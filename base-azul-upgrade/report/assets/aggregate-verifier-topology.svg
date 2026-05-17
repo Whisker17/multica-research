@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1120" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr-tee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#2563eb"/></marker>
+    <marker id="arr-zk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#7c3aed"/></marker>
+    <marker id="arr-main" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#0f172a"/></marker>
+    <marker id="arr-out" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#475569"/></marker>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#0f172a" flood-opacity="0.12"/></filter>
+    <filter id="sh-hi" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#b45309" flood-opacity="0.30"/></filter>
+  </defs>
+  <rect width="1280" height="1120" fill="#ffffff"/>
+  <text x="640" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Base Azul — Aggregate Verifier Topology (on-chain)</text>
+  <text x="640" y="68" text-anchor="middle" font-size="13" fill="#64748b">PROOF_THRESHOLD = 1  ·  TEE + ZK proofs converge on a shared OptimismPortal2 exit</text>
+  <rect x="40" y="300" width="560" height="340" rx="14" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <text x="60" y="324" font-size="12" font-weight="700" fill="#1e40af" letter-spacing="1">TEE PROOF PATH</text>
+  <rect x="900" y="300" width="320" height="340" rx="14" fill="#f5f3ff" stroke="#ddd6fe" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <text x="920" y="324" font-size="12" font-weight="700" fill="#5b21b6" letter-spacing="1">ZK PROOF PATH</text>
+  <rect x="180" y="860" width="920" height="240" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <text x="200" y="884" font-size="12" font-weight="700" fill="#475569" letter-spacing="1">SETTLEMENT / WITHDRAWAL CONTRACTS</text>
+  <g filter="url(#sh)">
+    <rect x="520" y="96" width="240" height="64" rx="8" fill="#ffffff" stroke="#0f172a" stroke-width="1.6"/>
+    <text x="640.0" y="124.0" text-anchor="middle" font-size="14" font-weight="600" fill="#0f172a">Off-chain Proposer</text>
+    <text x="640.0" y="142.0" text-anchor="middle" font-size="11" fill="#64748b">claim creation · UUID forward walk</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="520" y="206" width="240" height="64" rx="8" fill="#ffffff" stroke="#0f172a" stroke-width="1.6"/>
+    <text x="640.0" y="234.0" text-anchor="middle" font-size="14" font-weight="600" fill="#0f172a">DisputeGameFactory</text>
+    <text x="640.0" y="252.0" text-anchor="middle" font-size="11" fill="#64748b">create() emits new game</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="60" y="350" width="240" height="72" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.6"/>
+    <text x="180.0" y="382.0" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">NitroEnclaveVerifier</text>
+    <text x="180.0" y="400.0" text-anchor="middle" font-size="11" fill="#1d4ed8">PCR0 → tee_image_hash</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="340" y="350" width="240" height="72" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.6"/>
+    <text x="460.0" y="382.0" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">TEE Prover</text>
+    <text x="460.0" y="400.0" text-anchor="middle" font-size="11" fill="#1d4ed8">Nitro Enclaves · vsock · NSM</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="60" y="460" width="240" height="72" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.6"/>
+    <text x="180.0" y="492.0" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">TEEProverRegistry</text>
+    <text x="180.0" y="510.0" text-anchor="middle" font-size="11" fill="#1d4ed8">active-set + ghost-entry guard</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="200" y="560" width="240" height="64" rx="8" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.8"/>
+    <text x="320.0" y="588.0" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">TEEVerifier</text>
+    <text x="320.0" y="606.0" text-anchor="middle" font-size="11" fill="#1d4ed8">secp256k1 ECDSA · nullify()-first</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="940" y="350" width="240" height="72" rx="8" fill="#ffffff" stroke="#7c3aed" stroke-width="1.6"/>
+    <text x="1060.0" y="382.0" text-anchor="middle" font-size="14" font-weight="600" fill="#4c1d95">ZK Prover</text>
+    <text x="1060.0" y="400.0" text-anchor="middle" font-size="11" fill="#6d28d9">SP1 Range + Groth16 · 3 backends</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="940" y="560" width="240" height="64" rx="8" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.8"/>
+    <text x="1060.0" y="588.0" text-anchor="middle" font-size="14" font-weight="600" fill="#4c1d95">ZKVerifier</text>
+    <text x="1060.0" y="606.0" text-anchor="middle" font-size="11" fill="#6d28d9">challenge() · fallback path</text>
+  </g>
+  <g filter="url(#sh-hi)">
+    <rect x="400" y="700" width="480" height="120" rx="12" fill="#fffbeb" stroke="#d97706" stroke-width="2.5"/>
+    <text x="640" y="734" text-anchor="middle" font-size="18" font-weight="800" fill="#7c2d12">AggregateVerifier</text>
+    <text x="640" y="758" text-anchor="middle" font-size="12" fill="#92400e">1041 LOC Solidity  ·  PROOF_THRESHOLD = 1 (hardcoded, L68)</text>
+    <text x="640" y="778" text-anchor="middle" font-size="12" fill="#92400e">SLOW_FINALIZATION_DELAY = 7d (L51)  ·  FAST_FINALIZATION_DELAY = 1d (L54)</text>
+    <text x="640" y="800" text-anchor="middle" font-size="11.5" font-style="italic" fill="#7c2d12">Path C: min(createdAt + 7d, secondProofAt + 1d) — strictly monotonic decrease</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="240" y="920" width="300" height="76" rx="8" fill="#ffffff" stroke="#475569" stroke-width="1.6"/>
+    <text x="390.0" y="954.0" text-anchor="middle" font-size="14" font-weight="600" fill="#0f172a">OptimismPortal2</text>
+    <text x="390.0" y="972.0" text-anchor="middle" font-size="11" fill="#64748b">PROOF_MATURITY_DELAY_SECONDS = 0</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="740" y="920" width="300" height="76" rx="8" fill="#ffffff" stroke="#475569" stroke-width="1.6"/>
+    <text x="890.0" y="954.0" text-anchor="middle" font-size="14" font-weight="600" fill="#0f172a">AnchorStateRegistry</text>
+    <text x="890.0" y="972.0" text-anchor="middle" font-size="11" fill="#64748b">disputeGameFinalityDelaySeconds = 0</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="240" y="1020" width="300" height="64" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="1.6"/>
+    <text x="390.0" y="1048.0" text-anchor="middle" font-size="14" font-weight="600" fill="#064e3b">DelayedWETH</text>
+    <text x="390.0" y="1066.0" text-anchor="middle" font-size="11" fill="#047857">DELAY_SECONDS = 1 day  (vs OP upstream 7d)</text>
+  </g>
+  <path d="M 640,160 L 640,206" stroke="#0f172a" stroke-width="2" fill="none" marker-end="url(#arr-main)"/>
+  <path d="M 640,270 L 640,700" stroke="#0f172a" stroke-width="2" fill="none" marker-end="url(#arr-main)"/>
+  <rect x="600" y="465" width="80" height="20" fill="#ffffff" opacity="0.95"/>
+  <text x="640" y="479" text-anchor="middle" font-size="11" font-weight="600" fill="#0f172a">create()</text>
+  <path d="M 180,422 L 180,460" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arr-tee)"/>
+  <path d="M 220,532 L 260,560" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arr-tee)"/>
+  <rect x="180" y="538" width="64" height="16" fill="#eff6ff" opacity="0.95"/>
+  <text x="212" y="550" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">active-set</text>
+  <path d="M 420,422 L 380,560" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arr-tee)"/>
+  <rect x="370" y="478" width="80" height="16" fill="#eff6ff" opacity="0.95"/>
+  <text x="410" y="490" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">signed proof</text>
+  <path d="M 380,624 L 480,700" stroke="#2563eb" stroke-width="2.2" fill="none" marker-end="url(#arr-tee)"/>
+  <path d="M 1060,422 L 1060,560" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#arr-zk)"/>
+  <rect x="1018" y="478" width="84" height="16" fill="#f5f3ff" opacity="0.95"/>
+  <text x="1060" y="490" text-anchor="middle" font-size="10" font-weight="600" fill="#5b21b6">SP1 proof</text>
+  <path d="M 940,624 L 800,700" stroke="#7c3aed" stroke-width="2.2" fill="none" marker-end="url(#arr-zk)"/>
+  <path d="M 540,820 L 390,920" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arr-out)"/>
+  <path d="M 740,820 L 890,920" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arr-out)"/>
+  <path d="M 390,996 L 390,1020" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arr-out)"/>
+  <rect x="760" y="1010" width="320" height="80" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="776" y="1030" font-size="11" font-weight="700" fill="#0f172a" letter-spacing="0.5">LEGEND</text>
+  <line x1="776" y1="1046" x2="810" y2="1046" stroke="#2563eb" stroke-width="2.2"/>
+  <text x="818" y="1050" font-size="11" fill="#1e40af">TEE proof path</text>
+  <line x1="930" y1="1046" x2="964" y2="1046" stroke="#7c3aed" stroke-width="2.2"/>
+  <text x="972" y="1050" font-size="11" fill="#5b21b6">ZK proof path</text>
+  <line x1="776" y1="1068" x2="810" y2="1068" stroke="#0f172a" stroke-width="2.2"/>
+  <text x="818" y="1072" font-size="11" fill="#0f172a">claim flow</text>
+  <line x1="930" y1="1068" x2="964" y2="1068" stroke="#475569" stroke-width="2.2"/>
+  <text x="972" y="1072" font-size="11" fill="#475569">settlement output</text>
+</svg>

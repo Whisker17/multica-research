@@ -7,7 +7,7 @@
 | **Author** | Technical Writer Agent (Multica Research Squad) |
 | **Repository** | `Whisker17/multica-research` |
 | **Report path** | `base-azul-upgrade/report/final-report.md` |
-| **Diagram assets** | `base-azul-upgrade/report/assets/` (Mermaid embedded inline — see §10 Methodology Notes) |
+| **Diagram assets** | `base-azul-upgrade/report/assets/` — §4.1 + §5.1 rendered as PNG via `fireworks-tech-graph`; other diagrams remain Mermaid (see §10 Methodology Notes) |
 | **Source sections aggregated** | 6 — see §9 Traceability Matrix |
 | **Cut-off date for upstream evidence** | 2026-05-17 (snapshots referenced in research-sections) |
 
@@ -151,6 +151,11 @@ This is the most architecturally novel layer of Azul. The full code-level walkth
 
 ### 4.1 Aggregate Verifier Topology
 
+![Aggregate Verifier Topology](./assets/aggregate-verifier-topology.png)
+
+<details>
+<summary>Mermaid source (for editors)</summary>
+
 ```mermaid
 flowchart TB
   Proposer["Off-chain Proposer<br/>(claim creation)"] --> DGF["DisputeGameFactory"]
@@ -165,6 +170,8 @@ flowchart TB
   AV --> ASR["AnchorStateRegistry<br/>(disputeGameFinalityDelay = 0)"]
   Portal --> DW["DelayedWETH<br/>(DELAY_SECONDS = 1 day,<br/>vs OP upstream 7 days)"]
 ```
+
+</details>
 
 **Key invariants** (all hardcoded constants in `AggregateVerifier.sol`):
 
@@ -231,6 +238,11 @@ The five Rust services are the operational counterpart to §4's on-chain contrac
 
 ### 5.1 Service Map
 
+![Off-Chain Multiproof Service Map](./assets/offchain-service-map.png)
+
+<details>
+<summary>Mermaid source (for editors)</summary>
+
 ```mermaid
 flowchart LR
   L1[(L1 RPC)]
@@ -249,6 +261,8 @@ flowchart LR
   TEEV["TEEVerifier"] --> AV
   ZKV["ZKVerifier"] --> AV
 ```
+
+</details>
 
 ### 5.2 Proposer — UUID Forward Walk
 
@@ -527,7 +541,7 @@ Every key conclusion in this report traces to a research issue and GitHub sectio
 - **Synthesis approach**: organized by **theme** (Strategic / EVM / Proof / Off-chain / Network / Mantle Impact), not by research issue. Within each theme, the synthesis preserves direct citations to the source research section.
 - **Conflicts are surfaced, not smoothed** (§7.2): six discrete cross-section conflicts (C-1 … C-6) are catalogued with their resolution status. Where no resolution exists in research, the conflict is marked **open** and inherited as an integration risk.
 - **`[TW inference]` markers** distinguish Technical Writer cross-cutting synthesis (e.g., the `op-geth` EOL × Mantle migration timing risk in §7.4) from research-issue findings. Three TW inferences are marked in §7.4.
-- **Diagrams**: rendered as **Mermaid** throughout. Per `diagram-upgrade-guide.md`, architecture/topology diagrams (e.g., §4.1, §5.1) would normally be upgraded with `/fireworks-tech-graph`, but that skill is **not accessible at runtime in this Technical Writer Agent's environment**. Per the fallback rule in the guide, all diagrams ship as Mermaid and this gap is recorded both here and in the §10.3 completion-comment integration gaps. The Mermaid source is inline in the report and renders natively on GitHub.
+- **Diagrams**: architecture/topology diagrams §4.1 (Aggregate Verifier Topology) and §5.1 (Off-Chain Service Map) are rendered as **PNG via `fireworks-tech-graph`** (SVG sources kept alongside the PNG under `report/assets/` for future re-export). State-machine §4.2, sequence §6.3, and timeline-flow §8.2 stay as **Mermaid** since their semantics (state transitions, lifelines, time axis) are first-class in Mermaid. The Mermaid source for §4.1 / §5.1 is preserved in a collapsible `<details>` block beneath each image so editors can regenerate without re-running the SVG pipeline.
 - **Source coverage**: each research issue includes its own per-source minimum requirement matrix (Source Coverage sections). This report does not re-verify those — it trusts the adversarial-review-approved state of each `final.md`.
 
 ### 10.2 Glossary (selected acronyms)
@@ -561,7 +575,7 @@ Every key conclusion in this report traces to a research issue and GitHub sectio
 
 The following gaps are recorded here so they propagate to the §8.10 completion comment:
 
-1. **`/fireworks-tech-graph` unavailability** — all architecture and topology diagrams rendered as Mermaid per fallback rule. Future TW runs with the skill enabled should upgrade §4.1 (Aggregate verifier topology) and §5.1 (Off-chain service map) for polished spatial layout.
+1. **Topology diagrams upgraded to PNG** — §4.1 (Aggregate Verifier Topology) and §5.1 (Off-Chain Service Map) re-rendered via `fireworks-tech-graph` and committed under `report/assets/`. State / sequence / timeline diagrams (§4.2, §6.3, §8.2) remain Mermaid by design.
 2. **Mainnet activation date** — 2026-05-28 is code-set / spec-TBD; `specs.base.org` should be re-verified before any Mantle action calendar pivots on the date.
 3. **Mantle Flashblocks mainnet config + payload-schema parity** — not verified in source; verify-track item in §8.5.
 4. **Arsia activation timestamp 6-day delta** — L2BEAT 2026-04-16 vs `mantle-v2 v1.5.4` config 2026-04-22 07:00 UTC; sources do not resolve.
