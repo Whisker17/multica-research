@@ -6,3 +6,4 @@
 | 2 | osaka-evm-changes | 9db30b8f-96e2-4430-8a94-b8b04e0e8206 | base-azul-upgrade/research-sections/osaka-evm-changes/final.md | base-strategy-azul-overview | done |
 | 3 | multiproof-architecture | 8932658c-c799-4df3-b1eb-196dc080d5cc | base-azul-upgrade/research-sections/multiproof-architecture/final.md | base-strategy-azul-overview | done |
 | 4 | flashblocks-network-changes | 350a117f-4b9e-4379-b4c9-f300be129dda | base-azul-upgrade/research-sections/flashblocks-network-changes/final.md | base-strategy-azul-overview | done |
+| 5 | multiproof-provers-challengers | 1914fec7-71af-486c-a7b3-729f89218216 | base-azul-upgrade/research-sections/multiproof-provers-challengers/final.md | multiproof-architecture | done |
