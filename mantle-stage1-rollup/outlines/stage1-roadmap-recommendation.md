@@ -166,7 +166,7 @@ expected_output: |
 
         **优先级得分** P = U × I（range 1-25）
 
-        **象限分配**：P1 = U≥4 且 I≥4；P2 = P≥9 且不满足 P1；P3 = P 4-8；P4 = P<4
+        **象限分配**：P1 = U≥4 且 I≥4；P2 = P≥9 且不满足 P1；P3 = 4≤P≤8；P4 = P<4
 
         **平分优先顺序（Tie-breaker，依次适用）**：
         (1) Severity 等级（CRITICAL > HIGH > MEDIUM）；
