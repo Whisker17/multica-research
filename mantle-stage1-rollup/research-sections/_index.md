@@ -1,7 +1,7 @@
 ---
 project: "Mantle 如何进入 Stage 1 Rollups"
 project_slug: mantle-stage1-rollup
-updated_at: "2026-05-19T08:55:00Z"
+updated_at: "2026-05-20T00:00:00Z"
 updated_by: "agent:orchestrator (Orchestrator, id=273629f0-3fe7-47c4-aae7-846a11dbbe13)"
 ---
 
@@ -14,6 +14,7 @@ updated_by: "agent:orchestrator (Orchestrator, id=273629f0-3fe7-47c4-aae7-846a11
 | 3 | stage1-case-studies | 856af005-11a9-4812-be51-f76a1bd7ff95 | mantle-stage1-rollup/research-sections/stage1-case-studies/final.md | - | done | C1: exit-window cell re-verification; C2: Starknet gate-4 sourcing re-verification |
 | 4 | upgrade-exitwindow-securitycouncil | 6cc99efe-e183-4588-a6d7-c2f61efb19ae | mantle-stage1-rollup/research-sections/upgrade-exitwindow-securitycouncil/final.md | l2beat-stage-framework-2026, mantle-architecture-2026, stage1-case-studies | done | - |
 | 5 | proposer-decentralization-zk-compliance | cc2b0693-6554-4866-83b9-401cfd232570 | mantle-stage1-rollup/research-sections/proposer-decentralization-zk-compliance/final.md | l2beat-stage-framework-2026, mantle-architecture-2026, stage1-case-studies | done | - |
+| 6 | stage1-roadmap-recommendation | 949da39e-e3ff-44a0-8efc-6795de4a4354 | mantle-stage1-rollup/research-sections/stage1-roadmap-recommendation/final.md | l2beat-stage-framework-2026, mantle-architecture-2026, stage1-case-studies, upgrade-exitwindow-securitycouncil, proposer-decentralization-zk-compliance | done | - |
 
 ## Caveats Registry
 
