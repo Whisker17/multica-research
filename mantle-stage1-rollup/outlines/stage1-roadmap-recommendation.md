@@ -140,9 +140,45 @@ expected_output: |
         (vi) 三路径治理隔离（core rollup / MNT TimelockController / mETH），(vii) 新合约审计
         （GuardedExecutor / TargetSelectorWhitelist / PauseTimelock），(viii) Sequencer 去中心化
         与 force-inclusion 6h 优化（Stage 1 边界可接受但属改进项）。
-    (b) **评分方法说明**：紧急度（1-5）= grace period 距离 + L2Beat 项目页文本严重性 + 影响
-        资产规模（TVS）；重要度（1-5）= 是否 Stage 1 hard blocker + 与其他 Gap 的依赖数量 +
-        是否影响 walkaway-FAIL 状态。每条 Gap 必须给出**评分依据短文 2-3 句**，避免数字漂移。
+    (b) **评分方法说明与预定权重表**（draft 阶段可调整权重，但须附理由并重跑敏感性检查）：
+
+        **紧急度（U，1-5）子项**：
+
+        | 子项 | 取值尺度 | 默认权重 |
+        |------|----------|----------|
+        | U1 Grace-period 距离 | 3 = 剩余 <4 周；2 = 4-12 周；1 = >12 周 | 0.40 |
+        | U2 L2Beat 项目页文本严重性 | 3 = CRITICAL；2 = HIGH；1 = MEDIUM / 无标注 | 0.35 |
+        | U3 受影响 TVS 路径 | 3 = >$1B；2 = $100M-1B；1 = <$100M | 0.25 |
+
+        U（raw）= 0.40×U1 + 0.35×U2 + 0.25×U3（range 1.00-3.00）
+        U（1-5）= round((U_raw - 1.0) / 2.0 × 4 + 1)，min=1，max=5
+
+        **重要度（I，1-5）子项**：
+
+        | 子项 | 取值尺度 | 默认权重 |
+        |------|----------|----------|
+        | I1 Stage 1 hard blocker | 3 = yes；1 = no | 0.45 |
+        | I2 DAG 出边数（依赖该项的 Gap 数量） | 3 = ≥3；2 = 1-2；1 = 0 | 0.30 |
+        | I3 Walkaway-FAIL 影响 | 3 = 直接触发 FAIL；1 = 无直接影响 | 0.25 |
+
+        I（raw）= 0.45×I1 + 0.30×I2 + 0.25×I3（range 1.00-3.00）
+        I（1-5）= round((I_raw - 1.0) / 2.0 × 4 + 1)，min=1，max=5
+
+        **优先级得分** P = U × I（range 1-25）
+
+        **象限分配**：P1 = U≥4 且 I≥4；P2 = P≥9 且不满足 P1；P3 = P 4-8；P4 = P<4
+
+        **平分优先顺序（Tie-breaker，依次适用）**：
+        (1) Severity 等级（CRITICAL > HIGH > MEDIUM）；
+        (2) DAG 出边数（下游依赖更多者优先）；
+        (3) 里程碑阶段（阶段 1 优先于阶段 2/3）。
+
+        **敏感性检查要求**：若任意默认权重 ±0.10 变动导致某 Gap 的象限归属改变（P1↔P2 或
+        P2↔P3），该 Gap 须在 §Gap Analysis 中标注为"评分敏感"并给出说明。draft 阶段如调整
+        权重，须列出调整前后所有受影响 Gap 的象限变化表。
+
+        每条 Gap 附 2-3 句**评分依据短文**，记录 U1/U2/U3 与 I1/I2/I3 的取值来源（锚定上游
+        final §section），避免数字漂移。
 
   - **§Item-2 升级依赖关系图与可并行性分析**：
     (a) **diag-1 Stage 1 升级依赖关系图（mermaid graph LR）**：节点为 Master Gap List 中的每项
@@ -248,12 +284,37 @@ revision_metadata:
   last_modified_at: "2026-05-19T15:00:00Z"
 
 upstream_final_commits:
-  l2beat-stage-framework-2026: "mantle-stage1-rollup/research-sections/l2beat-stage-framework-2026/final.md (main, post 2026-05-19 promotion)"
-  mantle-architecture-2026: "mantle-stage1-rollup/research-sections/mantle-architecture-2026/final.md (main, post 2026-05-19 promotion)"
-  stage1-case-studies: "mantle-stage1-rollup/research-sections/stage1-case-studies/final.md (main, post 2026-05-19 promotion)"
-  upgrade-exitwindow-securitycouncil: "mantle-stage1-rollup/research-sections/upgrade-exitwindow-securitycouncil/final.md (main, post 2026-05-19 promotion)"
-  proposer-decentralization-zk-compliance: "mantle-stage1-rollup/research-sections/proposer-decentralization-zk-compliance/final.md (main, post 2026-05-19 promotion)"
-  note: "Round 1 outline 阶段使用 main 分支的最新 final（截至 2026-05-19 5 个 final 全部 done，详 _index.md）；draft 阶段 frontmatter 将固化精确 commit SHA。"
+  l2beat-stage-framework-2026: "d1834f9003ce402a7103a3fb9a4e258925f7ae0d"
+  mantle-architecture-2026: "60253749d49bf4723c06b27338d5119d15a16677"
+  stage1-case-studies: "854419cca691404c3ec2b709cdfc12c8a7527be5"
+  upgrade-exitwindow-securitycouncil: "f8ecb76b8cebfe41978451a1ec6db93f30c0e3d8"
+  proposer-decentralization-zk-compliance: "3a7cb957aeccd4581c644e356bd11c95f7461fbd"
+
+upstream_caveats:
+  source: "mantle-stage1-rollup/research-sections/_index.md § Caveats Registry"
+  C1:
+    section: stage1-case-studies
+    description: "OP Mainnet and Scroll Item-7(C) exit-window matrix cells require re-verification against current L2Beat live data"
+    affected_roadmap_items: [item-1, item-3, item-4, item-6, diag-1, diag-4]
+    downstream_reverification_requirement: >
+      Before quoting OP Mainnet or Scroll exit-window cell values in any Gap score, scoring
+      rationale, diagram node, or §Source Coverage entry, re-verify against L2Beat project pages
+      (Stages section + permissions section for OP Mainnet, Scroll). Any cell that cannot be
+      re-verified must be annotated [UNVERIFIED - C1] and surfaced in §Gap Analysis.
+  C2:
+    section: stage1-case-studies
+    description: "Starknet gate (4) program-commitment risk sourcing should be re-verified against current L2Beat + ZK Catalog data"
+    affected_roadmap_items: [item-1, item-3, item-4, item-6, diag-3]
+    downstream_reverification_requirement: >
+      Before quoting Starknet gate-4 status in any comparison, diagram node, or §Source Coverage
+      entry, re-verify against l2beat.com/scaling/projects/starknet (proof system section) and
+      zk-catalog.dev Starknet entry. Any value that cannot be re-verified must be annotated
+      [UNVERIFIED - C2] and surfaced in §Gap Analysis.
+  draft_gate: >
+    Research Agent must complete C1 and C2 re-verification and record pass/fail results in
+    §Gap Analysis before any roadmap item, scoring cell, or diagram node that cites
+    stage1-case-studies case-study cells is finalized. Silent promotion of accepted-risk values
+    from the upstream section without explicit re-check is prohibited.
 ---
 
 # Research Outline: Mantle Stage 1 路线图综合建议
@@ -284,8 +345,15 @@ Master Gap List**，作为后续依赖图、时间线、风险矩阵、Action It
          `upgrade-exitwindow-securitycouncil` §Item-6 6.b + G-14）；
   (viii) Sequencer 去中心化与 force-inclusion 6h 优化（边界改进项，来源：
           `proposer-decentralization-zk-compliance` §item-5）。
-(b) **评分方法 + 评分依据短文**：每条 Gap 标注紧急度（1-5）+ 重要度（1-5）+ 优先级得分 + 2-3 句
-    依据，避免数字漂移；评分体系本身必须可复现。
+(b) **评分方法 + 权重表 + 敏感性检查**（遵循 expected_output §Item-1(b) 中的预定权重表；下文为摘要）：
+
+    紧急度 U（1-5）= f(U1 Grace-period距离×0.40, U2 L2Beat严重性×0.35, U3 TVS暴露×0.25)
+    重要度 I（1-5）= f(I1 Stage1硬阻断×0.45, I2 DAG出边数×0.30, I3 Walkaway-FAIL×0.25)
+    优先级得分 P = U × I（1-25）；象限分配 P1/P2/P3/P4 见权重表象限规则。
+
+    draft 阶段如调整权重须附理由并列出所有受影响 Gap 的象限变化表。
+    若默认权重 ±0.10 变动导致任何 Gap 象限改变，须在 §Gap Analysis 标注"评分敏感"。
+    每条 Gap 附 2-3 句评分依据（锚定上游 final §section），避免数字漂移。
 (c) **二元判定**：每条 Gap 标注 Stage 1 hard blocker / soft prerequisite / non-blocking improvement。
 (d) **上游锚定**：每条 Gap 必须给出"上游 final + §section + 段落 anchor + 关键引用句"四元组，
     可被 Adversarial 与 TW 独立复核。
@@ -563,7 +631,7 @@ prerequisite / parallel / serial 四类边，并给出**最优升级批次划分
 | ID | Type | Description | Min Count |
 |----|------|-------------|-----------|
 | src-1 | upstream_research_final | 本项目前 5 个 final sections（commit SHA 在 frontmatter `upstream_final_commits` 固化），是本研究**唯一的 primary 事实基线**；所有 Gap / Action Item / Diagram 节点必须可锚定到此处 | 5 (全部) |
-| src-2 | l2beat_framework_docs | L2Beat 公开框架文档（Stages 总览、Glossary、Forum #291 / #409 / #412 / #413 / #425、Monthly Updates、相关 Medium 文章）；本研究在评估 framework_evolution_exposure 时**直接引用上游 §section 已固化的 URL**，避免重新搜索 | 6 |
+| src-2 | l2beat_framework_docs | L2Beat 公开框架文档（Stages 总览、Glossary、Forum #291 / #409 / #412 / #413 / #425、Monthly Updates、相关 Medium 文章）；本研究在评估 framework_evolution_exposure 时**直接引用上游 §section 已固化的 URL**，避免重新搜索。**注意**：src-1（stage1-case-studies）中 C1/C2 标注的 OP Mainnet / Scroll exit-window 单元格与 Starknet gate-4 状态在引用前必须按 `upstream_caveats` 要求做实时再验证，不可直接复用上游 URL 而绕过再验证门控 | 6 |
 | src-3 | mantle_onchain_anchor | Mantle mainnet 链上数据锚点（合约地址、storage slot、role assignment）；本研究**不重新执行**链上 retrieval，仅复用上游 final 已固化的 cast 输出，作为评分与依赖图的事实基础 | 4 (核心合约地址) |
 | src-4 | op_stack_upstream_signals | OP Stack 上游公开渠道（OP Stack governance forum、Optimism Collective 公开提案、optimism-org GitHub repo 关键 PR / release notes）；用于 item-6 leverage / fork / 等待上游 决策 | 3 |
 | src-5 | audit_cadence_reference | 公开审计方 cadence 参考（OpenZeppelin / Cantina / Sigma Prime / Trail of Bits 等公开 changelog 或 case study）；用于 item-5 审计周期区间估算，**仅作为 industry-reference**，不指定具体公司 | 2 |
@@ -581,5 +649,6 @@ prerequisite / parallel / serial 四类边，并给出**最优升级批次划分
 
 | Round | Action | Target | Reason | Source |
 |-------|--------|--------|--------|--------|
-
-（Round 1 outline 创建，Patch Log 为空。后续 round 由 Adversarial Review + Orchestrator 触发修订时填充。）
+| R1→R2 | Pin upstream SHA | frontmatter `upstream_final_commits` | Review finding: "main, post 2026-05-19" is not reproducible anchor | Research Review Agent verdict, 2026-05-19 |
+| R1→R2 | Add `upstream_caveats` block | frontmatter | Review finding: C1/C2 caveats from `_index.md` not propagated; src-2 rule risks silent promotion of unverified cells | Research Review Agent verdict, 2026-05-19 |
+| R1→R2 | Replace item-1(b) with weight table | expected_output §Item-1(b) + Items §item-1(b) | Review finding: scoring formula under-specified; weights, normalization, tie-breakers, and sensitivity check missing | Research Review Agent verdict, 2026-05-19 |
