@@ -4,13 +4,23 @@ project_slug: mantle-stage1-rollup
 topic_slug: stage1-roadmap-recommendation
 github_repo: Whisker17/multica-research
 round: 2
-status: draft
+status: final
 
 artifact_paths:
   outline: mantle-stage1-rollup/outlines/stage1-roadmap-recommendation.md
   draft: mantle-stage1-rollup/research-sections/stage1-roadmap-recommendation/drafts/round-2.md
   final: mantle-stage1-rollup/research-sections/stage1-roadmap-recommendation/final.md
   index: mantle-stage1-rollup/research-sections/_index.md
+
+promotion_metadata:
+  promoted_from_draft: mantle-stage1-rollup/research-sections/stage1-roadmap-recommendation/drafts/round-2.md
+  promoted_from_round: 2
+  promoted_from_commit: 3bd8eb1bb4c65f293be60dd9e300add310f915fd
+  approval_evidence: "comment c02c200c-26e8-457e-9077-3ce0f99fcc95 (Round 2 approve, confidence 0.88)"
+  promoted_by: "agent:research-agent (Deep Research Agent, id=13a888db-49bb-4a19-9906-827729e156d9)"
+  promoted_at: "2026-05-20T00:00:00Z"
+  order: 6
+  dependencies: ["l2beat-stage-framework-2026", "mantle-architecture-2026", "stage1-case-studies", "upgrade-exitwindow-securitycouncil", "proposer-decentralization-zk-compliance"]
 
 outline_commit: "d6c8251 (post non-blocking fixup; pre-fix outline_commit 9d2a1dbf78db93dcaaa58c9e3b7ff1049b63ba02)"
 prior_draft_commit: "a945586ea5629bb299244ddfbc0ee1139caaebf1"
@@ -57,7 +67,7 @@ draft_metadata:
     P3: "Normalize AI-15 predecessor entry from text 'AI-03 audit done' to pure AI ID 'AI-03'; consistency sweep of all 32 Action Items confirms no other text-based predecessor references remain"
 ---
 
-# Mantle Stage 1 路线图综合建议（Round 2 Draft — Narrow Patch P1+P2+P3）
+# Mantle Stage 1 路线图综合建议（Final Section — promoted from Round 2 draft）
 
 > **本草案是综合 / 收尾课题（order=6）的 Round 2 deep draft（在 Round 1 基础上应用 narrow patch P1+P2+P3），
 > 依赖上游 5 个 final sections 的所有结论。**
@@ -991,4 +1001,4 @@ reproducibility）
 
 ---
 
-**End of Round 2 Draft（narrow patch P1+P2+P3）** —— 等待 Orchestrator 安排 Adversarial Review 调度。
+**End of Final Section** —— promoted from Round 2 draft (`drafts/round-2.md` @ `3bd8eb1bb4c65f293be60dd9e300add310f915fd`) per Adversarial approve, confidence 0.88 (comment `c02c200c-26e8-457e-9077-3ce0f99fcc95`). Awaiting Orchestrator `_index.md` update + main integration + TW handoff dispatch.
