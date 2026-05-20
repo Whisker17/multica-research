@@ -1,7 +1,7 @@
 ---
 project: "解析 Base 的性能提升方式"
 project_slug: base-perf-analysis
-updated_at: "2026-05-20T08:50:00Z"
+updated_at: "2026-05-20T13:45:00Z"
 updated_by: "agent:orchestrator (Orchestrator, id=273629f0-3fe7-47c4-aae7-846a11dbbe13)"
 ---
 
@@ -14,6 +14,7 @@ updated_by: "agent:orchestrator (Orchestrator, id=273629f0-3fe7-47c4-aae7-846a11
 | 3 | gas-protocol-perf-config | b5b2870f-fe64-42e5-a232-9acce565c195 | base-perf-analysis/research-sections/gas-protocol-perf-config/final.md | - | done | C1: process-deviation (outline revision cycle skipped; adversarial feedback substantively addressed in content) |
 | 4 | sequencer-consensus-pipeline-perf | c0a26a72-9c25-42ca-9b0d-2563078d82c5 | base-perf-analysis/research-sections/sequencer-consensus-pipeline-perf/final.md | order-1,order-2 | done | - |
 | 5 | batcher-pipeline-architecture | c75656d7-c1ae-45bc-a83b-c9b57be14299 | base-perf-analysis/research-sections/batcher-pipeline-architecture/final.md | order-3 | done | - |
+| 7 | batcher-sequencer-backpressure | 612c9aac-31ea-43f8-bac4-33eff4fe4e33 | base-perf-analysis/research-sections/batcher-sequencer-backpressure/final.md | batcher-pipeline-architecture, da-bandwidth-throughput-ceiling | done | - |
 
 ## Caveats Registry
 
