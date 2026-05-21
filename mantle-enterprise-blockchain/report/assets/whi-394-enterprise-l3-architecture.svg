@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 780" width="960" height="780">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="960" height="780" fill="#ffffff"/>
+  <text x="480" y="32" text-anchor="middle" font-size="18" font-weight="600" fill="#5b21b6">Enterprise L3 High-Level Architecture</text>
+  <text x="480" y="50" text-anchor="middle" font-size="12" fill="#6b7280">Multi-Tenant App Chains — One Enterprise, One Chain</text>
+
+  <!-- TOP: L3 Chains container -->
+  <rect x="20" y="65" width="920" height="250" rx="10" fill="#faf5ff" stroke="#7c3aed" stroke-width="1" stroke-dasharray="6,3"/>
+  <text x="35" y="82" font-size="11" font-weight="600" fill="#7c3aed">ENTERPRISE L3 CHAINS (INDEPENDENT INSTANCES)</text>
+
+  <!-- Bank A L3 -->
+  <rect x="35" y="95" width="210" height="205" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="140" y="117" text-anchor="middle" font-size="13" font-weight="600" fill="#5b21b6">Bank A L3</text>
+  <rect x="45" y="130" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="145" text-anchor="middle" font-size="10" fill="#5b21b6">Own Sequencer</text>
+  <rect x="45" y="157" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="172" text-anchor="middle" font-size="10" fill="#5b21b6">Own Private DA</text>
+  <rect x="45" y="184" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="199" text-anchor="middle" font-size="10" fill="#5b21b6">Own Policy / Compliance</text>
+  <rect x="45" y="211" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="226" text-anchor="middle" font-size="10" fill="#5b21b6">Own Auth RPC</text>
+  <rect x="45" y="238" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="253" text-anchor="middle" font-size="10" fill="#5b21b6">Own Governance Keys</text>
+  <rect x="45" y="265" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="280" text-anchor="middle" font-size="10" fill="#5b21b6">Own Upgrade Cadence</text>
+
+  <!-- RWA Issuer L3 -->
+  <rect x="260" y="95" width="210" height="205" rx="8" fill="#e9d5ff" stroke="#7c3aed" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="365" y="117" text-anchor="middle" font-size="13" font-weight="600" fill="#5b21b6">RWA Issuer L3</text>
+  <rect x="270" y="130" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="145" text-anchor="middle" font-size="10" fill="#5b21b6">Own Sequencer</text>
+  <rect x="270" y="157" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="172" text-anchor="middle" font-size="10" fill="#5b21b6">Own Private DA</text>
+  <rect x="270" y="184" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="199" text-anchor="middle" font-size="10" fill="#5b21b6">Own Policy / Compliance</text>
+  <rect x="270" y="211" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="226" text-anchor="middle" font-size="10" fill="#5b21b6">Own Auth RPC</text>
+  <rect x="270" y="238" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="253" text-anchor="middle" font-size="10" fill="#5b21b6">Own Governance Keys</text>
+  <rect x="270" y="265" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="280" text-anchor="middle" font-size="10" fill="#5b21b6">Own Upgrade Cadence</text>
+
+  <!-- Payment Processor L3 -->
+  <rect x="485" y="95" width="210" height="205" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="590" y="117" text-anchor="middle" font-size="13" font-weight="600" fill="#5b21b6">Payment Proc. L3</text>
+  <rect x="495" y="130" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="145" text-anchor="middle" font-size="10" fill="#5b21b6">Own Sequencer</text>
+  <rect x="495" y="157" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="172" text-anchor="middle" font-size="10" fill="#5b21b6">Own Private DA</text>
+  <rect x="495" y="184" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="199" text-anchor="middle" font-size="10" fill="#5b21b6">Own Policy / Compliance</text>
+  <rect x="495" y="211" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="226" text-anchor="middle" font-size="10" fill="#5b21b6">Own Auth RPC</text>
+  <rect x="495" y="238" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="253" text-anchor="middle" font-size="10" fill="#5b21b6">Own Governance Keys</text>
+  <rect x="495" y="265" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="280" text-anchor="middle" font-size="10" fill="#5b21b6">Own Upgrade Cadence</text>
+
+  <!-- Custom L3 -->
+  <rect x="710" y="95" width="210" height="205" rx="8" fill="#e9d5ff" stroke="#7c3aed" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="815" y="117" text-anchor="middle" font-size="13" font-weight="600" fill="#5b21b6">Custom L3 ...</text>
+  <rect x="720" y="130" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="145" text-anchor="middle" font-size="10" fill="#5b21b6">Own Sequencer</text>
+  <rect x="720" y="157" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="172" text-anchor="middle" font-size="10" fill="#5b21b6">Own Private DA</text>
+  <rect x="720" y="184" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="199" text-anchor="middle" font-size="10" fill="#5b21b6">Own Policy / Compliance</text>
+  <rect x="720" y="211" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="226" text-anchor="middle" font-size="10" fill="#5b21b6">Own Auth RPC</text>
+  <rect x="720" y="238" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="253" text-anchor="middle" font-size="10" fill="#5b21b6">Own Governance Keys</text>
+  <rect x="720" y="265" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="280" text-anchor="middle" font-size="10" fill="#5b21b6">Own Upgrade Cadence</text>
+
+  <!-- Arrows: L3s down to Mantle L2 -->
+  <line x1="140" y1="300" x2="140" y2="340" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple)"/>
+  <line x1="365" y1="300" x2="365" y2="340" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple)"/>
+  <line x1="590" y1="300" x2="590" y2="340" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple)"/>
+  <line x1="815" y1="300" x2="815" y2="340" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple)"/>
+  <!-- Arrow labels -->
+  <rect x="65" y="310" width="90" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="110" y="321" text-anchor="middle" font-size="9" fill="#7c3aed">State roots, proofs</text>
+  <rect x="300" y="310" width="100" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="350" y="321" text-anchor="middle" font-size="9" fill="#7c3aed">Bridge messages</text>
+  <rect x="520" y="310" width="100" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="570" y="321" text-anchor="middle" font-size="9" fill="#7c3aed">Withdrawal hashes</text>
+  <rect x="750" y="310" width="90" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="795" y="321" text-anchor="middle" font-size="9" fill="#7c3aed">Batch commits</text>
+
+  <!-- MIDDLE: Mantle L2 Settlement Hub -->
+  <rect x="20" y="345" width="920" height="180" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="480" y="368" text-anchor="middle" font-size="15" font-weight="600" fill="#1e40af">Mantle L2 — Settlement Hub</text>
+  <text x="480" y="384" text-anchor="middle" font-size="11" fill="#3b82f6">Proof Verification / Cross-L3 Relay / Shared Liquidity / SDK Provider</text>
+
+  <!-- L2 components row 1 -->
+  <rect x="45" y="398" width="170" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="130" y="421" text-anchor="middle" font-size="11" fill="#1e40af">ZonePortal Contracts</text>
+  <rect x="235" y="398" width="150" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="310" y="421" text-anchor="middle" font-size="11" fill="#1e40af">Proof Verification</text>
+  <rect x="405" y="398" width="140" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="475" y="421" text-anchor="middle" font-size="11" fill="#1e40af">Cross-L3 Relay</text>
+  <rect x="565" y="398" width="170" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="650" y="421" text-anchor="middle" font-size="11" fill="#1e40af">Shared Liquidity Pools</text>
+  <rect x="755" y="398" width="155" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="832" y="421" text-anchor="middle" font-size="11" fill="#1e40af">Compliance Routing</text>
+
+  <!-- L2 components row 2 -->
+  <rect x="45" y="448" width="170" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="130" y="471" text-anchor="middle" font-size="11" fill="#1e40af">SDK / Chain Templates</text>
+  <rect x="235" y="448" width="160" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="315" y="471" text-anchor="middle" font-size="11" fill="#1e40af">Enterprise Onboarding</text>
+  <rect x="415" y="448" width="150" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="490" y="471" text-anchor="middle" font-size="11" fill="#1e40af">Observability / SRE</text>
+  <rect x="585" y="448" width="155" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="662" y="471" text-anchor="middle" font-size="11" fill="#1e40af">Governance / Guardian</text>
+  <rect x="760" y="448" width="150" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="835" y="471" text-anchor="middle" font-size="11" fill="#1e40af">DA Coordinator</text>
+
+  <text x="480" y="506" text-anchor="middle" font-size="10" fill="#3b82f6">Aggregates state from multiple L3s → submits to Ethereum L1</text>
+
+  <!-- Arrow: Mantle L2 down to Ethereum L1 -->
+  <line x1="480" y1="525" x2="480" y2="560" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <rect x="430" y="530" width="100" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="480" y="541" text-anchor="middle" font-size="9" fill="#2563eb">Aggregated proof + root</text>
+
+  <!-- BOTTOM: Ethereum L1 -->
+  <rect x="20" y="565" width="920" height="80" rx="10" fill="#f0fdf4" stroke="#059669" stroke-width="2" filter="url(#shadow)"/>
+  <text x="480" y="590" text-anchor="middle" font-size="15" font-weight="600" fill="#059669">Ethereum L1 — Final Settlement Anchor</text>
+  <rect x="80" y="602" width="180" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="170" y="621" text-anchor="middle" font-size="11" fill="#065f46">State Root Verification</text>
+  <rect x="310" y="602" width="170" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="395" y="621" text-anchor="middle" font-size="11" fill="#065f46">Asset Exit Execution</text>
+  <rect x="530" y="602" width="190" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="625" y="621" text-anchor="middle" font-size="11" fill="#065f46">Public Settlement Guarantee</text>
+  <rect x="770" y="602" width="145" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="842" y="621" text-anchor="middle" font-size="11" fill="#065f46">Economic Security</text>
+
+  <!-- Legend -->
+  <line x1="320" y1="655" x2="350" y2="655" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple)"/>
+  <text x="356" y="659" font-size="10" fill="#6b7280">L3 → L2 Settlement</text>
+  <line x1="500" y1="655" x2="530" y2="655" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="536" y="659" font-size="10" fill="#6b7280">L2 → L1 Proof/Root</text>
+
+  <!-- Key Properties callout -->
+  <rect x="20" y="670" width="450" height="100" rx="8" fill="#faf5ff" stroke="#7c3aed" stroke-width="1"/>
+  <text x="35" y="692" font-size="12" font-weight="600" fill="#5b21b6">Key Properties</text>
+  <text x="35" y="710" font-size="11" fill="#5b21b6">L3 Soft Confirmation: ~1-2s</text>
+  <text x="35" y="726" font-size="11" fill="#5b21b6">External Hard Finality: ~1 hour (ZK) / 7 days (optimistic)</text>
+  <text x="35" y="742" font-size="11" fill="#5b21b6">Per-Zone Cost: $60K-$600K/year</text>
+  <text x="35" y="758" font-size="11" fill="#5b21b6">Platform Timeline: 9-13 months / Team: 10-15</text>
+
+  <!-- Structural Constraints callout -->
+  <rect x="490" y="670" width="450" height="100" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1"/>
+  <text x="505" y="692" font-size="12" font-weight="600" fill="#dc2626">Structural Constraints (Honest)</text>
+  <text x="505" y="710" font-size="11" fill="#7f1d1d">Longest external finality of all three paths</text>
+  <text x="505" y="726" font-size="11" fill="#7f1d1d">Cross-L3 DVP is non-atomic in Phase 1</text>
+  <text x="505" y="742" font-size="11" fill="#7f1d1d">Per-enterprise L3s fragment secondary liquidity</text>
+  <text x="505" y="758" font-size="11" fill="#7f1d1d">Three-layer debugging / incident response complexity</text>
+</svg>

@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="ab" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/></marker>
+    <marker id="ag" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/></marker>
+    <marker id="ao" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ea580c"/></marker>
+    <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.08"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="#ffffff"/>
+
+  <text x="600" y="38" text-anchor="middle" font-size="20" font-weight="600" fill="#111827">Solution 3: Enterprise L3 App Chain Architecture</text>
+  <text x="600" y="58" text-anchor="middle" font-size="13" fill="#6b7280">WHI-389 — Per-Enterprise L3 Chains Settling on Mantle L2, Then Ethereum L1</text>
+
+  <!-- L3 Layer -->
+  <rect x="30" y="80" width="1140" height="310" rx="12" fill="#faf5ff" stroke="#c084fc" stroke-width="1.5"/>
+  <text x="600" y="104" text-anchor="middle" font-size="15" font-weight="600" fill="#7c3aed">Enterprise L3 Layer — One Chain Per Enterprise (Enterprise-Operated)</text>
+
+  <!-- Bank L3 -->
+  <rect x="55" y="120" width="260" height="250" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)"/>
+  <rect x="55" y="120" width="260" height="30" rx="10" fill="#3b82f6"/>
+  <text x="185" y="140" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">Bank L3</text>
+  <text x="185" y="168" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">Internal Deposit Ledger</text>
+  <rect x="70" y="182" width="230" height="22" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.8"/>
+  <text x="185" y="197" text-anchor="middle" font-size="10" fill="#111827">Enterprise Sequencer</text>
+  <rect x="70" y="209" width="230" height="22" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.8"/>
+  <text x="185" y="224" text-anchor="middle" font-size="10" fill="#111827">Private DA (Validium)</text>
+  <rect x="70" y="236" width="230" height="22" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.8"/>
+  <text x="185" y="251" text-anchor="middle" font-size="10" fill="#111827">Authenticated RPC (JWT/mTLS)</text>
+  <rect x="70" y="263" width="230" height="22" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.8"/>
+  <text x="185" y="278" text-anchor="middle" font-size="10" fill="#111827">KYC/KYB Policy Engine</text>
+  <rect x="70" y="290" width="230" height="22" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.8"/>
+  <text x="185" y="305" text-anchor="middle" font-size="10" fill="#111827">Regulator Audit Portal</text>
+  <rect x="70" y="317" width="230" height="22" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.8"/>
+  <text x="185" y="332" text-anchor="middle" font-size="10" fill="#111827">BFT Committee (optional)</text>
+
+  <!-- RWA Issuer L3 -->
+  <rect x="340" y="120" width="260" height="250" rx="10" fill="#faf5ff" stroke="#a855f7" stroke-width="2" filter="url(#sh)"/>
+  <rect x="340" y="120" width="260" height="30" rx="10" fill="#a855f7"/>
+  <text x="470" y="140" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">RWA Issuer L3</text>
+  <text x="470" y="168" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">Tokenized Fund/Bond</text>
+  <rect x="355" y="182" width="230" height="22" rx="4" fill="#ffffff" stroke="#c084fc" stroke-width="0.8"/>
+  <text x="470" y="197" text-anchor="middle" font-size="10" fill="#111827">Enterprise Sequencer</text>
+  <rect x="355" y="209" width="230" height="22" rx="4" fill="#ffffff" stroke="#c084fc" stroke-width="0.8"/>
+  <text x="470" y="224" text-anchor="middle" font-size="10" fill="#111827">Private DA (Validium)</text>
+  <rect x="355" y="236" width="230" height="22" rx="4" fill="#ffffff" stroke="#c084fc" stroke-width="0.8"/>
+  <text x="470" y="251" text-anchor="middle" font-size="10" fill="#111827">ERC-3643 Compliance Hooks</text>
+  <rect x="355" y="263" width="230" height="22" rx="4" fill="#ffffff" stroke="#c084fc" stroke-width="0.8"/>
+  <text x="470" y="278" text-anchor="middle" font-size="10" fill="#111827">Investor Registry</text>
+  <rect x="355" y="290" width="230" height="22" rx="4" fill="#ffffff" stroke="#c084fc" stroke-width="0.8"/>
+  <text x="470" y="305" text-anchor="middle" font-size="10" fill="#111827">DVP Settlement</text>
+  <rect x="355" y="317" width="230" height="22" rx="4" fill="#ffffff" stroke="#c084fc" stroke-width="0.8"/>
+  <text x="470" y="332" text-anchor="middle" font-size="10" fill="#111827">Selective Disclosure</text>
+
+  <!-- Payment L3 -->
+  <rect x="625" y="120" width="260" height="250" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="2" filter="url(#sh)"/>
+  <rect x="625" y="120" width="260" height="30" rx="10" fill="#f97316"/>
+  <text x="755" y="140" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">Payment L3</text>
+  <text x="755" y="168" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">Stablecoin Rail</text>
+  <rect x="640" y="182" width="230" height="22" rx="4" fill="#ffffff" stroke="#fdba74" stroke-width="0.8"/>
+  <text x="755" y="197" text-anchor="middle" font-size="10" fill="#111827">Enterprise Sequencer</text>
+  <rect x="640" y="209" width="230" height="22" rx="4" fill="#ffffff" stroke="#fdba74" stroke-width="0.8"/>
+  <text x="755" y="224" text-anchor="middle" font-size="10" fill="#111827">Private DA (Validium)</text>
+  <rect x="640" y="236" width="230" height="22" rx="4" fill="#ffffff" stroke="#fdba74" stroke-width="0.8"/>
+  <text x="755" y="251" text-anchor="middle" font-size="10" fill="#111827">Travel Rule Engine</text>
+  <rect x="640" y="263" width="230" height="22" rx="4" fill="#ffffff" stroke="#fdba74" stroke-width="0.8"/>
+  <text x="755" y="278" text-anchor="middle" font-size="10" fill="#111827">Stablecoin Gas Model</text>
+  <rect x="640" y="290" width="230" height="22" rx="4" fill="#ffffff" stroke="#fdba74" stroke-width="0.8"/>
+  <text x="755" y="305" text-anchor="middle" font-size="10" fill="#111827">Merchant SDK</text>
+  <rect x="640" y="317" width="230" height="22" rx="4" fill="#ffffff" stroke="#fdba74" stroke-width="0.8"/>
+  <text x="755" y="332" text-anchor="middle" font-size="10" fill="#111827">High TPS Config</text>
+
+  <!-- More L3s indicator -->
+  <rect x="910" y="120" width="240" height="250" rx="10" fill="#f0fdfa" stroke="#14b8a6" stroke-width="2" filter="url(#sh)"/>
+  <rect x="910" y="120" width="240" height="30" rx="10" fill="#14b8a6"/>
+  <text x="1030" y="140" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">More L3s...</text>
+  <text x="1030" y="180" text-anchor="middle" font-size="11" fill="#6b7280">xStocks Venue L3</text>
+  <text x="1030" y="200" text-anchor="middle" font-size="11" fill="#6b7280">Treasury L3</text>
+  <text x="1030" y="220" text-anchor="middle" font-size="11" fill="#6b7280">Enterprise Sandbox L3</text>
+  <text x="1030" y="240" text-anchor="middle" font-size="11" fill="#6b7280">Consortium L3</text>
+  <text x="1030" y="280" text-anchor="middle" font-size="12" font-weight="600" fill="#0d9488">One Chain</text>
+  <text x="1030" y="300" text-anchor="middle" font-size="12" font-weight="600" fill="#0d9488">Per Enterprise</text>
+  <text x="1030" y="330" text-anchor="middle" font-size="10" fill="#6b7280">Hosted / Self-Hosted / Hybrid</text>
+
+  <!-- ZonePortal contracts -->
+  <rect x="150" y="405" width="900" height="40" rx="8" fill="#faf5ff" stroke="#c084fc" stroke-width="1.5"/>
+  <text x="600" y="430" text-anchor="middle" font-size="13" font-weight="600" fill="#7c3aed">ZonePortal Contracts — L3 Settlement Interface on Mantle L2</text>
+
+  <!-- Arrows L3 -> ZonePortal -->
+  <line x1="185" y1="370" x2="185" y2="403" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+  <line x1="470" y1="370" x2="470" y2="403" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+  <line x1="755" y1="370" x2="755" y2="403" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+  <line x1="1030" y1="370" x2="1030" y2="403" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <!-- Mantle L2 -->
+  <rect x="100" y="470" width="1000" height="110" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" filter="url(#sh)"/>
+  <rect x="100" y="470" width="1000" height="35" rx="12" fill="#16a34a"/>
+  <text x="600" y="494" text-anchor="middle" font-size="15" font-weight="600" fill="#ffffff">Mantle L2 — Settlement + Liquidity Hub (Mantle-Operated)</text>
+
+  <rect x="130" y="518" width="180" height="45" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="220" y="537" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">L3 State Roots</text>
+  <text x="220" y="553" text-anchor="middle" font-size="10" fill="#6b7280">Batch Commitments</text>
+
+  <rect x="330" y="518" width="180" height="45" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="420" y="537" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Liquidity Pools</text>
+  <text x="420" y="553" text-anchor="middle" font-size="10" fill="#6b7280">DeFi · Stablecoins</text>
+
+  <rect x="530" y="518" width="180" height="45" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="620" y="537" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Cross-L3 Relay</text>
+  <text x="620" y="553" text-anchor="middle" font-size="10" fill="#6b7280">Inter-Zone Settlement</text>
+
+  <rect x="730" y="518" width="180" height="45" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="820" y="537" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Proof Aggregation</text>
+  <text x="820" y="553" text-anchor="middle" font-size="10" fill="#6b7280">ZK Proof Submission</text>
+
+  <rect x="930" y="518" width="150" height="45" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="1005" y="537" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Bridge</text>
+  <text x="1005" y="553" text-anchor="middle" font-size="10" fill="#6b7280">L2 ↔ L1 Bridge</text>
+
+  <line x1="600" y1="445" x2="600" y2="468" stroke="#16a34a" stroke-width="2" marker-end="url(#ag)"/>
+
+  <!-- Cross-L3 relay arrows -->
+  <path d="M 185 395 Q 185 460 420 460 Q 755 460 755 395" stroke="#ea580c" stroke-width="1" fill="none" stroke-dasharray="4,3"/>
+  <rect x="420" y="452" width="120" height="14" rx="3" fill="#ffffff" opacity="0.95"/>
+  <text x="480" y="463" text-anchor="middle" font-size="9" fill="#ea580c">Cross-L3 Relay via L2</text>
+
+  <!-- Ethereum L1 -->
+  <rect x="200" y="620" width="800" height="70" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="2" filter="url(#sh)"/>
+  <text x="600" y="650" text-anchor="middle" font-size="16" font-weight="600" fill="#1e40af">Ethereum L1 — Final Settlement</text>
+  <text x="600" y="672" text-anchor="middle" font-size="12" fill="#3b82f6">L2 State Roots · ZK Proofs · Bridge · External Asset Security</text>
+
+  <line x1="600" y1="580" x2="600" y2="618" stroke="#2563eb" stroke-width="2" marker-end="url(#ab)"/>
+  <rect x="548" y="592" width="104" height="16" rx="3" fill="#ffffff" opacity="0.95"/>
+  <text x="600" y="604" text-anchor="middle" font-size="10" fill="#2563eb">L2 Proofs/Roots</text>
+
+  <!-- Legend -->
+  <rect x="40" y="715" width="520" height="30" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="55" y1="730" x2="85" y2="730" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+  <text x="92" y="734" font-size="10" fill="#6b7280">Settlement Flow</text>
+  <line x1="195" y1="730" x2="225" y2="730" stroke="#16a34a" stroke-width="1.5" marker-end="url(#ag)"/>
+  <text x="232" y="734" font-size="10" fill="#6b7280">L3→L2 Submit</text>
+  <line x1="325" y1="730" x2="355" y2="730" stroke="#ea580c" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="362" y="734" font-size="10" fill="#6b7280">Cross-L3 Relay</text>
+  <text x="490" y="734" font-size="10" fill="#6b7280">L3→L2→L1 Stack</text>
+</svg>

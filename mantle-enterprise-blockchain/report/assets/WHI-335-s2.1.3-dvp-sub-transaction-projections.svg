@@ -1,0 +1,370 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Card drop shadow -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+
+    <!-- Subtle shadow for small cards -->
+    <filter id="softShadow" x="-8%" y="-8%" width="116%" height="124%">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#94A3B8" flood-opacity="0.14"/>
+    </filter>
+
+    <!-- Dark card shadow -->
+    <filter id="darkShadow" x="-8%" y="-8%" width="116%" height="124%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#1E293B" flood-opacity="0.35"/>
+    </filter>
+
+    <!-- Green gradient for Alice accent -->
+    <linearGradient id="greenAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#16A34A"/>
+    </linearGradient>
+
+    <!-- Blue gradient for Bob accent -->
+    <linearGradient id="blueAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+
+    <!-- Amber gradient for Bank accent -->
+    <linearGradient id="amberAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+
+    <!-- Indigo gradient for Registrar accent -->
+    <linearGradient id="indigoAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+
+    <!-- Dark slate for top card -->
+    <linearGradient id="darkSlate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+
+    <!-- Dark bottom card -->
+    <linearGradient id="darkBottom" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+
+    <!-- Dashed line marker -->
+    <marker id="arrowGray" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#94A3B8"/>
+    </marker>
+  </defs>
+
+  <!-- ═══════════════════════════════════════════ BACKGROUND ══════════════════════════════════════════ -->
+  <rect width="1200" height="800" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid pattern -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#CBD5E1" stroke-width="0.4" opacity="0.5"/>
+  </pattern>
+  <rect width="1200" height="800" fill="url(#grid)"/>
+
+  <!-- ═══════════════════════════════════════════ TITLE HEADER ══════════════════════════════════════════ -->
+  <rect x="40" y="18" width="1120" height="54" rx="14" fill="white" filter="url(#softShadow)" opacity="0.85"/>
+  <rect x="40" y="18" width="6" height="54" rx="3" fill="#6366F1"/>
+  <text x="600" y="39" text-anchor="middle" font-size="13" font-weight="600" fill="#6366F1" letter-spacing="1.5">WHI-335 §2.1.3</text>
+  <text x="600" y="60" text-anchor="middle" font-size="17" font-weight="700" fill="#0F172A" letter-spacing="0.5">DvP 子交易投影 — 每方可见视图</text>
+
+  <!-- ═══════════════════════════════════════════ TOP: FULL TX TREE CARD ══════════════════════════════════════════ -->
+  <!-- Card background -->
+  <rect x="200" y="86" width="800" height="232" rx="14" fill="url(#darkSlate)" filter="url(#darkShadow)"/>
+  <!-- Accent bar top -->
+  <rect x="200" y="86" width="800" height="5" rx="3" fill="#818CF8"/>
+
+  <!-- Card label -->
+  <text x="600" y="112" text-anchor="middle" font-size="11" font-weight="600" fill="#94A3B8" letter-spacing="2">完整交易树 · FULL TRANSACTION TREE</text>
+
+  <!-- Root TX node -->
+  <rect x="370" y="122" width="460" height="36" rx="8" fill="#334155"/>
+  <text x="600" y="138" text-anchor="middle" font-size="10" font-weight="500" fill="#CBD5E1">🔗  TX: Alice buys 100 shares from Bob, paying via Bank IOU</text>
+  <text x="600" y="152" text-anchor="middle" font-size="9" fill="#64748B">signatories: Alice, Bob, Bank, Registrar</text>
+
+  <!-- Trunk line -->
+  <line x1="600" y1="158" x2="600" y2="168" stroke="#475569" stroke-width="1.5"/>
+  <!-- Fork -->
+  <line x1="385" y1="168" x2="815" y2="168" stroke="#475569" stroke-width="1.5"/>
+  <line x1="385" y1="168" x2="385" y2="178" stroke="#475569" stroke-width="1.5"/>
+  <line x1="815" y1="168" x2="815" y2="178" stroke="#475569" stroke-width="1.5"/>
+
+  <!-- LEFT BRANCH: Transfer IOU -->
+  <rect x="238" y="178" width="295" height="30" rx="7" fill="#166534" opacity="0.8"/>
+  <text x="385" y="192" text-anchor="middle" font-size="9.5" font-weight="600" fill="#4ADE80">Exercise: Alice → Transfer IOU</text>
+  <text x="385" y="204" text-anchor="middle" font-size="8.5" fill="#86EFAC">signatories: Bank</text>
+
+  <!-- Transfer IOU children -->
+  <line x1="300" y1="208" x2="300" y2="218" stroke="#475569" stroke-width="1"/>
+  <line x1="470" y1="208" x2="470" y2="218" stroke="#475569" stroke-width="1"/>
+  <line x1="300" y1="218" x2="470" y2="218" stroke="#475569" stroke-width="1"/>
+  <line x1="325" y1="218" x2="325" y2="228" stroke="#475569" stroke-width="1"/>
+  <line x1="445" y1="218" x2="445" y2="228" stroke="#475569" stroke-width="1"/>
+
+  <!-- Archive: IOU(Alice) -->
+  <rect x="248" y="228" width="154" height="44" rx="6" fill="#1E293B" stroke="#EF4444" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="325" y="242" text-anchor="middle" font-size="8" font-weight="600" fill="#FCA5A5">🗑 Archive</text>
+  <text x="325" y="255" text-anchor="middle" font-size="8.5" fill="#94A3B8">IOU(Alice, Bank, $100k)</text>
+  <text x="325" y="266" text-anchor="middle" font-size="7.5" fill="#64748B">owner: Alice</text>
+
+  <!-- Create: IOU(Bob) -->
+  <rect x="368" y="228" width="154" height="44" rx="6" fill="#1E293B" stroke="#22C55E" stroke-width="1"/>
+  <text x="445" y="242" text-anchor="middle" font-size="8" font-weight="600" fill="#86EFAC">✨ Create</text>
+  <text x="445" y="255" text-anchor="middle" font-size="8.5" fill="#94A3B8">IOU(Bob, Bank, $100k)</text>
+  <text x="445" y="266" text-anchor="middle" font-size="7.5" fill="#64748B">owner: Bob</text>
+
+  <!-- RIGHT BRANCH: Deliver Shares -->
+  <rect x="668" y="178" width="295" height="30" rx="7" fill="#1D4ED8" opacity="0.8"/>
+  <text x="815" y="192" text-anchor="middle" font-size="9.5" font-weight="600" fill="#93C5FD">Exercise: Bob → Deliver Shares</text>
+  <text x="815" y="204" text-anchor="middle" font-size="8.5" fill="#BFDBFE">signatories: Registrar</text>
+
+  <!-- Deliver Shares children -->
+  <line x1="730" y1="208" x2="730" y2="218" stroke="#475569" stroke-width="1"/>
+  <line x1="900" y1="208" x2="900" y2="218" stroke="#475569" stroke-width="1"/>
+  <line x1="730" y1="218" x2="900" y2="218" stroke="#475569" stroke-width="1"/>
+  <line x1="755" y1="218" x2="755" y2="228" stroke="#475569" stroke-width="1"/>
+  <line x1="875" y1="218" x2="875" y2="228" stroke="#475569" stroke-width="1"/>
+
+  <!-- Archive: Share(Bob) -->
+  <rect x="678" y="228" width="154" height="44" rx="6" fill="#1E293B" stroke="#EF4444" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="755" y="242" text-anchor="middle" font-size="8" font-weight="600" fill="#FCA5A5">🗑 Archive</text>
+  <text x="755" y="255" text-anchor="middle" font-size="8.5" fill="#94A3B8">Share(Bob, Registrar, 100)</text>
+  <text x="755" y="266" text-anchor="middle" font-size="7.5" fill="#64748B">owner: Bob</text>
+
+  <!-- Create: Share(Alice) -->
+  <rect x="798" y="228" width="154" height="44" rx="6" fill="#1E293B" stroke="#22C55E" stroke-width="1"/>
+  <text x="875" y="242" text-anchor="middle" font-size="8" font-weight="600" fill="#86EFAC">✨ Create</text>
+  <text x="875" y="255" text-anchor="middle" font-size="8.5" fill="#94A3B8">Share(Alice, Registrar, 100)</text>
+  <text x="875" y="266" text-anchor="middle" font-size="7.5" fill="#64748B">owner: Alice</text>
+
+  <!-- Privacy label -->
+  <rect x="480" y="290" width="240" height="22" rx="6" fill="#312E81" opacity="0.7"/>
+  <text x="600" y="304" text-anchor="middle" font-size="9" fill="#C7D2FE" font-weight="500">🔒 Canton 隐私: 每方仅见自己的子树投影</text>
+
+  <!-- ═══════════════════════════════════════════ DASHED LINES TO PROJECTION CARDS ══════════════════════════════════════════ -->
+  <!-- Alice -->
+  <line x1="130" y1="318" x2="130" y2="348" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrowGray)"/>
+  <!-- Bob -->
+  <line x1="390" y1="318" x2="390" y2="348" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrowGray)"/>
+  <!-- Bank -->
+  <line x1="680" y1="318" x2="680" y2="348" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrowGray)"/>
+  <!-- Registrar -->
+  <line x1="1000" y1="318" x2="1000" y2="348" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrowGray)"/>
+
+  <!-- Connector from card bottom to dashed lines -->
+  <path d="M 200 318 Q 130 325 130 318" fill="none" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+
+  <!-- Horizontal dashed span under card -->
+  <line x1="130" y1="318" x2="1000" y2="318" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.6"/>
+  <!-- Vertical drops from span -->
+  <!-- (already drawn above) -->
+
+  <!-- "投影过滤" label -->
+  <text x="600" y="338" text-anchor="middle" font-size="9.5" fill="#94A3B8" font-style="italic">▾ 隐私投影过滤 (Privacy Projection Filter)</text>
+
+  <!-- ═══════════════════════════════════════════ 4 PROJECTION CARDS ══════════════════════════════════════════ -->
+
+  <!-- ─────────── ALICE CARD ─────────── -->
+  <rect x="28" y="352" width="224" height="216" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Green accent bar -->
+  <rect x="28" y="352" width="224" height="5" rx="3" fill="url(#greenAccent)"/>
+  <!-- Header -->
+  <rect x="28" y="357" width="224" height="44" rx="0" fill="#F0FDF4"/>
+  <text x="68" y="375" font-size="22">👩</text>
+  <text x="96" y="374" font-size="13" font-weight="700" fill="#15803D">Alice</text>
+  <text x="96" y="389" font-size="9" fill="#4ADE80" font-weight="500">IOU 转账 + 收到股份</text>
+  <!-- Divider -->
+  <line x1="44" y1="401" x2="236" y2="401" stroke="#DCFCE7" stroke-width="1"/>
+
+  <!-- Alice sees: Transfer IOU -->
+  <rect x="38" y="408" width="204" height="44" rx="7" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+  <text x="140" y="422" text-anchor="middle" font-size="9" font-weight="600" fill="#15803D">Exercise: Transfer IOU ✓</text>
+  <rect x="44" y="428" width="88" height="18" rx="4" fill="#FEE2E2"/>
+  <text x="88" y="440" text-anchor="middle" font-size="7.5" fill="#B91C1C">🗑 Archive IOU(Alice)</text>
+  <rect x="140" y="428" width="96" height="18" rx="4" fill="#DCFCE7"/>
+  <text x="188" y="440" text-anchor="middle" font-size="7.5" fill="#15803D">✨ Create IOU(Bob)</text>
+
+  <!-- Alice sees: Share received -->
+  <rect x="38" y="460" width="204" height="34" rx="7" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+  <text x="140" y="474" text-anchor="middle" font-size="9" font-weight="600" fill="#15803D">Create: Share(Alice, 100) ✓</text>
+  <text x="140" y="487" text-anchor="middle" font-size="8" fill="#4ADE80">新股份合同 → Alice</text>
+
+  <!-- Alice does NOT see -->
+  <rect x="38" y="502" width="204" height="28" rx="7" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="140" y="517" text-anchor="middle" font-size="8" fill="#94A3B8">🚫 Archive Share(Bob) — 不可见</text>
+
+  <!-- Subtitle -->
+  <rect x="38" y="537" width="204" height="24" rx="6" fill="#22C55E" opacity="0.1"/>
+  <text x="140" y="552" text-anchor="middle" font-size="8.5" font-weight="600" fill="#15803D">3 nodes visible / 4 total</text>
+
+  <!-- ─────────── BOB CARD ─────────── -->
+  <rect x="278" y="352" width="224" height="216" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="278" y="352" width="224" height="5" rx="3" fill="url(#blueAccent)"/>
+  <rect x="278" y="357" width="224" height="44" rx="0" fill="#EFF6FF"/>
+  <text x="318" y="375" font-size="22">👨</text>
+  <text x="346" y="374" font-size="13" font-weight="700" fill="#1D4ED8">Bob</text>
+  <text x="346" y="389" font-size="9" fill="#60A5FA" font-weight="500">收到付款 + 股份交付</text>
+  <line x1="294" y1="401" x2="486" y2="401" stroke="#DBEAFE" stroke-width="1"/>
+
+  <!-- Bob sees: IOU received -->
+  <rect x="288" y="408" width="204" height="34" rx="7" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+  <text x="390" y="422" text-anchor="middle" font-size="9" font-weight="600" fill="#1D4ED8">Create: IOU(Bob, $100k) ✓</text>
+  <text x="390" y="435" text-anchor="middle" font-size="8" fill="#60A5FA">新 IOU 合同 → Bob</text>
+
+  <!-- Bob sees: Deliver Shares -->
+  <rect x="288" y="450" width="204" height="44" rx="7" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+  <text x="390" y="464" text-anchor="middle" font-size="9" font-weight="600" fill="#1D4ED8">Exercise: Deliver Shares ✓</text>
+  <rect x="294" y="470" width="92" height="18" rx="4" fill="#FEE2E2"/>
+  <text x="340" y="482" text-anchor="middle" font-size="7.5" fill="#B91C1C">🗑 Archive Share(Bob)</text>
+  <rect x="394" y="470" width="92" height="18" rx="4" fill="#DCFCE7"/>
+  <text x="440" y="482" text-anchor="middle" font-size="7.5" fill="#15803D">✨ Create Share(Alice)</text>
+
+  <!-- Bob does NOT see -->
+  <rect x="288" y="502" width="204" height="28" rx="7" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="390" y="517" text-anchor="middle" font-size="8" fill="#94A3B8">🚫 Archive IOU(Alice) — 不可见</text>
+
+  <rect x="288" y="537" width="204" height="24" rx="6" fill="#3B82F6" opacity="0.1"/>
+  <text x="390" y="552" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1D4ED8">3 nodes visible / 4 total</text>
+
+  <!-- ─────────── BANK CARD ─────────── -->
+  <rect x="558" y="352" width="224" height="216" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="558" y="352" width="224" height="5" rx="3" fill="url(#amberAccent)"/>
+  <rect x="558" y="357" width="224" height="44" rx="0" fill="#FFFBEB"/>
+  <text x="598" y="375" font-size="22">🏦</text>
+  <text x="626" y="374" font-size="13" font-weight="700" fill="#B45309">Bank</text>
+  <text x="626" y="389" font-size="9" fill="#FCD34D" font-weight="500">仅看到 IOU 变动</text>
+  <line x1="574" y1="401" x2="766" y2="401" stroke="#FEF3C7" stroke-width="1"/>
+
+  <!-- Bank sees: Transfer IOU only -->
+  <rect x="568" y="408" width="204" height="44" rx="7" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+  <text x="670" y="422" text-anchor="middle" font-size="9" font-weight="600" fill="#B45309">Exercise: Transfer IOU ✓</text>
+  <rect x="574" y="428" width="88" height="18" rx="4" fill="#FEE2E2"/>
+  <text x="618" y="440" text-anchor="middle" font-size="7.5" fill="#B91C1C">🗑 Archive IOU(Alice)</text>
+  <rect x="670" y="428" width="96" height="18" rx="4" fill="#DCFCE7"/>
+  <text x="718" y="440" text-anchor="middle" font-size="7.5" fill="#15803D">✨ Create IOU(Bob)</text>
+
+  <!-- Bank does NOT see -->
+  <rect x="568" y="460" width="204" height="28" rx="7" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="670" y="475" text-anchor="middle" font-size="8" fill="#94A3B8">🚫 Deliver Shares — 不可见</text>
+
+  <rect x="568" y="496" width="204" height="28" rx="7" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="670" y="511" text-anchor="middle" font-size="8" fill="#94A3B8">🚫 Share(Bob/Alice) — 不可见</text>
+
+  <!-- Isolation callout -->
+  <rect x="568" y="532" width="204" height="28" rx="7" fill="#FEF3C7" stroke="#FCD34D" stroke-width="1"/>
+  <text x="670" y="546" text-anchor="middle" font-size="8" font-weight="600" fill="#92400E">🔒 股权变化对银行完全隔离</text>
+  <text x="670" y="557" text-anchor="middle" font-size="7.5" fill="#B45309">1 node visible / 4 total</text>
+
+  <!-- ─────────── REGISTRAR CARD ─────────── -->
+  <rect x="808" y="352" width="224" height="216" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="808" y="352" width="224" height="5" rx="3" fill="url(#indigoAccent)"/>
+  <rect x="808" y="357" width="224" height="44" rx="0" fill="#EEF2FF"/>
+  <text x="848" y="375" font-size="22">📋</text>
+  <text x="876" y="374" font-size="13" font-weight="700" fill="#4338CA">Registrar</text>
+  <text x="876" y="389" font-size="9" fill="#818CF8" font-weight="500">仅看到股份变动</text>
+  <line x1="824" y1="401" x2="1016" y2="401" stroke="#E0E7FF" stroke-width="1"/>
+
+  <!-- Registrar sees: Deliver Shares only -->
+  <rect x="818" y="408" width="204" height="44" rx="7" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1"/>
+  <text x="920" y="422" text-anchor="middle" font-size="9" font-weight="600" fill="#4338CA">Exercise: Deliver Shares ✓</text>
+  <rect x="824" y="428" width="92" height="18" rx="4" fill="#FEE2E2"/>
+  <text x="870" y="440" text-anchor="middle" font-size="7.5" fill="#B91C1C">🗑 Archive Share(Bob)</text>
+  <rect x="924" y="428" width="92" height="18" rx="4" fill="#DCFCE7"/>
+  <text x="970" y="440" text-anchor="middle" font-size="7.5" fill="#15803D">✨ Create Share(Alice)</text>
+
+  <!-- Registrar does NOT see -->
+  <rect x="818" y="460" width="204" height="28" rx="7" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="920" y="475" text-anchor="middle" font-size="8" fill="#94A3B8">🚫 Transfer IOU — 不可见</text>
+
+  <rect x="818" y="496" width="204" height="28" rx="7" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="920" y="511" text-anchor="middle" font-size="8" fill="#94A3B8">🚫 IOU(Alice/Bob) — 不可见</text>
+
+  <!-- Isolation callout -->
+  <rect x="818" y="532" width="204" height="28" rx="7" fill="#E0E7FF" stroke="#C7D2FE" stroke-width="1"/>
+  <text x="920" y="546" text-anchor="middle" font-size="8" font-weight="600" fill="#3730A3">🔒 IOU 细节对登记机构完全隔离</text>
+  <text x="920" y="557" text-anchor="middle" font-size="7.5" fill="#4338CA">1 node visible / 4 total</text>
+
+  <!-- ═══════════════════════════════════════════ BOTTOM ROW: SEQUENCER + MEDIATOR ══════════════════════════════════════════ -->
+
+  <!-- Connector lines from projection cards to bottom cards -->
+  <line x1="140" y1="568" x2="140" y2="612" stroke="#475569" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+  <line x1="390" y1="568" x2="390" y2="612" stroke="#475569" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+  <line x1="670" y1="568" x2="670" y2="612" stroke="#475569" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+  <line x1="920" y1="568" x2="920" y2="612" stroke="#475569" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+
+  <!-- Horizontal connector -->
+  <line x1="140" y1="590" x2="920" y2="590" stroke="#475569" stroke-width="1" stroke-dasharray="4,3" opacity="0.35"/>
+
+  <!-- Bottom annotations row -->
+  <text x="600" y="608" text-anchor="middle" font-size="9.5" fill="#64748B" font-style="italic">▾ 基础设施节点 — 无法解密内容</text>
+
+  <!-- ─────────── SEQUENCER CARD ─────────── -->
+  <rect x="88" y="618" width="466" height="100" rx="14" fill="url(#darkBottom)" filter="url(#darkShadow)"/>
+  <rect x="88" y="618" width="466" height="4" rx="2" fill="#334155"/>
+  <!-- Circuit accent -->
+  <rect x="88" y="618" width="4" height="100" rx="2" fill="#475569"/>
+
+  <text x="122" y="646" font-size="20">⚡</text>
+  <text x="148" y="644" font-size="12" font-weight="700" fill="#E2E8F0" letter-spacing="0.5">Sequencer</text>
+  <text x="148" y="658" font-size="9" fill="#64748B">Canton 网络排序节点</text>
+
+  <rect x="100" y="664" width="438" height="42" rx="8" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+  <text x="319" y="681" text-anchor="middle" font-size="9" font-weight="500" fill="#64748B">所见内容 →</text>
+  <text x="319" y="698" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="9.5" fill="#22D3EE">[ encrypted_blob_1, encrypted_blob_2, encrypted_blob_3, ... ]</text>
+  <text x="540" y="698" font-size="9" fill="#475569">🔒 全加密</text>
+
+  <!-- ─────────── MEDIATOR CARD ─────────── -->
+  <rect x="600" y="618" width="512" height="100" rx="14" fill="url(#darkBottom)" filter="url(#darkShadow)"/>
+  <rect x="600" y="618" width="512" height="4" rx="2" fill="#334155"/>
+  <rect x="600" y="618" width="4" height="100" rx="2" fill="#475569"/>
+
+  <text x="634" y="646" font-size="20">⚖️</text>
+  <text x="660" y="644" font-size="12" font-weight="700" fill="#E2E8F0" letter-spacing="0.5">Mediator</text>
+  <text x="660" y="658" font-size="9" fill="#64748B">Canton 确认协调节点</text>
+
+  <rect x="612" y="664" width="488" height="42" rx="8" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+  <text x="856" y="681" text-anchor="middle" font-size="9" font-weight="500" fill="#64748B">收到 → 验证 → 批准</text>
+  <text x="856" y="698" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="9" fill="#A78BFA">{ P1:✓, P2:✓, P3:✓, P4:✓ } → all confirmed → </text>
+  <text x="1048" y="698" font-size="9" font-weight="700" fill="#4ADE80">APPROVE ✅</text>
+
+  <!-- ═══════════════════════════════════════════ LEGEND ══════════════════════════════════════════ -->
+  <rect x="40" y="738" width="1120" height="48" rx="10" fill="white" filter="url(#softShadow)" opacity="0.8"/>
+
+  <text x="80" y="758" font-size="9" font-weight="600" fill="#475569" letter-spacing="1">图例 LEGEND</text>
+
+  <!-- Archive -->
+  <rect x="150" y="744" width="12" height="12" rx="2" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="168" y="755" font-size="9" fill="#64748B">🗑 Archive (销毁合同)</text>
+
+  <!-- Create -->
+  <rect x="310" y="744" width="12" height="12" rx="2" fill="none" stroke="#22C55E" stroke-width="1.5"/>
+  <text x="328" y="755" font-size="9" fill="#64748B">✨ Create (新建合同)</text>
+
+  <!-- Not visible -->
+  <rect x="460" y="744" width="12" height="12" rx="2" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="478" y="755" font-size="9" fill="#64748B">🚫 不可见节点 (隐私隔离)</text>
+
+  <!-- Dashed line -->
+  <line x1="650" y1="750" x2="690" y2="750" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="698" y="755" font-size="9" fill="#64748B">投影过滤关系</text>
+
+  <!-- Canton note -->
+  <text x="850" y="755" font-size="9" fill="#64748B">Canton 保证: 参与方仅能看到自己是</text>
+  <text x="850" y="768" font-size="9" fill="#64748B">signatory / observer 的合同节点</text>
+
+  <!-- Top legend row 2 -->
+  <text x="168" y="770" font-size="8" fill="#94A3B8">owner 合同被销毁</text>
+  <text x="328" y="770" font-size="8" fill="#94A3B8">owner 得到新合同</text>
+  <text x="478" y="770" font-size="8" fill="#94A3B8">密码学强制执行</text>
+
+</svg>

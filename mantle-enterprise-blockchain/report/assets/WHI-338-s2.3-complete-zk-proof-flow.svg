@@ -1,0 +1,245 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="1000" height="900" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EEF2F7;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Card drop shadow -->
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+
+    <!-- Subtle inner shadow for timeline -->
+    <filter id="timelineShadow" x="-2%" y="-10%" width="104%" height="130%">
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#64748B" flood-opacity="0.12"/>
+    </filter>
+
+    <!-- Arrow marker -->
+    <marker id="arrowGray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#94A3B8"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#22C55E"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3B82F6"/>
+    </marker>
+    <marker id="arrowIndigo" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#6366F1"/>
+    </marker>
+  </defs>
+
+  <!-- ═══════════════════════════════════════════ BACKGROUND -->
+  <rect width="1000" height="900" fill="url(#bgGrad)"/>
+
+  <!-- ═══════════════════════════════════════════ TITLE AREA -->
+  <rect x="40" y="18" width="920" height="52" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="40" y="18" width="6" height="52" rx="3" fill="#6366F1"/>
+  <text x="62" y="36" font-size="11" font-weight="600" fill="#6366F1" letter-spacing="0.5">WHI-338 §2.3</text>
+  <text x="62" y="56" font-size="16" font-weight="700" fill="#1E293B">证明生成到链上验证的完整流程</text>
+  <text x="870" y="48" font-size="11" fill="#94A3B8" text-anchor="middle">ZKsync Prividium</text>
+
+  <!-- ═══════════════════════════════════════════ PHASE 1 — 交易执行与批次最终化 -->
+  <!-- Card -->
+  <rect x="40" y="88" width="920" height="148" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Accent bar -->
+  <rect x="40" y="88" width="6" height="148" rx="3" fill="#22C55E"/>
+  <!-- Phase badge -->
+  <rect x="60" y="96" width="76" height="22" rx="11" fill="#DCFCE7"/>
+  <text x="98" y="111" font-size="10" font-weight="700" fill="#16A34A" text-anchor="middle">Phase 1</text>
+  <!-- Emoji -->
+  <text x="156" y="112" font-size="18">⚙️</text>
+  <!-- Title -->
+  <text x="184" y="112" font-size="14" font-weight="700" fill="#15803D">交易执行与批次最终化</text>
+  <!-- Subtitle -->
+  <text x="184" y="129" font-size="11" fill="#64748B">Sequencer</text>
+
+  <!-- Step pills — row -->
+  <!-- Step 1 -->
+  <rect x="60" y="140" width="180" height="36" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1"/>
+  <text x="150" y="155" font-size="10" font-weight="600" fill="#15803D" text-anchor="middle">① 接收验证交易</text>
+  <text x="150" y="169" font-size="9" fill="#4ADE80" text-anchor="middle">validate &amp; receive</text>
+  <!-- Arrow -->
+  <line x1="240" y1="158" x2="258" y2="158" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <!-- Step 2 -->
+  <rect x="260" y="140" width="180" height="36" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1"/>
+  <text x="350" y="155" font-size="10" font-weight="600" fill="#15803D" text-anchor="middle">② 排序交易组成区块</text>
+  <text x="350" y="169" font-size="9" fill="#4ADE80" text-anchor="middle">order &amp; batch</text>
+  <!-- Arrow -->
+  <line x1="440" y1="158" x2="458" y2="158" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <!-- Step 3 -->
+  <rect x="460" y="140" width="200" height="36" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1"/>
+  <text x="560" y="155" font-size="10" font-weight="600" fill="#15803D" text-anchor="middle">③ 执行交易更新 PostgreSQL</text>
+  <text x="560" y="169" font-size="9" fill="#4ADE80" text-anchor="middle">execute &amp; persist state</text>
+  <!-- Arrow -->
+  <line x1="660" y1="158" x2="678" y2="158" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <!-- Step 4 -->
+  <rect x="680" y="140" width="260" height="36" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1"/>
+  <text x="810" y="155" font-size="10" font-weight="600" fill="#15803D" text-anchor="middle">④ 最终化批次计算新状态根</text>
+  <text x="810" y="169" font-size="9" fill="#4ADE80" text-anchor="middle">finalize batch, compute state root</text>
+
+  <!-- Output label -->
+  <text x="500" y="226" font-size="10" fill="#64748B" text-anchor="middle">输出: 区块数据 + 执行轨迹</text>
+
+  <!-- Down arrow Ph1→Ph2 -->
+  <line x1="500" y1="236" x2="500" y2="250" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowGray)"/>
+
+  <!-- ═══════════════════════════════════════════ PHASE 2 — 证明生成 -->
+  <rect x="40" y="258" width="920" height="178" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="40" y="258" width="6" height="178" rx="3" fill="#3B82F6"/>
+  <!-- Badge -->
+  <rect x="60" y="266" width="76" height="22" rx="11" fill="#DBEAFE"/>
+  <text x="98" y="281" font-size="10" font-weight="700" fill="#1D4ED8" text-anchor="middle">Phase 2</text>
+  <text x="156" y="282" font-size="18">🔬</text>
+  <text x="184" y="282" font-size="14" font-weight="700" fill="#1D4ED8">证明生成</text>
+  <text x="184" y="299" font-size="11" fill="#64748B">Airbender RISC-V Prover (GPU 加速) — Prover Farm</text>
+
+  <!-- Steps row -->
+  <rect x="60" y="310" width="155" height="36" rx="8" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
+  <text x="137" y="325" font-size="10" font-weight="600" fill="#1D4ED8" text-anchor="middle">① 接收执行轨迹</text>
+  <text x="137" y="339" font-size="9" fill="#60A5FA" text-anchor="middle">receive trace</text>
+  <line x1="215" y1="328" x2="233" y2="328" stroke="#3B82F6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <rect x="235" y="310" width="170" height="36" rx="8" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
+  <text x="320" y="325" font-size="10" font-weight="600" fill="#1D4ED8" text-anchor="middle">② 编译为 RISC-V 算术电路</text>
+  <text x="320" y="339" font-size="9" fill="#60A5FA" text-anchor="middle">compile to arithmetic circuit</text>
+  <line x1="405" y1="328" x2="423" y2="328" stroke="#3B82F6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <rect x="425" y="310" width="200" height="36" rx="8" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
+  <text x="525" y="322" font-size="9.5" font-weight="600" fill="#1D4ED8" text-anchor="middle">③ GPU 并行: FFT+</text>
+  <text x="525" y="334" font-size="9.5" font-weight="600" fill="#1D4ED8" text-anchor="middle">多项式承诺+FRI</text>
+  <text x="525" y="343" font-size="8.5" fill="#60A5FA" text-anchor="middle">parallel GPU compute</text>
+
+  <!-- Arrow to proof box -->
+  <line x1="625" y1="328" x2="643" y2="328" stroke="#3B82F6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <rect x="645" y="310" width="200" height="36" rx="8" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1"/>
+  <text x="745" y="325" font-size="10" font-weight="600" fill="#1D4ED8" text-anchor="middle">④ 生成 STARK 证明</text>
+  <text x="745" y="339" font-size="9" fill="#60A5FA" text-anchor="middle">sub-second generation</text>
+
+  <!-- Proof content box -->
+  <rect x="60" y="358" width="585" height="62" rx="8" fill="#F8FAFF" stroke="#C7D2FE" stroke-width="1"/>
+  <text x="76" y="374" font-size="10" font-weight="700" fill="#4338CA">证明内容 (Proof Contents):</text>
+  <text x="76" y="390" font-size="9.5" fill="#3730A3">✓ 状态转换有效</text>
+  <text x="210" y="390" font-size="9.5" fill="#3730A3">✓ EVM 规则遵守</text>
+  <text x="340" y="390" font-size="9.5" fill="#3730A3">✓ 状态根正确</text>
+  <text x="460" y="390" font-size="9.5" fill="#3730A3">✓ 隐藏所有交易数据</text>
+  <text x="76" y="410" font-size="9" fill="#6366F1" font-style="italic">state transition valid · EVM rules · correct state root · all tx data hidden</text>
+
+  <!-- Output -->
+  <text x="350" y="432" font-size="10" fill="#64748B" text-anchor="middle">输出: STARK 证明 + 新状态根 (出站连接, 无入站)</text>
+  <!-- Down arrow -->
+  <line x1="500" y1="436" x2="500" y2="450" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowGray)"/>
+
+  <!-- ═══════════════════════════════════════════ PHASE 3 — 跨链提交 -->
+  <rect x="40" y="458" width="920" height="138" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="40" y="458" width="6" height="138" rx="3" fill="#6366F1"/>
+  <rect x="60" y="466" width="76" height="22" rx="11" fill="#EEF2FF"/>
+  <text x="98" y="481" font-size="10" font-weight="700" fill="#4338CA" text-anchor="middle">Phase 3</text>
+  <text x="156" y="482" font-size="18">🔗</text>
+  <text x="184" y="482" font-size="14" font-weight="700" fill="#4338CA">跨链提交</text>
+  <text x="184" y="499" font-size="11" fill="#64748B">ZKsync Gateway</text>
+
+  <!-- Steps -->
+  <rect x="60" y="510" width="185" height="36" rx="8" fill="#EEF2FF" stroke="#A5B4FC" stroke-width="1"/>
+  <text x="152" y="525" font-size="10" font-weight="600" fill="#4338CA" text-anchor="middle">① Relayer 接收证明</text>
+  <text x="152" y="539" font-size="9" fill="#818CF8" text-anchor="middle">relayer receives proof</text>
+  <line x1="245" y1="528" x2="263" y2="528" stroke="#6366F1" stroke-width="1.5" marker-end="url(#arrowIndigo)"/>
+
+  <rect x="265" y="510" width="185" height="36" rx="8" fill="#EEF2FF" stroke="#A5B4FC" stroke-width="1"/>
+  <text x="357" y="525" font-size="10" font-weight="600" fill="#4338CA" text-anchor="middle">② 可选聚合多链证明</text>
+  <text x="357" y="539" font-size="9" fill="#818CF8" text-anchor="middle">optional multi-chain aggregation</text>
+  <line x1="450" y1="528" x2="468" y2="528" stroke="#6366F1" stroke-width="1.5" marker-end="url(#arrowIndigo)"/>
+
+  <rect x="470" y="510" width="180" height="36" rx="8" fill="#EEF2FF" stroke="#A5B4FC" stroke-width="1"/>
+  <text x="560" y="525" font-size="10" font-weight="600" fill="#4338CA" text-anchor="middle">③ 准备 L1 提交</text>
+  <text x="560" y="539" font-size="9" fill="#818CF8" text-anchor="middle">prepare L1 submission</text>
+  <line x1="650" y1="528" x2="668" y2="528" stroke="#6366F1" stroke-width="1.5" marker-end="url(#arrowIndigo)"/>
+
+  <rect x="670" y="510" width="270" height="36" rx="8" fill="#EEF2FF" stroke="#A5B4FC" stroke-width="1"/>
+  <text x="805" y="525" font-size="10" font-weight="600" fill="#4338CA" text-anchor="middle">④ 提交到以太坊验证合约</text>
+  <text x="805" y="539" font-size="9" fill="#818CF8" text-anchor="middle">submit to Ethereum verifier contract</text>
+
+  <!-- Output -->
+  <text x="500" y="576" font-size="10" fill="#64748B" text-anchor="middle">输出: 以太坊交易</text>
+  <!-- Down arrow -->
+  <line x1="500" y1="596" x2="500" y2="610" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowGray)"/>
+
+  <!-- ═══════════════════════════════════════════ PHASE 4 — 链上验证 -->
+  <rect x="40" y="618" width="920" height="168" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="40" y="618" width="6" height="168" rx="3" fill="#8B5CF6"/>
+  <rect x="60" y="626" width="76" height="22" rx="11" fill="#F3E8FF"/>
+  <text x="98" y="641" font-size="10" font-weight="700" fill="#6D28D9" text-anchor="middle">Phase 4</text>
+  <text x="156" y="642" font-size="18">💎</text>
+  <text x="184" y="642" font-size="14" font-weight="700" fill="#6D28D9">链上验证与最终性</text>
+  <text x="184" y="659" font-size="11" fill="#64748B">Ethereum L1 — Verifier Contract</text>
+
+  <!-- Steps -->
+  <rect x="60" y="670" width="180" height="36" rx="8" fill="#F3E8FF" stroke="#C4B5FD" stroke-width="1"/>
+  <text x="150" y="685" font-size="10" font-weight="600" fill="#6D28D9" text-anchor="middle">① 验证合约接收</text>
+  <text x="150" y="699" font-size="9" fill="#A78BFA" text-anchor="middle">contract receives proof</text>
+  <line x1="240" y1="688" x2="258" y2="688" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <rect x="260" y="670" width="190" height="36" rx="8" fill="#F3E8FF" stroke="#C4B5FD" stroke-width="1"/>
+  <text x="355" y="685" font-size="10" font-weight="600" fill="#6D28D9" text-anchor="middle">② STARK 验证 O(log n)</text>
+  <text x="355" y="699" font-size="9" fill="#A78BFA" text-anchor="middle">sub-linear verification</text>
+  <line x1="450" y1="688" x2="468" y2="688" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <rect x="470" y="670" width="195" height="36" rx="8" fill="#F3E8FF" stroke="#C4B5FD" stroke-width="1"/>
+  <text x="567" y="685" font-size="10" font-weight="600" fill="#6D28D9" text-anchor="middle">③ 验证通过接受新状态根</text>
+  <text x="567" y="699" font-size="9" fill="#A78BFA" text-anchor="middle">accept new state root</text>
+  <line x1="665" y1="688" x2="683" y2="688" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <rect x="685" y="670" width="255" height="36" rx="8" fill="#F3E8FF" stroke="#C4B5FD" stroke-width="1"/>
+  <text x="812" y="685" font-size="10" font-weight="600" fill="#6D28D9" text-anchor="middle">④ 状态根写入 L1 不可篡改</text>
+  <text x="812" y="699" font-size="9" fill="#A78BFA" text-anchor="middle">immutable L1 finality</text>
+
+  <!-- Visibility pills -->
+  <rect x="60" y="718" width="420" height="26" rx="13" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.5"/>
+  <text x="270" y="735" font-size="10" font-weight="600" fill="#15803D" text-anchor="middle">✅ L1 可见: 仅状态根哈希 + 验证结果</text>
+
+  <rect x="500" y="718" width="440" height="26" rx="13" fill="#FFF1F2" stroke="#FCA5A5" stroke-width="1.5"/>
+  <text x="720" y="735" font-size="10" font-weight="600" fill="#DC2626" text-anchor="middle">🔒 L1 不可见: 交易数据、地址、金额</text>
+
+  <!-- ═══════════════════════════════════════════ TIMELINE STRIP -->
+  <rect x="40" y="806" width="920" height="72" rx="14" fill="#1E293B" filter="url(#timelineShadow)"/>
+  <!-- Segment dividers -->
+  <line x1="263" y1="820" x2="263" y2="864" stroke="#334155" stroke-width="1"/>
+  <line x1="500" y1="820" x2="500" y2="864" stroke="#334155" stroke-width="1"/>
+  <line x1="737" y1="820" x2="737" y2="864" stroke="#334155" stroke-width="1"/>
+
+  <!-- Segment 1 -->
+  <rect x="56" y="814" width="190" height="4" rx="2" fill="#22C55E" opacity="0.7"/>
+  <text x="151" y="836" font-size="11" font-weight="700" fill="#22C55E" text-anchor="middle">⚙️ 执行</text>
+  <text x="151" y="852" font-size="10" fill="#94A3B8" text-anchor="middle">~毫秒级</text>
+  <text x="151" y="866" font-size="9" fill="#475569" text-anchor="middle">milliseconds</text>
+
+  <!-- Arrow -->
+  <text x="271" y="844" font-size="14" fill="#475569" text-anchor="middle">→</text>
+
+  <!-- Segment 2 -->
+  <rect x="279" y="814" width="205" height="4" rx="2" fill="#3B82F6" opacity="0.7"/>
+  <text x="388" y="836" font-size="11" font-weight="700" fill="#60A5FA" text-anchor="middle">🔬 证明</text>
+  <text x="388" y="852" font-size="10" fill="#94A3B8" text-anchor="middle">&lt;1 秒</text>
+  <text x="388" y="866" font-size="9" fill="#475569" text-anchor="middle">sub-second</text>
+
+  <!-- Arrow -->
+  <text x="508" y="844" font-size="14" fill="#475569" text-anchor="middle">→</text>
+
+  <!-- Segment 3 -->
+  <rect x="516" y="814" width="204" height="4" rx="2" fill="#6366F1" opacity="0.7"/>
+  <text x="621" y="836" font-size="11" font-weight="700" fill="#A5B4FC" text-anchor="middle">🔗 Gateway</text>
+  <text x="621" y="852" font-size="10" fill="#94A3B8" text-anchor="middle">~秒级</text>
+  <text x="621" y="866" font-size="9" fill="#475569" text-anchor="middle">seconds</text>
+
+  <!-- Arrow -->
+  <text x="745" y="844" font-size="14" fill="#475569" text-anchor="middle">→</text>
+
+  <!-- Segment 4 -->
+  <rect x="753" y="814" width="190" height="4" rx="2" fill="#8B5CF6" opacity="0.7"/>
+  <text x="848" y="836" font-size="11" font-weight="700" fill="#C4B5FD" text-anchor="middle">💎 L1 最终性</text>
+  <text x="848" y="852" font-size="10" fill="#94A3B8" text-anchor="middle">~分钟级</text>
+  <text x="848" y="866" font-size="9" fill="#475569" text-anchor="middle">minutes</text>
+</svg>

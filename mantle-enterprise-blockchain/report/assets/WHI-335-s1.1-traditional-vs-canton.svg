@@ -1,0 +1,270 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 650" width="1100" height="650" font-family="Inter, 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#EEF2F7;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Left card shadow -->
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#00000018"/>
+    </filter>
+
+    <!-- Stronger shadow for main boxes -->
+    <filter id="strongShadow" x="-8%" y="-8%" width="116%" height="124%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#00000022"/>
+    </filter>
+
+    <!-- Red accent gradient -->
+    <linearGradient id="redAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#EF4444"/>
+      <stop offset="100%" style="stop-color:#F97316"/>
+    </linearGradient>
+
+    <!-- Green accent gradient -->
+    <linearGradient id="greenAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10B981"/>
+      <stop offset="100%" style="stop-color:#3B82F6"/>
+    </linearGradient>
+
+    <!-- Node red gradient -->
+    <linearGradient id="nodeRedGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FEF2F2"/>
+      <stop offset="100%" style="stop-color:#FEE2E2"/>
+    </linearGradient>
+
+    <!-- Participant green gradient -->
+    <linearGradient id="nodeGreenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F0FDF4"/>
+      <stop offset="100%" style="stop-color:#DCFCE7"/>
+    </linearGradient>
+
+    <!-- Global state gradient -->
+    <linearGradient id="globalStateGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF7ED"/>
+      <stop offset="100%" style="stop-color:#FFEDD5"/>
+    </linearGradient>
+
+    <!-- Virtual ledger gradient -->
+    <linearGradient id="virtualLedgerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#EFF6FF"/>
+      <stop offset="100%" style="stop-color:#DBEAFE"/>
+    </linearGradient>
+
+    <!-- Arrow marker red -->
+    <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#EF4444"/>
+    </marker>
+
+    <!-- Arrow marker green -->
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#10B981"/>
+    </marker>
+
+    <!-- Dashed arrow marker blue -->
+    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3B82F6"/>
+    </marker>
+  </defs>
+
+  <!-- ══════════════════════════════════ BACKGROUND ══════════════════════════════════ -->
+  <rect width="1100" height="650" fill="url(#bgGrad)" rx="16"/>
+
+  <!-- ══════════════════════════════════ TITLE BLOCK ══════════════════════════════════ -->
+  <rect x="40" y="18" width="1020" height="62" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <rect x="40" y="18" width="1020" height="5" rx="2" fill="url(#greenAccent)"/>
+  <text x="550" y="43" text-anchor="middle" font-size="15" font-weight="700" fill="#1E293B" letter-spacing="0.3">WHI-335 §1.1 — Traditional Blockchain vs Canton: State Model Comparison</text>
+  <text x="550" y="62" text-anchor="middle" font-size="10.5" font-weight="500" fill="#94A3B8" letter-spacing="1.2">FLAT ICON STYLE</text>
+
+  <!-- ══════════════════════════════════ DIVIDER LINE ══════════════════════════════════ -->
+  <line x1="550" y1="98" x2="550" y2="490" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <!-- VS badge -->
+  <circle cx="550" cy="292" r="18" fill="white" filter="url(#cardShadow)"/>
+  <text x="550" y="297" text-anchor="middle" font-size="11" font-weight="800" fill="#64748B">VS</text>
+
+  <!-- ══════════════════════════════════ LEFT PANEL CARD ══════════════════════════════════ -->
+  <rect x="40" y="98" width="490" height="388" rx="14" fill="white" filter="url(#strongShadow)"/>
+  <!-- Red accent bar top -->
+  <rect x="40" y="98" width="490" height="5" rx="2" fill="url(#redAccent)"/>
+
+  <!-- LEFT PANEL HEADER -->
+  <text x="285" y="127" text-anchor="middle" font-size="13" font-weight="700" fill="#DC2626">⛓ Traditional Blockchain (Ethereum)</text>
+
+  <!-- GLOBAL STATE BOX -->
+  <rect x="80" y="140" width="410" height="105" rx="12" fill="url(#globalStateGrad)" filter="url(#cardShadow)" stroke="#FCA5A5" stroke-width="1.5"/>
+  <!-- Icon -->
+  <text x="110" y="178" font-size="28">🌐</text>
+  <!-- Label -->
+  <text x="150" y="173" font-size="12" font-weight="700" fill="#92400E">Global State</text>
+  <text x="150" y="189" font-size="10.5" fill="#B45309">All Contracts · All Balances · All History</text>
+  <!-- Tag pill -->
+  <rect x="150" y="198" width="130" height="20" rx="10" fill="#FEF3C7"/>
+  <text x="215" y="212" text-anchor="middle" font-size="9.5" font-weight="600" fill="#92400E">📦 Monolithic Storage</text>
+  <!-- Sub badge -->
+  <rect x="296" y="198" width="100" height="20" rx="10" fill="#FEE2E2"/>
+  <text x="346" y="212" text-anchor="middle" font-size="9.5" font-weight="600" fill="#DC2626">🔒 All-or-Nothing</text>
+
+  <!-- ARROWS from Global State to Nodes -->
+  <!-- Arrow to Node 1 -->
+  <line x1="150" y1="245" x2="115" y2="290" stroke="#EF4444" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+  <!-- Arrow to Node 2 -->
+  <line x1="285" y1="245" x2="285" y2="290" stroke="#EF4444" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+  <!-- Arrow to Node 3 -->
+  <line x1="420" y1="245" x2="450" y2="290" stroke="#EF4444" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+
+  <!-- NODE 1 -->
+  <rect x="60" y="292" width="130" height="84" rx="10" fill="url(#nodeRedGrad)" filter="url(#cardShadow)" stroke="#FCA5A5" stroke-width="1.2"/>
+  <text x="125" y="316" text-anchor="middle" font-size="22">🖥</text>
+  <text x="125" y="336" text-anchor="middle" font-size="10" font-weight="700" fill="#DC2626">Node A</text>
+  <text x="125" y="350" text-anchor="middle" font-size="9" fill="#B45309">Full Copy</text>
+  <rect x="75" y="358" width="95" height="13" rx="6" fill="#FEE2E2"/>
+  <text x="123" y="368" text-anchor="middle" font-size="8.5" font-weight="600" fill="#DC2626">≡ Identical</text>
+
+  <!-- NODE 2 -->
+  <rect x="220" y="292" width="130" height="84" rx="10" fill="url(#nodeRedGrad)" filter="url(#cardShadow)" stroke="#FCA5A5" stroke-width="1.2"/>
+  <text x="285" y="316" text-anchor="middle" font-size="22">🖥</text>
+  <text x="285" y="336" text-anchor="middle" font-size="10" font-weight="700" fill="#DC2626">Node B</text>
+  <text x="285" y="350" text-anchor="middle" font-size="9" fill="#B45309">Full Copy</text>
+  <rect x="235" y="358" width="95" height="13" rx="6" fill="#FEE2E2"/>
+  <text x="283" y="368" text-anchor="middle" font-size="8.5" font-weight="600" fill="#DC2626">≡ Identical</text>
+
+  <!-- NODE 3 -->
+  <rect x="380" y="292" width="130" height="84" rx="10" fill="url(#nodeRedGrad)" filter="url(#cardShadow)" stroke="#FCA5A5" stroke-width="1.2"/>
+  <text x="445" y="316" text-anchor="middle" font-size="22">🖥</text>
+  <text x="445" y="336" text-anchor="middle" font-size="10" font-weight="700" fill="#DC2626">Node C</text>
+  <text x="445" y="350" text-anchor="middle" font-size="9" fill="#B45309">Full Copy</text>
+  <rect x="395" y="358" width="95" height="13" rx="6" fill="#FEE2E2"/>
+  <text x="443" y="368" text-anchor="middle" font-size="8.5" font-weight="600" fill="#DC2626">≡ Identical</text>
+
+  <!-- LEFT CAPTION -->
+  <rect x="96" y="392" width="375" height="26" rx="8" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+  <text x="283" y="409" text-anchor="middle" font-size="10.5" font-weight="600" fill="#991B1B">⚠ Every node stores an identical full copy of global state</text>
+
+  <!-- Privacy concern badge -->
+  <rect x="96" y="424" width="180" height="22" rx="11" fill="#FEE2E2"/>
+  <text x="186" y="438" text-anchor="middle" font-size="9.5" font-weight="600" fill="#DC2626">🔴 Privacy: Default Transparent</text>
+  <rect x="288" y="424" width="183" height="22" rx="11" fill="#FFF7ED"/>
+  <text x="379" y="438" text-anchor="middle" font-size="9.5" font-weight="600" fill="#C2410C">🟠 GDPR: Nearly Impossible</text>
+
+  <!-- ══════════════════════════════════ RIGHT PANEL CARD ══════════════════════════════════ -->
+  <rect x="570" y="98" width="490" height="388" rx="14" fill="white" filter="url(#strongShadow)"/>
+  <!-- Green accent bar top -->
+  <rect x="570" y="98" width="490" height="5" rx="2" fill="url(#greenAccent)"/>
+
+  <!-- RIGHT PANEL HEADER -->
+  <text x="815" y="127" text-anchor="middle" font-size="13" font-weight="700" fill="#059669">🔐 Canton (Digital Asset)</text>
+
+  <!-- VIRTUAL GLOBAL LEDGER (dashed) -->
+  <rect x="610" y="140" width="410" height="88" rx="12" fill="url(#virtualLedgerGrad)" stroke="#93C5FD" stroke-width="2" stroke-dasharray="7,4"/>
+  <!-- Icon -->
+  <text x="640" y="178" font-size="24">☁️</text>
+  <!-- Label -->
+  <text x="680" y="172" font-size="12" font-weight="700" fill="#1D4ED8">Virtual Global Ledger</text>
+  <text x="680" y="188" font-size="9.5" fill="#3B82F6">Logical union of all contracts — nowhere physically stored</text>
+  <!-- Dashed tag -->
+  <rect x="680" y="196" width="170" height="18" rx="9" fill="white" stroke="#93C5FD" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="765" y="208" text-anchor="middle" font-size="9" font-weight="600" fill="#2563EB">- - - Logical Abstraction Only - - -</text>
+  <!-- Sub note -->
+  <rect x="862" y="196" width="140" height="18" rx="9" fill="#EFF6FF"/>
+  <text x="932" y="208" text-anchor="middle" font-size="9" font-weight="600" fill="#1D4ED8">✨ No single owner</text>
+
+  <!-- ARROWS from Virtual Ledger to Participants (dashed) -->
+  <!-- Arrow to P1 -->
+  <line x1="690" y1="228" x2="658" y2="285" stroke="#3B82F6" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrowBlue)"/>
+  <!-- Arrow to P2 -->
+  <line x1="815" y1="228" x2="815" y2="285" stroke="#3B82F6" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrowBlue)"/>
+  <!-- Arrow to P3 -->
+  <line x1="940" y1="228" x2="970" y2="285" stroke="#3B82F6" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrowBlue)"/>
+
+  <!-- PARTICIPANT 1 -->
+  <rect x="590" y="287" width="138" height="104" rx="10" fill="url(#nodeGreenGrad)" filter="url(#cardShadow)" stroke="#6EE7B7" stroke-width="1.2"/>
+  <text x="659" y="308" text-anchor="middle" font-size="18">👤</text>
+  <text x="659" y="326" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">P1 — Alice</text>
+  <!-- Contracts badge -->
+  <rect x="605" y="331" width="108" height="18" rx="9" fill="#D1FAE5"/>
+  <text x="659" y="343" text-anchor="middle" font-size="9" font-weight="700" fill="#065F46">📄 {A, B, C} contracts</text>
+  <rect x="605" y="353" width="108" height="18" rx="9" fill="white" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="659" y="365" text-anchor="middle" font-size="8.5" fill="#059669">Only sees own slice</text>
+  <rect x="605" y="375" width="108" height="12" rx="6" fill="#ECFDF5"/>
+  <text x="659" y="384" text-anchor="middle" font-size="8" font-weight="600" fill="#10B981">🔒 Privacy-first</text>
+
+  <!-- PARTICIPANT 2 -->
+  <rect x="747" y="287" width="138" height="104" rx="10" fill="url(#nodeGreenGrad)" filter="url(#cardShadow)" stroke="#6EE7B7" stroke-width="1.2"/>
+  <text x="816" y="308" text-anchor="middle" font-size="18">👤</text>
+  <text x="816" y="326" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">P2 — Bob</text>
+  <!-- Contracts badge -->
+  <rect x="762" y="331" width="108" height="18" rx="9" fill="#D1FAE5"/>
+  <text x="816" y="343" text-anchor="middle" font-size="9" font-weight="700" fill="#065F46">📄 {B, D} subset</text>
+  <rect x="762" y="353" width="108" height="18" rx="9" fill="white" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="816" y="365" text-anchor="middle" font-size="8.5" fill="#059669">Only sees own slice</text>
+  <rect x="762" y="375" width="108" height="12" rx="6" fill="#ECFDF5"/>
+  <text x="816" y="384" text-anchor="middle" font-size="8" font-weight="600" fill="#10B981">🔒 Privacy-first</text>
+
+  <!-- PARTICIPANT 3 -->
+  <rect x="904" y="287" width="138" height="104" rx="10" fill="url(#nodeGreenGrad)" filter="url(#cardShadow)" stroke="#6EE7B7" stroke-width="1.2"/>
+  <text x="973" y="308" text-anchor="middle" font-size="18">👤</text>
+  <text x="973" y="326" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">P3 — Carol</text>
+  <!-- Contracts badge -->
+  <rect x="919" y="331" width="108" height="18" rx="9" fill="#D1FAE5"/>
+  <text x="973" y="343" text-anchor="middle" font-size="9" font-weight="700" fill="#065F46">📄 {C, E} subset</text>
+  <rect x="919" y="353" width="108" height="18" rx="9" fill="white" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="973" y="365" text-anchor="middle" font-size="8.5" fill="#059669">Only sees own slice</text>
+  <rect x="919" y="375" width="108" height="12" rx="6" fill="#ECFDF5"/>
+  <text x="973" y="384" text-anchor="middle" font-size="8" font-weight="600" fill="#10B981">🔒 Privacy-first</text>
+
+  <!-- RIGHT CAPTION -->
+  <rect x="626" y="400" width="375" height="26" rx="8" fill="#F0FDF4" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="813" y="417" text-anchor="middle" font-size="10.5" font-weight="600" fill="#065F46">✅ Each Participant receives a unique projection of global state</text>
+
+  <!-- Privacy & GDPR badges -->
+  <rect x="626" y="432" width="180" height="22" rx="11" fill="#D1FAE5"/>
+  <text x="716" y="446" text-anchor="middle" font-size="9.5" font-weight="600" fill="#059669">🟢 Privacy: Need-to-Know</text>
+  <rect x="820" y="432" width="181" height="22" rx="11" fill="#DBEAFE"/>
+  <text x="910" y="446" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1D4ED8">🔵 GDPR: Natively Supported</text>
+
+  <!-- ══════════════════════════════════ BOTTOM COMPARISON TABLE ══════════════════════════════════ -->
+  <rect x="40" y="500" width="1020" height="132" rx="14" fill="white" filter="url(#strongShadow)"/>
+  <!-- Header accent bar -->
+  <rect x="40" y="500" width="1020" height="5" rx="2" fill="url(#greenAccent)"/>
+
+  <!-- Table header row -->
+  <rect x="40" y="505" width="1020" height="32" rx="0" fill="#F8FAFC"/>
+  <text x="200" y="527" text-anchor="middle" font-size="10.5" font-weight="700" fill="#64748B" letter-spacing="0.5">DIMENSION</text>
+  <line x1="360" y1="505" x2="360" y2="632" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="527" y="527" text-anchor="middle" font-size="10.5" font-weight="700" fill="#DC2626" letter-spacing="0.5">⛓ TRADITIONAL (ETHEREUM)</text>
+  <line x1="700" y1="505" x2="700" y2="632" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="870" y="527" text-anchor="middle" font-size="10.5" font-weight="700" fill="#059669" letter-spacing="0.5">🔐 CANTON</text>
+
+  <!-- Divider after header -->
+  <line x1="40" y1="537" x2="1060" y2="537" stroke="#E2E8F0" stroke-width="1"/>
+
+  <!-- Row 1: State Distribution -->
+  <rect x="40" y="537" width="1020" height="24" fill="#FAFAFA"/>
+  <text x="65" y="553" font-size="10" font-weight="600" fill="#475569">📊</text>
+  <text x="82" y="553" font-size="10" font-weight="600" fill="#475569">State Distribution</text>
+  <text x="527" y="553" text-anchor="middle" font-size="10" fill="#B91C1C">Full replication across all nodes</text>
+  <text x="870" y="553" text-anchor="middle" font-size="10" fill="#047857">Sharded projection per Participant</text>
+  <line x1="40" y1="561" x2="1060" y2="561" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- Row 2: Consistency -->
+  <text x="65" y="577" font-size="10" font-weight="600" fill="#475569">⚖️</text>
+  <text x="82" y="577" font-size="10" font-weight="600" fill="#475569">Consistency Model</text>
+  <text x="527" y="577" text-anchor="middle" font-size="10" fill="#B91C1C">Strong global consensus required</text>
+  <text x="870" y="577" text-anchor="middle" font-size="10" fill="#047857">Causal consistency (sub-transaction)</text>
+  <line x1="40" y1="585" x2="1060" y2="585" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- Row 3: Privacy -->
+  <rect x="40" y="585" width="1020" height="24" fill="#FAFAFA"/>
+  <text x="65" y="601" font-size="10" font-weight="600" fill="#475569">🔒</text>
+  <text x="82" y="601" font-size="10" font-weight="600" fill="#475569">Privacy Guarantee</text>
+  <text x="527" y="601" text-anchor="middle" font-size="10" fill="#B91C1C">Default transparent — all visible to all</text>
+  <text x="870" y="601" text-anchor="middle" font-size="10" fill="#047857">Need-to-know — cryptographic enforced</text>
+  <line x1="40" y1="609" x2="1060" y2="609" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- Row 4: GDPR -->
+  <text x="65" y="625" font-size="10" font-weight="600" fill="#475569">🏛</text>
+  <text x="82" y="625" font-size="10" font-weight="600" fill="#475569">GDPR Compliance</text>
+  <text x="527" y="625" text-anchor="middle" font-size="10" fill="#B91C1C">Nearly impossible (immutable global history)</text>
+  <text x="870" y="625" text-anchor="middle" font-size="10" fill="#047857">Natively supported via data minimization</text>
+</svg>

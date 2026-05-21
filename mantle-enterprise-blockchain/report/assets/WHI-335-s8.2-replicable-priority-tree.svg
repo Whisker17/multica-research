@@ -1,0 +1,291 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" width="900" height="550" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Card shadow filter -->
+    <filter id="cardShadow" x="-8%" y="-8%" width="116%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+
+    <!-- Title shadow -->
+    <filter id="titleShadow" x="-4%" y="-20%" width="108%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1E293B" flood-opacity="0.12"/>
+    </filter>
+
+    <!-- Green accent gradient -->
+    <linearGradient id="greenAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#16A34A"/>
+    </linearGradient>
+
+    <!-- Amber accent gradient -->
+    <linearGradient id="amberAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+
+    <!-- Blue accent gradient -->
+    <linearGradient id="blueAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+
+    <!-- Green badge gradient -->
+    <linearGradient id="greenBadge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DCFCE7"/>
+      <stop offset="100%" stop-color="#BBF7D0"/>
+    </linearGradient>
+
+    <!-- Amber badge gradient -->
+    <linearGradient id="amberBadge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="100%" stop-color="#FDE68A"/>
+    </linearGradient>
+
+    <!-- Blue badge gradient -->
+    <linearGradient id="blueBadge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DBEAFE"/>
+      <stop offset="100%" stop-color="#BFDBFE"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── Background ── -->
+  <rect width="900" height="550" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid decoration -->
+  <pattern id="gridPat" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#CBD5E1" stroke-width="0.4" stroke-opacity="0.5"/>
+  </pattern>
+  <rect width="900" height="550" fill="url(#gridPat)" opacity="0.4"/>
+
+  <!-- ── Header bar ── -->
+  <rect x="0" y="0" width="900" height="64" fill="#1E293B" opacity="0.96"/>
+  <rect x="0" y="60" width="900" height="4" fill="url(#greenAccent)" opacity="0.7"/>
+
+  <!-- Header icon circle -->
+  <circle cx="42" cy="32" r="18" fill="#334155"/>
+  <text x="42" y="38" text-anchor="middle" font-size="16">🌳</text>
+
+  <!-- Header title -->
+  <text x="70" y="22" font-size="11" fill="#94A3B8" font-weight="500" letter-spacing="0.8">WHI-335 §8.2</text>
+  <text x="70" y="44" font-size="17" fill="#F1F5F9" font-weight="700" letter-spacing="0.2">可复制能力的优先级排序</text>
+
+  <!-- Subtitle right -->
+  <text x="880" y="24" text-anchor="end" font-size="10.5" fill="#64748B">Canton Enterprise Feature Analysis</text>
+  <text x="880" y="42" text-anchor="end" font-size="10.5" fill="#64748B">Replicable Capabilities Priority Tree</text>
+
+  <!-- ══════════════════════════════════════════
+       CARD 1 — 优先级 1  (green)
+       ══════════════════════════════════════════ -->
+  <g filter="url(#cardShadow)">
+    <rect x="22" y="82" width="272" height="430" rx="14" fill="white"/>
+  </g>
+  <!-- Top accent bar -->
+  <rect x="22" y="82" width="272" height="8" rx="7" fill="url(#greenAccent)"/>
+  <rect x="22" y="86" width="272" height="4" fill="url(#greenAccent)"/>
+
+  <!-- Star badge -->
+  <rect x="228" y="92" width="58" height="24" rx="12" fill="url(#greenBadge)" stroke="#86EFAC" stroke-width="1"/>
+  <text x="257" y="108" text-anchor="middle" font-size="13">⭐⭐⭐</text>
+
+  <!-- Priority label -->
+  <text x="36" y="114" font-size="10" fill="#22C55E" font-weight="700" letter-spacing="1.2">优先级 1</text>
+
+  <!-- Card title -->
+  <text x="36" y="136" font-size="13.5" fill="#1E293B" font-weight="700">高价值、可行性高</text>
+
+  <!-- Divider -->
+  <line x1="36" y1="148" x2="278" y2="148" stroke="#E2E8F0" stroke-width="1.2"/>
+
+  <!-- Tree root indicator -->
+  <circle cx="44" cy="170" r="5" fill="#22C55E"/>
+  <text x="56" y="174" font-size="11.5" fill="#475569" font-weight="600">Canton 可复制特性</text>
+
+  <!-- Vertical tree line -->
+  <line x1="44" y1="175" x2="44" y2="380" stroke="#BBF7D0" stroke-width="2" stroke-dasharray="3,2"/>
+
+  <!-- Item 1 -->
+  <line x1="44" y1="210" x2="62" y2="210" stroke="#86EFAC" stroke-width="2"/>
+  <circle cx="44" cy="210" r="3.5" fill="#22C55E"/>
+  <rect x="66" y="194" width="212" height="52" rx="8" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+  <text x="78" y="207" font-size="10" fill="#15803D" font-weight="700" letter-spacing="0.3">├──</text>
+  <text x="110" y="207" font-size="11" fill="#166534" font-weight="600" font-family="Inter, sans-serif">Permissioned Participant</text>
+  <text x="110" y="221" font-size="11" fill="#166534" font-weight="600">Registry</text>
+  <text x="78" y="237" font-size="10" fill="#16A34A">准入注册</text>
+
+  <!-- Item 2 -->
+  <line x1="44" y1="280" x2="62" y2="280" stroke="#86EFAC" stroke-width="2"/>
+  <circle cx="44" cy="280" r="3.5" fill="#22C55E"/>
+  <rect x="66" y="264" width="212" height="52" rx="8" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+  <text x="78" y="277" font-size="10" fill="#15803D" font-weight="700" letter-spacing="0.3">├──</text>
+  <text x="110" y="277" font-size="11" fill="#166534" font-weight="600">Observer / Audit Party</text>
+  <text x="110" y="291" font-size="11" fill="#166534" font-weight="600">角色</text>
+  <text x="78" y="307" font-size="10" fill="#16A34A">合规审计</text>
+
+  <!-- Item 3 -->
+  <line x1="44" y1="350" x2="62" y2="350" stroke="#86EFAC" stroke-width="2"/>
+  <circle cx="44" cy="350" r="3.5" fill="#22C55E"/>
+  <rect x="66" y="334" width="212" height="52" rx="8" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+  <text x="78" y="347" font-size="10" fill="#15803D" font-weight="700" letter-spacing="0.3">└──</text>
+  <text x="110" y="347" font-size="11" fill="#166534" font-weight="600">端到端加密交易内容</text>
+  <text x="110" y="361" font-size="11" fill="#166534" font-weight="600"></text>
+  <text x="78" y="377" font-size="10" fill="#16A34A">数据隐私基础</text>
+
+  <!-- Bottom note -->
+  <rect x="36" y="402" width="244" height="94" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="158" y="420" text-anchor="middle" font-size="10" fill="#64748B" font-weight="600">实施策略</text>
+  <text x="48" y="436" font-size="9.5" fill="#64748B">• 直接映射到 OP Stack 现有模块</text>
+  <text x="48" y="451" font-size="9.5" fill="#64748B">• 改动量小，兼容性强</text>
+  <text x="48" y="466" font-size="9.5" fill="#64748B">• 可在 M3 阶段率先落地</text>
+  <text x="48" y="481" font-size="9.5" fill="#64748B">• 风险可控，ROI 最高</text>
+
+  <!-- ══════════════════════════════════════════
+       CARD 2 — 优先级 2  (amber)
+       ══════════════════════════════════════════ -->
+  <g filter="url(#cardShadow)">
+    <rect x="314" y="82" width="272" height="430" rx="14" fill="white"/>
+  </g>
+  <rect x="314" y="82" width="272" height="8" rx="7" fill="url(#amberAccent)"/>
+  <rect x="314" y="86" width="272" height="4" fill="url(#amberAccent)"/>
+
+  <!-- Star badge -->
+  <rect x="516" y="92" width="44" height="24" rx="12" fill="url(#amberBadge)" stroke="#FCD34D" stroke-width="1"/>
+  <text x="538" y="108" text-anchor="middle" font-size="13">⭐⭐</text>
+
+  <!-- Priority label -->
+  <text x="328" y="114" font-size="10" fill="#F59E0B" font-weight="700" letter-spacing="1.2">优先级 2</text>
+
+  <!-- Card title -->
+  <text x="328" y="136" font-size="13.5" fill="#1E293B" font-weight="700">高价值、需设计适配</text>
+
+  <!-- Divider -->
+  <line x1="328" y1="148" x2="570" y2="148" stroke="#E2E8F0" stroke-width="1.2"/>
+
+  <!-- Tree root indicator -->
+  <circle cx="336" cy="170" r="5" fill="#F59E0B"/>
+  <text x="348" y="174" font-size="11.5" fill="#475569" font-weight="600">需架构适配特性</text>
+
+  <!-- Vertical tree line -->
+  <line x1="336" y1="175" x2="336" y2="380" stroke="#FDE68A" stroke-width="2" stroke-dasharray="3,2"/>
+
+  <!-- Item 1 -->
+  <line x1="336" y1="210" x2="354" y2="210" stroke="#FCD34D" stroke-width="2"/>
+  <circle cx="336" cy="210" r="3.5" fill="#F59E0B"/>
+  <rect x="358" y="194" width="212" height="52" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+  <text x="370" y="207" font-size="10" fill="#B45309" font-weight="700" letter-spacing="0.3">├──</text>
+  <text x="402" y="207" font-size="11" fill="#92400E" font-weight="600">多 Rollup 水平扩展</text>
+  <text x="402" y="221" font-size="11" fill="#92400E" font-weight="600">+ 跨链资产转移</text>
+  <text x="370" y="237" font-size="10" fill="#B45309">Rollup 扩展性</text>
+
+  <!-- Item 2 -->
+  <line x1="336" y1="280" x2="354" y2="280" stroke="#FCD34D" stroke-width="2"/>
+  <circle cx="336" cy="280" r="3.5" fill="#F59E0B"/>
+  <rect x="358" y="264" width="212" height="52" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+  <text x="370" y="277" font-size="10" fill="#B45309" font-weight="700" letter-spacing="0.3">├──</text>
+  <text x="402" y="277" font-size="11" fill="#92400E" font-weight="600">Sequencer 角色细化</text>
+  <text x="402" y="291" font-size="11" fill="#92400E" font-weight="600">（减少信息暴露面）</text>
+  <text x="370" y="307" font-size="10" fill="#B45309">隐私保护增强</text>
+
+  <!-- Item 3 -->
+  <line x1="336" y1="350" x2="354" y2="350" stroke="#FCD34D" stroke-width="2"/>
+  <circle cx="336" cy="350" r="3.5" fill="#F59E0B"/>
+  <rect x="358" y="334" width="212" height="52" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+  <text x="370" y="347" font-size="10" fill="#B45309" font-weight="700" letter-spacing="0.3">└──</text>
+  <text x="402" y="347" font-size="11" fill="#92400E" font-weight="600">Smart Contract 授权</text>
+  <text x="402" y="361" font-size="11" fill="#92400E" font-weight="600">Signatory-like 模式</text>
+  <text x="370" y="377" font-size="10" fill="#B45309">智能合约授权</text>
+
+  <!-- Bottom note -->
+  <rect x="328" y="402" width="244" height="94" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="450" y="420" text-anchor="middle" font-size="10" fill="#64748B" font-weight="600">实施策略</text>
+  <text x="340" y="436" font-size="9.5" fill="#64748B">• 需要额外架构层设计</text>
+  <text x="340" y="451" font-size="9.5" fill="#64748B">• Canton 模式可参考，实现需适配</text>
+  <text x="340" y="466" font-size="9.5" fill="#64748B">• 建议 M4 阶段实施</text>
+  <text x="340" y="481" font-size="9.5" fill="#64748B">• 中等复杂度，高业务价值</text>
+
+  <!-- ══════════════════════════════════════════
+       CARD 3 — 优先级 3  (blue)
+       ══════════════════════════════════════════ -->
+  <g filter="url(#cardShadow)">
+    <rect x="606" y="82" width="272" height="430" rx="14" fill="white"/>
+  </g>
+  <rect x="606" y="82" width="272" height="8" rx="7" fill="url(#blueAccent)"/>
+  <rect x="606" y="86" width="272" height="4" fill="url(#blueAccent)"/>
+
+  <!-- Star badge -->
+  <rect x="804" y="92" width="30" height="24" rx="12" fill="url(#blueBadge)" stroke="#93C5FD" stroke-width="1"/>
+  <text x="819" y="108" text-anchor="middle" font-size="13">⭐</text>
+
+  <!-- Priority label -->
+  <text x="620" y="114" font-size="10" fill="#3B82F6" font-weight="700" letter-spacing="1.2">优先级 3</text>
+
+  <!-- Card title -->
+  <text x="620" y="136" font-size="13.5" fill="#1E293B" font-weight="700">理念参考、不直接复制</text>
+
+  <!-- Divider -->
+  <line x1="620" y1="148" x2="862" y2="148" stroke="#E2E8F0" stroke-width="1.2"/>
+
+  <!-- Tree root indicator -->
+  <circle cx="628" cy="170" r="5" fill="#3B82F6"/>
+  <text x="640" y="174" font-size="11.5" fill="#475569" font-weight="600">理念借鉴特性</text>
+
+  <!-- Vertical tree line -->
+  <line x1="628" y1="175" x2="628" y2="380" stroke="#BFDBFE" stroke-width="2" stroke-dasharray="3,2"/>
+
+  <!-- Item 1 -->
+  <line x1="628" y1="210" x2="646" y2="210" stroke="#93C5FD" stroke-width="2"/>
+  <circle cx="628" cy="210" r="3.5" fill="#3B82F6"/>
+  <rect x="650" y="194" width="212" height="52" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+  <text x="662" y="207" font-size="10" fill="#1D4ED8" font-weight="700" letter-spacing="0.3">├──</text>
+  <text x="694" y="207" font-size="11" fill="#1E3A8A" font-weight="600">Need-to-know 投影</text>
+  <text x="694" y="221" font-size="11" fill="#1E3A8A" font-weight="600">→ view-based access</text>
+  <text x="662" y="237" font-size="10" fill="#2563EB">视图访问控制转化</text>
+
+  <!-- Item 2 -->
+  <line x1="628" y1="280" x2="646" y2="280" stroke="#93C5FD" stroke-width="2"/>
+  <circle cx="628" cy="280" r="3.5" fill="#3B82F6"/>
+  <rect x="650" y="264" width="212" height="52" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+  <text x="662" y="277" font-size="10" fill="#1D4ED8" font-weight="700" letter-spacing="0.3">├──</text>
+  <text x="694" y="277" font-size="11" fill="#1E3A8A" font-weight="600">不可变审计轨迹</text>
+  <text x="694" y="291" font-size="11" fill="#1E3A8A" font-weight="600">→ event sourcing 层</text>
+  <text x="662" y="307" font-size="10" fill="#2563EB">可变存储增强审计</text>
+
+  <!-- Item 3 -->
+  <line x1="628" y1="350" x2="646" y2="350" stroke="#93C5FD" stroke-width="2"/>
+  <circle cx="628" cy="350" r="3.5" fill="#3B82F6"/>
+  <rect x="650" y="334" width="212" height="52" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+  <text x="662" y="347" font-size="10" fill="#1D4ED8" font-weight="700" letter-spacing="0.3">└──</text>
+  <text x="694" y="347" font-size="11" fill="#1E3A8A" font-weight="600">确定性执行消除 MEV</text>
+  <text x="694" y="361" font-size="11" fill="#1E3A8A" font-weight="600">（参考，实现路径不同）</text>
+  <text x="662" y="377" font-size="10" fill="#2563EB">MEV 防护参考</text>
+
+  <!-- Bottom note -->
+  <rect x="620" y="402" width="244" height="94" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="742" y="420" text-anchor="middle" font-size="10" fill="#64748B" font-weight="600">实施策略</text>
+  <text x="632" y="436" font-size="9.5" fill="#64748B">• 架构理念值得借鉴</text>
+  <text x="632" y="451" font-size="9.5" fill="#64748B">• 直接复制实现代价极高</text>
+  <text x="632" y="466" font-size="9.5" fill="#64748B">• 转化为 Mantle 原生方案</text>
+  <text x="632" y="481" font-size="9.5" fill="#64748B">• 长期路线图参考</text>
+
+  <!-- ══════════════════════════════════════════
+       BOTTOM LEGEND BAR
+       ══════════════════════════════════════════ -->
+  <rect x="22" y="522" width="856" height="18" rx="6" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+
+  <!-- Legend items -->
+  <circle cx="50" cy="531" r="4" fill="#22C55E"/>
+  <text x="60" y="535" font-size="9" fill="#475569" font-weight="600">优先级 1：直接可实施</text>
+
+  <circle cx="220" cy="531" r="4" fill="#F59E0B"/>
+  <text x="230" y="535" font-size="9" fill="#475569" font-weight="600">优先级 2：需架构适配</text>
+
+  <circle cx="400" cy="531" r="4" fill="#3B82F6"/>
+  <text x="410" y="535" font-size="9" fill="#475569" font-weight="600">优先级 3：理念借鉴</text>
+
+  <!-- Right side source note -->
+  <text x="860" y="535" text-anchor="end" font-size="8.5" fill="#94A3B8">Canton Enterprise · WHI-335 §8.2</text>
+</svg>

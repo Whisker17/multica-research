@@ -1,0 +1,215 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 900" width="1100" height="900" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Drop shadow filter -->
+    <filter id="cardShadow" x="-8%" y="-8%" width="116%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+    <filter id="phaseShadow" x="-2%" y="-4%" width="104%" height="116%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#94A3B8" flood-opacity="0.10"/>
+    </filter>
+    <filter id="badgeShadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#1E293B" flood-opacity="0.14"/>
+    </filter>
+
+    <!-- Arrow marker - dark -->
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+    </marker>
+    <!-- Arrow marker - green -->
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#16A34A"/>
+    </marker>
+    <!-- Arrow marker - blue -->
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#2563EB"/>
+    </marker>
+    <!-- Arrow marker - amber -->
+    <marker id="arrow-amber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#D97706"/>
+    </marker>
+    <!-- Arrow marker - indigo -->
+    <marker id="arrow-indigo" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4F46E5"/>
+    </marker>
+  </defs>
+
+  <!-- ═══════════════════════════════════════════════════════
+       BACKGROUND
+  ════════════════════════════════════════════════════════ -->
+  <rect width="1100" height="900" fill="url(#bgGrad)"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TITLE CARD
+  ════════════════════════════════════════════════════════ -->
+  <rect x="30" y="18" width="1040" height="54" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="30" y="18" width="6" height="54" rx="3" fill="#6366F1"/>
+  <text x="54" y="43" font-size="15" font-weight="700" fill="#1E293B">WHI-335 §3.1</text>
+  <text x="54" y="60" font-size="13" font-weight="500" fill="#64748B">Canton 提交协议详细流程（两阶段提交）</text>
+  <text x="1060" y="51" font-size="11" fill="#94A3B8" text-anchor="end">Two-Phase Commit Protocol</text>
+
+  <!-- ═══════════════════════════════════════════════════════
+       LANE HEADERS  (y=84)
+  ════════════════════════════════════════════════════════ -->
+
+  <!-- Lane x-centers: Submitter=140, Sequencer=370, Participants=620, Mediator=880 -->
+
+  <!-- Submitter -->
+  <rect x="50" y="84" width="180" height="68" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="50" y="84" width="180" height="5" rx="3" fill="#22C55E"/>
+  <text x="140" y="118" text-anchor="middle" font-size="22">📤</text>
+  <text x="140" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="#15803D">Submitter</text>
+
+  <!-- Sequencer -->
+  <rect x="280" y="84" width="180" height="68" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="280" y="84" width="180" height="5" rx="3" fill="#3B82F6"/>
+  <text x="370" y="118" text-anchor="middle" font-size="22">📋</text>
+  <text x="370" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="#1D4ED8">Sequencer</text>
+
+  <!-- Participants -->
+  <rect x="530" y="84" width="180" height="68" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="530" y="84" width="180" height="5" rx="3" fill="#F59E0B"/>
+  <text x="620" y="118" text-anchor="middle" font-size="22">🖥️</text>
+  <text x="620" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="#B45309">Participant(s)</text>
+
+  <!-- Mediator -->
+  <rect x="790" y="84" width="180" height="68" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="790" y="84" width="180" height="5" rx="3" fill="#6366F1"/>
+  <text x="880" y="118" text-anchor="middle" font-size="22">⚖️</text>
+  <text x="880" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="#4338CA">Mediator</text>
+
+  <!-- ───────── LIFELINES ───────── -->
+  <line x1="140" y1="152" x2="140" y2="870" stroke="#22C55E" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.45"/>
+  <line x1="370" y1="152" x2="370" y2="870" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.45"/>
+  <line x1="620" y1="152" x2="620" y2="870" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.45"/>
+  <line x1="880" y1="152" x2="880" y2="870" stroke="#6366F1" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.45"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PHASE 1: PREPARE  (y=168–420)
+  ════════════════════════════════════════════════════════ -->
+  <rect x="30" y="168" width="1040" height="248" rx="10" fill="#EFF6FF" opacity="0.65" filter="url(#phaseShadow)"/>
+  <!-- Phase label pill -->
+  <rect x="30" y="168" width="168" height="28" rx="8" fill="#3B82F6"/>
+  <text x="114" y="187" text-anchor="middle" font-size="12" font-weight="700" fill="white" letter-spacing="1">PHASE 1 — PREPARE</text>
+
+  <!-- ── Step 1: Submitter → Sequencer ── -->
+  <!-- Number badge -->
+  <circle cx="140" cy="228" r="14" fill="#3B82F6" filter="url(#badgeShadow)"/>
+  <text x="140" y="233" text-anchor="middle" font-size="11" font-weight="700" fill="white">1</text>
+  <!-- Arrow line -->
+  <line x1="154" y1="228" x2="354" y2="228" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <!-- Label pill -->
+  <rect x="196" y="213" width="118" height="22" rx="11" fill="#DBEAFE" filter="url(#badgeShadow)"/>
+  <text x="255" y="228" text-anchor="middle" font-size="10" font-weight="600" fill="#1D4ED8">Submit TX (encrypted)</text>
+  <!-- Step note -->
+  <rect x="380" y="214" width="244" height="28" rx="7" fill="white" opacity="0.85"/>
+  <text x="502" y="232" text-anchor="middle" font-size="10" fill="#475569">Submitter 发起加密交易请求</text>
+
+  <!-- ── Step 2: Sequencer assigns timestamp + routes ── -->
+  <circle cx="370" cy="292" r="14" fill="#3B82F6" filter="url(#badgeShadow)"/>
+  <text x="370" y="297" text-anchor="middle" font-size="11" font-weight="700" fill="white">2</text>
+  <!-- Sequencer self-action note -->
+  <rect x="390" y="278" width="200" height="28" rx="7" fill="white" opacity="0.85"/>
+  <text x="490" y="292" text-anchor="middle" font-size="10" fill="#1D4ED8">分配全局时间戳 (timestamp)</text>
+  <!-- Arrow Sequencer → Participants -->
+  <line x1="384" y1="304" x2="604" y2="304" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="446" y="290" width="102" height="22" rx="11" fill="#DBEAFE" filter="url(#badgeShadow)"/>
+  <text x="497" y="305" text-anchor="middle" font-size="10" font-weight="600" fill="#1D4ED8">路由加密子树</text>
+
+  <!-- ── Step 3: Participants validate ── -->
+  <circle cx="620" cy="368" r="14" fill="#F59E0B" filter="url(#badgeShadow)"/>
+  <text x="620" y="373" text-anchor="middle" font-size="11" font-weight="700" fill="white">3</text>
+  <!-- Validation note card -->
+  <rect x="640" y="349" width="408" height="42" rx="9" fill="white" opacity="0.92" filter="url(#badgeShadow)"/>
+  <rect x="640" y="349" width="4" height="42" rx="2" fill="#F59E0B"/>
+  <text x="654" y="365" font-size="10" font-weight="600" fill="#B45309">Participants 解密并验证：</text>
+  <text x="654" y="381" font-size="10" fill="#78350F">授权检查 · 双花防护 · 合约活跃状态 · 模型一致性</text>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PHASE 2: CONFIRM  (y=428–640)
+  ════════════════════════════════════════════════════════ -->
+  <rect x="30" y="428" width="1040" height="218" rx="10" fill="#FFFBEB" opacity="0.70" filter="url(#phaseShadow)"/>
+  <rect x="30" y="428" width="174" height="28" rx="8" fill="#F59E0B"/>
+  <text x="117" y="447" text-anchor="middle" font-size="12" font-weight="700" fill="white" letter-spacing="1">PHASE 2 — CONFIRM</text>
+
+  <!-- ── Step 4: Participants → Mediator ── -->
+  <circle cx="620" cy="492" r="14" fill="#F59E0B" filter="url(#badgeShadow)"/>
+  <text x="620" y="497" text-anchor="middle" font-size="11" font-weight="700" fill="white">4</text>
+  <!-- Arrow -->
+  <line x1="634" y1="492" x2="864" y2="492" stroke="#D97706" stroke-width="2" marker-end="url(#arrow-amber)"/>
+  <!-- Label pill -->
+  <rect x="695" y="478" width="110" height="22" rx="11" fill="#FEF3C7" filter="url(#badgeShadow)"/>
+  <text x="750" y="493" text-anchor="middle" font-size="10" font-weight="600" fill="#92400E">confirm / reject</text>
+  <!-- Note -->
+  <rect x="32" y="478" width="224" height="28" rx="7" fill="white" opacity="0.85"/>
+  <text x="144" y="496" text-anchor="middle" font-size="10" fill="#475569">各参与方返回确认或拒绝响应</text>
+
+  <!-- ── Step 5: Mediator collects ── -->
+  <circle cx="880" cy="552" r="14" fill="#6366F1" filter="url(#badgeShadow)"/>
+  <text x="880" y="557" text-anchor="middle" font-size="11" font-weight="700" fill="white">5</text>
+  <rect x="640" y="536" width="228" height="28" rx="7" fill="white" opacity="0.85"/>
+  <text x="754" y="554" text-anchor="middle" font-size="10" fill="#4338CA">Mediator 汇总响应，等待截止时间</text>
+
+  <!-- ── Step 6: Mediator issues VERDICT ── -->
+  <circle cx="880" cy="614" r="14" fill="#6366F1" filter="url(#badgeShadow)"/>
+  <text x="880" y="619" text-anchor="middle" font-size="11" font-weight="700" fill="white">6</text>
+  <!-- Verdict card -->
+  <rect x="640" y="598" width="408" height="34" rx="9" fill="white" opacity="0.92" filter="url(#badgeShadow)"/>
+  <rect x="640" y="598" width="4" height="34" rx="2" fill="#6366F1"/>
+  <text x="656" y="614" font-size="10" font-weight="600" fill="#4338CA">Mediator 裁决 →</text>
+  <rect x="742" y="602" width="76" height="22" rx="8" fill="#D1FAE5"/>
+  <text x="780" y="617" text-anchor="middle" font-size="10" font-weight="700" fill="#065F46">✓ APPROVE</text>
+  <text x="832" y="617" font-size="10" fill="#475569">or</text>
+  <rect x="850" y="602" width="68" height="22" rx="8" fill="#FEE2E2"/>
+  <text x="884" y="617" text-anchor="middle" font-size="10" font-weight="700" fill="#991B1B">✗ REJECT</text>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PHASE 3: FINALIZE  (y=650–860)
+  ════════════════════════════════════════════════════════ -->
+  <rect x="30" y="650" width="1040" height="218" rx="10" fill="#F0FDF4" opacity="0.70" filter="url(#phaseShadow)"/>
+  <rect x="30" y="650" width="178" height="28" rx="8" fill="#22C55E"/>
+  <text x="119" y="669" text-anchor="middle" font-size="12" font-weight="700" fill="white" letter-spacing="1">PHASE 3 — FINALIZE</text>
+
+  <!-- ── Step 7: Mediator → Sequencer → broadcast ── -->
+  <circle cx="880" cy="718" r="14" fill="#22C55E" filter="url(#badgeShadow)"/>
+  <text x="880" y="723" text-anchor="middle" font-size="11" font-weight="700" fill="white">7</text>
+  <!-- Mediator → Sequencer -->
+  <line x1="866" y1="718" x2="386" y2="718" stroke="#16A34A" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <rect x="574" y="703" width="136" height="22" rx="11" fill="#DCFCE7" filter="url(#badgeShadow)"/>
+  <text x="642" y="718" text-anchor="middle" font-size="10" font-weight="600" fill="#15803D">广播裁决 (verdict)</text>
+  <!-- Sequencer → broadcast note -->
+  <rect x="32" y="703" width="244" height="28" rx="7" fill="white" opacity="0.85"/>
+  <text x="154" y="721" text-anchor="middle" font-size="10" fill="#475569">Sequencer 转发裁决给所有参与方</text>
+  <!-- Sequencer → Participants broadcast arrow -->
+  <line x1="386" y1="730" x2="604" y2="730" stroke="#16A34A" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrow-green)"/>
+
+  <!-- ── Step 8: Apply verdict ── -->
+  <circle cx="620" cy="800" r="14" fill="#22C55E" filter="url(#badgeShadow)"/>
+  <text x="620" y="805" text-anchor="middle" font-size="11" font-weight="700" fill="white">8</text>
+  <!-- Outcome cards -->
+  <!-- APPROVE outcome -->
+  <rect x="32" y="782" width="268" height="46" rx="10" fill="white" opacity="0.95" filter="url(#badgeShadow)"/>
+  <rect x="32" y="782" width="5" height="46" rx="3" fill="#22C55E"/>
+  <text x="46" y="800" font-size="10" font-weight="700" fill="#065F46">✓ APPROVE</text>
+  <text x="46" y="816" font-size="10" fill="#374151">更新 ACS（活跃合约集），TX 最终确认</text>
+  <!-- Arrow Participants → APPROVE box -->
+  <line x1="606" y1="800" x2="304" y2="800" stroke="#16A34A" stroke-width="1.8" marker-end="url(#arrow-green)"/>
+
+  <!-- REJECT outcome -->
+  <rect x="640" y="782" width="240" height="46" rx="10" fill="white" opacity="0.95" filter="url(#badgeShadow)"/>
+  <rect x="640" y="782" width="5" height="46" rx="3" fill="#EF4444"/>
+  <text x="654" y="800" font-size="10" font-weight="700" fill="#991B1B">✗ REJECT</text>
+  <text x="654" y="816" font-size="10" fill="#374151">回滚 (rollback)，释放锁定资源</text>
+  <!-- Arrow Participants → REJECT box -->
+  <line x1="634" y1="800" x2="756" y2="800" stroke="#EF4444" stroke-width="1.8" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════════════ -->
+  <text x="550" y="888" text-anchor="middle" font-size="10" fill="#94A3B8">Canton Network — Two-Phase Commit Protocol · WHI-335 Research Output · 2026-05-08</text>
+</svg>

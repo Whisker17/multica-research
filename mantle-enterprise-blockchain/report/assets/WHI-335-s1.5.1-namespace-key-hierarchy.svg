@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC"/>
+      <stop offset="100%" style="stop-color:#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Drop shadow filter for cards -->
+    <filter id="cardShadow" x="-8%" y="-8%" width="116%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+
+    <!-- Subtle shadow for root card -->
+    <filter id="rootShadow" x="-8%" y="-8%" width="116%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#6366F1" flood-opacity="0.22"/>
+    </filter>
+
+    <!-- Header shadow -->
+    <filter id="headerShadow" x="-2%" y="-10%" width="104%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0F172A" flood-opacity="0.25"/>
+    </filter>
+
+    <!-- Connector line marker -->
+    <marker id="arrowDash" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <circle cx="4" cy="4" r="2.5" fill="#94A3B8"/>
+    </marker>
+  </defs>
+
+  <!-- ── Background ── -->
+  <rect width="900" height="600" fill="url(#bgGrad)"/>
+
+  <!-- ── Header bar ── -->
+  <rect x="0" y="0" width="900" height="62" rx="0" fill="#0F172A" filter="url(#headerShadow)"/>
+  <!-- Header accent stripe -->
+  <rect x="0" y="0" width="900" height="4" fill="#6366F1"/>
+  <!-- Header title -->
+  <text x="450" y="23" text-anchor="middle" font-size="12" font-weight="600" fill="#94A3B8" letter-spacing="1.5">WHI-335 §1.5.1</text>
+  <text x="450" y="46" text-anchor="middle" font-size="17" font-weight="700" fill="#F1F5F9" letter-spacing="0.3">命名空间与密钥层级 — Namespace Root of Trust &amp; Key Hierarchy</text>
+
+  <!-- ══════════════════════════════════════════════
+       ROOT NODE CARD  (centered, y≈95)
+  ══════════════════════════════════════════════ -->
+  <!-- Card body -->
+  <rect x="270" y="88" width="360" height="118" rx="14" fill="white" filter="url(#rootShadow)"/>
+  <!-- Indigo accent left bar -->
+  <rect x="270" y="88" width="7" height="118" rx="7" fill="#6366F1"/>
+  <rect x="274" y="88" width="4" height="118" fill="#6366F1"/>
+
+  <!-- Icon + KEY label -->
+  <text x="304" y="126" font-size="26">🔑</text>
+  <text x="338" y="122" font-size="18" font-weight="800" fill="#1E1B4B">ROOT_KEY</text>
+
+  <!-- Badge -->
+  <rect x="338" y="130" width="128" height="22" rx="11" fill="#EEF2FF"/>
+  <text x="402" y="145" text-anchor="middle" font-size="11" font-weight="600" fill="#4338CA">自签名 = 信任锚点</text>
+
+  <!-- NSD line -->
+  <text x="304" y="183" font-size="10.5" fill="#475569" font-family="'Courier New', monospace">NSD(namespace=ROOT_KEY, target=ROOT_KEY, signedBy=ROOT_KEY)</text>
+
+  <!-- ── Vertical stem from root down ── -->
+  <line x1="450" y1="206" x2="450" y2="242" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,4"/>
+
+  <!-- ── Horizontal crossbar ── -->
+  <line x1="190" y1="242" x2="710" y2="242" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,4"/>
+
+  <!-- ── Three vertical drops from crossbar ── -->
+  <!-- Left drop to Card A -->
+  <line x1="190" y1="242" x2="190" y2="272" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,4"/>
+  <!-- Center drop to Card B -->
+  <line x1="450" y1="242" x2="450" y2="272" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,4"/>
+  <!-- Right drop to Card C -->
+  <line x1="710" y1="242" x2="710" y2="272" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,4"/>
+
+  <!-- Terminal dots -->
+  <circle cx="190" cy="271" r="4" fill="#94A3B8"/>
+  <circle cx="450" cy="271" r="4" fill="#94A3B8"/>
+  <circle cx="710" cy="271" r="4" fill="#94A3B8"/>
+
+  <!-- ══════════════════════════════════════════════
+       CARD A — Intermediate Key A  (left)
+  ══════════════════════════════════════════════ -->
+  <rect x="60" y="272" width="260" height="172" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Blue accent bar -->
+  <rect x="60" y="272" width="7" height="172" rx="7" fill="#3B82F6"/>
+  <rect x="64" y="272" width="4" height="172" fill="#3B82F6"/>
+
+  <!-- Icon + label -->
+  <text x="90" y="307" font-size="22">🔐</text>
+  <text x="120" y="303" font-size="14" font-weight="700" fill="#1E3A8A">Intermediate Key A</text>
+
+  <!-- Badge -->
+  <rect x="89" y="312" width="180" height="21" rx="10.5" fill="#DBEAFE"/>
+  <text x="179" y="326.5" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1D4ED8">CanSignAllMappings</text>
+
+  <!-- Description lines -->
+  <text x="89" y="355" font-size="11.5" fill="#334155">可签署该命名空间下</text>
+  <text x="89" y="373" font-size="11.5" fill="#334155">所有拓扑映射</text>
+  <line x1="89" y1="383" x2="306" y2="383" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="89" y="400" font-size="11" fill="#64748B">可进一步委托子密钥</text>
+
+  <!-- Bottom accent line -->
+  <rect x="60" y="430" width="260" height="14" rx="7" fill="#EFF6FF"/>
+  <text x="190" y="440.5" text-anchor="middle" font-size="10" font-weight="500" fill="#3B82F6">Level 2 · Full Delegation</text>
+
+  <!-- ══════════════════════════════════════════════
+       CARD B — Intermediate Key B  (center)
+  ══════════════════════════════════════════════ -->
+  <rect x="320" y="272" width="260" height="172" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Teal accent bar -->
+  <rect x="320" y="272" width="7" height="172" rx="7" fill="#14B8A6"/>
+  <rect x="324" y="272" width="4" height="172" fill="#14B8A6"/>
+
+  <!-- Icon + label -->
+  <text x="350" y="307" font-size="22">🔓</text>
+  <text x="380" y="303" font-size="14" font-weight="700" fill="#134E4A">Intermediate Key B</text>
+
+  <!-- Badge -->
+  <rect x="349" y="312" width="218" height="21" rx="10.5" fill="#CCFBF1"/>
+  <text x="458" y="326.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#0F766E">CanSignAllButNamespaceDelegations</text>
+
+  <!-- Description lines -->
+  <text x="349" y="355" font-size="11.5" fill="#334155">可签署除命名空间委托</text>
+  <text x="349" y="373" font-size="11.5" fill="#334155">外的所有映射</text>
+  <line x1="349" y1="383" x2="566" y2="383" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="349" y="400" font-size="11" fill="#64748B">适合日常运维（根密钥可离线冷存储）</text>
+
+  <!-- Bottom accent line -->
+  <rect x="320" y="430" width="260" height="14" rx="7" fill="#F0FDFA"/>
+  <text x="450" y="440.5" text-anchor="middle" font-size="10" font-weight="500" fill="#14B8A6">Level 2 · Ops Delegation</text>
+
+  <!-- ══════════════════════════════════════════════
+       CARD C — Intermediate Key C  (right)
+  ══════════════════════════════════════════════ -->
+  <rect x="580" y="272" width="260" height="172" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Green accent bar -->
+  <rect x="580" y="272" width="7" height="172" rx="7" fill="#22C55E"/>
+  <rect x="584" y="272" width="4" height="172" fill="#22C55E"/>
+
+  <!-- Icon + label -->
+  <text x="610" y="307" font-size="22">🗝️</text>
+  <text x="642" y="303" font-size="14" font-weight="700" fill="#14532D">Intermediate Key C</text>
+
+  <!-- Badge -->
+  <rect x="609" y="312" width="200" height="21" rx="10.5" fill="#DCFCE7"/>
+  <text x="709" y="326.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#15803D">CanSignSpecificMappings</text>
+
+  <!-- Description lines -->
+  <text x="609" y="355" font-size="11.5" fill="#334155">仅可签署明确列出的</text>
+  <text x="609" y="373" font-size="11.5" fill="#334155">映射类型（最小权限）</text>
+  <line x1="609" y1="383" x2="826" y2="383" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="609" y="400" font-size="11" fill="#64748B">Principle of Least Privilege</text>
+
+  <!-- Bottom accent line -->
+  <rect x="580" y="430" width="260" height="14" rx="7" fill="#F0FDF4"/>
+  <text x="710" y="440.5" text-anchor="middle" font-size="10" font-weight="500" fill="#22C55E">Level 2 · Minimal Privilege</text>
+
+  <!-- ══════════════════════════════════════════════
+       BOTTOM NOTE BAR
+  ══════════════════════════════════════════════ -->
+  <rect x="60" y="463" width="780" height="44" rx="12" fill="#1E293B" opacity="0.92"/>
+  <text x="450" y="481" text-anchor="middle" font-size="11" font-weight="500" fill="#94A3B8">⚠ 三级委托限制</text>
+  <text x="450" y="498" text-anchor="middle" font-size="12" font-weight="600" fill="#E2E8F0">根密钥离线保管，中间密钥处理日常拓扑操作 — Root Key Offline · Intermediate Keys for Daily Ops</text>
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER WATERMARK
+  ══════════════════════════════════════════════ -->
+  <text x="450" y="585" text-anchor="middle" font-size="10" fill="#CBD5E1">Canton (Digital Asset) · Namespace Root of Trust · WHI-335 §1.5.1 · 2026-05-08</text>
+</svg>

@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <defs>
+    <!-- Gradient background -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EEF2F7;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Card drop shadow -->
+    <filter id="cardShadow" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+
+    <!-- Inner card shadow (lighter) -->
+    <filter id="innerCardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#94A3B8" flood-opacity="0.12"/>
+    </filter>
+
+    <!-- Arrow marker — blue dashed -->
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3B82F6"/>
+    </marker>
+
+    <!-- Arrow marker — green solid -->
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10B981"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="500" fill="url(#bgGrad)"/>
+
+  <!-- ═══════════════════════════════════════════════
+       TITLE HEADER BAR
+  ═══════════════════════════════════════════════ -->
+  <rect x="0" y="0" width="1000" height="52" rx="0" fill="#1E293B"/>
+  <text x="500" y="19" text-anchor="middle" fill="#94A3B8" font-size="10" font-weight="500" letter-spacing="0.08em">WHI-335 §1.4</text>
+  <text x="500" y="38" text-anchor="middle" fill="#F1F5F9" font-size="14" font-weight="700" letter-spacing="0.01em">多 Synchronizer 跨域事务协调 — 重新分配（Reassignment）</text>
+
+  <!-- ═══════════════════════════════════════════════
+       LEFT CARD — Synchronizer A
+  ═══════════════════════════════════════════════ -->
+  <rect x="32" y="72" width="390" height="340" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Blue accent bar -->
+  <rect x="32" y="72" width="390" height="4" rx="2" fill="#3B82F6"/>
+
+  <!-- Card header -->
+  <text x="52" y="106" fill="#1E293B" font-size="18" font-weight="700">🔵 Synchronizer A</text>
+  <line x1="52" y1="116" x2="402" y2="116" stroke="#E2E8F0" stroke-width="1"/>
+
+  <!-- ── Inner card: Contract X (active) ── -->
+  <rect x="56" y="128" width="220" height="86" rx="10" fill="#F0F9FF" filter="url(#innerCardShadow)"/>
+  <!-- left accent -->
+  <rect x="56" y="128" width="4" height="86" rx="2" fill="#3B82F6"/>
+  <!-- Contract icon + label -->
+  <text x="74" y="151" fill="#1E293B" font-size="13" font-weight="700">📄 Contract X</text>
+  <text x="74" y="170" fill="#475569" font-size="11">(active)</text>
+  <!-- Green badge ✓ -->
+  <rect x="180" y="138" width="74" height="22" rx="11" fill="#D1FAE5"/>
+  <text x="217" y="153" text-anchor="middle" fill="#059669" font-size="11" font-weight="700">✓ Active</text>
+  <!-- State label -->
+  <text x="74" y="200" fill="#64748B" font-size="10" font-style="italic">Current state</text>
+
+  <!-- Downward arrow between states -->
+  <line x1="166" y1="222" x2="166" y2="244" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arrowBlue)"/>
+
+  <!-- ── Inner card: Contract X (inactive) ── -->
+  <rect x="56" y="250" width="220" height="86" rx="10" fill="#FFF1F2" filter="url(#innerCardShadow)"/>
+  <!-- left accent red -->
+  <rect x="56" y="250" width="4" height="86" rx="2" fill="#EF4444"/>
+  <!-- Contract icon + label -->
+  <text x="74" y="273" fill="#1E293B" font-size="13" font-weight="700">📄 Contract X</text>
+  <text x="74" y="292" fill="#475569" font-size="11">(inactive)</text>
+  <!-- Red badge ✗ -->
+  <rect x="170" y="260" width="84" height="22" rx="11" fill="#FEE2E2"/>
+  <text x="212" y="275" text-anchor="middle" fill="#DC2626" font-size="11" font-weight="700">✗ Unassigned</text>
+  <!-- State label -->
+  <text x="74" y="322" fill="#64748B" font-size="10" font-style="italic">After step 1</text>
+
+  <!-- ═══════════════════════════════════════════════
+       MIDDLE ARROWS (between cards)
+  ═══════════════════════════════════════════════ -->
+
+  <!-- Arrow 1: Unassign X -->
+  <line x1="422" y1="205" x2="570" y2="205" stroke="#3B82F6" stroke-width="2" stroke-dasharray="7,4" marker-end="url(#arrowBlue)"/>
+  <!-- Step 1 label background -->
+  <rect x="434" y="185" width="120" height="16" rx="4" fill="#EFF6FF"/>
+  <text x="494" y="197" text-anchor="middle" fill="#2563EB" font-size="11" font-weight="600">① Unassign X</text>
+
+  <!-- Arrow 2: Assign X -->
+  <line x1="422" y1="270" x2="570" y2="270" stroke="#3B82F6" stroke-width="2" stroke-dasharray="7,4" marker-end="url(#arrowBlue)"/>
+  <!-- Step 2 label background -->
+  <rect x="440" y="250" width="106" height="16" rx="4" fill="#EFF6FF"/>
+  <text x="493" y="262" text-anchor="middle" fill="#2563EB" font-size="11" font-weight="600">② Assign X</text>
+
+  <!-- Bidirectional bracket / gap annotation -->
+  <line x1="506" y1="215" x2="506" y2="260" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="500" y1="215" x2="512" y2="215" stroke="#F59E0B" stroke-width="1.5"/>
+  <line x1="500" y1="260" x2="512" y2="260" stroke="#F59E0B" stroke-width="1.5"/>
+  <rect x="512" y="229" width="56" height="14" rx="4" fill="#FEF3C7"/>
+  <text x="540" y="240" text-anchor="middle" fill="#B45309" font-size="9" font-weight="600">GAP ⚡</text>
+
+  <!-- ═══════════════════════════════════════════════
+       RIGHT CARD — Synchronizer B
+  ═══════════════════════════════════════════════ -->
+  <rect x="578" y="72" width="390" height="340" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Indigo accent bar -->
+  <rect x="578" y="72" width="390" height="4" rx="2" fill="#6366F1"/>
+
+  <!-- Card header -->
+  <text x="598" y="106" fill="#1E293B" font-size="18" font-weight="700">🟣 Synchronizer B</text>
+  <line x1="598" y1="116" x2="948" y2="116" stroke="#E2E8F0" stroke-width="1"/>
+
+  <!-- ── Inner card: Contract X (active, newly assigned) ── -->
+  <rect x="602" y="128" width="220" height="86" rx="10" fill="#EEF2FF" filter="url(#innerCardShadow)"/>
+  <!-- left accent indigo -->
+  <rect x="602" y="128" width="4" height="86" rx="2" fill="#6366F1"/>
+  <text x="620" y="151" fill="#1E293B" font-size="13" font-weight="700">📄 Contract X</text>
+  <text x="620" y="170" fill="#475569" font-size="11">(active)</text>
+  <!-- Green badge -->
+  <rect x="726" y="138" width="74" height="22" rx="11" fill="#D1FAE5"/>
+  <text x="763" y="153" text-anchor="middle" fill="#059669" font-size="11" font-weight="700">✓ Assigned</text>
+  <!-- annotation -->
+  <text x="620" y="200" fill="#64748B" font-size="10" font-style="italic">After step 2 ← from Sync A</text>
+
+  <!-- ── Inner card: Contract Y (already here) ── -->
+  <rect x="602" y="234" width="220" height="86" rx="10" fill="#F0FDF4" filter="url(#innerCardShadow)"/>
+  <!-- left accent green -->
+  <rect x="602" y="234" width="4" height="86" rx="2" fill="#10B981"/>
+  <text x="620" y="257" fill="#1E293B" font-size="13" font-weight="700">📄 Contract Y</text>
+  <text x="620" y="276" fill="#475569" font-size="11">(already here)</text>
+  <!-- Green badge already -->
+  <rect x="720" y="244" width="82" height="22" rx="11" fill="#D1FAE5"/>
+  <text x="761" y="259" text-anchor="middle" fill="#059669" font-size="11" font-weight="700">✓ Resident</text>
+  <text x="620" y="306" fill="#64748B" font-size="10" font-style="italic">Pre-existing on Sync B</text>
+
+  <!-- ── Step 3 action badge ── -->
+  <rect x="602" y="332" width="346" height="62" rx="10" fill="#ECFDF5" filter="url(#innerCardShadow)"/>
+  <rect x="602" y="332" width="346" height="3" rx="1.5" fill="#10B981"/>
+  <text x="622" y="355" fill="#065F46" font-size="12" font-weight="700">③ Execute transaction using X + Y</text>
+  <text x="622" y="374" fill="#047857" font-size="10">Both contracts now co-resident on Synchronizer B</text>
+  <text x="622" y="388" fill="#047857" font-size="10">→ atomic cross-contract transaction is possible ✓</text>
+
+  <!-- ═══════════════════════════════════════════════
+       WARNING BANNER
+  ═══════════════════════════════════════════════ -->
+  <rect x="0" y="428" width="1000" height="72" rx="0" fill="#FEF3C7"/>
+  <rect x="0" y="428" width="1000" height="3" fill="#F59E0B"/>
+  <text x="500" y="454" text-anchor="middle" fill="#92400E" font-size="13" font-weight="700">
+    ⚠️  Steps 1–2 are NON-ATOMIC.
+  </text>
+  <text x="500" y="475" text-anchor="middle" fill="#B45309" font-size="12">
+    Contract X is temporarily unavailable between Unassign and Assign — any transaction requiring X will fail during this window.
+  </text>
+
+  <!-- ═══════════════════════════════════════════════
+       STEP LEGEND (top-right overlay)
+  ═══════════════════════════════════════════════ -->
+  <rect x="430" y="130" width="140" height="64" rx="8" fill="white" filter="url(#innerCardShadow)" opacity="0.95"/>
+  <text x="440" y="148" fill="#475569" font-size="10" font-weight="700" letter-spacing="0.06em">FLOW</text>
+  <line x1="440" y1="155" x2="560" y2="155" stroke="#E2E8F0" stroke-width="1"/>
+  <!-- Step legend items -->
+  <line x1="444" y1="165" x2="464" y2="165" stroke="#3B82F6" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="470" y="168" fill="#334155" font-size="10">① Unassign X</text>
+  <line x1="444" y1="181" x2="464" y2="181" stroke="#3B82F6" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="470" y="184" fill="#334155" font-size="10">② Assign X</text>
+</svg>

@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 800" width="960" height="800">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', 'SimHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/></marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ea580c"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/></marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/></marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.08"/></filter>
+  </defs>
+  <rect width="960" height="800" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="480" y="36" text-anchor="middle" font-size="18" font-weight="600" fill="#111827">Enterprise Blockchain Core Modules Panorama</text>
+  <text x="480" y="56" text-anchor="middle" font-size="12" fill="#6b7280">8 Coupled Design Choices That Define Enterprise Architecture</text>
+
+  <!-- Center Hub -->
+  <circle cx="480" cy="390" r="70" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="480" y="380" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Enterprise</text>
+  <text x="480" y="396" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Blockchain</text>
+  <text x="480" y="412" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Architecture</text>
+
+  <!-- Spoke lines (dashed, behind boxes) -->
+  <line x1="480" y1="320" x2="480" y2="196" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="531" y1="339" x2="613" y2="227" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="550" y1="390" x2="636" y2="390" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="531" y1="441" x2="613" y2="553" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="480" y1="460" x2="480" y2="584" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="429" y1="441" x2="347" y2="553" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="410" y1="390" x2="324" y2="390" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="429" y1="339" x2="347" y2="227" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Module 1: Execution Layer (top, KEY) -->
+  <rect x="410" y="130" width="140" height="60" rx="8" ry="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="424" cy="144" r="10" fill="#3b82f6"/><text x="424" y="148" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff">1</text>
+  <text x="480" y="156" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Execution</text>
+  <text x="480" y="172" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Layer</text>
+
+  <!-- Module 2: Consensus & Finality (top-right, KEY) -->
+  <rect x="603" y="190" width="140" height="60" rx="8" ry="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="617" cy="204" r="10" fill="#3b82f6"/><text x="617" y="208" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff">2</text>
+  <text x="673" y="216" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Consensus &amp;</text>
+  <text x="673" y="232" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Finality</text>
+
+  <!-- Module 3: Privacy Layer (right, KEY) -->
+  <rect x="636" y="360" width="140" height="60" rx="8" ry="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="650" cy="374" r="10" fill="#3b82f6"/><text x="650" y="378" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff">3</text>
+  <text x="706" y="386" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Privacy</text>
+  <text x="706" y="402" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Layer</text>
+
+  <!-- Module 4: Compliance & Identity (bottom-right) -->
+  <rect x="603" y="530" width="140" height="60" rx="8" ry="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#shadow)"/>
+  <circle cx="617" cy="544" r="10" fill="#6b7280"/><text x="617" y="548" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff">4</text>
+  <text x="673" y="556" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Compliance &amp;</text>
+  <text x="673" y="572" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Identity</text>
+
+  <!-- Module 5: Access Control (bottom) -->
+  <rect x="410" y="590" width="140" height="60" rx="8" ry="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#shadow)"/>
+  <circle cx="424" cy="604" r="10" fill="#6b7280"/><text x="424" y="608" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff">5</text>
+  <text x="480" y="616" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Access</text>
+  <text x="480" y="632" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Control</text>
+
+  <!-- Module 6: DA & Data Sovereignty (bottom-left) -->
+  <rect x="217" y="530" width="140" height="60" rx="8" ry="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#shadow)"/>
+  <circle cx="231" cy="544" r="10" fill="#6b7280"/><text x="231" y="548" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff">6</text>
+  <text x="287" y="556" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">DA &amp; Data</text>
+  <text x="287" y="572" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Sovereignty</text>
+
+  <!-- Module 7: Interoperability (left) -->
+  <rect x="184" y="360" width="140" height="60" rx="8" ry="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#shadow)"/>
+  <circle cx="198" cy="374" r="10" fill="#6b7280"/><text x="198" y="378" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff">7</text>
+  <text x="254" y="396" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Interoperability</text>
+
+  <!-- Module 8: Operations & Business (top-left) -->
+  <rect x="217" y="190" width="140" height="60" rx="8" ry="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#shadow)"/>
+  <circle cx="231" cy="204" r="10" fill="#6b7280"/><text x="231" y="208" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff">8</text>
+  <text x="287" y="216" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Operations &amp;</text>
+  <text x="287" y="232" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Business Comp.</text>
+
+  <!-- Constraint Arrow 1: Privacy(3) -> DA(6) - "Privacy changes DA model" -->
+  <path d="M 706,420 Q 620,510 357,540" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+  <rect x="475" y="462" width="130" height="30" rx="4" fill="#ffffff" opacity="0.95" stroke="#2563eb" stroke-width="0.5"/>
+  <text x="540" y="474" text-anchor="middle" font-size="10" fill="#2563eb">Privacy changes</text>
+  <text x="540" y="488" text-anchor="middle" font-size="10" fill="#2563eb">DA model</text>
+
+  <!-- Constraint Arrow 2: DA(6) -> Interop(7) - "DA changes Ethereum settlement" -->
+  <path d="M 247,530 Q 220,470 250,420" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+  <rect x="120" y="460" width="140" height="30" rx="4" fill="#ffffff" opacity="0.95" stroke="#2563eb" stroke-width="0.5"/>
+  <text x="190" y="472" text-anchor="middle" font-size="10" fill="#2563eb">DA changes</text>
+  <text x="190" y="486" text-anchor="middle" font-size="10" fill="#2563eb">Ethereum settlement</text>
+
+  <!-- Constraint Arrow 3: Compliance(4) -> Execution(1) - "Compliance depth changes execution" -->
+  <path d="M 673,530 Q 730,340 550,170" stroke="#ea580c" stroke-width="2" fill="none" marker-end="url(#arrow-orange)"/>
+  <rect x="680" y="330" width="145" height="30" rx="4" fill="#ffffff" opacity="0.95" stroke="#ea580c" stroke-width="0.5"/>
+  <text x="752" y="342" text-anchor="middle" font-size="10" fill="#ea580c">Compliance depth</text>
+  <text x="752" y="356" text-anchor="middle" font-size="10" fill="#ea580c">changes execution</text>
+
+  <!-- Constraint Arrow 4: Finality(2) -> Operations(8) - "Finality determines business viability" -->
+  <path d="M 603,220 Q 480,140 357,210" stroke="#16a34a" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+  <rect x="415" y="118" width="150" height="30" rx="4" fill="#ffffff" opacity="0.95" stroke="#16a34a" stroke-width="0.5"/>
+  <text x="490" y="130" text-anchor="middle" font-size="10" fill="#16a34a">Finality determines</text>
+  <text x="490" y="144" text-anchor="middle" font-size="10" fill="#16a34a">business viability</text>
+
+  <!-- Constraint Arrow 5: Access(5) -> Privacy(3) - "Access infra prerequisite" -->
+  <path d="M 550,610 Q 720,580 730,420" stroke="#9333ea" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+  <rect x="630" y="495" width="118" height="30" rx="4" fill="#ffffff" opacity="0.95" stroke="#9333ea" stroke-width="0.5"/>
+  <text x="689" y="507" text-anchor="middle" font-size="10" fill="#9333ea">Access infra</text>
+  <text x="689" y="521" text-anchor="middle" font-size="10" fill="#9333ea">prerequisite</text>
+
+  <!-- Constraint Arrow 6: Access(5) -> Compliance(4) - "Shared identity source" -->
+  <path d="M 530,590 Q 590,580 620,590" stroke="#9333ea" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+  <rect x="526" y="570" width="106" height="18" rx="4" fill="#ffffff" opacity="0.95" stroke="#9333ea" stroke-width="0.5"/>
+  <text x="579" y="583" text-anchor="middle" font-size="10" fill="#9333ea">Shared identity source</text>
+
+  <!-- Legend -->
+  <g transform="translate(30, 710)">
+    <text x="0" y="0" font-size="13" font-weight="600" fill="#111827">Legend</text>
+    <rect x="0" y="10" width="20" height="14" rx="3" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="26" y="22" font-size="11" fill="#6b7280">Key divergence point between L1/L2/L3 paths</text>
+    <rect x="0" y="30" width="20" height="14" rx="3" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5"/>
+    <text x="26" y="42" font-size="11" fill="#6b7280">Supporting module</text>
+  </g>
+  <g transform="translate(400, 710)">
+    <text x="0" y="0" font-size="13" font-weight="600" fill="#111827">Constraint Propagation</text>
+    <line x1="0" y1="18" x2="30" y2="18" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    <text x="36" y="22" font-size="11" fill="#6b7280">Privacy / DA cascade</text>
+    <line x1="0" y1="34" x2="30" y2="34" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-orange)"/>
+    <text x="36" y="38" font-size="11" fill="#6b7280">Compliance / Execution cascade</text>
+    <line x1="200" y1="18" x2="230" y2="18" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow-green)"/>
+    <text x="236" y="22" font-size="11" fill="#6b7280">Finality / Business cascade</text>
+    <line x1="200" y1="34" x2="230" y2="34" stroke="#9333ea" stroke-width="2" marker-end="url(#arrow-purple)"/>
+    <text x="236" y="38" font-size="11" fill="#6b7280">Identity / Access foundation</text>
+  </g>
+</svg>

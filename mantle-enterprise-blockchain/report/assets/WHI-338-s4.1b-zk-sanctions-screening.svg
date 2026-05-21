@@ -1,0 +1,245 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" width="900" height="550" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EEF2F7;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Card drop shadow -->
+    <filter id="cardShadow" x="-8%" y="-8%" width="116%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#CBD5E1" flood-opacity="0.45"/>
+    </filter>
+
+    <!-- Badge shadow -->
+    <filter id="badgeShadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+
+    <!-- Red section gradient -->
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FEF2F2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFF7F7;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Green section gradient -->
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F0FDF4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F7FFF9;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Arrow marker red -->
+    <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#EF4444"/>
+    </marker>
+
+    <!-- Arrow marker green -->
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#22C55E"/>
+    </marker>
+
+    <!-- Arrow marker gray -->
+    <marker id="arrowGray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#94A3B8"/>
+    </marker>
+  </defs>
+
+  <!-- ── Background ── -->
+  <rect width="900" height="550" fill="url(#bgGrad)" rx="0"/>
+
+  <!-- ══════════════════════════════════════════
+       TITLE
+  ══════════════════════════════════════════ -->
+  <text x="450" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#1E293B" letter-spacing="-0.3">WHI-338 §4.1　无 PII 存储的制裁筛查</text>
+  <text x="450" y="51" text-anchor="middle" font-size="11" fill="#64748B">ZK Sanctions Screening — No PII Storage</text>
+
+  <!-- ══════════════════════════════════════════
+       TOP SECTION — 传统制裁筛查
+  ══════════════════════════════════════════ -->
+
+  <!-- Section card -->
+  <rect x="20" y="62" width="860" height="195" rx="14" fill="url(#redGrad)" filter="url(#cardShadow)"/>
+  <!-- Red accent bar -->
+  <rect x="20" y="62" width="5" height="195" rx="3" fill="#EF4444"/>
+
+  <!-- Section header -->
+  <text x="42" y="84" font-size="13" font-weight="700" fill="#EF4444" letter-spacing="0.1">⚠  传统制裁筛查</text>
+  <text x="42" y="99" font-size="10" fill="#94A3B8">Traditional Sanctions Screening (with PII exposure)</text>
+
+  <!-- ─ Step boxes – traditional flow ─ -->
+  <!-- Each step: x positions at 42, 200, 372, 545, 720, warning badge at end -->
+
+  <!-- Step 1 -->
+  <rect x="42" y="110" width="140" height="56" rx="10" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <rect x="42" y="110" width="140" height="4" rx="2" fill="#EF4444"/>
+  <text x="112" y="128" text-anchor="middle" font-size="18">🏦</text>
+  <text x="112" y="143" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1E293B">①</text>
+  <text x="112" y="155" text-anchor="middle" font-size="9" fill="#475569">银行 A 与 银行 B</text>
+  <text x="112" y="166" text-anchor="middle" font-size="9" fill="#475569">发起交易</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="185" y1="138" x2="197" y2="138" stroke="#EF4444" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+
+  <!-- Step 2 -->
+  <rect x="200" y="110" width="155" height="56" rx="10" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <rect x="200" y="110" width="155" height="4" rx="2" fill="#EF4444"/>
+  <text x="278" y="128" text-anchor="middle" font-size="18">📋</text>
+  <text x="278" y="143" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1E293B">②</text>
+  <text x="278" y="155" text-anchor="middle" font-size="9" fill="#475569">银行 A 收集银行 B</text>
+  <text x="278" y="166" text-anchor="middle" font-size="9" fill="#475569">客户护照号、地址</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="358" y1="138" x2="370" y2="138" stroke="#EF4444" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+
+  <!-- Step 3 -->
+  <rect x="373" y="110" width="150" height="56" rx="10" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <rect x="373" y="110" width="150" height="4" rx="2" fill="#EF4444"/>
+  <text x="448" y="128" text-anchor="middle" font-size="18">💾</text>
+  <text x="448" y="143" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1E293B">③</text>
+  <text x="448" y="155" text-anchor="middle" font-size="9" fill="#475569">银行 A 在本地</text>
+  <text x="448" y="166" text-anchor="middle" font-size="9" fill="#475569">存储这些 PII</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="526" y1="138" x2="538" y2="138" stroke="#EF4444" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+
+  <!-- Step 4 -->
+  <rect x="541" y="110" width="155" height="56" rx="10" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <rect x="541" y="110" width="155" height="4" rx="2" fill="#EF4444"/>
+  <text x="618" y="128" text-anchor="middle" font-size="18">🔍</text>
+  <text x="618" y="143" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1E293B">④</text>
+  <text x="618" y="155" text-anchor="middle" font-size="9" fill="#475569">与 OFAC 制裁名单</text>
+  <text x="618" y="166" text-anchor="middle" font-size="9" fill="#475569">进行 PII 比对</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="699" y1="138" x2="711" y2="138" stroke="#EF4444" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+
+  <!-- Step 5 — warning -->
+  <rect x="714" y="110" width="150" height="56" rx="10" fill="#FEE2E2" filter="url(#cardShadow)"/>
+  <rect x="714" y="110" width="150" height="4" rx="2" fill="#DC2626"/>
+  <text x="789" y="128" text-anchor="middle" font-size="18">⚠️</text>
+  <text x="789" y="143" text-anchor="middle" font-size="9.5" font-weight="700" fill="#DC2626">⑤ 风险!</text>
+  <text x="789" y="155" text-anchor="middle" font-size="9" fill="#7F1D1D">银行 A 持有对方</text>
+  <text x="789" y="166" text-anchor="middle" font-size="9" fill="#7F1D1D">客户的敏感信息</text>
+
+  <!-- Warning badge -->
+  <rect x="42" y="180" width="820" height="66" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+  <text x="62" y="200" font-size="10" font-weight="700" fill="#DC2626">⚠  问题:</text>
+  <text x="62" y="216" font-size="9.5" fill="#7F1D1D">• 违反 GDPR / 数据最小化原则 — 银行 A 持有无需存储的对方 PII</text>
+  <text x="62" y="230" font-size="9.5" fill="#7F1D1D">• 数据泄露风险扩大 — 任何安全漏洞均可暴露第三方客户隐私</text>
+  <text x="500" y="216" font-size="9.5" fill="#7F1D1D">• 跨境数据传输合规复杂 — 可能违反 PDPA、PIPL 等本地法规</text>
+  <text x="500" y="230" font-size="9.5" fill="#7F1D1D">• 监管审计困难 — PII 的处理链路难以追溯核查</text>
+
+  <!-- ══════════════════════════════════════════
+       BOTTOM SECTION — ZK 制裁筛查
+  ══════════════════════════════════════════ -->
+
+  <!-- Section card -->
+  <rect x="20" y="268" width="860" height="238" rx="14" fill="url(#greenGrad)" filter="url(#cardShadow)"/>
+  <!-- Green accent bar -->
+  <rect x="20" y="268" width="5" height="238" rx="3" fill="#22C55E"/>
+
+  <!-- Section header -->
+  <text x="42" y="290" font-size="13" font-weight="700" fill="#16A34A" letter-spacing="0.1">✦  ZK 制裁筛查</text>
+  <text x="42" y="305" font-size="10" fill="#94A3B8">ZK-Proof Sanctions Screening (zero PII exposure)</text>
+
+  <!-- ─ Step boxes – ZK flow ─ -->
+  <!-- 6 steps, tighter spacing -->
+
+  <!-- Step 1 -->
+  <rect x="42" y="316" width="120" height="60" rx="10" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <rect x="42" y="316" width="120" height="4" rx="2" fill="#22C55E"/>
+  <text x="102" y="333" text-anchor="middle" font-size="16">🏦</text>
+  <text x="102" y="347" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1E293B">①</text>
+  <text x="102" y="358" text-anchor="middle" font-size="9" fill="#475569">银行 A 与 银行 B</text>
+  <text x="102" y="369" text-anchor="middle" font-size="9" fill="#475569">发起交易</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="165" y1="346" x2="177" y2="346" stroke="#22C55E" stroke-width="1.8" marker-end="url(#arrowGreen)"/>
+
+  <!-- Step 2 -->
+  <rect x="180" y="316" width="120" height="60" rx="10" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <rect x="180" y="316" width="120" height="4" rx="2" fill="#22C55E"/>
+  <text x="240" y="333" text-anchor="middle" font-size="16">🔒</text>
+  <text x="240" y="347" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1E293B">②</text>
+  <text x="240" y="358" text-anchor="middle" font-size="9" fill="#475569">银行 B 本地执行</text>
+  <text x="240" y="369" text-anchor="middle" font-size="9" fill="#475569">制裁筛查</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="303" y1="346" x2="315" y2="346" stroke="#22C55E" stroke-width="1.8" marker-end="url(#arrowGreen)"/>
+
+  <!-- Step 3 — ZK generation highlight -->
+  <rect x="318" y="316" width="155" height="60" rx="10" fill="#DCFCE7" filter="url(#cardShadow)"/>
+  <rect x="318" y="316" width="155" height="4" rx="2" fill="#16A34A"/>
+  <text x="395" y="333" text-anchor="middle" font-size="16">🔐</text>
+  <text x="395" y="347" text-anchor="middle" font-size="9.5" font-weight="700" fill="#166534">③ 生成 ZK 证明</text>
+  <text x="395" y="358" text-anchor="middle" font-size="8.5" fill="#166534">"客户不在 OFAC</text>
+  <text x="395" y="369" text-anchor="middle" font-size="8.5" fill="#166534">名单上" (无 PII)</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="476" y1="346" x2="488" y2="346" stroke="#22C55E" stroke-width="1.8" marker-end="url(#arrowGreen)"/>
+
+  <!-- Step 4 -->
+  <rect x="491" y="316" width="120" height="60" rx="10" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <rect x="491" y="316" width="120" height="4" rx="2" fill="#22C55E"/>
+  <text x="551" y="333" text-anchor="middle" font-size="16">✅</text>
+  <text x="551" y="347" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1E293B">④</text>
+  <text x="551" y="358" text-anchor="middle" font-size="9" fill="#475569">银行 A 验证</text>
+  <text x="551" y="369" text-anchor="middle" font-size="9" fill="#475569">密码学证明</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="614" y1="346" x2="626" y2="346" stroke="#22C55E" stroke-width="1.8" marker-end="url(#arrowGreen)"/>
+
+  <!-- Step 5 -->
+  <rect x="629" y="316" width="120" height="60" rx="10" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <rect x="629" y="316" width="120" height="4" rx="2" fill="#22C55E"/>
+  <text x="689" y="333" text-anchor="middle" font-size="16">🛡️</text>
+  <text x="689" y="347" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1E293B">⑤ ✅</text>
+  <text x="689" y="358" text-anchor="middle" font-size="9" fill="#475569">银行 A 从未</text>
+  <text x="689" y="369" text-anchor="middle" font-size="9" fill="#475569">接触任何 PII</text>
+
+  <!-- Arrow 5→6 -->
+  <line x1="752" y1="346" x2="764" y2="346" stroke="#22C55E" stroke-width="1.8" marker-end="url(#arrowGreen)"/>
+
+  <!-- Step 6 -->
+  <rect x="767" y="316" width="113" height="60" rx="10" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <rect x="767" y="316" width="113" height="4" rx="2" fill="#22C55E"/>
+  <text x="823" y="333" text-anchor="middle" font-size="16">🏛️</text>
+  <text x="823" y="347" text-anchor="middle" font-size="9.5" font-weight="600" fill="#1E293B">⑥ ✅</text>
+  <text x="823" y="358" text-anchor="middle" font-size="9" fill="#475569">监管机构可</text>
+  <text x="823" y="369" text-anchor="middle" font-size="9" fill="#475569">独立验证证明</text>
+
+  <!-- Benefits grid -->
+  <rect x="42" y="390" width="820" height="100" rx="10" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+
+  <!-- Benefit label -->
+  <text x="62" y="410" font-size="10" font-weight="700" fill="#16A34A">✦  ZK 筛查优势:</text>
+
+  <!-- Column 1 -->
+  <text x="62" y="428" font-size="9.5" fill="#166534">✅  数据最小化合规 — 无跨机构 PII 传输</text>
+  <text x="62" y="444" font-size="9.5" fill="#166534">✅  GDPR / PIPL 友好 — 本地处理，零外泄</text>
+  <text x="62" y="460" font-size="9.5" fill="#166534">✅  密码学不可伪造 — 无法造假合规状态</text>
+  <text x="62" y="476" font-size="9.5" fill="#166534">✅  可审计链上记录 — 证明本身即审计轨迹</text>
+
+  <!-- Column 2 -->
+  <text x="460" y="428" font-size="9.5" fill="#166534">✅  监管机构无需访问 PII 即可核查合规</text>
+  <text x="460" y="444" font-size="9.5" fill="#166534">✅  双边隐私保护 — 双方客户数据均不外露</text>
+  <text x="460" y="460" font-size="9.5" fill="#166534">✅  与 Tempo Privacy Layer 原生集成</text>
+  <text x="460" y="476" font-size="9.5" fill="#166534">✅  可扩展至 AML、KYC 等更多合规场景</text>
+
+  <!-- ══════════════════════════════════════════
+       BOTTOM NOTE
+  ══════════════════════════════════════════ -->
+  <rect x="20" y="516" width="860" height="26" rx="8" fill="#1E293B"/>
+  <text x="450" y="531" text-anchor="middle" font-size="10" fill="#F1F5F9">
+    🔐  密码学合规证明是防篡改的 — 与传统自我声明不同，ZK 证明不可伪造
+  </text>
+  <text x="450" y="543" text-anchor="middle" font-size="9" fill="#64748B">Cryptographic compliance proofs are tamper-proof — unlike attestations, ZK proofs cannot be falsified</text>
+
+  <!-- ══════════════════════════════════════════
+       VS divider between sections
+  ══════════════════════════════════════════ -->
+  <line x1="40" y1="262" x2="860" y2="262" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="415" y="253" width="70" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="450" y="265" text-anchor="middle" font-size="9.5" font-weight="700" fill="#64748B">vs</text>
+
+</svg>

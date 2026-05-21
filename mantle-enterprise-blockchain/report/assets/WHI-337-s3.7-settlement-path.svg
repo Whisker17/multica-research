@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 650" width="700" height="650" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Drop shadow filter -->
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+
+    <!-- Badge shadow -->
+    <filter id="badgeShadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#22C55E" flood-opacity="0.25"/>
+    </filter>
+
+    <!-- Arrow marker (solid) -->
+    <marker id="arrowSolid" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748B"/>
+    </marker>
+
+    <!-- Arrow marker (green for final) -->
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22C55E"/>
+    </marker>
+
+    <!-- Green accent gradient -->
+    <linearGradient id="greenAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#16A34A"/>
+    </linearGradient>
+
+    <!-- Blue accent gradient -->
+    <linearGradient id="blueAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+
+    <!-- Indigo accent gradient -->
+    <linearGradient id="indigoAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+
+    <!-- Badge gradient -->
+    <linearGradient id="badgeGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#DCFCE7"/>
+      <stop offset="100%" stop-color="#D1FAE5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="650" fill="url(#bgGrad)"/>
+
+  <!-- ═══════════════════════════════════ TITLE ═══════════════════════════════════ -->
+  <text x="350" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#0F172A" letter-spacing="-0.3">WHI-337 §3.7 结算路径</text>
+  <text x="350" y="57" text-anchor="middle" font-size="12" font-weight="400" fill="#64748B">Settlement Path — Prividium → ZKsync Gateway → Ethereum</text>
+  <line x1="100" y1="67" x2="600" y2="67" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- ═══════════════════════════════════ CARD 1: Prividium Chain ═══════════════════════════════════ -->
+  <!-- Card body -->
+  <rect x="60" y="80" width="580" height="148" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Green accent bar -->
+  <rect x="60" y="80" width="7" height="148" rx="3.5" fill="url(#greenAccent)"/>
+  <!-- Right-corner clip to square the bar's right edge -->
+  <rect x="64" y="80" width="3" height="148" fill="url(#greenAccent)"/>
+
+  <!-- Icon + Layer label -->
+  <text x="88" y="108" font-size="22">🔒</text>
+  <text x="118" y="104" font-size="14" font-weight="700" fill="#15803D">Prividium Chain</text>
+  <text x="118" y="120" font-size="11.5" fill="#64748B" font-weight="500">私有执行</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="130" x2="628" y2="130" stroke="#F1F5F9" stroke-width="1.2"/>
+
+  <!-- Step 1 -->
+  <rect x="80" y="140" width="24" height="24" rx="6" fill="#DCFCE7"/>
+  <text x="92" y="156" font-size="11" font-weight="700" fill="#15803D" text-anchor="middle">1</text>
+  <text x="114" y="156" font-size="12.5" fill="#1E293B" font-weight="500">Sequencer 最终化区块批次</text>
+
+  <!-- Step 2 -->
+  <rect x="80" y="176" width="24" height="24" rx="6" fill="#DCFCE7"/>
+  <text x="92" y="192" font-size="11" font-weight="700" fill="#15803D" text-anchor="middle">2</text>
+  <text x="114" y="192" font-size="12.5" fill="#1E293B" font-weight="500">Prover 生成 STARK 证明</text>
+
+  <!-- ═══════════════════════════════════ ARROW 1 ═══════════════════════════════════ -->
+  <line x1="350" y1="228" x2="350" y2="263" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowSolid)"/>
+  <!-- Label pill -->
+  <rect x="218" y="237" width="264" height="22" rx="11" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="350" y="252" text-anchor="middle" font-size="11" fill="#475569" font-weight="600">STARK 证明 + 状态根</text>
+
+  <!-- ═══════════════════════════════════ CARD 2: ZKsync Gateway ═══════════════════════════════════ -->
+  <rect x="60" y="268" width="580" height="148" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Blue accent bar -->
+  <rect x="60" y="268" width="7" height="148" rx="3.5" fill="url(#blueAccent)"/>
+  <rect x="64" y="268" width="3" height="148" fill="url(#blueAccent)"/>
+
+  <!-- Icon + Layer label -->
+  <text x="88" y="296" font-size="22">🔗</text>
+  <text x="118" y="292" font-size="14" font-weight="700" fill="#1D4ED8">ZKsync Gateway</text>
+  <text x="118" y="308" font-size="11.5" fill="#64748B" font-weight="500">共享结算层</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="318" x2="628" y2="318" stroke="#F1F5F9" stroke-width="1.2"/>
+
+  <!-- Step 3 -->
+  <rect x="80" y="328" width="24" height="24" rx="6" fill="#DBEAFE"/>
+  <text x="92" y="344" font-size="11" font-weight="700" fill="#1D4ED8" text-anchor="middle">3</text>
+  <text x="114" y="344" font-size="12.5" fill="#1E293B" font-weight="500">Relayer 接收证明 <tspan fill="#64748B" font-size="11">(出站连接, 无入站)</tspan></text>
+
+  <!-- Step 4 -->
+  <rect x="80" y="364" width="24" height="24" rx="6" fill="#DBEAFE"/>
+  <text x="92" y="380" font-size="11" font-weight="700" fill="#1D4ED8" text-anchor="middle">4</text>
+  <text x="114" y="380" font-size="12.5" fill="#1E293B" font-weight="500">提交状态根 + 证明至以太坊</text>
+
+  <!-- ═══════════════════════════════════ ARROW 2 ═══════════════════════════════════ -->
+  <line x1="350" y1="416" x2="350" y2="451" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowSolid)"/>
+  <!-- Label pill -->
+  <rect x="248" y="425" width="204" height="22" rx="11" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="350" y="440" text-anchor="middle" font-size="11" fill="#475569" font-weight="600">以太坊交易</text>
+
+  <!-- ═══════════════════════════════════ CARD 3: Ethereum Mainnet ═══════════════════════════════════ -->
+  <rect x="60" y="456" width="580" height="148" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Indigo accent bar -->
+  <rect x="60" y="456" width="7" height="148" rx="3.5" fill="url(#indigoAccent)"/>
+  <rect x="64" y="456" width="3" height="148" fill="url(#indigoAccent)"/>
+
+  <!-- Icon + Layer label -->
+  <text x="88" y="484" font-size="22">💎</text>
+  <text x="118" y="480" font-size="14" font-weight="700" fill="#4338CA">Ethereum Mainnet</text>
+  <text x="118" y="496" font-size="11.5" fill="#64748B" font-weight="500">L1</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="506" x2="628" y2="506" stroke="#F1F5F9" stroke-width="1.2"/>
+
+  <!-- Step 5 -->
+  <rect x="80" y="516" width="24" height="24" rx="6" fill="#E0E7FF"/>
+  <text x="92" y="532" font-size="11" font-weight="700" fill="#4338CA" text-anchor="middle">5</text>
+  <text x="114" y="532" font-size="12.5" fill="#1E293B" font-weight="500">链上验证 STARK 证明</text>
+
+  <!-- Step 6 -->
+  <rect x="80" y="552" width="24" height="24" rx="6" fill="#E0E7FF"/>
+  <text x="92" y="568" font-size="11" font-weight="700" fill="#4338CA" text-anchor="middle">6</text>
+  <text x="114" y="568" font-size="12.5" fill="#1E293B" font-weight="500">状态根被接受 → 不可篡改的最终性</text>
+
+  <!-- ═══════════════════════════════════ ARROW 3 (to result) ═══════════════════════════════════ -->
+  <line x1="350" y1="604" x2="350" y2="616" stroke="#22C55E" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
+
+  <!-- ═══════════════════════════════════ RESULT BADGE ═══════════════════════════════════ -->
+  <rect x="85" y="620" width="530" height="24" rx="12" fill="url(#badgeGrad)" stroke="#86EFAC" stroke-width="1.5" filter="url(#badgeShadow)"/>
+  <text x="350" y="636" text-anchor="middle" font-size="12.5" font-weight="700" fill="#15803D">✅  结算完成 — 无中间人, 无运营商信任依赖</text>
+</svg>

@@ -1,0 +1,269 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" width="900" height="550" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Card drop shadow -->
+    <filter id="cardShadow" x="-4%" y="-8%" width="108%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#1E293B" flood-opacity="0.08"/>
+    </filter>
+
+    <!-- Lighter shadow for annotation box -->
+    <filter id="noteShadow" x="-6%" y="-10%" width="112%" height="130%">
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#1E293B" flood-opacity="0.06"/>
+    </filter>
+
+    <!-- Arrow marker -->
+    <marker id="arrowHead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748B"/>
+    </marker>
+    <marker id="arrowHeadBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3B82F6"/>
+    </marker>
+  </defs>
+
+  <!-- ── Background ── -->
+  <rect width="900" height="550" fill="url(#bgGrad)"/>
+
+  <!-- ══════════════════════════════════════
+       TITLE
+  ═══════════════════════════════════════ -->
+  <text x="450" y="34" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0F172A" letter-spacing="0.2">WHI-338 §3 企业级准入控制实现层次 — 四层纵深防御</text>
+  <text x="450" y="52" text-anchor="middle" font-size="11" fill="#64748B">Four-Layer Defense-in-Depth Access Control Stack · Prividium zkSync Enterprise</text>
+
+  <!-- divider -->
+  <line x1="60" y1="62" x2="840" y2="62" stroke="#E2E8F0" stroke-width="1"/>
+
+  <!-- ══════════════════════════════════════
+       LAYER CARDS  (top = L4, bottom = L1)
+       Card x=60, width=700 (leaving room for annotation column)
+       Heights: y=72 each card 94px tall, gap 10px
+  ═══════════════════════════════════════ -->
+
+  <!-- ── LAYER 4 ── (y=72, accent red) -->
+  <rect x="60" y="72" width="700" height="94" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- accent bar -->
+  <rect x="60" y="72" width="7" height="94" rx="4" fill="#EF4444"/>
+  <rect x="64" y="72" width="3" height="94" fill="#EF4444"/>
+
+  <!-- Layer badge -->
+  <rect x="80" y="86" width="72" height="22" rx="6" fill="#FEF2F2"/>
+  <text x="116" y="101" text-anchor="middle" font-size="10.5" font-weight="700" fill="#EF4444">Layer 4</text>
+
+  <!-- Emoji + primary label -->
+  <text x="164" y="101" font-size="18">🛡️</text>
+  <text x="190" y="101" font-size="13.5" font-weight="700" fill="#0F172A">L1 边界防御</text>
+  <text x="190" y="116" font-size="11" fill="#64748B">L1 Perimeter Defense</text>
+
+  <!-- Vertical divider -->
+  <line x1="400" y1="82" x2="400" y2="156" stroke="#F1F5F9" stroke-width="1.5"/>
+
+  <!-- Right-side detail -->
+  <text x="416" y="100" font-size="12" font-weight="600" fill="#1E293B">PrividiumTransactionFilterer (L1 合约层)</text>
+  <text x="416" y="118" font-size="11" fill="#64748B">拦截 L1→L2 强制交易</text>
+  <text x="416" y="134" font-size="11" fill="#64748B">白名单机制 · 链上合约执行拦截逻辑</text>
+
+  <!-- "enforced on-chain" pill -->
+  <rect x="416" y="142" width="92" height="16" rx="5" fill="#FEE2E2"/>
+  <text x="462" y="153.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#DC2626">On-Chain Enforced</text>
+
+  <!-- ── LAYER 3 ── (y=176, accent amber) -->
+  <rect x="60" y="176" width="700" height="94" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="60" y="176" width="7" height="94" rx="4" fill="#F59E0B"/>
+  <rect x="64" y="176" width="3" height="94" fill="#F59E0B"/>
+
+  <rect x="80" y="190" width="72" height="22" rx="6" fill="#FFFBEB"/>
+  <text x="116" y="205" text-anchor="middle" font-size="10.5" font-weight="700" fill="#D97706">Layer 3</text>
+
+  <text x="164" y="205" font-size="18">🔐</text>
+  <text x="190" y="205" font-size="13.5" font-weight="700" fill="#0F172A">合约函数权限</text>
+  <text x="190" y="220" font-size="11" fill="#64748B">Contract Function RBAC</text>
+
+  <line x1="400" y1="186" x2="400" y2="260" stroke="#F1F5F9" stroke-width="1.5"/>
+
+  <text x="416" y="204" font-size="12" font-weight="600" fill="#1E293B">RBAC 六种权限类型 (默认 Forbidden)</text>
+
+  <!-- Three permission tags -->
+  <rect x="416" y="210" width="80" height="17" rx="5" fill="#FEF3C7"/>
+  <text x="456" y="221.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#92400E">Check Role</text>
+
+  <rect x="504" y="210" width="100" height="17" rx="5" fill="#FEF3C7"/>
+  <text x="554" y="221.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#92400E">Restrict Argument</text>
+
+  <rect x="612" y="210" width="72" height="17" rx="5" fill="#FEF3C7"/>
+  <text x="648" y="221.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#92400E">组合模式</text>
+
+  <text x="416" y="244" font-size="11" fill="#64748B">角色 → 函数级绑定 · 六类：Forbidden / Allow / AllowOnly /</text>
+  <text x="416" y="258" font-size="11" fill="#64748B">CheckRole / RestrictArg / Composite</text>
+
+  <!-- ── LAYER 2 ── (y=280, accent blue) -->
+  <rect x="60" y="280" width="700" height="94" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="60" y="280" width="7" height="94" rx="4" fill="#3B82F6"/>
+  <rect x="64" y="280" width="3" height="94" fill="#3B82F6"/>
+
+  <rect x="80" y="294" width="72" height="22" rx="6" fill="#EFF6FF"/>
+  <text x="116" y="309" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563EB">Layer 2</text>
+
+  <text x="164" y="309" font-size="18">🔍</text>
+  <text x="190" y="309" font-size="13.5" font-weight="700" fill="#0F172A">网关验证</text>
+  <text x="190" y="324" font-size="11" fill="#64748B">Gateway / Proxy RPC Validation</text>
+
+  <line x1="400" y1="290" x2="400" y2="364" stroke="#F1F5F9" stroke-width="1.5"/>
+
+  <text x="416" y="308" font-size="12" font-weight="600" fill="#1E293B">Proxy RPC 三步验证流程</text>
+
+  <!-- Step indicators -->
+  <circle cx="423" cy="325" r="8" fill="#3B82F6"/>
+  <text x="423" y="328.5" text-anchor="middle" font-size="9" font-weight="700" fill="white">1</text>
+  <text x="437" y="328" font-size="11" fill="#1E293B">JWT Token 验证</text>
+
+  <circle cx="523" cy="325" r="8" fill="#3B82F6"/>
+  <text x="523" y="328.5" text-anchor="middle" font-size="9" font-weight="700" fill="white">2</text>
+  <text x="537" y="328" font-size="11" fill="#1E293B">钱包地址核验</text>
+
+  <circle cx="623" cy="325" r="8" fill="#3B82F6"/>
+  <text x="623" y="328.5" text-anchor="middle" font-size="9" font-weight="700" fill="white">3</text>
+  <text x="637" y="328" font-size="11" fill="#1E293B">合约函数权限检查</text>
+
+  <text x="416" y="350" font-size="11" fill="#64748B">所有 RPC 调用经由 Prividium Proxy 拦截 · 企业自建可信节点</text>
+  <text x="416" y="364" font-size="11" fill="#64748B">网络隔离 + 防火墙策略配合部署</text>
+
+  <!-- ── LAYER 1 ── (y=384, accent green) -->
+  <rect x="60" y="384" width="700" height="94" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="60" y="384" width="7" height="94" rx="4" fill="#22C55E"/>
+  <rect x="64" y="384" width="3" height="94" fill="#22C55E"/>
+
+  <rect x="80" y="398" width="72" height="22" rx="6" fill="#F0FDF4"/>
+  <text x="116" y="413" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16A34A">Layer 1</text>
+
+  <text x="164" y="413" font-size="18">🪪</text>
+  <text x="190" y="413" font-size="13.5" font-weight="700" fill="#0F172A">身份认证</text>
+  <text x="190" y="428" font-size="11" fill="#64748B">Identity &amp; Authentication</text>
+
+  <line x1="400" y1="394" x2="400" y2="468" stroke="#F1F5F9" stroke-width="1.5"/>
+
+  <text x="416" y="412" font-size="12" font-weight="600" fill="#1E293B">SSO 集成 (Okta OIDC / SIWE / 混合模式)</text>
+  <text x="416" y="428" font-size="11" fill="#64748B">企业级身份管理 + 钱包地址绑定</text>
+
+  <!-- SSO badges -->
+  <rect x="416" y="434" width="52" height="17" rx="5" fill="#F0FDF4"/>
+  <text x="442" y="445.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#15803D">Okta OIDC</text>
+
+  <rect x="476" y="434" width="36" height="17" rx="5" fill="#F0FDF4"/>
+  <text x="494" y="445.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#15803D">SIWE</text>
+
+  <rect x="520" y="434" width="52" height="17" rx="5" fill="#F0FDF4"/>
+  <text x="546" y="445.5" text-anchor="middle" font-size="9.5" font-weight="600" fill="#15803D">混合模式</text>
+
+  <text x="416" y="464" font-size="11" fill="#64748B">JWT 颁发 · 会话管理 · 钱包签名验证 (EIP-4361)</text>
+
+  <!-- ══════════════════════════════════════
+       ANNOTATION COLUMN (x=775)
+  ═══════════════════════════════════════ -->
+  <rect x="771" y="72" width="118" height="406" rx="12" fill="white" filter="url(#noteShadow)" opacity="0.97"/>
+  <rect x="771" y="72" width="118" height="6" rx="6" fill="#F59E0B"/>
+
+  <text x="830" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#92400E">⚠️ 重要说明</text>
+  <line x1="782" y1="106" x2="878" y2="106" stroke="#FEF3C7" stroke-width="1"/>
+
+  <text x="830" y="122" text-anchor="middle" font-size="9.5" fill="#44403C">所有层均为</text>
+  <text x="830" y="136" text-anchor="middle" font-size="9.5" fill="#44403C">企业控制的</text>
+  <text x="830" y="150" text-anchor="middle" font-size="9.5" fill="#44403C">可信执行点</text>
+
+  <line x1="782" y1="158" x2="878" y2="158" stroke="#F1F5F9" stroke-width="1"/>
+
+  <text x="830" y="174" text-anchor="middle" font-size="9" fill="#78716C">非 ZK proof</text>
+  <text x="830" y="188" text-anchor="middle" font-size="9" fill="#78716C">层面的密码学</text>
+  <text x="830" y="202" text-anchor="middle" font-size="9" fill="#78716C">保证</text>
+
+  <line x1="782" y1="212" x2="878" y2="212" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- Trust model annotation per layer -->
+  <rect x="783" y="220" width="96" height="56" rx="6" fill="#FEF2F2"/>
+  <text x="831" y="234" text-anchor="middle" font-size="8.5" font-weight="700" fill="#DC2626">L4 On-Chain</text>
+  <text x="831" y="246" text-anchor="middle" font-size="8" fill="#7F1D1D">最强执行力</text>
+  <text x="831" y="258" text-anchor="middle" font-size="8" fill="#7F1D1D">L1 合约保证</text>
+  <text x="831" y="270" text-anchor="middle" font-size="8" fill="#7F1D1D">可审计</text>
+
+  <rect x="783" y="282" width="96" height="56" rx="6" fill="#FFFBEB"/>
+  <text x="831" y="296" text-anchor="middle" font-size="8.5" font-weight="700" fill="#D97706">L3 合约层</text>
+  <text x="831" y="308" text-anchor="middle" font-size="8" fill="#78350F">链上 RBAC</text>
+  <text x="831" y="320" text-anchor="middle" font-size="8" fill="#78350F">逻辑透明</text>
+  <text x="831" y="332" text-anchor="middle" font-size="8" fill="#78350F">可验证</text>
+
+  <rect x="783" y="344" width="96" height="56" rx="6" fill="#EFF6FF"/>
+  <text x="831" y="358" text-anchor="middle" font-size="8.5" font-weight="700" fill="#2563EB">L2 网关层</text>
+  <text x="831" y="370" text-anchor="middle" font-size="8" fill="#1E3A8A">企业自运营</text>
+  <text x="831" y="382" text-anchor="middle" font-size="8" fill="#1E3A8A">中心化可信</text>
+  <text x="831" y="394" text-anchor="middle" font-size="8" fill="#1E3A8A">基础设施</text>
+
+  <rect x="783" y="406" width="96" height="56" rx="6" fill="#F0FDF4"/>
+  <text x="831" y="420" text-anchor="middle" font-size="8.5" font-weight="700" fill="#16A34A">L1 身份层</text>
+  <text x="831" y="432" text-anchor="middle" font-size="8" fill="#14532D">企业 IdP</text>
+  <text x="831" y="444" text-anchor="middle" font-size="8" fill="#14532D">外部信任锚</text>
+  <text x="831" y="456" text-anchor="middle" font-size="8" fill="#14532D">SSO 集成</text>
+
+  <!-- ══════════════════════════════════════
+       FLOW ARROW BAR at bottom
+  ═══════════════════════════════════════ -->
+  <rect x="60" y="492" width="700" height="44" rx="10" fill="white" filter="url(#cardShadow)" opacity="0.9"/>
+
+  <!-- flow nodes -->
+  <!-- 用户请求 -->
+  <rect x="74" y="503" width="72" height="22" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="110" y="518" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">用户请求</text>
+
+  <!-- arrow -->
+  <line x1="148" y1="514" x2="168" y2="514" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrowHead)"/>
+
+  <!-- Layer 1 -->
+  <rect x="170" y="503" width="72" height="22" rx="6" fill="#F0FDF4" stroke="#22C55E" stroke-width="1.5"/>
+  <text x="206" y="518" text-anchor="middle" font-size="10" font-weight="600" fill="#15803D">Layer 1</text>
+
+  <!-- arrow -->
+  <line x1="244" y1="514" x2="264" y2="514" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrowHead)"/>
+
+  <!-- Layer 2 -->
+  <rect x="266" y="503" width="72" height="22" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="302" y="518" text-anchor="middle" font-size="10" font-weight="600" fill="#2563EB">Layer 2</text>
+
+  <!-- arrow -->
+  <line x1="340" y1="514" x2="360" y2="514" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrowHead)"/>
+
+  <!-- Layer 3 -->
+  <rect x="362" y="503" width="72" height="22" rx="6" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="398" y="518" text-anchor="middle" font-size="10" font-weight="600" fill="#D97706">Layer 3</text>
+
+  <!-- arrow -->
+  <line x1="436" y1="514" x2="456" y2="514" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrowHead)"/>
+
+  <!-- Layer 4 -->
+  <rect x="458" y="503" width="72" height="22" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.5"/>
+  <text x="494" y="518" text-anchor="middle" font-size="10" font-weight="600" fill="#DC2626">Layer 4</text>
+
+  <!-- arrow -->
+  <line x1="532" y1="514" x2="552" y2="514" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrowHead)"/>
+
+  <!-- Sequencer -->
+  <rect x="554" y="503" width="96" height="22" rx="6" fill="#1E293B"/>
+  <text x="602" y="518" text-anchor="middle" font-size="10" font-weight="600" fill="white">Sequencer 执行</text>
+
+  <!-- bottom note -->
+  <text x="664" y="525" font-size="9" fill="#94A3B8">每层独立拦截 · 任一层拒绝即阻断</text>
+
+  <!-- ══════════════════════════════════════
+       VERTICAL FLOW ARROWS (left side, connecting cards)
+  ═══════════════════════════════════════ -->
+  <!-- L4 → L3 -->
+  <line x1="36" y1="166" x2="36" y2="176" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <!-- L3 → L2 -->
+  <line x1="36" y1="270" x2="36" y2="280" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <!-- L2 → L1 -->
+  <line x1="36" y1="374" x2="36" y2="384" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+  <!-- Side label "防御深度↑" -->
+  <text x="22" y="320" text-anchor="middle" font-size="9" fill="#94A3B8" transform="rotate(-90, 22, 280)">防 御 深 度 ↑</text>
+</svg>

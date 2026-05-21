@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/></marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/></marker>
+    <filter id="shadow"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.1"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" font-size="20" font-weight="600" fill="#111827">Enterprise Blockchain: Three-Path Architecture Overview</text>
+  <text x="600" y="62" text-anchor="middle" font-size="13" fill="#6b7280">L1 vs L2 vs L3 — Architecture Positioning &amp; Relationship to Ethereum</text>
+
+  <!-- Ethereum L1 base -->
+  <rect x="80" y="660" width="1040" height="80" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="695" text-anchor="middle" font-size="16" font-weight="600" fill="#1e40af">Ethereum L1</text>
+  <text x="600" y="718" text-anchor="middle" font-size="12" fill="#3b82f6">Final Settlement · Proof Verification · Bridge Contracts · Public Security</text>
+
+  <!-- Mantle L2 -->
+  <rect x="380" y="530" width="440" height="80" rx="12" fill="#f0fdf4" stroke="#86efac" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="565" text-anchor="middle" font-size="16" font-weight="600" fill="#166534">Mantle L2</text>
+  <text x="600" y="588" text-anchor="middle" font-size="12" fill="#16a34a">Public L2 · OP Stack · DeFi · Liquidity Hub</text>
+  <line x1="600" y1="610" x2="600" y2="658" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <rect x="543" y="626" width="114" height="18" rx="3" fill="#ffffff" opacity="0.95"/>
+  <text x="600" y="639" text-anchor="middle" font-size="11" fill="#16a34a">State/Proofs</text>
+
+  <!-- Solution 1: L1 -->
+  <rect x="40" y="100" width="320" height="400" rx="12" fill="#faf5ff" stroke="#c084fc" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="40" y="100" width="320" height="40" rx="12" fill="#9333ea"/>
+  <text x="200" y="126" text-anchor="middle" font-size="15" font-weight="600" fill="#ffffff">Solution 1: Self-Built L1</text>
+  <rect x="60" y="155" width="280" height="30" rx="6" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+  <text x="200" y="175" text-anchor="middle" font-size="12" font-weight="600" fill="#111827">Independent BFT Chain</text>
+
+  <rect x="60" y="195" width="280" height="38" rx="6" fill="#ffffff" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="200" y="211" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">Finality</text>
+  <text x="200" y="225" text-anchor="middle" font-size="10" fill="#6b7280">BFT Hard ~1s · ZK ~5-30min · L1-Anchored</text>
+
+  <rect x="60" y="240" width="280" height="38" rx="6" fill="#ffffff" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="200" y="256" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">Privacy</text>
+  <text x="200" y="270" text-anchor="middle" font-size="10" fill="#6b7280">Native Multi-Zone · Private DA · ECIES</text>
+
+  <rect x="60" y="285" width="280" height="38" rx="6" fill="#ffffff" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="200" y="301" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">Operator</text>
+  <text x="200" y="315" text-anchor="middle" font-size="10" fill="#6b7280">Permissioned Validators · HSM · DKG</text>
+
+  <rect x="60" y="330" width="280" height="38" rx="6" fill="#ffffff" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="200" y="346" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">Build</text>
+  <text x="200" y="360" text-anchor="middle" font-size="10" fill="#6b7280">18-24 months · 15-25 engineers</text>
+
+  <rect x="60" y="380" width="280" height="100" rx="6" fill="#faf5ff" stroke="#c084fc" stroke-width="1"/>
+  <text x="200" y="398" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">Best Fit</text>
+  <text x="200" y="416" text-anchor="middle" font-size="10" fill="#6b7280">xStocks T+0 Settlement</text>
+  <text x="200" y="432" text-anchor="middle" font-size="10" fill="#6b7280">Payment Rails (10K+ TPS)</text>
+  <text x="200" y="448" text-anchor="middle" font-size="10" fill="#6b7280">Regulated DVP · Consortium</text>
+  <text x="200" y="464" text-anchor="middle" font-size="10" fill="#6b7280">Max Sovereignty Required</text>
+
+  <path d="M 200 500 L 200 570 Q 200 585 220 585 L 378 585" stroke="#9333ea" stroke-width="1.5" fill="none" stroke-dasharray="6,3" marker-end="url(#arrow-purple)"/>
+  <rect x="230" y="558" width="120" height="16" rx="3" fill="#ffffff" opacity="0.95"/>
+  <text x="290" y="570" text-anchor="middle" font-size="10" fill="#9333ea">Optional Anchor</text>
+
+  <!-- Solution 2: L2 -->
+  <rect x="420" y="100" width="360" height="400" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="420" y="100" width="360" height="40" rx="12" fill="#2563eb"/>
+  <text x="600" y="126" text-anchor="middle" font-size="15" font-weight="600" fill="#ffffff">Solution 2: Enterprise L2</text>
+  <rect x="440" y="155" width="320" height="30" rx="6" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+  <text x="600" y="175" text-anchor="middle" font-size="12" font-weight="600" fill="#111827">Parallel Permissioned Chain</text>
+
+  <rect x="440" y="195" width="320" height="38" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="600" y="211" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Finality</text>
+  <text x="600" y="225" text-anchor="middle" font-size="10" fill="#6b7280">Sequencer Soft ~1-2s · ZK ~15-30min · ETH Final</text>
+
+  <rect x="440" y="240" width="320" height="38" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="600" y="256" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Privacy</text>
+  <text x="600" y="270" text-anchor="middle" font-size="10" fill="#6b7280">Validium/Private DA · Operator Visible</text>
+
+  <rect x="440" y="285" width="320" height="38" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="600" y="301" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Operator</text>
+  <text x="600" y="315" text-anchor="middle" font-size="10" fill="#6b7280">Mantle-Operated Sequencer · SLA</text>
+
+  <rect x="440" y="330" width="320" height="38" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="600" y="346" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Build</text>
+  <text x="600" y="360" text-anchor="middle" font-size="10" fill="#6b7280">8-12 months · 8-15 engineers</text>
+
+  <rect x="440" y="380" width="320" height="100" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="600" y="398" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Best Fit</text>
+  <text x="600" y="416" text-anchor="middle" font-size="10" fill="#6b7280">Enterprise DeFi · RWA Platform</text>
+  <text x="600" y="432" text-anchor="middle" font-size="10" fill="#6b7280">Compliant Assets · Mantle Liquidity</text>
+  <text x="600" y="448" text-anchor="middle" font-size="10" fill="#6b7280">Ethereum Alignment Needed</text>
+  <text x="600" y="464" text-anchor="middle" font-size="10" fill="#6b7280">Custodian/Institutional Products</text>
+
+  <line x1="600" y1="500" x2="600" y2="528" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="558" y="504" width="84" height="16" rx="3" fill="#ffffff" opacity="0.95"/>
+  <text x="600" y="516" text-anchor="middle" font-size="10" fill="#2563eb">Settlement</text>
+
+  <!-- Solution 3: L3 -->
+  <rect x="840" y="100" width="320" height="400" rx="12" fill="#f0fdf4" stroke="#86efac" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="840" y="100" width="320" height="40" rx="12" fill="#16a34a"/>
+  <text x="1000" y="126" text-anchor="middle" font-size="15" font-weight="600" fill="#ffffff">Solution 3: Enterprise L3</text>
+  <rect x="860" y="155" width="280" height="30" rx="6" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+  <text x="1000" y="175" text-anchor="middle" font-size="12" font-weight="600" fill="#111827">Per-Enterprise App Chains</text>
+
+  <rect x="860" y="195" width="280" height="38" rx="6" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="1000" y="211" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Finality</text>
+  <text x="1000" y="225" text-anchor="middle" font-size="10" fill="#6b7280">L3 Soft ~1-2s · L2 ZK ~1h · ETH Final (slowest)</text>
+
+  <rect x="860" y="240" width="280" height="38" rx="6" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="1000" y="256" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Privacy</text>
+  <text x="1000" y="270" text-anchor="middle" font-size="10" fill="#6b7280">Physical Isolation · Private DA · Per-Tenant</text>
+
+  <rect x="860" y="285" width="280" height="38" rx="6" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="1000" y="301" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Operator</text>
+  <text x="1000" y="315" text-anchor="middle" font-size="10" fill="#6b7280">Enterprise-Operated Sequencer</text>
+
+  <rect x="860" y="330" width="280" height="38" rx="6" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="1000" y="346" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Build</text>
+  <text x="1000" y="360" text-anchor="middle" font-size="10" fill="#6b7280">9-13 months · 10-15 engineers</text>
+
+  <rect x="860" y="380" width="280" height="100" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+  <text x="1000" y="398" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Best Fit</text>
+  <text x="1000" y="416" text-anchor="middle" font-size="10" fill="#6b7280">Bank Private Ledger · RWA Issuer</text>
+  <text x="1000" y="432" text-anchor="middle" font-size="10" fill="#6b7280">Payment Processor · SaaS Tenants</text>
+  <text x="1000" y="448" text-anchor="middle" font-size="10" fill="#6b7280">Per-Tenant Isolation Needed</text>
+  <text x="1000" y="464" text-anchor="middle" font-size="10" fill="#6b7280">Fastest Enterprise Onboarding</text>
+
+  <path d="M 1000 500 L 1000 570 Q 1000 585 985 585 L 822 585" stroke="#16a34a" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+  <rect x="870" y="558" width="120" height="16" rx="3" fill="#ffffff" opacity="0.95"/>
+  <text x="930" y="570" text-anchor="middle" font-size="10" fill="#16a34a">L3 Settlement</text>
+
+  <!-- Legend -->
+  <rect x="40" y="755" width="440" height="35" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="55" y1="773" x2="85" y2="773" stroke="#9333ea" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow-purple)"/>
+  <text x="92" y="777" font-size="11" fill="#6b7280">Optional Anchor</text>
+  <line x1="205" y1="773" x2="235" y2="773" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="242" y="777" font-size="11" fill="#6b7280">L2 Settlement</text>
+  <line x1="345" y1="773" x2="375" y2="773" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="382" y="777" font-size="11" fill="#6b7280">L3 Settlement</text>
+</svg>

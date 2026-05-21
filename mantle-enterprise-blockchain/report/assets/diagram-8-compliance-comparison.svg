@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" width="1200" height="650">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="ab" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/></marker>
+    <marker id="ap" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/></marker>
+    <marker id="ag" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/></marker>
+    <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.06"/></filter>
+  </defs>
+  <rect width="1200" height="650" fill="#ffffff"/>
+
+  <text x="600" y="38" text-anchor="middle" font-size="20" font-weight="600" fill="#111827">Compliance Architecture Comparison: L1 vs L2 vs L3</text>
+  <text x="600" y="58" text-anchor="middle" font-size="13" fill="#6b7280">Layered Defense-in-Depth — Enforcement Points Across Three Paths</text>
+
+  <!-- === L1 Row === -->
+  <rect x="20" y="80" width="1160" height="150" rx="10" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.5"/>
+  <rect x="20" y="80" width="100" height="150" rx="10" fill="#9333ea"/>
+  <text x="70" y="145" text-anchor="middle" font-size="14" font-weight="600" fill="#ffffff">L1</text>
+  <text x="70" y="165" text-anchor="middle" font-size="10" fill="#e9d5ff">Protocol</text>
+  <text x="70" y="178" text-anchor="middle" font-size="10" fill="#e9d5ff">Native</text>
+
+  <!-- L1 compliance layers -->
+  <rect x="140" y="95" width="170" height="55" rx="8" fill="#ffffff" stroke="#c084fc" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="225" y="116" text-anchor="middle" font-size="12" font-weight="600" fill="#7c3aed">Authenticated RPC</text>
+  <text x="225" y="133" text-anchor="middle" font-size="10" fill="#6b7280">Identity · JWT · SIWE</text>
+  <text x="225" y="146" text-anchor="middle" font-size="9" fill="#9ca3af">Access Gate</text>
+
+  <line x1="310" y1="122" x2="335" y2="122" stroke="#9333ea" stroke-width="1.5" marker-end="url(#ap)"/>
+
+  <rect x="340" y="95" width="170" height="55" rx="8" fill="#ffffff" stroke="#c084fc" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="425" y="116" text-anchor="middle" font-size="12" font-weight="600" fill="#7c3aed">Mempool Policy</text>
+  <text x="425" y="133" text-anchor="middle" font-size="10" fill="#6b7280">Sanctions · KYC · Lane</text>
+  <text x="425" y="146" text-anchor="middle" font-size="9" fill="#9ca3af">Pre-Execution Filter</text>
+
+  <line x1="510" y1="122" x2="535" y2="122" stroke="#9333ea" stroke-width="1.5" marker-end="url(#ap)"/>
+
+  <rect x="540" y="95" width="170" height="55" rx="8" fill="#ffffff" stroke="#c084fc" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="625" y="116" text-anchor="middle" font-size="12" font-weight="600" fill="#7c3aed">Precompile Hooks</text>
+  <text x="625" y="133" text-anchor="middle" font-size="10" fill="#6b7280">Transfer Auth · Policy</text>
+  <text x="625" y="146" text-anchor="middle" font-size="9" fill="#9ca3af">EVM-Level Enforce</text>
+
+  <line x1="710" y1="122" x2="735" y2="122" stroke="#9333ea" stroke-width="1.5" marker-end="url(#ap)"/>
+
+  <rect x="740" y="95" width="170" height="55" rx="8" fill="#ffffff" stroke="#c084fc" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="825" y="116" text-anchor="middle" font-size="12" font-weight="600" fill="#7c3aed">Consensus Rules</text>
+  <text x="825" y="133" text-anchor="middle" font-size="10" fill="#6b7280">Validator Policy · Lane</text>
+  <text x="825" y="146" text-anchor="middle" font-size="9" fill="#9ca3af">Block-Level Enforce</text>
+
+  <line x1="910" y1="122" x2="935" y2="122" stroke="#9333ea" stroke-width="1.5" marker-end="url(#ap)"/>
+
+  <rect x="940" y="95" width="170" height="55" rx="8" fill="#ffffff" stroke="#c084fc" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="1025" y="116" text-anchor="middle" font-size="12" font-weight="600" fill="#7c3aed">Bridge Filter</text>
+  <text x="1025" y="133" text-anchor="middle" font-size="10" fill="#6b7280">ZK Bridge · Limits</text>
+  <text x="1025" y="146" text-anchor="middle" font-size="9" fill="#9ca3af">Cross-Chain Gate</text>
+
+  <!-- L1 depth bar -->
+  <rect x="140" y="160" width="970" height="22" rx="4" fill="#9333ea" opacity="0.15"/>
+  <rect x="140" y="160" width="970" height="22" rx="4" fill="none" stroke="#9333ea" stroke-width="1"/>
+  <text x="625" y="176" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">Deepest: 5 enforcement layers — protocol-native, non-bypassable</text>
+
+  <!-- L1 special note -->
+  <rect x="140" y="190" width="970" height="22" rx="4" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="625" y="205" text-anchor="middle" font-size="10" fill="#7c3aed">Unique to L1: Consensus-level enforcement + custom transaction types + validator policy checks</text>
+
+  <!-- === L2 Row === -->
+  <rect x="20" y="245" width="1160" height="150" rx="10" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <rect x="20" y="245" width="100" height="150" rx="10" fill="#2563eb"/>
+  <text x="70" y="310" text-anchor="middle" font-size="14" font-weight="600" fill="#ffffff">L2</text>
+  <text x="70" y="330" text-anchor="middle" font-size="10" fill="#bfdbfe">Boundary</text>
+  <text x="70" y="343" text-anchor="middle" font-size="10" fill="#bfdbfe">Enforce</text>
+
+  <rect x="140" y="260" width="200" height="55" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="240" y="281" text-anchor="middle" font-size="12" font-weight="600" fill="#2563eb">Auth RPC Gateway</text>
+  <text x="240" y="298" text-anchor="middle" font-size="10" fill="#6b7280">OIDC · SAML · mTLS</text>
+  <text x="240" y="311" text-anchor="middle" font-size="9" fill="#9ca3af">First Line of Defense</text>
+
+  <line x1="340" y1="287" x2="370" y2="287" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <rect x="375" y="260" width="200" height="55" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="475" y="281" text-anchor="middle" font-size="12" font-weight="600" fill="#2563eb">Sequencer Policy</text>
+  <text x="475" y="298" text-anchor="middle" font-size="10" fill="#6b7280">KYT · Sanctions · Whitelist</text>
+  <text x="475" y="311" text-anchor="middle" font-size="9" fill="#9ca3af">Pre-Inclusion Filter</text>
+
+  <line x1="575" y1="287" x2="605" y2="287" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <rect x="610" y="260" width="200" height="55" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="710" y="281" text-anchor="middle" font-size="12" font-weight="600" fill="#2563eb">Contract Hooks</text>
+  <text x="710" y="298" text-anchor="middle" font-size="10" fill="#6b7280">ERC-3643 · Predeploys</text>
+  <text x="710" y="311" text-anchor="middle" font-size="9" fill="#9ca3af">Execution-Level</text>
+
+  <line x1="810" y1="287" x2="840" y2="287" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <rect x="845" y="260" width="200" height="55" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="945" y="281" text-anchor="middle" font-size="12" font-weight="600" fill="#2563eb">Bridge Filter</text>
+  <text x="945" y="298" text-anchor="middle" font-size="10" fill="#6b7280">Portal Allowlist · Limits</text>
+  <text x="945" y="311" text-anchor="middle" font-size="9" fill="#9ca3af">Cross-Chain Gate</text>
+
+  <!-- L2 depth bar -->
+  <rect x="140" y="325" width="905" height="22" rx="4" fill="#2563eb" opacity="0.1"/>
+  <rect x="140" y="325" width="905" height="22" rx="4" fill="none" stroke="#2563eb" stroke-width="1"/>
+  <text x="592" y="341" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Medium: 4 enforcement layers — boundary-focused, OP Stack compatible</text>
+
+  <rect x="140" y="355" width="905" height="22" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="592" y="370" text-anchor="middle" font-size="10" fill="#2563eb">Note: No consensus-level enforcement. Forced L1 inclusion can bypass Sequencer unless bridge is filtered.</text>
+
+  <!-- === L3 Row === -->
+  <rect x="20" y="410" width="1160" height="150" rx="10" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.5"/>
+  <rect x="20" y="410" width="100" height="150" rx="10" fill="#16a34a"/>
+  <text x="70" y="475" text-anchor="middle" font-size="14" font-weight="600" fill="#ffffff">L3</text>
+  <text x="70" y="495" text-anchor="middle" font-size="10" fill="#bbf7d0">Per-Tenant</text>
+  <text x="70" y="508" text-anchor="middle" font-size="10" fill="#bbf7d0">Policy</text>
+
+  <rect x="140" y="425" width="200" height="55" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="240" y="446" text-anchor="middle" font-size="12" font-weight="600" fill="#16a34a">Auth RPC (Per-L3)</text>
+  <text x="240" y="463" text-anchor="middle" font-size="10" fill="#6b7280">JWT · mTLS · SIWE</text>
+  <text x="240" y="476" text-anchor="middle" font-size="9" fill="#9ca3af">Enterprise-Specific</text>
+
+  <line x1="340" y1="452" x2="370" y2="452" stroke="#16a34a" stroke-width="1.5" marker-end="url(#ag)"/>
+
+  <rect x="375" y="425" width="200" height="55" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="475" y="446" text-anchor="middle" font-size="12" font-weight="600" fill="#16a34a">Sequencer Policy</text>
+  <text x="475" y="463" text-anchor="middle" font-size="10" fill="#6b7280">Enterprise-Operated</text>
+  <text x="475" y="476" text-anchor="middle" font-size="9" fill="#9ca3af">Full Control</text>
+
+  <line x1="575" y1="452" x2="605" y2="452" stroke="#16a34a" stroke-width="1.5" marker-end="url(#ag)"/>
+
+  <rect x="610" y="425" width="200" height="55" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="710" y="446" text-anchor="middle" font-size="12" font-weight="600" fill="#16a34a">Contract Hooks</text>
+  <text x="710" y="463" text-anchor="middle" font-size="10" fill="#6b7280">ERC-3643 · Registries</text>
+  <text x="710" y="476" text-anchor="middle" font-size="9" fill="#9ca3af">Zone-Specific Rules</text>
+
+  <line x1="810" y1="452" x2="840" y2="452" stroke="#16a34a" stroke-width="1.5" marker-end="url(#ag)"/>
+
+  <rect x="845" y="425" width="200" height="55" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="945" y="446" text-anchor="middle" font-size="12" font-weight="600" fill="#16a34a">ZonePortal Filter</text>
+  <text x="945" y="463" text-anchor="middle" font-size="10" fill="#6b7280">L3↔L2 Boundary</text>
+  <text x="945" y="476" text-anchor="middle" font-size="9" fill="#9ca3af">Settlement Gate</text>
+
+  <!-- L3 depth bar -->
+  <rect x="140" y="490" width="905" height="22" rx="4" fill="#16a34a" opacity="0.1"/>
+  <rect x="140" y="490" width="905" height="22" rx="4" fill="none" stroke="#16a34a" stroke-width="1"/>
+  <text x="592" y="506" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Medium-High: 4 layers — per-tenant configurable, enterprise-operated sequencer</text>
+
+  <rect x="140" y="520" width="905" height="22" rx="4" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="592" y="535" text-anchor="middle" font-size="10" fill="#16a34a">Advantage: Enterprise controls entire ingress. Disadvantage: No chain-wide protocol enforcement.</text>
+
+  <!-- Bottom summary -->
+  <rect x="40" y="575" width="1120" height="55" rx="8" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="600" y="597" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Compliance Depth Summary</text>
+  <text x="250" y="618" text-anchor="middle" font-size="11" fill="#7c3aed">L1: Deepest (protocol-native)</text>
+  <text x="600" y="618" text-anchor="middle" font-size="11" fill="#2563eb">L2: Medium (boundary enforcement)</text>
+  <text x="950" y="618" text-anchor="middle" font-size="11" fill="#16a34a">L3: Medium-High (per-tenant control)</text>
+</svg>

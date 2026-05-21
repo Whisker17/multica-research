@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 780" width="960" height="780">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-teal" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0d7377"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ea580c"/>
+    </marker>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="960" height="780" fill="#ffffff"/>
+  <text x="480" y="32" text-anchor="middle" font-size="18" font-weight="600" fill="#0d7377">Enterprise L2 High-Level Architecture</text>
+  <text x="480" y="50" text-anchor="middle" font-size="12" fill="#6b7280">Mantle Enterprise L2 Parallel Chain — OP Stack + Enterprise Controls</text>
+
+  <!-- LEFT COLUMN: Ethereum L1 -->
+  <rect x="30" y="70" width="180" height="530" rx="10" fill="#f0fdf4" stroke="#059669" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="120" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#059669">Ethereum L1</text>
+  <text x="120" y="108" text-anchor="middle" font-size="10" fill="#6b7280">Settlement Layer</text>
+  <rect x="50" y="135" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="155" text-anchor="middle" font-size="11" fill="#065f46">State Root</text>
+  <rect x="50" y="175" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="195" text-anchor="middle" font-size="11" fill="#065f46">Verification</text>
+  <rect x="50" y="260" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="280" text-anchor="middle" font-size="11" fill="#065f46">Bridge Portal</text>
+  <rect x="50" y="340" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="360" text-anchor="middle" font-size="11" fill="#065f46">Proof</text>
+  <rect x="50" y="380" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="400" text-anchor="middle" font-size="11" fill="#065f46">Submission</text>
+  <rect x="50" y="460" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="480" text-anchor="middle" font-size="11" fill="#065f46">Economic</text>
+  <rect x="50" y="500" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="520" text-anchor="middle" font-size="11" fill="#065f46">Security</text>
+
+  <!-- RIGHT COLUMN: Public Mantle L2 -->
+  <rect x="750" y="70" width="180" height="530" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="840" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#ea580c">Public Mantle L2</text>
+  <text x="840" y="108" text-anchor="middle" font-size="10" fill="#6b7280">Public Network</text>
+  <rect x="770" y="135" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="155" text-anchor="middle" font-size="11" fill="#9a3412">DeFi</text>
+  <rect x="770" y="175" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="195" text-anchor="middle" font-size="11" fill="#9a3412">Protocols</text>
+  <rect x="770" y="260" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="280" text-anchor="middle" font-size="11" fill="#9a3412">MNT Token</text>
+  <rect x="770" y="300" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="320" text-anchor="middle" font-size="11" fill="#9a3412">Ecosystem</text>
+  <rect x="770" y="400" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="420" text-anchor="middle" font-size="11" fill="#9a3412">Public</text>
+  <rect x="770" y="440" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="460" text-anchor="middle" font-size="11" fill="#9a3412">Liquidity</text>
+
+  <!-- CENTER: Enterprise L2 -->
+  <rect x="230" y="70" width="500" height="530" rx="10" fill="#f0fdfa" stroke="#0d7377" stroke-width="2" filter="url(#shadow)"/>
+  <text x="480" y="92" text-anchor="middle" font-size="15" font-weight="600" fill="#0d7377">Mantle Enterprise L2</text>
+  <text x="480" y="108" text-anchor="middle" font-size="10" fill="#6b7280">Permissioned Parallel Chain (Own Chain ID)</text>
+
+  <!-- Enterprise Apps -->
+  <rect x="250" y="120" width="460" height="45" rx="6" fill="#ccfbf1" stroke="#0d7377" stroke-width="1"/>
+  <text x="260" y="138" font-size="10" font-weight="600" fill="#0d7377">ENTERPRISE APPLICATIONS</text>
+  <rect x="265" y="142" width="120" height="18" rx="4" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+  <text x="325" y="155" text-anchor="middle" font-size="10" fill="#0d7377">RWA Issuance</text>
+  <rect x="395" y="142" width="120" height="18" rx="4" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+  <text x="455" y="155" text-anchor="middle" font-size="10" fill="#0d7377">Institutional DeFi</text>
+  <rect x="525" y="142" width="120" height="18" rx="4" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+  <text x="585" y="155" text-anchor="middle" font-size="10" fill="#0d7377">Custodian Ops</text>
+
+  <!-- Authenticated RPC -->
+  <rect x="250" y="178" width="460" height="40" rx="6" fill="#99f6e4" stroke="#0d7377" stroke-width="1"/>
+  <text x="480" y="195" text-anchor="middle" font-size="12" font-weight="600" fill="#0d7377">Authenticated RPC Gateway</text>
+  <text x="480" y="210" text-anchor="middle" font-size="10" fill="#115e59">OIDC / SAML / JWT / mTLS / Wallet Binding</text>
+
+  <!-- Enterprise Sequencer -->
+  <rect x="250" y="230" width="460" height="55" rx="6" fill="#5eead4" stroke="#0d7377" stroke-width="1.5"/>
+  <text x="480" y="250" text-anchor="middle" font-size="13" font-weight="600" fill="#042f2e">Enterprise Sequencer</text>
+  <rect x="265" y="257" width="115" height="20" rx="4" fill="#ffffff" stroke="#0d7377" stroke-width="0.8"/>
+  <text x="322" y="271" text-anchor="middle" font-size="10" fill="#0d7377">Admission Filters</text>
+  <rect x="395" y="257" width="115" height="20" rx="4" fill="#ffffff" stroke="#0d7377" stroke-width="0.8"/>
+  <text x="452" y="271" text-anchor="middle" font-size="10" fill="#0d7377">Policy Engine</text>
+  <rect x="525" y="257" width="115" height="20" rx="4" fill="#ffffff" stroke="#0d7377" stroke-width="0.8"/>
+  <text x="582" y="271" text-anchor="middle" font-size="10" fill="#0d7377">KYT/AML</text>
+
+  <!-- Execution + Identity side by side -->
+  <rect x="250" y="298" width="225" height="60" rx="6" fill="#ccfbf1" stroke="#0d7377" stroke-width="1"/>
+  <text x="362" y="318" text-anchor="middle" font-size="11" font-weight="600" fill="#0d7377">Execution Client</text>
+  <text x="362" y="334" text-anchor="middle" font-size="10" fill="#115e59">op-geth + Enterprise</text>
+  <text x="362" y="348" text-anchor="middle" font-size="10" fill="#115e59">Predeployments</text>
+  <rect x="485" y="298" width="225" height="60" rx="6" fill="#ccfbf1" stroke="#0d7377" stroke-width="1"/>
+  <text x="597" y="318" text-anchor="middle" font-size="11" font-weight="600" fill="#0d7377">Identity &amp; Compliance</text>
+  <text x="597" y="334" text-anchor="middle" font-size="10" fill="#115e59">KYC/KYB Registry</text>
+  <text x="597" y="348" text-anchor="middle" font-size="10" fill="#115e59">ERC-3643 / PolicyExecutor</text>
+
+  <!-- Hybrid DA -->
+  <rect x="250" y="372" width="460" height="55" rx="6" fill="#99f6e4" stroke="#0d7377" stroke-width="1"/>
+  <text x="480" y="392" text-anchor="middle" font-size="12" font-weight="600" fill="#0d7377">Hybrid Data Availability</text>
+  <rect x="270" y="398" width="170" height="22" rx="4" fill="#ffffff" stroke="#0d7377" stroke-width="0.8"/>
+  <text x="355" y="413" text-anchor="middle" font-size="10" fill="#0d7377">Public Blobs (non-sensitive)</text>
+  <rect x="460" y="398" width="230" height="22" rx="4" fill="#ffffff" stroke="#0d7377" stroke-width="0.8"/>
+  <text x="575" y="413" text-anchor="middle" font-size="10" fill="#0d7377">Private Validium (encrypted off-chain)</text>
+
+  <!-- Enterprise Bridge -->
+  <rect x="250" y="440" width="460" height="40" rx="6" fill="#5eead4" stroke="#0d7377" stroke-width="1.5"/>
+  <text x="480" y="460" text-anchor="middle" font-size="12" font-weight="600" fill="#042f2e">Enterprise Bridge (Compliance-Filtered)</text>
+  <text x="480" y="474" text-anchor="middle" font-size="10" fill="#115e59">EnterpriseOptimismPortal / Deposit-Withdrawal Whitelist</text>
+
+  <!-- Audit -->
+  <rect x="250" y="494" width="460" height="36" rx="6" fill="#ccfbf1" stroke="#0d7377" stroke-width="1"/>
+  <text x="480" y="517" text-anchor="middle" font-size="11" fill="#0d7377">Audit Events / Selective Disclosure Portal / Regulator Export</text>
+
+  <!-- Arrows: Enterprise L2 <-> Ethereum L1 -->
+  <line x1="250" y1="460" x2="210" y2="460" stroke="#0d7377" stroke-width="2" marker-end="url(#arrow-teal)"/>
+  <rect x="213" y="445" width="30" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="228" y="456" text-anchor="middle" font-size="9" fill="#0d7377">Proofs</text>
+  <line x1="250" y1="350" x2="210" y2="350" stroke="#0d7377" stroke-width="1.5" marker-end="url(#arrow-teal)"/>
+  <rect x="205" y="338" width="42" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="226" y="349" text-anchor="middle" font-size="9" fill="#0d7377">Settlement</text>
+
+  <!-- Arrows: Enterprise L2 <-> Public Mantle -->
+  <line x1="710" y1="300" x2="750" y2="300" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <rect x="713" y="286" width="35" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="730" y="297" text-anchor="middle" font-size="9" fill="#ea580c">Interop</text>
+  <line x1="750" y1="440" x2="710" y2="440" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+  <rect x="713" y="426" width="35" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="730" y="437" text-anchor="middle" font-size="9" fill="#ea580c">Liquidity</text>
+
+  <!-- Legend -->
+  <line x1="250" y1="610" x2="280" y2="610" stroke="#0d7377" stroke-width="2" marker-end="url(#arrow-teal)"/>
+  <text x="286" y="614" font-size="10" fill="#6b7280">Settlement / Proofs</text>
+  <line x1="430" y1="610" x2="460" y2="610" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <text x="466" y="614" font-size="10" fill="#6b7280">Controlled Interop</text>
+
+  <!-- Key Properties callout -->
+  <rect x="30" y="625" width="440" height="140" rx="8" fill="#f0fdfa" stroke="#0d7377" stroke-width="1"/>
+  <text x="45" y="647" font-size="12" font-weight="600" fill="#0d7377">Key Properties</text>
+  <text x="45" y="665" font-size="11" fill="#115e59">Soft Confirmation: ~1-2s (Sequencer)</text>
+  <text x="45" y="681" font-size="11" fill="#115e59">ZK Hard Finality: ~15-30 min (target)</text>
+  <text x="45" y="697" font-size="11" fill="#115e59">Optimistic Fallback: 7 days</text>
+  <text x="45" y="713" font-size="11" fill="#115e59">EVM Compatible: Full Solidity/Hardhat/Foundry</text>
+  <text x="45" y="729" font-size="11" fill="#115e59">Timeline: 8-12 months (MVP in 3-4)</text>
+  <text x="45" y="745" font-size="11" fill="#115e59">Team: 8-15 engineers</text>
+
+  <!-- Structural Constraints callout -->
+  <rect x="490" y="625" width="440" height="140" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1"/>
+  <text x="505" y="647" font-size="12" font-weight="600" fill="#dc2626">Structural Constraints (Honest)</text>
+  <text x="505" y="665" font-size="11" fill="#7f1d1d">Sequencer sees all tx data in plaintext</text>
+  <text x="505" y="681" font-size="11" fill="#7f1d1d">Enterprises are tenants, not owners</text>
+  <text x="505" y="697" font-size="11" fill="#7f1d1d">Soft confirmation ≠ legal hard settlement</text>
+  <text x="505" y="713" font-size="11" fill="#7f1d1d">Cannot independently sequence or recover</text>
+  <text x="505" y="729" font-size="11" fill="#7f1d1d">Force-inclusion bypass risk at L1 bridge</text>
+  <text x="505" y="745" font-size="11" fill="#7f1d1d">Operator trust is structural, not interim</text>
+</svg>

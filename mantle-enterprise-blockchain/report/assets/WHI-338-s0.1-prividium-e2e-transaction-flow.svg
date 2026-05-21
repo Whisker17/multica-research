@@ -1,0 +1,338 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1160" width="900" height="1160" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <!-- Gradient background -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#EEF2F7;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Drop shadows -->
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+    <filter id="shadowSm" x="-6%" y="-6%" width="112%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#94A3B8" flood-opacity="0.12"/>
+    </filter>
+    <filter id="shadowStrong" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#64748B" flood-opacity="0.22"/>
+    </filter>
+
+    <!-- Arrow marker -->
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#60A5FA"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94A3B8"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34D399"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#FBBF24"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#F87171"/>
+    </marker>
+    <marker id="arrowTeal" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2DD4BF"/>
+    </marker>
+    <marker id="arrowIndigo" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#818CF8"/>
+    </marker>
+  </defs>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- BACKGROUND -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect width="900" height="1160" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid dots -->
+  <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#CBD5E1" opacity="0.45"/>
+  </pattern>
+  <rect width="900" height="1160" fill="url(#dots)"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- TITLE BLOCK -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="30" y="18" width="840" height="68" rx="14" fill="white" filter="url(#shadowSm)"/>
+  <rect x="30" y="18" width="8" height="68" rx="4" fill="#6366F1"/>
+  <text x="52" y="43" font-size="13" font-weight="700" fill="#6366F1" letter-spacing="1.5">WHI-338 §0.1</text>
+  <text x="52" y="63" font-size="15" font-weight="700" fill="#1E293B">Prividium End-to-End Transaction Flow &amp; Trust Boundaries</text>
+  <rect x="760" y="30" width="96" height="22" rx="11" fill="#EEF2FF"/>
+  <text x="808" y="45" font-size="10" font-weight="600" fill="#6366F1" text-anchor="middle" letter-spacing="0.8">FLAT ICON STYLE</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STEP ①  CLIENT / WALLET  — green -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- Card -->
+  <rect x="60" y="108" width="620" height="108" rx="14" fill="white" filter="url(#shadow)"/>
+  <!-- Accent bar -->
+  <rect x="60" y="108" width="8" height="108" rx="4" fill="#10B981"/>
+  <!-- Step badge -->
+  <circle cx="104" cy="162" r="18" fill="#10B981"/>
+  <text x="104" y="168" font-size="16" text-anchor="middle" fill="white" font-weight="800">①</text>
+  <!-- Icon area -->
+  <rect x="132" y="122" width="48" height="48" rx="10" fill="#ECFDF5"/>
+  <text x="156" y="154" font-size="28" text-anchor="middle">💻</text>
+  <!-- Title -->
+  <text x="196" y="143" font-size="15" font-weight="700" fill="#1E293B">Client / Wallet</text>
+  <text x="196" y="161" font-size="12" fill="#64748B">DApp / SDK (Viem, MetaMask)</text>
+  <!-- Trust badge -->
+  <rect x="196" y="170" width="172" height="20" rx="10" fill="#D1FAE5"/>
+  <text x="204" y="183" font-size="10" fill="#065F46" font-weight="600">信任类型: 客户端软件</text>
+  <!-- Border -->
+  <rect x="60" y="108" width="620" height="108" rx="14" fill="none" stroke="#10B981" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- Side Trust meter -->
+  <rect x="700" y="108" width="170" height="108" rx="14" fill="white" filter="url(#shadowSm)"/>
+  <rect x="700" y="108" width="4" height="108" rx="2" fill="#10B981"/>
+  <text x="713" y="130" font-size="10" font-weight="700" fill="#64748B" letter-spacing="0.5">TRUST LEVEL</text>
+  <text x="713" y="152" font-size="22">🌐</text>
+  <text x="742" y="155" font-size="12" font-weight="700" fill="#1E293B">客户端</text>
+  <text x="713" y="172" font-size="10" fill="#94A3B8">用户可控环境</text>
+  <text x="713" y="188" font-size="10" fill="#94A3B8">无密码学背书</text>
+  <text x="713" y="204" font-size="13">⬜⬜⬜⬜⬜</text>
+
+  <!-- Arrow ① → ② -->
+  <line x1="370" y1="218" x2="370" y2="248" stroke="#34D399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <rect x="270" y="224" width="200" height="22" rx="11" fill="white" filter="url(#shadowSm)"/>
+  <rect x="270" y="224" width="4" height="22" rx="2" fill="#34D399"/>
+  <text x="380" y="238" font-size="10.5" font-weight="600" fill="#064E3B" text-anchor="middle">🔒 HTTPS (TLS)</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STEP ②  IdP / 身份认证  — amber -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="60" y="252" width="620" height="108" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="60" y="252" width="8" height="108" rx="4" fill="#F59E0B"/>
+  <circle cx="104" cy="306" r="18" fill="#F59E0B"/>
+  <text x="104" y="312" font-size="16" text-anchor="middle" fill="white" font-weight="800">②</text>
+  <rect x="132" y="266" width="48" height="48" rx="10" fill="#FFFBEB"/>
+  <text x="156" y="298" font-size="28" text-anchor="middle">🔑</text>
+  <text x="196" y="287" font-size="15" font-weight="700" fill="#1E293B">IdP / 身份认证</text>
+  <text x="196" y="305" font-size="12" fill="#64748B">Okta OIDC 或 SIWE (混合模式)</text>
+  <rect x="196" y="314" width="280" height="20" rx="10" fill="#FEF3C7"/>
+  <text x="204" y="327" font-size="10" fill="#92400E" font-weight="600">★ 可信第三方 (企业 IdP)</text>
+  <rect x="60" y="252" width="620" height="108" rx="14" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- Trust side -->
+  <rect x="700" y="252" width="170" height="108" rx="14" fill="white" filter="url(#shadowSm)"/>
+  <rect x="700" y="252" width="4" height="108" rx="2" fill="#F59E0B"/>
+  <text x="713" y="274" font-size="10" font-weight="700" fill="#64748B" letter-spacing="0.5">TRUST LEVEL</text>
+  <text x="713" y="296" font-size="22">🏢</text>
+  <text x="742" y="299" font-size="12" font-weight="700" fill="#1E293B">企业 IdP</text>
+  <text x="713" y="316" font-size="10" fill="#94A3B8">可信第三方</text>
+  <text x="713" y="332" font-size="10" fill="#94A3B8">OAuth / OIDC 标准</text>
+  <text x="713" y="348" font-size="13">⭐⬜⬜⬜⬜</text>
+
+  <!-- Arrow ② → ③ -->
+  <line x1="370" y1="362" x2="370" y2="392" stroke="#FBBF24" stroke-width="2.5" marker-end="url(#arrowAmber)"/>
+  <rect x="250" y="368" width="240" height="22" rx="11" fill="white" filter="url(#shadowSm)"/>
+  <rect x="250" y="368" width="4" height="22" rx="2" fill="#FBBF24"/>
+  <text x="370" y="382" font-size="10.5" font-weight="600" fill="#78350F" text-anchor="middle">🪙 JWT token</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STEP ③  Proxy RPC  — red/orange, DOUBLE BORDER (DMZ) -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- Outer "DMZ" glow -->
+  <rect x="52" y="396" width="636" height="130" rx="16" fill="none" stroke="#FCA5A5" stroke-width="3" stroke-dasharray="6,3" opacity="0.7"/>
+  <!-- DMZ label -->
+  <rect x="68" y="390" width="68" height="16" rx="8" fill="#FEE2E2"/>
+  <text x="102" y="401" font-size="9" font-weight="700" fill="#DC2626" text-anchor="middle" letter-spacing="0.8">DMZ 层</text>
+
+  <rect x="60" y="400" width="620" height="120" rx="14" fill="white" filter="url(#shadowStrong)"/>
+  <!-- Double border effect -->
+  <rect x="60" y="400" width="620" height="120" rx="14" fill="none" stroke="#EF4444" stroke-width="2.5"/>
+  <rect x="65" y="405" width="610" height="110" rx="11" fill="none" stroke="#FCA5A5" stroke-width="1.2"/>
+  <rect x="60" y="400" width="8" height="120" rx="4" fill="#EF4444"/>
+  <circle cx="104" cy="460" r="18" fill="#EF4444"/>
+  <text x="104" y="466" font-size="16" text-anchor="middle" fill="white" font-weight="800">③</text>
+  <rect x="132" y="414" width="48" height="48" rx="10" fill="#FEF2F2"/>
+  <text x="156" y="446" font-size="28" text-anchor="middle">🛡️</text>
+  <text x="196" y="430" font-size="15" font-weight="700" fill="#1E293B">Proxy RPC</text>
+  <text x="196" y="448" font-size="12" fill="#64748B">Prividium API</text>
+  <text x="196" y="466" font-size="11" fill="#64748B">三步验证: JWT → 钱包地址 → 函数权限</text>
+  <!-- Warning badge -->
+  <rect x="196" y="474" width="330" height="20" rx="10" fill="#FEE2E2"/>
+  <text x="204" y="487" font-size="10" fill="#991B1B" font-weight="600">⚠️ 权限执行仅在此层  |  ★★ 可信企业网关 (非密码学保证)</text>
+
+  <!-- Trust side -->
+  <rect x="700" y="400" width="170" height="120" rx="14" fill="white" filter="url(#shadowSm)"/>
+  <rect x="700" y="400" width="4" height="120" rx="2" fill="#EF4444"/>
+  <text x="713" y="422" font-size="10" font-weight="700" fill="#64748B" letter-spacing="0.5">TRUST LEVEL</text>
+  <text x="713" y="444" font-size="22">🔐</text>
+  <text x="742" y="447" font-size="12" font-weight="700" fill="#1E293B">企业网关</text>
+  <text x="713" y="464" font-size="10" fill="#94A3B8">非密码学保证</text>
+  <text x="713" y="480" font-size="10" fill="#B91C1C" font-weight="600">⚠️ 单点控制</text>
+  <text x="713" y="508" font-size="13">⭐⭐⬜⬜⬜</text>
+
+  <!-- Arrow ③ → ④ -->
+  <line x1="370" y1="522" x2="370" y2="552" stroke="#F87171" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <rect x="196" y="528" width="350" height="22" rx="11" fill="white" filter="url(#shadowSm)"/>
+  <rect x="196" y="528" width="4" height="22" rx="2" fill="#F87171"/>
+  <text x="372" y="542" font-size="10.5" font-weight="600" fill="#7F1D1D" text-anchor="middle">✅ 已授权的 JSON-RPC 请求</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STEP ④  Sequencer  — red/orange, DOUBLE BORDER (应用层) -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="52" y="554" width="636" height="118" rx="16" fill="none" stroke="#FDBA74" stroke-width="3" stroke-dasharray="6,3" opacity="0.6"/>
+  <rect x="68" y="548" width="68" height="16" rx="8" fill="#FEF3C7"/>
+  <text x="102" y="559" font-size="9" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing="0.8">应用层</text>
+
+  <rect x="60" y="556" width="620" height="108" rx="14" fill="white" filter="url(#shadowStrong)"/>
+  <rect x="60" y="556" width="620" height="108" rx="14" fill="none" stroke="#F97316" stroke-width="2.5"/>
+  <rect x="65" y="561" width="610" height="98" rx="11" fill="none" stroke="#FDBA74" stroke-width="1.2"/>
+  <rect x="60" y="556" width="8" height="108" rx="4" fill="#F97316"/>
+  <circle cx="104" cy="610" r="18" fill="#F97316"/>
+  <text x="104" y="616" font-size="16" text-anchor="middle" fill="white" font-weight="800">④</text>
+  <rect x="132" y="570" width="48" height="48" rx="10" fill="#FFF7ED"/>
+  <text x="156" y="602" font-size="28" text-anchor="middle">⚙️</text>
+  <text x="196" y="586" font-size="15" font-weight="700" fill="#1E293B">Sequencer</text>
+  <text x="196" y="604" font-size="12" fill="#64748B">交易排序 → 区块打包 → 状态执行</text>
+  <rect x="196" y="614" width="340" height="20" rx="10" fill="#FFF7ED"/>
+  <text x="204" y="627" font-size="10" fill="#9A3412" font-weight="600">★★ 可信运营商组件  |  可见性: 全部交易内容 + 完整状态</text>
+
+  <!-- Trust side -->
+  <rect x="700" y="556" width="170" height="108" rx="14" fill="white" filter="url(#shadowSm)"/>
+  <rect x="700" y="556" width="4" height="108" rx="2" fill="#F97316"/>
+  <text x="713" y="578" font-size="10" font-weight="700" fill="#64748B" letter-spacing="0.5">TRUST LEVEL</text>
+  <text x="713" y="600" font-size="22">🔄</text>
+  <text x="742" y="603" font-size="12" font-weight="700" fill="#1E293B">运营商</text>
+  <text x="713" y="620" font-size="10" fill="#94A3B8">全状态可见</text>
+  <text x="713" y="636" font-size="10" fill="#B45309" font-weight="600">⚠️ 审查风险</text>
+  <text x="713" y="654" font-size="13">⭐⭐⬜⬜⬜</text>
+
+  <!-- Arrow ④ → ⑤ -->
+  <line x1="370" y1="666" x2="370" y2="696" stroke="#FB923C" stroke-width="2.5" marker-end="url(#arrowTeal)"/>
+  <rect x="264" y="672" width="212" height="22" rx="11" fill="white" filter="url(#shadowSm)"/>
+  <rect x="264" y="672" width="4" height="22" rx="2" fill="#FB923C"/>
+  <text x="370" y="686" font-size="10.5" font-weight="600" fill="#7C2D12" text-anchor="middle">⚡ 执行轨迹</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STEP ⑤  Prover  — teal -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="60" y="700" width="500" height="118" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="60" y="700" width="8" height="118" rx="4" fill="#0D9488"/>
+  <circle cx="104" cy="759" r="18" fill="#0D9488"/>
+  <text x="104" y="765" font-size="16" text-anchor="middle" fill="white" font-weight="800">⑤</text>
+  <rect x="132" y="714" width="48" height="48" rx="10" fill="#F0FDFA"/>
+  <text x="156" y="746" font-size="28" text-anchor="middle">🖥️</text>
+  <text x="196" y="730" font-size="15" font-weight="700" fill="#1E293B">Prover (Airbender GPU Farm)</text>
+  <text x="196" y="748" font-size="12" fill="#64748B">生成 STARK 证明</text>
+  <!-- Success badge -->
+  <rect x="196" y="758" width="336" height="20" rx="10" fill="#CCFBF1"/>
+  <text x="204" y="771" font-size="10" fill="#065F46" font-weight="600">✅ 状态转换有效性的数学保证  |  ★★ 可信运营商 (输出有密码学保证)</text>
+  <rect x="60" y="700" width="500" height="118" rx="14" fill="none" stroke="#0D9488" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- ⑤b  PostgreSQL + Blob Store side card -->
+  <rect x="580" y="700" width="290" height="118" rx="14" fill="white" filter="url(#shadowSm)"/>
+  <rect x="580" y="700" width="6" height="118" rx="3" fill="#6366F1"/>
+  <!-- Connector line from prover to ⑤b -->
+  <line x1="560" y1="759" x2="580" y2="759" stroke="#0D9488" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="596" y="722" font-size="11" font-weight="700" fill="#4338CA">⑤b  数据层</text>
+  <text x="596" y="740" font-size="22">🗄️</text>
+  <text x="626" y="743" font-size="12" font-weight="700" fill="#1E293B">PostgreSQL</text>
+  <text x="626" y="759" font-size="11" fill="#64748B">+ Blob Store</text>
+  <rect x="596" y="768" width="162" height="18" rx="9" fill="#EEF2FF"/>
+  <text x="604" y="780" font-size="9.5" fill="#3730A3" font-weight="600">🗂️ 链外数据存储层</text>
+  <text x="596" y="804" font-size="10" fill="#94A3B8">交易历史 / 状态数据</text>
+
+  <!-- Trust side ⑤ -->
+  <rect x="700" y="700" width="170" height="118" rx="14" fill="none"/>
+  <!-- reuse side card space for ⑤b -->
+
+  <!-- Arrow ⑤ → divider -->
+  <line x1="370" y1="820" x2="370" y2="850" stroke="#2DD4BF" stroke-width="2.5" marker-end="url(#arrowTeal)"/>
+  <rect x="180" y="826" width="380" height="22" rx="11" fill="white" filter="url(#shadowSm)"/>
+  <rect x="180" y="826" width="4" height="22" rx="2" fill="#2DD4BF"/>
+  <text x="370" y="840" font-size="10.5" font-weight="600" fill="#134E4A" text-anchor="middle">🔏 STARK 证明 + 状态根 (出站连接)</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- DIVIDER LINE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="30" y="855" width="840" height="34" rx="10" fill="#E0E7FF" opacity="0.7"/>
+  <line x1="30" y1="872" x2="870" y2="872" stroke="#818CF8" stroke-width="1.5" stroke-dasharray="8,4"/>
+  <rect x="220" y="856" width="460" height="32" rx="12" fill="#818CF8"/>
+  <text x="450" y="877" font-size="11" font-weight="700" fill="white" text-anchor="middle" letter-spacing="0.5">━━  以下为链外公共基础设施  ━━</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STEP ⑥  ZKsync Gateway  — blue -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- Arrow divider → ⑥ -->
+  <line x1="370" y1="891" x2="370" y2="918" stroke="#60A5FA" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+
+  <rect x="60" y="920" width="620" height="100" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="60" y="920" width="8" height="100" rx="4" fill="#3B82F6"/>
+  <circle cx="104" cy="970" r="18" fill="#3B82F6"/>
+  <text x="104" y="976" font-size="16" text-anchor="middle" fill="white" font-weight="800">⑥</text>
+  <rect x="132" y="934" width="48" height="48" rx="10" fill="#EFF6FF"/>
+  <text x="156" y="966" font-size="28" text-anchor="middle">🌐</text>
+  <text x="196" y="952" font-size="15" font-weight="700" fill="#1E293B">ZKsync Gateway</text>
+  <text x="196" y="970" font-size="12" fill="#64748B">聚合多链证明 → 批量提交 L1</text>
+  <rect x="196" y="980" width="170" height="20" rx="10" fill="#DBEAFE"/>
+  <text x="204" y="993" font-size="10" fill="#1E3A8A" font-weight="600">半可信</text>
+  <rect x="60" y="920" width="620" height="100" rx="14" fill="none" stroke="#3B82F6" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- Trust side ⑥ -->
+  <rect x="700" y="920" width="170" height="100" rx="14" fill="white" filter="url(#shadowSm)"/>
+  <rect x="700" y="920" width="4" height="100" rx="2" fill="#3B82F6"/>
+  <text x="713" y="942" font-size="10" font-weight="700" fill="#64748B" letter-spacing="0.5">TRUST LEVEL</text>
+  <text x="713" y="964" font-size="22">🔗</text>
+  <text x="742" y="967" font-size="12" font-weight="700" fill="#1E293B">半可信</text>
+  <text x="713" y="984" font-size="10" fill="#94A3B8">证明聚合层</text>
+  <text x="713" y="1010" font-size="13">⭐⭐⭐⬜⬜</text>
+
+  <!-- Arrow ⑥ → ⑦ -->
+  <line x1="370" y1="1022" x2="370" y2="1052" stroke="#818CF8" stroke-width="2.5" marker-end="url(#arrowIndigo)"/>
+  <rect x="248" y="1028" width="244" height="22" rx="11" fill="white" filter="url(#shadowSm)"/>
+  <rect x="248" y="1028" width="4" height="22" rx="2" fill="#818CF8"/>
+  <text x="370" y="1042" font-size="10.5" font-weight="600" fill="#312E81" text-anchor="middle">📤 以太坊交易</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STEP ⑦  Ethereum L1  — indigo, strongest -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- Glow highlight for strongest trust -->
+  <rect x="48" y="1054" width="648" height="84" rx="18" fill="#EEF2FF" opacity="0.8" filter="url(#shadowStrong)"/>
+
+  <rect x="60" y="1058" width="620" height="76" rx="14" fill="white" filter="url(#shadowStrong)"/>
+  <!-- Triple-strength border for max trust -->
+  <rect x="60" y="1058" width="620" height="76" rx="14" fill="none" stroke="#4F46E5" stroke-width="3"/>
+  <rect x="64" y="1062" width="612" height="68" rx="11" fill="none" stroke="#818CF8" stroke-width="1.5"/>
+  <rect x="68" y="1066" width="604" height="60" rx="9" fill="none" stroke="#C7D2FE" stroke-width="1"/>
+  <rect x="60" y="1058" width="8" height="76" rx="4" fill="#4F46E5"/>
+
+  <circle cx="104" cy="1096" r="18" fill="#4F46E5"/>
+  <text x="104" y="1102" font-size="16" text-anchor="middle" fill="white" font-weight="800">⑦</text>
+  <rect x="132" y="1068" width="48" height="48" rx="10" fill="#EEF2FF"/>
+  <text x="156" y="1100" font-size="28" text-anchor="middle">⛓️</text>
+  <text x="196" y="1086" font-size="15" font-weight="700" fill="#1E293B">Ethereum L1</text>
+  <text x="196" y="1103" font-size="12" fill="#64748B">STARK 验证 → 接受状态根 → 不可篡改最终性</text>
+  <rect x="196" y="1112" width="316" height="20" rx="10" fill="#E0E7FF"/>
+  <text x="204" y="1125" font-size="10" fill="#3730A3" font-weight="700">✅✅ 密码学 + 去中心化共识</text>
+
+  <!-- Trust side ⑦ -->
+  <rect x="700" y="1058" width="170" height="76" rx="14" fill="white" filter="url(#shadowSm)"/>
+  <rect x="700" y="1058" width="4" height="76" rx="2" fill="#4F46E5"/>
+  <text x="713" y="1080" font-size="10" font-weight="700" fill="#64748B" letter-spacing="0.5">TRUST LEVEL</text>
+  <text x="713" y="1102" font-size="22">🔒</text>
+  <text x="742" y="1105" font-size="12" font-weight="700" fill="#1E293B">最高信任</text>
+  <text x="713" y="1122" font-size="13">⭐⭐⭐⭐⭐</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LEGEND / FOOTER -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="30" y="1146" width="840" height="2" rx="1" fill="#CBD5E1" opacity="0.5"/>
+
+  <!-- Legend items inline -->
+  <!-- Double border = trusted operator -->
+  <rect x="48" y="1152" width="24" height="14" rx="3" fill="none" stroke="#EF4444" stroke-width="2"/>
+  <rect x="50" y="1154" width="20" height="10" rx="2" fill="none" stroke="#FCA5A5" stroke-width="1"/>
+  <text x="78" y="1163" font-size="9.5" fill="#64748B">双边框 = 可信运营商组件</text>
+  <!-- Single border -->
+  <rect x="230" y="1152" width="24" height="14" rx="3" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+  <text x="260" y="1163" font-size="9.5" fill="#64748B">单边框 = 标准组件</text>
+  <!-- Stars -->
+  <text x="390" y="1163" font-size="9.5" fill="#64748B">★ = 信任等级 (⬜无 → ⭐⭐⭐⭐⭐最高)</text>
+  <!-- Date -->
+  <text x="820" y="1163" font-size="9" fill="#94A3B8" text-anchor="end">2026-05-08</text>
+</svg>

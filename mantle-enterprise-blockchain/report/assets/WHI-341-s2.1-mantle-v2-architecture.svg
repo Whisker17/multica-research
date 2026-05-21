@@ -1,0 +1,356 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 950" width="1200" height="950" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EEF2F7;stop-opacity:1" />
+    </linearGradient>
+    <!-- L1 panel gradient -->
+    <linearGradient id="l1PanelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#EDE9FE;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DDD6FE;stop-opacity:1" />
+    </linearGradient>
+    <!-- L2 panel gradient -->
+    <linearGradient id="l2PanelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#EFF6FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DBEAFE;stop-opacity:1" />
+    </linearGradient>
+    <!-- Card shadow filter -->
+    <filter id="cardShadow" x="-5%" y="-5%" width="115%" height="125%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+    <!-- Panel shadow filter -->
+    <filter id="panelShadow" x="-2%" y="-2%" width="106%" height="108%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#7C3AED" flood-opacity="0.12"/>
+    </filter>
+    <filter id="l2PanelShadow" x="-2%" y="-2%" width="106%" height="108%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#2563EB" flood-opacity="0.12"/>
+    </filter>
+    <!-- Arrow marker -->
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3B82F6"/>
+    </marker>
+    <marker id="arrowIndigo" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6366F1"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10B981"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94A3B8"/>
+    </marker>
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="1200" height="950" fill="url(#bgGrad)"/>
+
+  <!-- ===== TITLE BLOCK ===== -->
+  <rect x="24" y="16" width="1152" height="56" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="24" y="16" width="6" height="56" rx="3" fill="#6366F1"/>
+  <text x="44" y="40" font-size="15" font-weight="700" fill="#1E1B4B" letter-spacing="-0.3px">WHI-341 §2.1 — Mantle V2 Architecture (OP Stack ZK Validity Rollup)</text>
+  <text x="44" y="60" font-size="11" font-weight="500" fill="#6366F1" letter-spacing="2px">FLAT ICON STYLE</text>
+  <text x="1160" y="50" font-size="11" fill="#94A3B8" text-anchor="end">2026-05-08</text>
+
+  <!-- ================================================================ -->
+  <!-- ===== ETHEREUM L1 PANEL ===== -->
+  <!-- ================================================================ -->
+  <rect x="24" y="86" width="1152" height="295" rx="16" fill="url(#l1PanelGrad)" stroke="#A78BFA" stroke-width="1.5" filter="url(#panelShadow)"/>
+  <!-- L1 accent bar -->
+  <rect x="24" y="86" width="1152" height="6" rx="8" fill="#7C3AED"/>
+  <rect x="24" y="86" width="1152" height="32" rx="12" fill="#7C3AED" opacity="0.15"/>
+
+  <!-- L1 label -->
+  <text x="44" y="107" font-size="13" font-weight="700" fill="#4C1D95" letter-spacing="0.5px">⬡  ETHEREUM L1</text>
+  <text x="185" y="107" font-size="11" fill="#7C3AED">结算层 (Settlement Layer)</text>
+
+  <!-- ---- TOP ROW: three L1 components ---- -->
+
+  <!-- Batch Inbox card -->
+  <rect x="48" y="126" width="234" height="88" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="48" y="126" width="6" height="88" rx="3" fill="#8B5CF6"/>
+  <text x="74" y="148" font-size="18">📥</text>
+  <text x="102" y="148" font-size="12" font-weight="700" fill="#1E1B4B">Batch Inbox</text>
+  <text x="102" y="164" font-size="10" fill="#7C3AED" font-weight="600">EOA 地址</text>
+  <text x="58" y="184" font-size="10" fill="#64748B">接收 L2 批次数据</text>
+  <text x="58" y="200" font-size="10" fill="#64748B">via blobs / calldata</text>
+
+  <!-- L1 SystemConfig card -->
+  <rect x="306" y="126" width="234" height="88" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="306" y="126" width="6" height="88" rx="3" fill="#8B5CF6"/>
+  <text x="332" y="148" font-size="18">⚙️</text>
+  <text x="360" y="148" font-size="12" font-weight="700" fill="#1E1B4B">L1 SystemConfig</text>
+  <text x="360" y="164" font-size="10" fill="#7C3AED" font-weight="600">proxy 合约</text>
+  <text x="316" y="184" font-size="10" fill="#64748B">链级配置管理</text>
+  <text x="316" y="200" font-size="10" fill="#64748B">gas limit / fee scalars</text>
+
+  <!-- Deposit Contract card -->
+  <rect x="564" y="126" width="234" height="88" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="564" y="126" width="6" height="88" rx="3" fill="#8B5CF6"/>
+  <text x="590" y="148" font-size="18">🔒</text>
+  <text x="618" y="148" font-size="12" font-weight="700" fill="#1E1B4B">Deposit Contract</text>
+  <text x="618" y="164" font-size="10" fill="#7C3AED" font-weight="600">OptimismPortal</text>
+  <text x="574" y="184" font-size="10" fill="#64748B">L1→L2 存款入口</text>
+  <text x="574" y="200" font-size="10" fill="#64748B">事件驱动存款推导</text>
+
+  <!-- ---- OPSuccinctL2OutputOracle wide card ---- -->
+  <rect x="48" y="228" width="1104" height="136" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="48" y="228" width="8" height="136" rx="4" fill="#6366F1"/>
+
+  <!-- Oracle header -->
+  <text x="70" y="250" font-size="14" font-weight="700" fill="#1E1B4B">🔮  OPSuccinctL2OutputOracle</text>
+  <text x="292" y="250" font-size="10" fill="#6366F1" font-weight="600">output root 最终性 + ZK 验证核心</text>
+
+  <!-- Divider line -->
+  <line x1="596" y1="232" x2="596" y2="360" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- ZK mode box -->
+  <rect x="64" y="260" width="508" height="90" rx="10" fill="#F5F3FF" stroke="#A78BFA" stroke-width="1"/>
+  <rect x="64" y="260" width="508" height="28" rx="10" fill="#7C3AED" opacity="0.1"/>
+  <text x="78" y="278" font-size="11" font-weight="700" fill="#4C1D95">⚡ ZK 模式 (默认)</text>
+  <text x="78" y="300" font-size="10" fill="#374151">● SP1 validity proofs — <tspan font-weight="600" fill="#6D28D9">proposeL2Output</tspan></text>
+  <text x="78" y="316" font-size="10" fill="#374151">● 验证器: <tspan font-weight="600" fill="#6D28D9">SP1VerifierGW</tspan> (PLONK / FRI)</text>
+  <text x="78" y="332" font-size="10" fill="#374151">● 每个 output root 附带有效性证明, 即时最终性</text>
+  <text x="78" y="348" font-size="10" fill="#64748B" font-style="italic">无挑战窗口, 经济安全由密码学保障</text>
+
+  <!-- Optimistic fallback box -->
+  <rect x="612" y="260" width="516" height="90" rx="10" fill="#FFF7ED" stroke="#FCA5A5" stroke-width="1"/>
+  <rect x="612" y="260" width="516" height="28" rx="10" fill="#F97316" opacity="0.1"/>
+  <text x="626" y="278" font-size="11" font-weight="700" fill="#9A3412">🔄 Optimistic 回退 (可切换)</text>
+  <text x="626" y="300" font-size="10" fill="#374151">● 无需证明提交, 保留 7 天挑战窗口</text>
+  <text x="626" y="316" font-size="10" fill="#374151">● 挑战者可通过 <tspan font-weight="600" fill="#B45309">OP-CHALLENGER</tspan> 质疑无效 root</text>
+  <text x="626" y="332" font-size="10" fill="#374151">● 切换权限: <tspan font-weight="600" fill="#B45309">MantleSecurityMultisig</tspan></text>
+  <text x="626" y="348" font-size="10" fill="#64748B" font-style="italic">6/14 多签控制, 仅紧急降级使用</text>
+
+  <!-- ================================================================ -->
+  <!-- ===== VERTICAL ARROWS: L1 → L2 ===== -->
+  <!-- ================================================================ -->
+  <!-- Deposits arrow -->
+  <line x1="681" y1="381" x2="681" y2="428" stroke="#6366F1" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowIndigo)"/>
+  <rect x="620" y="390" width="120" height="18" rx="4" fill="#EDE9FE"/>
+  <text x="680" y="403" font-size="9" fill="#4C1D95" font-weight="600" text-anchor="middle">存款 / 配置更新</text>
+
+  <!-- Batch anchor arrow -->
+  <line x1="165" y1="381" x2="165" y2="428" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowIndigo)"/>
+  <rect x="104" y="390" width="120" height="18" rx="4" fill="#EDE9FE"/>
+  <text x="164" y="403" font-size="9" fill="#4C1D95" font-weight="600" text-anchor="middle">批次锚定确认</text>
+
+  <!-- ================================================================ -->
+  <!-- ===== MANTLE V2 L2 PANEL ===== -->
+  <!-- ================================================================ -->
+  <rect x="24" y="430" width="1152" height="494" rx="16" fill="url(#l2PanelGrad)" stroke="#93C5FD" stroke-width="1.5" filter="url(#l2PanelShadow)"/>
+  <!-- L2 accent bar -->
+  <rect x="24" y="430" width="1152" height="6" rx="8" fill="#2563EB"/>
+  <rect x="24" y="430" width="1152" height="32" rx="12" fill="#2563EB" opacity="0.12"/>
+
+  <!-- L2 label -->
+  <text x="44" y="451" font-size="13" font-weight="700" fill="#1E3A8A" letter-spacing="0.5px">🔷  MANTLE V2 (L2)</text>
+  <text x="190" y="451" font-size="11" fill="#2563EB">OP Stack ZK Validity Rollup</text>
+
+  <!-- ================================================================ -->
+  <!-- OP-NODE section -->
+  <!-- ================================================================ -->
+  <rect x="44" y="468" width="440" height="240" rx="14" fill="white" filter="url(#cardShadow)" opacity="0.95"/>
+  <rect x="44" y="468" width="440" height="38" rx="10" fill="#EFF6FF"/>
+  <rect x="44" y="468" width="6" height="240" rx="3" fill="#3B82F6"/>
+  <text x="66" y="487" font-size="12" font-weight="700" fill="#1E40AF">🧠  OP-NODE</text>
+  <text x="160" y="487" font-size="10" fill="#3B82F6" font-weight="600">共识层 (Consensus)</text>
+  <text x="62" y="502" font-size="9" fill="#64748B" font-style="italic">驱动 L2 区块推导与排序器协调</text>
+
+  <!-- OP-NODE sub-cards -->
+  <!-- Sequencer -->
+  <rect x="58" y="514" width="190" height="58" rx="8" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1"/>
+  <text x="72" y="532" font-size="14">🔢</text>
+  <text x="96" y="532" font-size="11" font-weight="700" fill="#0C4A6E">Sequencer</text>
+  <text x="72" y="548" font-size="9" fill="#374151">区块构建 + 排序</text>
+  <text x="72" y="560" font-size="9" fill="#374151">L2 tx 打包 → unsafe blocks</text>
+
+  <!-- Derivation Pipeline -->
+  <rect x="262" y="514" width="210" height="58" rx="8" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1"/>
+  <text x="276" y="532" font-size="14">🔄</text>
+  <text x="300" y="532" font-size="11" font-weight="700" fill="#0C4A6E">Derivation Pipeline</text>
+  <text x="276" y="548" font-size="9" fill="#374151">Mantle Blob Src</text>
+  <text x="276" y="560" font-size="9" fill="#374151">从 L1 重建 L2 链</text>
+
+  <!-- L1 Origin Selector -->
+  <rect x="58" y="582" width="190" height="52" rx="8" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1"/>
+  <text x="72" y="600" font-size="14">🎯</text>
+  <text x="96" y="600" font-size="11" font-weight="700" fill="#0C4A6E">L1 Origin Selector</text>
+  <text x="72" y="614" font-size="9" fill="#374151">选择 L1 锚点区块</text>
+  <text x="72" y="626" font-size="9" fill="#374151">控制 L2 时钟推进</text>
+
+  <!-- Conductor -->
+  <rect x="262" y="582" width="210" height="52" rx="8" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1"/>
+  <text x="276" y="600" font-size="14">🎼</text>
+  <text x="300" y="600" font-size="11" font-weight="700" fill="#78350F">Conductor</text>
+  <text x="276" y="614" font-size="9" fill="#374151">HA Sequencer 协调</text>
+  <text x="276" y="626" font-size="9" fill="#374151">故障转移 + leader 选举</text>
+
+  <!-- P2P label at bottom of OP-NODE -->
+  <rect x="58" y="644" width="406" height="24" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+  <text x="261" y="660" font-size="9" fill="#1D4ED8" text-anchor="middle" font-weight="600">📡 P2P 网络: 区块广播 / 不安全区块同步 / 对等节点发现</text>
+
+  <!-- ================================================================ -->
+  <!-- ENGINE API arrow -->
+  <!-- ================================================================ -->
+  <line x1="484" y1="588" x2="556" y2="588" stroke="#3B82F6" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <rect x="484" y="566" width="72" height="44" rx="6" fill="white" stroke="#93C5FD" stroke-width="1" filter="url(#cardShadow)"/>
+  <text x="520" y="582" font-size="8" fill="#1D4ED8" font-weight="700" text-anchor="middle">Engine</text>
+  <text x="520" y="594" font-size="8" fill="#1D4ED8" font-weight="700" text-anchor="middle">API</text>
+  <text x="520" y="606" font-size="7" fill="#64748B" text-anchor="middle">FCU / NP / GP</text>
+
+  <!-- ================================================================ -->
+  <!-- OP-GETH section -->
+  <!-- ================================================================ -->
+  <rect x="556" y="468" width="612" height="240" rx="14" fill="white" filter="url(#cardShadow)" opacity="0.95"/>
+  <rect x="556" y="468" width="612" height="38" rx="10" fill="#F0FDF4"/>
+  <rect x="556" y="468" width="6" height="240" rx="3" fill="#10B981"/>
+  <text x="578" y="487" font-size="12" font-weight="700" fill="#14532D">⚙️  OP-GETH</text>
+  <text x="658" y="487" font-size="10" fill="#10B981" font-weight="600">执行层 (Execution Engine)</text>
+  <text x="578" y="502" font-size="9" fill="#64748B" font-style="italic">EVM 执行 + 状态管理 + 费用处理</text>
+
+  <!-- OP-GETH sub-cards row 1 -->
+  <!-- EVM Engine -->
+  <rect x="570" y="514" width="180" height="58" rx="8" fill="#F0FDF4" stroke="#A7F3D0" stroke-width="1"/>
+  <text x="584" y="532" font-size="14">🖥️</text>
+  <text x="608" y="532" font-size="11" font-weight="700" fill="#14532D">EVM 引擎</text>
+  <text x="584" y="548" font-size="9" fill="#374151">标准 EVM + L1 cost</text>
+  <text x="584" y="560" font-size="9" fill="#374151">兼容 Mantle fee 模型</text>
+
+  <!-- Tx Pool -->
+  <rect x="762" y="514" width="180" height="58" rx="8" fill="#F0FDF4" stroke="#A7F3D0" stroke-width="1"/>
+  <text x="776" y="532" font-size="14">🗂️</text>
+  <text x="800" y="532" font-size="11" font-weight="700" fill="#14532D">Tx Pool</text>
+  <text x="776" y="548" font-size="9" fill="#374151">L1 cost 感知</text>
+  <text x="776" y="560" font-size="9" fill="#374151">优先级费用排序</text>
+
+  <!-- State Database -->
+  <rect x="954" y="514" width="192" height="58" rx="8" fill="#F0FDF4" stroke="#A7F3D0" stroke-width="1"/>
+  <text x="968" y="532" font-size="14">🗄️</text>
+  <text x="992" y="532" font-size="11" font-weight="700" fill="#14532D">State Database</text>
+  <text x="968" y="548" font-size="9" fill="#374151">Merkle Patricia Trie</text>
+  <text x="968" y="560" font-size="9" fill="#374151">全量状态存储</text>
+
+  <!-- OP-GETH sub-cards row 2 -->
+  <!-- Preconf -->
+  <rect x="570" y="582" width="180" height="52" rx="8" fill="#FFF7ED" stroke="#FDE68A" stroke-width="1"/>
+  <text x="584" y="600" font-size="14">⚡</text>
+  <text x="608" y="600" font-size="11" font-weight="700" fill="#78350F">Preconf 模块</text>
+  <text x="584" y="614" font-size="9" fill="#374151">预确认支持</text>
+  <text x="584" y="626" font-size="9" fill="#374151">亚秒级 tx 响应</text>
+
+  <!-- Miner -->
+  <rect x="762" y="582" width="180" height="52" rx="8" fill="#F0FDF4" stroke="#A7F3D0" stroke-width="1"/>
+  <text x="776" y="600" font-size="14">⛏️</text>
+  <text x="800" y="600" font-size="11" font-weight="700" fill="#14532D">Miner</text>
+  <text x="776" y="614" font-size="9" fill="#374151">区块组装</text>
+  <text x="776" y="626" font-size="9" fill="#374151">封装 + seal</text>
+
+  <!-- L2 Predeploys -->
+  <rect x="954" y="582" width="192" height="52" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+  <text x="968" y="600" font-size="14">📋</text>
+  <text x="992" y="600" font-size="11" font-weight="700" fill="#1E40AF">L2 Predeploys</text>
+  <text x="968" y="614" font-size="9" fill="#374151">L1Block · GasPriceOracle</text>
+  <text x="968" y="626" font-size="9" fill="#374151">OperatorFeeVault</text>
+
+  <!-- Predeploys note -->
+  <rect x="570" y="644" width="576" height="24" rx="6" fill="#F0FDF4" stroke="#A7F3D0" stroke-width="1"/>
+  <text x="858" y="660" font-size="9" fill="#065F46" text-anchor="middle" font-weight="600">🔗 JSON-RPC: eth_* / debug_* / net_* — 标准以太坊接口对外暴露</text>
+
+  <!-- ================================================================ -->
+  <!-- UTILITY ROW 1: OP-BATCHER, OP-PROPOSER, GAS-ORACLE -->
+  <!-- ================================================================ -->
+  <rect x="44" y="728" width="356" height="90" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="44" y="728" width="6" height="90" rx="3" fill="#F59E0B"/>
+  <text x="62" y="748" font-size="14">📦</text>
+  <text x="86" y="748" font-size="12" font-weight="700" fill="#1E1B4B">OP-BATCHER</text>
+  <rect x="62" y="754" width="60" height="14" rx="3" fill="#FEF3C7"/>
+  <text x="63" y="765" font-size="8" fill="#78350F" font-weight="600">L2 → L1 批次</text>
+  <text x="62" y="784" font-size="9" fill="#374151">将 L2 交易批量提交到 L1</text>
+  <text x="62" y="798" font-size="9" fill="#374151">via blobs / calldata (EIP-4844)</text>
+  <text x="62" y="812" font-size="9" fill="#64748B">压缩 + 分片 + 重试机制</text>
+
+  <rect x="416" y="728" width="356" height="90" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="416" y="728" width="6" height="90" rx="3" fill="#8B5CF6"/>
+  <text x="434" y="748" font-size="14">📤</text>
+  <text x="458" y="748" font-size="12" font-weight="700" fill="#1E1B4B">OP-PROPOSER</text>
+  <rect x="434" y="754" width="78" height="14" rx="3" fill="#EDE9FE"/>
+  <text x="435" y="765" font-size="8" fill="#4C1D95" font-weight="600">L2 → L1 output</text>
+  <text x="434" y="784" font-size="9" fill="#374151">向 L1 提交 L2 output roots</text>
+  <text x="434" y="798" font-size="9" fill="#374151">触发 OPSuccinctL2OutputOracle</text>
+  <text x="434" y="812" font-size="9" fill="#64748B">定期锚点 + ZK 证明附带</text>
+
+  <rect x="788" y="728" width="380" height="90" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="788" y="728" width="6" height="90" rx="3" fill="#10B981"/>
+  <text x="806" y="748" font-size="14">💱</text>
+  <text x="830" y="748" font-size="12" font-weight="700" fill="#1E1B4B">GAS-ORACLE</text>
+  <rect x="806" y="754" width="88" height="14" rx="3" fill="#D1FAE5"/>
+  <text x="807" y="765" font-size="8" fill="#065F46" font-weight="600">MNT/ETH 汇率</text>
+  <text x="806" y="784" font-size="9" fill="#374151">更新 MNT / ETH token 比率</text>
+  <text x="806" y="798" font-size="9" fill="#374151">GasPriceOracle predeploy 同步</text>
+  <text x="806" y="812" font-size="9" fill="#64748B">链下价格聚合 → 链上写入</text>
+
+  <!-- ================================================================ -->
+  <!-- UTILITY ROW 2: OP-CHALLENGER, CANNON, KONA -->
+  <!-- ================================================================ -->
+  <rect x="44" y="832" width="356" height="82" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="44" y="832" width="6" height="82" rx="3" fill="#EF4444"/>
+  <text x="62" y="852" font-size="14">⚔️</text>
+  <text x="86" y="852" font-size="12" font-weight="700" fill="#1E1B4B">OP-CHALLENGER</text>
+  <rect x="62" y="858" width="78" height="14" rx="3" fill="#FEE2E2"/>
+  <text x="63" y="869" font-size="8" fill="#991B1B" font-weight="600">争议博弈代理</text>
+  <text x="62" y="884" font-size="9" fill="#374151">监控 output roots 有效性</text>
+  <text x="62" y="898" font-size="9" fill="#374151">发起 / 响应故障证明游戏</text>
+  <text x="62" y="908" font-size="9" fill="#64748B">Optimistic 模式下激活</text>
+
+  <rect x="416" y="832" width="356" height="82" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="416" y="832" width="6" height="82" rx="3" fill="#F97316"/>
+  <text x="434" y="852" font-size="14">💣</text>
+  <text x="458" y="852" font-size="12" font-weight="700" fill="#1E1B4B">CANNON</text>
+  <rect x="434" y="858" width="88" height="14" rx="3" fill="#FEF3C7"/>
+  <text x="435" y="869" font-size="8" fill="#92400E" font-weight="600">MIPS fault proof VM</text>
+  <text x="434" y="884" font-size="9" fill="#374151">MIPS32 指令集链上执行</text>
+  <text x="434" y="898" font-size="9" fill="#374151">单步故障证明仲裁</text>
+  <text x="434" y="908" font-size="9" fill="#64748B">与 CHALLENGER 协同工作</text>
+
+  <rect x="788" y="832" width="380" height="82" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="788" y="832" width="6" height="82" rx="3" fill="#06B6D4"/>
+  <text x="806" y="852" font-size="14">🦀</text>
+  <text x="830" y="852" font-size="12" font-weight="700" fill="#1E1B4B">KONA (Rust)</text>
+  <rect x="806" y="858" width="110" height="14" rx="3" fill="#CFFAFE"/>
+  <text x="807" y="869" font-size="8" fill="#164E63" font-weight="600">故障证明 client/host</text>
+  <text x="806" y="884" font-size="9" fill="#374151">Rust 实现 rollup node</text>
+  <text x="806" y="898" font-size="9" fill="#374151">derivation + ZK 辅助</text>
+  <text x="806" y="908" font-size="9" fill="#64748B">轻量级链外证明生成</text>
+
+  <!-- ================================================================ -->
+  <!-- DATA FLOW ARROWS: L2 internals -->
+  <!-- ================================================================ -->
+  <!-- OP-BATCHER → L1 Batch Inbox (upward) -->
+  <line x1="222" y1="728" x2="222" y2="390" stroke="#F59E0B" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arrowGray)"/>
+
+  <!-- OP-PROPOSER → L1 Oracle (upward) -->
+  <line x1="594" y1="728" x2="594" y2="390" stroke="#8B5CF6" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arrowIndigo)"/>
+
+  <!-- OP-BATCHER feeds from OP-GETH (horizontal within L2) -->
+  <line x1="556" y1="588" x2="422" y2="588" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowGray)"/>
+
+  <!-- OP-NODE → OP-BATCHER coordination -->
+  <line x1="222" y1="708" x2="222" y2="728" stroke="#3B82F6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <!-- CHALLENGER ↔ CANNON -->
+  <line x1="400" y1="873" x2="416" y2="873" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arrowGray)"/>
+
+  <!-- CANNON ↔ KONA -->
+  <line x1="772" y1="873" x2="788" y2="873" stroke="#F97316" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arrowGray)"/>
+
+  <!-- ================================================================ -->
+  <!-- LEGEND BOX -->
+  <!-- ================================================================ -->
+  <rect x="820" y="734" width="0" height="0" rx="0" fill="none"/>
+
+  <!-- ================================================================ -->
+  <!-- FOOTER -->
+  <!-- ================================================================ -->
+  <rect x="24" y="924" width="1152" height="18" rx="6" fill="none"/>
+  <text x="600" y="937" font-size="9" fill="#94A3B8" text-anchor="middle">Mantle V2 Architecture · WHI-341 §2.1 · 企业区块链可行性研究 · 2026-05-08</text>
+</svg>

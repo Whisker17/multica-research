@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" width="800" height="700" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <!-- Gradient background -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#EEF2F7;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Drop shadows -->
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+    <filter id="shadowSm" x="-6%" y="-6%" width="112%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#94A3B8" flood-opacity="0.12"/>
+    </filter>
+    <filter id="shadowStrong" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#64748B" flood-opacity="0.20"/>
+    </filter>
+
+    <!-- Arrow markers -->
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22C55E"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#EF4444"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94A3B8"/>
+    </marker>
+  </defs>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- BACKGROUND                                              -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect width="800" height="700" fill="url(#bgGrad)"/>
+  <!-- Subtle dot grid -->
+  <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#CBD5E1" opacity="0.4"/>
+  </pattern>
+  <rect width="800" height="700" fill="url(#dots)"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- TITLE BLOCK                                             -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="24" y="16" width="752" height="64" rx="14" fill="white" filter="url(#shadowSm)"/>
+  <rect x="24" y="16" width="8" height="64" rx="4" fill="#6366F1"/>
+  <text x="46" y="38" font-size="12" font-weight="700" fill="#6366F1" letter-spacing="1.4">WHI-338 §3.2</text>
+  <text x="46" y="60" font-size="15" font-weight="700" fill="#1E293B">Proxy RPC 三步验证</text>
+  <rect x="636" y="28" width="126" height="20" rx="10" fill="#EEF2FF"/>
+  <text x="699" y="42" font-size="9.5" font-weight="600" fill="#6366F1" text-anchor="middle" letter-spacing="0.8">FLAT ICON STYLE</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- HEADER: Request Flow Banner                             -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="24" y="92" width="752" height="32" rx="10" fill="#1E293B" filter="url(#shadowSm)"/>
+  <text x="400" y="113" font-size="11.5" font-weight="600" fill="#E2E8F0" text-anchor="middle" letter-spacing="0.3">请求流:  客户端  →  Proxy RPC  →  Prividium API  →  Sequencer RPC</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STEP 1: JWT 凭证验证 (blue #3B82F6)                    -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- Card -->
+  <rect x="24" y="140" width="590" height="138" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="24" y="140" width="8" height="138" rx="4" fill="#3B82F6"/>
+  <rect x="24" y="140" width="590" height="138" rx="14" fill="none" stroke="#3B82F6" stroke-width="1.2" opacity="0.3"/>
+
+  <!-- Step circle badge -->
+  <circle cx="62" cy="209" r="17" fill="#3B82F6"/>
+  <text x="62" y="215" font-size="15" font-weight="800" fill="white" text-anchor="middle">1</text>
+
+  <!-- Icon box -->
+  <rect x="89" y="154" width="46" height="46" rx="10" fill="#EFF6FF"/>
+  <text x="112" y="185" font-size="26" text-anchor="middle">🔑</text>
+
+  <!-- Title -->
+  <text x="148" y="172" font-size="14.5" font-weight="700" fill="#1E293B">JWT 凭证验证</text>
+  <!-- Bullet points -->
+  <text x="148" y="192" font-size="11" fill="#475569">• 检查 Authorization header 中的 Bearer token</text>
+  <text x="148" y="208" font-size="11" fill="#475569">• 验证 JWT 签名、过期时间、签发者</text>
+  <text x="148" y="224" font-size="11" fill="#475569">• 提取用户身份和角色声明</text>
+
+  <!-- Pass pill -->
+  <rect x="148" y="233" width="78" height="22" rx="11" fill="#DCFCE7"/>
+  <text x="187" y="248" font-size="11" font-weight="700" fill="#15803D" text-anchor="middle">✅ 通过</text>
+
+  <!-- Fail pill (right side) -->
+  <rect x="625" y="168" width="151" height="28" rx="14" fill="#FEE2E2" filter="url(#shadowSm)"/>
+  <rect x="625" y="168" width="4" height="28" rx="2" fill="#EF4444"/>
+  <text x="701" y="186" font-size="10.5" font-weight="700" fill="#991B1B" text-anchor="middle">401 Unauthorized</text>
+  <!-- Fail sub-label -->
+  <text x="701" y="210" font-size="10" fill="#DC2626" text-anchor="middle">+ 审计日志</text>
+
+  <!-- Fail arrow (horizontal, from card right edge to fail pill) -->
+  <line x1="614" y1="195" x2="622" y2="182" stroke="#EF4444" stroke-width="1.8" stroke-dasharray="4,2" marker-end="url(#arrowRed)"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- Down arrow 1→2                                         -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <line x1="310" y1="280" x2="310" y2="306" stroke="#22C55E" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <rect x="232" y="284" width="158" height="20" rx="10" fill="white" filter="url(#shadowSm)"/>
+  <rect x="232" y="284" width="4" height="20" rx="2" fill="#22C55E"/>
+  <text x="320" y="298" font-size="10" font-weight="600" fill="#166534" text-anchor="middle">通过 → 进入第 2 步</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STEP 2: 钱包地址验证 (indigo #6366F1)                  -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="24" y="308" width="590" height="138" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="24" y="308" width="8" height="138" rx="4" fill="#6366F1"/>
+  <rect x="24" y="308" width="590" height="138" rx="14" fill="none" stroke="#6366F1" stroke-width="1.2" opacity="0.3"/>
+
+  <circle cx="62" cy="377" r="17" fill="#6366F1"/>
+  <text x="62" y="383" font-size="15" font-weight="800" fill="white" text-anchor="middle">2</text>
+
+  <rect x="89" y="322" width="46" height="46" rx="10" fill="#EEF2FF"/>
+  <text x="112" y="353" font-size="26" text-anchor="middle">👛</text>
+
+  <text x="148" y="340" font-size="14.5" font-weight="700" fill="#1E293B">钱包地址验证</text>
+  <text x="148" y="360" font-size="11" fill="#475569">• 验证请求中的 from 地址与 JWT 中的身份匹配</text>
+  <text x="148" y="376" font-size="11" fill="#475569">• 确保用户只能用自己关联的钱包发起交易</text>
+  <text x="148" y="392" font-size="11" fill="#475569">• 防止身份冒用和钱包劫持</text>
+
+  <rect x="148" y="401" width="78" height="22" rx="11" fill="#DCFCE7"/>
+  <text x="187" y="416" font-size="11" font-weight="700" fill="#15803D" text-anchor="middle">✅ 通过</text>
+
+  <!-- Fail pill -->
+  <rect x="625" y="336" width="151" height="28" rx="14" fill="#FEE2E2" filter="url(#shadowSm)"/>
+  <rect x="625" y="336" width="4" height="28" rx="2" fill="#EF4444"/>
+  <text x="701" y="354" font-size="10.5" font-weight="700" fill="#991B1B" text-anchor="middle">403 Forbidden</text>
+  <text x="701" y="378" font-size="10" fill="#DC2626" text-anchor="middle">+ 审计日志</text>
+  <line x1="614" y1="363" x2="622" y2="350" stroke="#EF4444" stroke-width="1.8" stroke-dasharray="4,2" marker-end="url(#arrowRed)"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- Down arrow 2→3                                         -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <line x1="310" y1="448" x2="310" y2="474" stroke="#22C55E" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <rect x="232" y="452" width="158" height="20" rx="10" fill="white" filter="url(#shadowSm)"/>
+  <rect x="232" y="452" width="4" height="20" rx="2" fill="#22C55E"/>
+  <text x="320" y="466" font-size="10" font-weight="600" fill="#166534" text-anchor="middle">通过 → 进入第 3 步</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- STEP 3: 合约函数权限检查 (amber #F59E0B)               -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="24" y="476" width="590" height="162" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="24" y="476" width="8" height="162" rx="4" fill="#F59E0B"/>
+  <rect x="24" y="476" width="590" height="162" rx="14" fill="none" stroke="#F59E0B" stroke-width="1.2" opacity="0.3"/>
+
+  <circle cx="62" cy="557" r="17" fill="#F59E0B"/>
+  <text x="62" y="563" font-size="15" font-weight="800" fill="white" text-anchor="middle">3</text>
+
+  <rect x="89" y="490" width="46" height="46" rx="10" fill="#FFFBEB"/>
+  <text x="112" y="521" font-size="26" text-anchor="middle">📋</text>
+
+  <text x="148" y="508" font-size="14.5" font-weight="700" fill="#1E293B">合约函数权限检查</text>
+  <text x="148" y="528" font-size="11" fill="#475569">• 解析请求中的目标合约地址和函数选择器</text>
+  <text x="148" y="544" font-size="11" fill="#475569">• 查询该函数的权限配置 (Forbidden / AllUsers / …)</text>
+
+  <!-- Sub-check pills row -->
+  <rect x="148" y="554" width="118" height="22" rx="11" fill="#FEF3C7"/>
+  <text x="207" y="569" font-size="10.5" font-weight="600" fill="#92400E" text-anchor="middle">Check Role → 验证用户角色</text>
+  <rect x="276" y="554" width="138" height="22" rx="11" fill="#FEF3C7"/>
+  <text x="345" y="569" font-size="10.5" font-weight="600" fill="#92400E" text-anchor="middle">Restrict Argument → 验证参数</text>
+
+  <text x="148" y="592" font-size="11" fill="#475569">• 权限在 eth_call (读) 和执行 (写) 时均检查</text>
+
+  <rect x="148" y="601" width="78" height="22" rx="11" fill="#DCFCE7"/>
+  <text x="187" y="616" font-size="11" font-weight="700" fill="#15803D" text-anchor="middle">✅ 通过</text>
+
+  <!-- Fail pill -->
+  <rect x="625" y="506" width="151" height="28" rx="14" fill="#FEE2E2" filter="url(#shadowSm)"/>
+  <rect x="625" y="506" width="4" height="28" rx="2" fill="#EF4444"/>
+  <text x="701" y="524" font-size="10.5" font-weight="700" fill="#991B1B" text-anchor="middle">403 Forbidden</text>
+  <text x="701" y="548" font-size="10" fill="#DC2626" text-anchor="middle">+ 审计日志</text>
+  <line x1="614" y1="533" x2="622" y2="520" stroke="#EF4444" stroke-width="1.8" stroke-dasharray="4,2" marker-end="url(#arrowRed)"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- Down arrow 3→Result                                    -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <line x1="310" y1="640" x2="310" y2="656" stroke="#22C55E" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- RESULT: Forward to Sequencer RPC                       -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="100" y="658" width="440" height="30" rx="15" fill="#15803D" filter="url(#shadow)"/>
+  <text x="320" y="677" font-size="12.5" font-weight="700" fill="white" text-anchor="middle">→ 转发至 Sequencer RPC 执行</text>
+</svg>

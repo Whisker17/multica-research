@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC"/>
+      <stop offset="100%" style="stop-color:#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Card drop shadow -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#64748B" flood-opacity="0.10"/>
+    </filter>
+
+    <!-- Stronger shadow for guarantee badge -->
+    <filter id="badgeShadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#16A34A" flood-opacity="0.20"/>
+    </filter>
+
+    <!-- Red warning shadow -->
+    <filter id="warnShadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#DC2626" flood-opacity="0.15"/>
+    </filter>
+
+    <!-- Green step card gradient accent -->
+    <linearGradient id="greenAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#16A34A"/>
+      <stop offset="100%" style="stop-color:#22C55E"/>
+    </linearGradient>
+
+    <!-- Red accent gradient -->
+    <linearGradient id="redAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#DC2626"/>
+      <stop offset="100%" style="stop-color:#EF4444"/>
+    </linearGradient>
+
+    <!-- Amber accent gradient -->
+    <linearGradient id="amberAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#D97706"/>
+      <stop offset="100%" style="stop-color:#F59E0B"/>
+    </linearGradient>
+
+    <!-- Guarantee badge gradient -->
+    <linearGradient id="guaranteeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#14532D"/>
+      <stop offset="100%" style="stop-color:#166534"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ═══════════════════════════════════════
+       BACKGROUND
+  ═══════════════════════════════════════ -->
+  <rect width="900" height="600" fill="url(#bgGrad)"/>
+
+  <!-- ═══════════════════════════════════════
+       TITLE BAR
+  ═══════════════════════════════════════ -->
+  <rect x="30" y="18" width="840" height="52" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="30" y="18" width="6" height="52" rx="3" fill="#6366F1"/>
+  <text x="54" y="38" font-size="11" fill="#6366F1" font-weight="600" letter-spacing="0.5">WHI-338 §4.2</text>
+  <text x="54" y="57" font-size="18" font-weight="700" fill="#1E293B">KYC 链级执行</text>
+  <text x="870" y="38" font-size="11" fill="#94A3B8" text-anchor="end">zkSync Prividium</text>
+  <text x="870" y="57" font-size="11" fill="#94A3B8" text-anchor="end">KYC Chain-Level Enforcement</text>
+
+  <!-- ═══════════════════════════════════════
+       COLUMN HEADERS
+  ═══════════════════════════════════════ -->
+  <!-- Left header -->
+  <rect x="30" y="84" width="400" height="40" rx="10" fill="#FEF2F2" filter="url(#cardShadow)"/>
+  <rect x="30" y="84" width="400" height="40" rx="10" fill="none" stroke="#FECACA" stroke-width="1.5"/>
+  <text x="230" y="100" font-size="11" fill="#DC2626" font-weight="600" text-anchor="middle" letter-spacing="0.3">⚠️</text>
+  <text x="246" y="100" font-size="11" fill="#DC2626" font-weight="600" letter-spacing="0.3">传统模式</text>
+  <text x="230" y="116" font-size="13" font-weight="700" fill="#991B1B" text-anchor="middle">传统 KYC 流程</text>
+
+  <!-- Right header -->
+  <rect x="470" y="84" width="400" height="40" rx="10" fill="#F0FDF4" filter="url(#cardShadow)"/>
+  <rect x="470" y="84" width="400" height="40" rx="10" fill="none" stroke="#BBF7D0" stroke-width="1.5"/>
+  <text x="660" y="100" font-size="11" fill="#16A34A" font-weight="600" text-anchor="middle" letter-spacing="0.3">✅</text>
+  <text x="676" y="100" font-size="11" fill="#16A34A" font-weight="600" letter-spacing="0.3">Prividium 模式</text>
+  <text x="660" y="116" font-size="13" font-weight="700" fill="#15803D" text-anchor="middle">Prividium KYC 流程</text>
+
+  <!-- Divider -->
+  <line x1="450" y1="84" x2="450" y2="585" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- ═══════════════════════════════════════
+       LEFT COLUMN — 传统 KYC 流程
+  ═══════════════════════════════════════ -->
+
+  <!-- Flow card -->
+  <rect x="40" y="138" width="380" height="90" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="40" y="138" width="6" height="90" rx="3" fill="url(#amberAccent)"/>
+  <text x="58" y="158" font-size="12" fill="#B45309" font-weight="600">🔄  传统流程</text>
+  <!-- Step 1 -->
+  <rect x="58" y="167" width="105" height="22" rx="6" fill="#FEF3C7"/>
+  <text x="110" y="182" font-size="10" fill="#92400E" font-weight="500" text-anchor="middle">🏦 链外 KYC</text>
+  <text x="110" y="194" font-size="9" fill="#A16207" text-anchor="middle">交易所 / 银行</text>
+  <!-- Arrow -->
+  <text x="170" y="182" font-size="14" fill="#D97706" text-anchor="middle">→</text>
+  <!-- Step 2 -->
+  <rect x="183" y="167" width="105" height="22" rx="6" fill="#FEF3C7"/>
+  <text x="235" y="182" font-size="10" fill="#92400E" font-weight="500" text-anchor="middle">✏️ 手动映射</text>
+  <text x="235" y="194" font-size="9" fill="#A16207" text-anchor="middle">→ 链上地址</text>
+  <!-- Arrow -->
+  <text x="295" y="182" font-size="14" fill="#D97706" text-anchor="middle">→</text>
+  <!-- Step 3 -->
+  <rect x="307" y="167" width="105" height="22" rx="6" fill="#FEF3C7"/>
+  <text x="360" y="178" font-size="10" fill="#92400E" font-weight="500" text-anchor="middle">⛓️ 链上交易</text>
+  <text x="360" y="190" font-size="9" fill="#A16207" text-anchor="middle">无 KYC 执行</text>
+
+  <!-- Problem card -->
+  <rect x="40" y="242" width="380" height="82" rx="14" fill="white" filter="url(#warnShadow)"/>
+  <rect x="40" y="242" width="6" height="82" rx="3" fill="url(#redAccent)"/>
+  <text x="58" y="262" font-size="12" fill="#DC2626" font-weight="700">❗  核心问题</text>
+  <text x="58" y="282" font-size="11" fill="#374151">• 链上地址可自由创建和使用</text>
+  <text x="58" y="300" font-size="11" fill="#374151">• KYC 映射可能过期或不准确</text>
+  <text x="58" y="318" font-size="11" fill="#374151">• 无法在协议层强制身份验证</text>
+
+  <!-- Warning badges -->
+  <rect x="40" y="338" width="180" height="30" rx="8" fill="#FEE2E2" filter="url(#warnShadow)"/>
+  <rect x="40" y="338" width="180" height="30" rx="8" fill="none" stroke="#FECACA" stroke-width="1"/>
+  <text x="130" y="358" font-size="11" fill="#991B1B" font-weight="600" text-anchor="middle">⚠️ KYC 绕过风险</text>
+
+  <rect x="232" y="338" width="188" height="30" rx="8" fill="#FEE2E2" filter="url(#warnShadow)"/>
+  <rect x="232" y="338" width="188" height="30" rx="8" fill="none" stroke="#FECACA" stroke-width="1"/>
+  <text x="326" y="358" font-size="11" fill="#991B1B" font-weight="600" text-anchor="middle">⚠️ 监管合规缺口</text>
+
+  <!-- Consequence summary -->
+  <rect x="40" y="382" width="380" height="60" rx="14" fill="#FEF2F2"/>
+  <rect x="40" y="382" width="380" height="60" rx="14" fill="none" stroke="#FECACA" stroke-width="1.5"/>
+  <text x="230" y="406" font-size="12" fill="#991B1B" font-weight="600" text-anchor="middle">🚫  结果</text>
+  <text x="230" y="424" font-size="11" fill="#7F1D1D" text-anchor="middle">KYC 与链上活动之间存在根本性断裂</text>
+  <text x="230" y="440" font-size="10" fill="#B91C1C" text-anchor="middle">合规责任落在应用层 — 而非协议层</text>
+
+  <!-- ═══════════════════════════════════════
+       RIGHT COLUMN — Prividium KYC 流程
+  ═══════════════════════════════════════ -->
+
+  <!-- Step 1 -->
+  <rect x="480" y="138" width="380" height="58" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="480" y="138" width="6" height="58" rx="3" fill="url(#greenAccent)"/>
+  <text x="498" y="157" font-size="18">🔐</text>
+  <text x="524" y="157" font-size="11" fill="#15803D" font-weight="700">步骤 1 — 企业 SSO</text>
+  <text x="524" y="173" font-size="10.5" fill="#374151">Okta 身份验证 + 多因素认证 (MFA)</text>
+  <text x="524" y="189" font-size="10" fill="#6B7280">企业统一认证入口 → 强身份绑定</text>
+
+  <!-- Arrow 1→2 -->
+  <text x="660" y="208" font-size="18" fill="#16A34A" text-anchor="middle">✅</text>
+  <line x1="660" y1="196" x2="660" y2="214" stroke="#16A34A" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- Step 2 -->
+  <rect x="480" y="218" width="380" height="58" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="480" y="218" width="6" height="58" rx="3" fill="url(#greenAccent)"/>
+  <text x="498" y="237" font-size="18">👤</text>
+  <text x="524" y="237" font-size="11" fill="#15803D" font-weight="700">步骤 2 — 管理员授权</text>
+  <text x="524" y="253" font-size="10.5" fill="#374151">创建用户记录 → 关联钱包地址</text>
+  <text x="524" y="269" font-size="10" fill="#6B7280">链上身份与企业身份强绑定</text>
+
+  <!-- Arrow 2→3 -->
+  <text x="660" y="288" font-size="18" fill="#16A34A" text-anchor="middle">✅</text>
+
+  <!-- Step 3 -->
+  <rect x="480" y="298" width="380" height="58" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="480" y="298" width="6" height="58" rx="3" fill="url(#greenAccent)"/>
+  <text x="498" y="317" font-size="18">🎫</text>
+  <text x="524" y="317" font-size="11" fill="#15803D" font-weight="700">步骤 3 — JWT 签发 &amp; Proxy 验证</text>
+  <text x="524" y="333" font-size="10.5" fill="#374151">用户认证 → JWT 签发 → Proxy RPC 验证</text>
+  <text x="524" y="349" font-size="10" fill="#6B7280">所有 RPC 请求须携带有效令牌</text>
+
+  <!-- Arrow 3→4 -->
+  <text x="660" y="368" font-size="18" fill="#16A34A" text-anchor="middle">✅</text>
+
+  <!-- Step 4 -->
+  <rect x="480" y="378" width="380" height="58" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="480" y="378" width="6" height="58" rx="3" fill="url(#greenAccent)"/>
+  <text x="498" y="397" font-size="18">🔎</text>
+  <text x="524" y="397" font-size="11" fill="#15803D" font-weight="700">步骤 4 — 合约函数权限检查</text>
+  <text x="524" y="413" font-size="10.5" fill="#374151">角色验证 + 参数限制</text>
+  <text x="524" y="429" font-size="10" fill="#6B7280">细粒度访问控制 → 合约层强制执行</text>
+
+  <!-- Arrow 4→5 -->
+  <text x="660" y="448" font-size="18" fill="#16A34A" text-anchor="middle">✅</text>
+
+  <!-- Step 5 -->
+  <rect x="480" y="458" width="380" height="50" rx="14" fill="#F0FDF4" filter="url(#cardShadow)"/>
+  <rect x="480" y="458" width="6" height="50" rx="3" fill="url(#greenAccent)"/>
+  <rect x="480" y="458" width="380" height="50" rx="14" fill="none" stroke="#BBF7D0" stroke-width="1.5"/>
+  <text x="498" y="479" font-size="18">⛓️</text>
+  <text x="524" y="479" font-size="11" fill="#15803D" font-weight="700">步骤 5 — 交易执行</text>
+  <text x="524" y="497" font-size="10.5" fill="#166534">仅在以上所有检查通过后方可执行</text>
+
+  <!-- ═══════════════════════════════════════
+       GUARANTEE BADGE (bottom right)
+  ═══════════════════════════════════════ -->
+  <rect x="480" y="520" width="380" height="62" rx="14" fill="url(#guaranteeGrad)" filter="url(#badgeShadow)"/>
+  <text x="500" y="545" font-size="14">🛡️</text>
+  <text x="522" y="541" font-size="11" fill="#86EFAC" font-weight="600" letter-spacing="0.3">安全保证</text>
+  <text x="522" y="560" font-size="10.5" fill="#DCFCE7">未通过身份验证和授权的用户</text>
+  <text x="522" y="575" font-size="10.5" fill="#DCFCE7">从物理上无法与链交互</text>
+
+  <!-- ═══════════════════════════════════════
+       LEFT COLUMN SUMMARY (bottom)
+  ═══════════════════════════════════════ -->
+  <rect x="40" y="520" width="380" height="62" rx="14" fill="#1E293B" filter="url(#cardShadow)"/>
+  <text x="60" y="545" font-size="14">📊</text>
+  <text x="82" y="541" font-size="11" fill="#94A3B8" font-weight="600" letter-spacing="0.3">对比结论</text>
+  <text x="82" y="560" font-size="10.5" fill="#CBD5E1">传统模式: KYC 仅在链外, 协议层无约束</text>
+  <text x="82" y="575" font-size="10.5" fill="#CBD5E1">合规性取决于人工审核与链外系统</text>
+
+  <!-- ═══════════════════════════════════════
+       CENTER VS BADGE
+  ═══════════════════════════════════════ -->
+  <circle cx="450" cy="305" r="20" fill="#6366F1" filter="url(#cardShadow)"/>
+  <text x="450" y="311" font-size="13" font-weight="800" fill="white" text-anchor="middle">VS</text>
+
+</svg>

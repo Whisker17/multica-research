@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.08"/></filter>
+  </defs>
+  <rect width="1000" height="700" fill="#ffffff"/>
+
+  <text x="500" y="38" text-anchor="middle" font-size="20" font-weight="600" fill="#111827">L2 Privacy Visibility Zones</text>
+  <text x="500" y="58" text-anchor="middle" font-size="13" fill="#6b7280">WHI-388 — Three Concentric Visibility Boundaries</text>
+
+  <!-- Outermost: Public Visibility -->
+  <rect x="40" y="80" width="920" height="560" rx="20" fill="#eff6ff" stroke="#93c5fd" stroke-width="2.5"/>
+  <text x="500" y="108" text-anchor="middle" font-size="16" font-weight="600" fill="#1e40af">Public Visibility Zone</text>
+  <text x="500" y="126" text-anchor="middle" font-size="11" fill="#3b82f6">Anyone can see: state roots, proofs, commitments, public bridge events</text>
+
+  <!-- Public items -->
+  <rect x="70" y="140" width="200" height="65" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="170" y="165" text-anchor="middle" font-size="12" font-weight="600" fill="#1e40af">Ethereum L1</text>
+  <text x="170" y="182" text-anchor="middle" font-size="10" fill="#6b7280">State Roots · ZK Proofs</text>
+  <text x="170" y="196" text-anchor="middle" font-size="10" fill="#6b7280">Bridge Contracts</text>
+
+  <rect x="730" y="140" width="200" height="65" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="830" y="165" text-anchor="middle" font-size="12" font-weight="600" fill="#166534">Mantle Public L2</text>
+  <text x="830" y="182" text-anchor="middle" font-size="10" fill="#6b7280">Public DeFi · Retail</text>
+  <text x="830" y="196" text-anchor="middle" font-size="10" fill="#6b7280">Bridge Messages</text>
+
+  <!-- Middle: Operator Visibility -->
+  <rect x="120" y="225" width="760" height="350" rx="16" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+  <text x="500" y="252" text-anchor="middle" font-size="15" font-weight="600" fill="#c2410c">Operator Visibility Zone</text>
+  <text x="500" y="270" text-anchor="middle" font-size="11" fill="#ea580c">Mantle operator can see: transaction plaintext, ordering, compliance decisions</text>
+
+  <!-- Operator items -->
+  <rect x="150" y="285" width="200" height="70" rx="8" fill="#ffffff" stroke="#fdba74" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="250" y="310" text-anchor="middle" font-size="12" font-weight="600" fill="#c2410c">Enterprise Sequencer</text>
+  <text x="250" y="328" text-anchor="middle" font-size="10" fill="#6b7280">Tx Ordering · Pre-Filter</text>
+  <text x="250" y="342" text-anchor="middle" font-size="10" fill="#6b7280">Compliance Checks</text>
+
+  <rect x="400" y="285" width="200" height="70" rx="8" fill="#ffffff" stroke="#fdba74" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="500" y="310" text-anchor="middle" font-size="12" font-weight="600" fill="#c2410c">Prover/Batcher</text>
+  <text x="500" y="328" text-anchor="middle" font-size="10" fill="#6b7280">Proof Generation</text>
+  <text x="500" y="342" text-anchor="middle" font-size="10" fill="#6b7280">Batch Submission</text>
+
+  <rect x="650" y="285" width="200" height="70" rx="8" fill="#ffffff" stroke="#fdba74" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="750" y="310" text-anchor="middle" font-size="12" font-weight="600" fill="#c2410c">Private DA Operator</text>
+  <text x="750" y="328" text-anchor="middle" font-size="10" fill="#6b7280">Encrypted Storage</text>
+  <text x="750" y="342" text-anchor="middle" font-size="10" fill="#6b7280">Retention Policy</text>
+
+  <!-- Innermost: Enterprise/Regulator Visibility -->
+  <rect x="200" y="380" width="600" height="170" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="500" y="405" text-anchor="middle" font-size="14" font-weight="600" fill="#166534">Enterprise &amp; Regulator Visibility Zone</text>
+  <text x="500" y="422" text-anchor="middle" font-size="11" fill="#16a34a">Authorized access only: scoped views, viewing keys, selective disclosure</text>
+
+  <rect x="225" y="438" width="160" height="70" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="305" y="460" text-anchor="middle" font-size="12" font-weight="600" fill="#166534">Tenant Systems</text>
+  <text x="305" y="478" text-anchor="middle" font-size="10" fill="#6b7280">Enterprise Apps</text>
+  <text x="305" y="492" text-anchor="middle" font-size="10" fill="#6b7280">Internal Workflows</text>
+
+  <rect x="415" y="438" width="170" height="70" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="500" y="460" text-anchor="middle" font-size="12" font-weight="600" fill="#166534">Auditor Portal</text>
+  <text x="500" y="478" text-anchor="middle" font-size="10" fill="#6b7280">Scoped Disclosure</text>
+  <text x="500" y="492" text-anchor="middle" font-size="10" fill="#6b7280">Compliance Reports</text>
+
+  <rect x="615" y="438" width="165" height="70" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="697" y="460" text-anchor="middle" font-size="12" font-weight="600" fill="#166534">Enterprise KMS</text>
+  <text x="697" y="478" text-anchor="middle" font-size="10" fill="#6b7280">HSM · Viewing Keys</text>
+  <text x="697" y="492" text-anchor="middle" font-size="10" fill="#6b7280">Encryption Keys</text>
+
+  <!-- Key insight box -->
+  <rect x="100" y="600" width="800" height="50" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="500" y="620" text-anchor="middle" font-size="12" font-weight="600" fill="#dc2626">Key Insight</text>
+  <text x="500" y="638" text-anchor="middle" font-size="11" fill="#991b1b">Validium hides from Public zone. Operator still sees plaintext unless TEE/encrypted mempool is used.</text>
+
+  <!-- Zone labels on right -->
+  <rect x="880" y="100" width="80" height="20" rx="4" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="920" y="114" text-anchor="middle" font-size="9" fill="#1e40af">Public</text>
+  <rect x="880" y="260" width="80" height="20" rx="4" fill="#fff7ed" stroke="#fdba74" stroke-width="1"/>
+  <text x="920" y="274" text-anchor="middle" font-size="9" fill="#c2410c">Operator</text>
+  <rect x="815" y="400" width="80" height="20" rx="4" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+  <text x="855" y="414" text-anchor="middle" font-size="9" fill="#166534">Enterprise</text>
+</svg>

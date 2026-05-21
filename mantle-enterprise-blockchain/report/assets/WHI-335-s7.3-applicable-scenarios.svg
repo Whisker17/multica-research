@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC"/>
+      <stop offset="100%" style="stop-color:#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Card drop shadow -->
+    <filter id="cardShadow" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#94A3B8" flood-opacity="0.15"/>
+    </filter>
+
+    <!-- Pill drop shadow -->
+    <filter id="pillShadow" x="-2%" y="-8%" width="104%" height="130%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#94A3B8" flood-opacity="0.10"/>
+    </filter>
+
+    <!-- Title underline gradient -->
+    <linearGradient id="titleLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366F1"/>
+      <stop offset="100%" style="stop-color:#8B5CF6"/>
+    </linearGradient>
+
+    <!-- Green accent gradient -->
+    <linearGradient id="greenAccent" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#22C55E"/>
+      <stop offset="100%" style="stop-color:#16A34A"/>
+    </linearGradient>
+
+    <!-- Red accent gradient -->
+    <linearGradient id="redAccent" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#EF4444"/>
+      <stop offset="100%" style="stop-color:#DC2626"/>
+    </linearGradient>
+
+    <!-- Green pill bg -->
+    <linearGradient id="greenPill" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F0FDF4"/>
+      <stop offset="100%" style="stop-color:#FFFFFF"/>
+    </linearGradient>
+
+    <!-- Red pill bg -->
+    <linearGradient id="redPill" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFF1F2"/>
+      <stop offset="100%" style="stop-color:#FFFFFF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bgGrad)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="730" cy="60" r="90" fill="#6366F1" opacity="0.04"/>
+  <circle cx="70" cy="440" r="70" fill="#22C55E" opacity="0.05"/>
+  <circle cx="740" cy="430" r="55" fill="#EF4444" opacity="0.05"/>
+
+  <!-- ═══════════════════════════════════ TITLE ═══════════════════════════════════ -->
+  <text x="400" y="42" text-anchor="middle" font-size="13" font-weight="600" letter-spacing="1.5" fill="#6366F1" opacity="0.8">WHI-335 §7.3</text>
+  <text x="400" y="72" text-anchor="middle" font-size="22" font-weight="700" fill="#1E293B">适用场景评估</text>
+  <rect x="300" y="82" width="200" height="3" rx="1.5" fill="url(#titleLine)" opacity="0.7"/>
+
+  <!-- ═══════════════════════════════════ LEFT CARD ═══════════════════════════════════ -->
+  <!-- Card body -->
+  <rect x="28" y="108" width="368" height="368" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Green accent bar -->
+  <rect x="28" y="108" width="10" height="368" rx="5" fill="url(#greenAccent)"/>
+
+  <!-- Card header area -->
+  <rect x="38" y="108" width="358" height="64" rx="0" fill="#F0FDF4"/>
+  <rect x="38" y="108" width="358" height="14" fill="#F0FDF4"/>
+  <rect x="38" y="158" width="358" height="14" fill="#F0FDF4"/>
+  <!-- Round top-right corner of header -->
+  <rect x="38" y="108" width="344" height="64" fill="#F0FDF4"/>
+  <rect x="382" y="108" width="14" height="64" fill="#F0FDF4"/>
+
+  <!-- Card header icon + label -->
+  <text x="60" y="132" font-size="20">✅</text>
+  <text x="90" y="128" font-size="15" font-weight="700" fill="#15803D">Canton 最适合的场景</text>
+  <text x="90" y="148" font-size="11.5" fill="#4ADE80" font-weight="500">Best-fit Enterprise Use Cases</text>
+
+  <!-- Divider -->
+  <line x1="48" y1="173" x2="386" y2="173" stroke="#DCFCE7" stroke-width="1.5"/>
+
+  <!-- ── Green pill rows ── -->
+  <!-- Row 1 -->
+  <rect x="44" y="182" width="342" height="46" rx="10" fill="url(#greenPill)" filter="url(#pillShadow)"/>
+  <rect x="44" y="182" width="4" height="46" rx="2" fill="#22C55E"/>
+  <text x="60" y="200" font-size="14">✅</text>
+  <text x="82" y="199" font-size="11.5" font-weight="600" fill="#166534">多方金融交易</text>
+  <text x="82" y="216" font-size="10.5" fill="#4B7C61">DvP、DVP、跨机构清结算</text>
+
+  <!-- Row 2 -->
+  <rect x="44" y="235" width="342" height="46" rx="10" fill="url(#greenPill)" filter="url(#pillShadow)"/>
+  <rect x="44" y="235" width="4" height="46" rx="2" fill="#22C55E"/>
+  <text x="60" y="253" font-size="14">✅</text>
+  <text x="82" y="252" font-size="11.5" font-weight="600" fill="#166534">GDPR 合规受监管环境</text>
+  <text x="82" y="269" font-size="10.5" fill="#4B7C61">需要 GDPR 合规的受监管场景</text>
+
+  <!-- Row 3 -->
+  <rect x="44" y="288" width="342" height="46" rx="10" fill="url(#greenPill)" filter="url(#pillShadow)"/>
+  <rect x="44" y="288" width="4" height="46" rx="2" fill="#22C55E"/>
+  <text x="60" y="306" font-size="14">✅</text>
+  <text x="82" y="305" font-size="11.5" font-weight="600" fill="#166534">精细隐私控制联盟场景</text>
+  <text x="82" y="322" font-size="10.5" fill="#4B7C61">需要精细隐私控制的联盟网络</text>
+
+  <!-- Row 4 -->
+  <rect x="44" y="341" width="342" height="46" rx="10" fill="url(#greenPill)" filter="url(#pillShadow)"/>
+  <rect x="44" y="341" width="4" height="46" rx="2" fill="#22C55E"/>
+  <text x="60" y="359" font-size="14">✅</text>
+  <text x="82" y="358" font-size="11.5" font-weight="600" fill="#166534">合规密集型行业</text>
+  <text x="82" y="375" font-size="10.5" fill="#4B7C61">金融、医疗、供应链（可审计性要求高）</text>
+
+  <!-- Row 5 -->
+  <rect x="44" y="394" width="342" height="46" rx="10" fill="url(#greenPill)" filter="url(#pillShadow)"/>
+  <rect x="44" y="394" width="4" height="46" rx="2" fill="#22C55E"/>
+  <text x="60" y="412" font-size="14">✅</text>
+  <text x="82" y="411" font-size="11.5" font-weight="600" fill="#166534">已知参与者企业联盟</text>
+  <text x="82" y="428" font-size="10.5" fill="#4B7C61">已有明确参与者身份的企业联盟网络</text>
+
+  <!-- ═══════════════════════════════════ RIGHT CARD ═══════════════════════════════════ -->
+  <!-- Card body -->
+  <rect x="404" y="108" width="368" height="368" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Red accent bar -->
+  <rect x="404" y="108" width="10" height="368" rx="5" fill="url(#redAccent)"/>
+
+  <!-- Card header area -->
+  <rect x="414" y="108" width="344" height="64" fill="#FFF1F2"/>
+  <rect x="758" y="108" width="14" height="64" fill="#FFF1F2"/>
+
+  <!-- Card header icon + label -->
+  <text x="436" y="132" font-size="20">❌</text>
+  <text x="466" y="128" font-size="15" font-weight="700" fill="#B91C1C">Canton 不太适合的场景</text>
+  <text x="466" y="148" font-size="11.5" fill="#F87171" font-weight="500">Poor-fit Scenarios for Canton</text>
+
+  <!-- Divider -->
+  <line x1="424" y1="173" x2="762" y2="173" stroke="#FEE2E2" stroke-width="1.5"/>
+
+  <!-- ── Red pill rows ── -->
+  <!-- Row 1 -->
+  <rect x="420" y="182" width="342" height="46" rx="10" fill="url(#redPill)" filter="url(#pillShadow)"/>
+  <rect x="420" y="182" width="4" height="46" rx="2" fill="#EF4444"/>
+  <text x="436" y="200" font-size="14">❌</text>
+  <text x="458" y="199" font-size="11.5" font-weight="600" fill="#991B1B">无许可公链应用（DeFi）</text>
+  <text x="458" y="216" font-size="10.5" fill="#7C4848">需要无许可参与的公链 DeFi 场景</text>
+
+  <!-- Row 2 -->
+  <rect x="420" y="235" width="342" height="46" rx="10" fill="url(#redPill)" filter="url(#pillShadow)"/>
+  <rect x="420" y="235" width="4" height="46" rx="2" fill="#EF4444"/>
+  <text x="436" y="253" font-size="14">❌</text>
+  <text x="458" y="252" font-size="11.5" font-weight="600" fill="#991B1B">Oracle 密集型外部数据集成</text>
+  <text x="458" y="269" font-size="10.5" fill="#7C4848">需要大量外部数据集成的应用</text>
+
+  <!-- Row 3 -->
+  <rect x="420" y="288" width="342" height="46" rx="10" fill="url(#redPill)" filter="url(#pillShadow)"/>
+  <rect x="420" y="288" width="4" height="46" rx="2" fill="#EF4444"/>
+  <text x="436" y="306" font-size="14">❌</text>
+  <text x="458" y="305" font-size="11.5" font-weight="600" fill="#991B1B">依赖庞大开发者社区的平台</text>
+  <text x="458" y="322" font-size="10.5" fill="#7C4848">需要庞大开发者生态支撑的平台选择</text>
+
+  <!-- Row 4 -->
+  <rect x="420" y="341" width="342" height="46" rx="10" fill="url(#redPill)" filter="url(#pillShadow)"/>
+  <rect x="420" y="341" width="4" height="46" rx="2" fill="#EF4444"/>
+  <text x="436" y="359" font-size="14">❌</text>
+  <text x="458" y="358" font-size="11.5" font-weight="600" fill="#991B1B">分析密集型全局查询应用</text>
+  <text x="458" y="375" font-size="10.5" fill="#7C4848">需要全局查询能力的分析类应用</text>
+
+  <!-- Row 5 -->
+  <rect x="420" y="394" width="342" height="46" rx="10" fill="url(#redPill)" filter="url(#pillShadow)"/>
+  <rect x="420" y="394" width="4" height="46" rx="2" fill="#EF4444"/>
+  <text x="436" y="412" font-size="14">❌</text>
+  <text x="458" y="411" font-size="11.5" font-weight="600" fill="#991B1B">预算有限的小型项目</text>
+  <text x="458" y="428" font-size="10.5" fill="#7C4848">Participant 节点运维成本高，不适合小型团队</text>
+
+  <!-- ═══════════════════════════════════ FOOTER ═══════════════════════════════════ -->
+  <text x="400" y="492" text-anchor="middle" font-size="10" fill="#94A3B8" letter-spacing="0.5">Canton (Digital Asset) · Enterprise Blockchain Feasibility Study · 2026</text>
+</svg>

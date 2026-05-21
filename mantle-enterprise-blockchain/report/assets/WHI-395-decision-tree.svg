@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1180" width="1280" height="1180">
+  <style>
+    text { font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 20px; fill: #111827; font-weight: 700; text-anchor: middle; }
+    .subtitle { font-size: 12px; fill: #6b7280; text-anchor: middle; }
+    .decision { font-size: 12px; fill: #111827; text-anchor: middle; font-weight: 600; }
+    .result { font-size: 13px; fill: #ffffff; font-weight: 700; text-anchor: middle; }
+    .small { font-size: 11px; fill: #ffffff; text-anchor: middle; }
+    .label { font-size: 11px; fill: #374151; text-anchor: middle; }
+    .note { font-size: 10px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="1180" fill="#ffffff"/>
+  <text x="640" y="40" class="title">Enterprise Blockchain Path Decision Tree</text>
+  <text x="640" y="60" class="subtitle">WHI-395 decision matrix: path selection by hard business requirement</text>
+
+  <!-- Start -->
+  <rect x="420" y="82" width="440" height="48" rx="24" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <text x="640" y="111" class="decision">What does your enterprise customer require?</text>
+  <line x1="640" y1="130" x2="640" y2="146" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Q1 -->
+  <polygon points="640,146 860,206 640,266 420,206" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="640" y="201" class="decision">Sub-second HARD finality</text>
+  <text x="640" y="216" class="decision">required?</text>
+
+  <!-- Q1 yes to L1 gate -->
+  <path d="M 860 206 L 1050 206 L 1050 280" fill="none" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="892" y="194" width="38" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="911" y="207" class="label">Yes</text>
+
+  <!-- Q1 no to Q2 -->
+  <line x1="640" y1="266" x2="640" y2="300" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="610" y="276" width="30" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="625" y="289" class="label">No</text>
+
+  <!-- L1 budget gate -->
+  <polygon points="1050,280 1210,340 1050,400 890,340" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="1050" y="335" class="decision">Budget &gt;$10M and</text>
+  <text x="1050" y="350" class="decision">18+ months acceptable?</text>
+
+  <!-- L1 gate yes to anchor -->
+  <line x1="1050" y1="400" x2="1050" y2="445" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="1018" y="412" width="38" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="1037" y="425" class="label">Yes</text>
+
+  <!-- L1 gate no to L2 discovery -->
+  <path d="M 1210 340 L 1240 340 L 1240 665 L 1202 665" fill="none" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="1220" y="328" width="30" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="1235" y="341" class="label">No</text>
+
+  <!-- Anchor gate -->
+  <polygon points="1050,445 1210,505 1050,565 890,505" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="1050" y="500" class="decision">Anchor client committed</text>
+  <text x="1050" y="515" class="decision">to fund or operate?</text>
+
+  <!-- Anchor yes to L1 -->
+  <line x1="1050" y1="565" x2="1050" y2="604" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="1018" y="575" width="38" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="1037" y="588" class="label">Yes</text>
+
+  <rect x="950" y="610" width="200" height="66" rx="9" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/>
+  <text x="1050" y="637" class="result">L1: Sovereign</text>
+  <text x="1050" y="654" class="result">Enterprise Chain</text>
+
+  <!-- Anchor no to L2 discovery -->
+  <path d="M 1210 505 L 1240 505 L 1240 665 L 1202 665" fill="none" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="1220" y="493" width="30" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="1235" y="506" class="label">No</text>
+
+  <rect x="970" y="630" width="232" height="76" rx="9" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="1086" y="654" class="result">L2: Discovery Pilot</text>
+  <text x="1086" y="671" class="small">Do not sell as hard</text>
+  <text x="1086" y="686" class="small">settlement infrastructure</text>
+
+  <!-- Q2 -->
+  <polygon points="640,300 860,365 640,430 420,365" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="640" y="354" class="decision">Data sovereignty from</text>
+  <text x="640" y="369" class="decision">third-party operators?</text>
+  <text x="640" y="384" class="decision">(Mantle should not see plaintext)</text>
+
+  <!-- Q2 yes to Q3 -->
+  <path d="M 420 365 L 330 365 L 330 445" fill="none" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="365" y="353" width="38" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="384" y="366" class="label">Yes</text>
+
+  <!-- Q2 no to Q4 -->
+  <line x1="640" y1="430" x2="640" y2="460" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="610" y="438" width="30" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="625" y="451" class="label">No</text>
+
+  <!-- Q3 -->
+  <polygon points="330,445 510,505 330,565 150,505" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="330" y="500" class="decision">Customer owns and</text>
+  <text x="330" y="515" class="decision">operates sequencer?</text>
+
+  <!-- Q3 yes to L3 -->
+  <line x1="330" y1="565" x2="330" y2="625" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="298" y="582" width="38" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="317" y="595" class="label">Yes</text>
+
+  <rect x="220" y="630" width="220" height="70" rx="9" fill="#ea580c" stroke="#c2410c" stroke-width="1.5"/>
+  <text x="330" y="658" class="result">L3: Enterprise</text>
+  <text x="330" y="675" class="result">App Chain</text>
+
+  <!-- Q3 no to Q4 -->
+  <path d="M 510 505 L 530 505 L 530 520 L 420 520" fill="none" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="520" y="493" width="30" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="535" y="506" class="label">No</text>
+
+  <!-- Q4 compliance -->
+  <polygon points="640,460 860,525 640,590 420,525" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="640" y="514" class="decision">Protocol-native, non-bypassable</text>
+  <text x="640" y="529" class="decision">compliance required?</text>
+  <text x="640" y="544" class="decision">(execution + bridge layers)</text>
+
+  <!-- Q4 yes routes to L1 budget gate -->
+  <path d="M 860 525 L 890 525 L 890 410 L 996 380" fill="none" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="870" y="513" width="38" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="889" y="526" class="label">Yes</text>
+
+  <!-- Q4 no to Q5 -->
+  <line x1="640" y1="590" x2="640" y2="630" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="610" y="600" width="30" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="625" y="613" class="label">No</text>
+
+  <!-- Q5 tenant isolation -->
+  <polygon points="640,630 850,695 640,760 430,695" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="640" y="684" class="decision">Per-tenant policy isolation</text>
+  <text x="640" y="699" class="decision">required?</text>
+  <text x="640" y="714" class="decision">(different rules per customer)</text>
+
+  <!-- Q5 yes to L3 -->
+  <path d="M 430 695 L 440 695 L 440 665" fill="none" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="448" y="683" width="38" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="467" y="696" class="label">Yes</text>
+
+  <!-- Q5 no to Q6 -->
+  <line x1="640" y1="760" x2="640" y2="805" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="610" y="774" width="30" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="625" y="787" class="label">No</text>
+
+  <!-- Q6 speed -->
+  <polygon points="640,805 850,870 640,935 430,870" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="640" y="859" class="decision">Pilot needed in 3-6 months?</text>
+  <text x="640" y="874" class="decision">Or is 9-13 month depth OK?</text>
+  <text x="640" y="889" class="decision">Speed vs capability depth</text>
+
+  <!-- Q6 speed to L2 -->
+  <line x1="640" y1="935" x2="640" y2="985" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="596" y="950" width="58" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="625" y="963" class="label">Speed</text>
+
+  <rect x="540" y="990" width="220" height="70" rx="9" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.5"/>
+  <text x="650" y="1018" class="result">L2: Enterprise L2</text>
+  <text x="650" y="1035" class="result">Parallel to Mantle</text>
+
+  <!-- Q6 depth to Q7 -->
+  <path d="M 850 870 L 980 870 L 980 900" fill="none" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="895" y="858" width="54" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="922" y="871" class="label">Depth</text>
+
+  <!-- Q7 Ethereum narrative -->
+  <polygon points="980,900 1160,960 980,1020 800,960" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="980" y="955" class="decision">"Settled on Ethereum"</text>
+  <text x="980" y="970" class="decision">narrative valued?</text>
+
+  <!-- Q7 yes to L2 -->
+  <path d="M 800 960 L 760 960 L 760 1025" fill="none" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="772" y="948" width="38" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="791" y="961" class="label">Yes</text>
+
+  <!-- Q7 no to L3 -->
+  <line x1="980" y1="1020" x2="980" y2="1076" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="950" y="1036" width="30" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+  <text x="965" y="1049" class="label">No</text>
+
+  <rect x="870" y="1080" width="220" height="70" rx="9" fill="#ea580c" stroke="#c2410c" stroke-width="1.5"/>
+  <text x="980" y="1108" class="result">L3: Enterprise</text>
+  <text x="980" y="1125" class="result">App Chain</text>
+
+  <!-- Legend -->
+  <rect x="24" y="1122" width="380" height="40" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="38" y="1136" width="16" height="12" rx="3" fill="#16a34a"/>
+  <text x="60" y="1146" class="note">L1 sovereign hard settlement</text>
+  <rect x="190" y="1136" width="16" height="12" rx="3" fill="#2563eb"/>
+  <text x="212" y="1146" class="note">L2 market entry / discovery</text>
+  <rect x="338" y="1136" width="16" height="12" rx="3" fill="#ea580c"/>
+  <text x="360" y="1146" class="note">L3 tenant sovereignty</text>
+</svg>

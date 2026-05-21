@@ -1,0 +1,244 @@
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Green gradient for normal path -->
+    <linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F0FDF4"/>
+      <stop offset="100%" stop-color="#DCFCE7"/>
+    </linearGradient>
+
+    <!-- Red gradient for attack path -->
+    <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF1F2"/>
+      <stop offset="100%" stop-color="#FFE4E6"/>
+    </linearGradient>
+
+    <!-- Amber gradient for decision section -->
+    <linearGradient id="amberGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="100%" stop-color="#FEF3C7"/>
+    </linearGradient>
+
+    <!-- Card shadow -->
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#94A3B8" flood-opacity="0.15"/>
+    </filter>
+
+    <!-- Subtle shadow for panels -->
+    <filter id="panelShadow" x="-3%" y="-3%" width="106%" height="112%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#64748B" flood-opacity="0.12"/>
+    </filter>
+
+    <!-- Arrow marker — green -->
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#16A34A"/>
+    </marker>
+
+    <!-- Arrow marker — red -->
+    <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#DC2626"/>
+    </marker>
+
+    <!-- Arrow marker — amber -->
+    <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#D97706"/>
+    </marker>
+
+    <!-- Arrow marker — gray -->
+    <marker id="arrowGray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#64748B"/>
+    </marker>
+
+    <!-- Arrow marker — teal (green pill) -->
+    <marker id="arrowTeal" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#059669"/>
+    </marker>
+
+    <!-- Arrow marker — orange (amber pill) -->
+    <marker id="arrowOrange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#B45309"/>
+    </marker>
+  </defs>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- BACKGROUND                                             -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <rect width="900" height="600" fill="url(#bgGrad)"/>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- TITLE BAR                                              -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <rect x="20" y="14" width="860" height="46" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <rect x="20" y="14" width="6" height="46" rx="3" fill="#6366F1"/>
+  <text x="38" y="42" font-size="15" font-weight="700" fill="#1E293B">WHI-338 §3.4</text>
+  <text x="120" y="42" font-size="15" font-weight="400" fill="#64748B"> L1 边界防御 — 威胁模型与 TransactionFilterer</text>
+  <text x="848" y="42" font-size="12" fill="#94A3B8" text-anchor="end">2026-05-08</text>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- LEFT PANEL — 正常路径                                  -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <rect x="20" y="74" width="410" height="238" rx="14" fill="url(#greenGrad)" filter="url(#panelShadow)"/>
+  <!-- Green accent bar top -->
+  <rect x="20" y="74" width="410" height="5" rx="3" fill="#16A34A"/>
+
+  <!-- Panel label -->
+  <text x="44" y="103" font-size="13" font-weight="700" fill="#15803D">✅ 正常路径（受保护）</text>
+
+  <!-- ─── Node: 用户 ─── -->
+  <rect x="40" y="116" width="82" height="38" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <text x="81" y="130" text-anchor="middle" font-size="11" fill="#374151">👤</text>
+  <text x="81" y="146" text-anchor="middle" font-size="11" font-weight="600" fill="#1F2937">用户</text>
+
+  <!-- Arrow: 用户 → Proxy RPC -->
+  <line x1="122" y1="135" x2="154" y2="135" stroke="#16A34A" stroke-width="1.8" marker-end="url(#arrowGreen)"/>
+
+  <!-- ─── Node: Proxy RPC ─── -->
+  <rect x="155" y="108" width="114" height="54" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <rect x="155" y="108" width="4" height="54" rx="2" fill="#16A34A"/>
+  <text x="213" y="125" text-anchor="middle" font-size="10" fill="#374151">🔒</text>
+  <text x="213" y="139" text-anchor="middle" font-size="11" font-weight="700" fill="#1F2937">Proxy RPC</text>
+  <text x="213" y="153" text-anchor="middle" font-size="9" fill="#6B7280">三步验证</text>
+
+  <!-- Arrow: Proxy RPC → Sequencer -->
+  <line x1="269" y1="135" x2="301" y2="135" stroke="#16A34A" stroke-width="1.8" marker-end="url(#arrowGreen)"/>
+
+  <!-- ─── Node: Sequencer ─── -->
+  <rect x="302" y="116" width="82" height="38" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <text x="343" y="130" text-anchor="middle" font-size="11" fill="#374151">⚙️</text>
+  <text x="343" y="146" text-anchor="middle" font-size="11" font-weight="600" fill="#1F2937">Sequencer</text>
+
+  <!-- Arrow: Sequencer → 执行 (down) -->
+  <line x1="343" y1="154" x2="343" y2="176" stroke="#16A34A" stroke-width="1.8" marker-end="url(#arrowGreen)"/>
+
+  <!-- ─── Node: 执行 ─── -->
+  <rect x="296" y="177" width="94" height="38" rx="10" fill="#DCFCE7" filter="url(#cardShadow)"/>
+  <rect x="296" y="177" width="4" height="38" rx="2" fill="#16A34A"/>
+  <text x="343" y="191" text-anchor="middle" font-size="11" fill="#374151">✅</text>
+  <text x="343" y="207" text-anchor="middle" font-size="11" font-weight="700" fill="#15803D">执行</text>
+
+  <!-- Verification steps detail box -->
+  <rect x="40" y="224" width="350" height="76" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <rect x="40" y="224" width="4" height="76" rx="2" fill="#16A34A"/>
+  <text x="56" y="242" font-size="10" font-weight="700" fill="#15803D">Proxy RPC 三步验证流程</text>
+  <text x="56" y="258" font-size="9.5" fill="#374151">① JWT 认证 → 身份验证（Keycloak OIDC）</text>
+  <text x="56" y="272" font-size="9.5" fill="#374151">② 钱包白名单检查 → 地址准入控制</text>
+  <text x="56" y="286" font-size="9.5" fill="#374151">③ 方法过滤 → 仅允许合规 RPC 调用</text>
+  <text x="56" y="298" font-size="9" fill="#6B7280">（所有请求通过 Proxy；未通过验证的请求被拦截）</text>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- RIGHT PANEL — 攻击路径                                 -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <rect x="470" y="74" width="410" height="238" rx="14" fill="url(#redGrad)" filter="url(#panelShadow)"/>
+  <!-- Red accent bar top -->
+  <rect x="470" y="74" width="410" height="5" rx="3" fill="#DC2626"/>
+
+  <!-- Panel label -->
+  <text x="494" y="103" font-size="13" font-weight="700" fill="#B91C1C">⚠️ 攻击路径（绕过 Proxy）</text>
+
+  <!-- ─── Node: 攻击者 ─── -->
+  <rect x="490" y="116" width="82" height="38" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <text x="531" y="130" text-anchor="middle" font-size="11" fill="#374151">🕵️</text>
+  <text x="531" y="146" text-anchor="middle" font-size="11" font-weight="600" fill="#991B1B">攻击者</text>
+
+  <!-- Arrow: 攻击者 → Ethereum L1 -->
+  <line x1="572" y1="135" x2="604" y2="135" stroke="#DC2626" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+
+  <!-- ─── Node: Ethereum L1 ─── -->
+  <rect x="605" y="116" width="90" height="38" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <rect x="605" y="116" width="4" height="38" rx="2" fill="#DC2626"/>
+  <text x="650" y="130" text-anchor="middle" font-size="11" fill="#374151">⛓️</text>
+  <text x="650" y="146" text-anchor="middle" font-size="10" font-weight="700" fill="#1F2937">Ethereum L1</text>
+
+  <!-- Arrow: Ethereum L1 → 强制交易 (down) -->
+  <line x1="650" y1="154" x2="650" y2="172" stroke="#DC2626" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+
+  <!-- ─── Node: 强制交易 ─── -->
+  <rect x="598" y="173" width="104" height="38" rx="10" fill="#FEE2E2" filter="url(#cardShadow)"/>
+  <rect x="598" y="173" width="4" height="38" rx="2" fill="#DC2626"/>
+  <text x="650" y="187" text-anchor="middle" font-size="11" fill="#374151">⚡</text>
+  <text x="650" y="203" text-anchor="middle" font-size="10" font-weight="700" fill="#991B1B">强制交易</text>
+
+  <!-- Arrow: 强制交易 → Sequencer -->
+  <line x1="756" y1="192" x2="782" y2="192" stroke="#DC2626" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+
+  <!-- ─── Node: Sequencer (right) ─── -->
+  <rect x="783" y="173" width="82" height="38" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <text x="824" y="187" text-anchor="middle" font-size="11" fill="#374151">⚙️</text>
+  <text x="824" y="203" text-anchor="middle" font-size="10" font-weight="600" fill="#1F2937">Sequencer</text>
+
+  <!-- Arrow: Sequencer → 执行 (bypassed, red dashed) -->
+  <!-- small bypass note above -->
+
+  <!-- Warning pill -->
+  <rect x="490" y="220" width="350" height="18" rx="9" fill="#DC2626"/>
+  <text x="665" y="232" text-anchor="middle" font-size="10" font-weight="700" fill="white">⚠️ 绕过了所有访问控制！</text>
+
+  <!-- Damage box -->
+  <rect x="490" y="244" width="350" height="60" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <rect x="490" y="244" width="4" height="60" rx="2" fill="#DC2626"/>
+  <text x="506" y="260" font-size="10" font-weight="700" fill="#B91C1C">可造成的损害</text>
+  <text x="506" y="276" font-size="9.5" fill="#374151">💉 任意合约部署（恶意代码注入）</text>
+  <text x="506" y="290" font-size="9.5" fill="#374151">💸 未授权写操作（非法转账）</text>
+  <text x="506" y="304" font-size="9.5" fill="#374151">🔍 盲目攻击导致数据泄露（探测性调用）</text>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- DIVIDER LINE between top and bottom                   -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <line x1="30" y1="328" x2="870" y2="328" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- BOTTOM SECTION — TransactionFilterer Decision Tree     -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <rect x="20" y="338" width="860" height="246" rx="14" fill="url(#amberGrad)" filter="url(#panelShadow)"/>
+  <!-- Amber accent bar top -->
+  <rect x="20" y="338" width="860" height="5" rx="3" fill="#D97706"/>
+
+  <!-- Section title -->
+  <text x="450" y="365" text-anchor="middle" font-size="13" font-weight="700" fill="#92400E">🔎 TransactionFilterer 决策树 — L1→L2 强制交易过滤</text>
+
+  <!-- Entry node -->
+  <rect x="290" y="376" width="320" height="40" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <rect x="290" y="376" width="4" height="40" rx="2" fill="#D97706"/>
+  <text x="452" y="392" text-anchor="middle" font-size="11" font-weight="700" fill="#1F2937">L1→L2 强制交易</text>
+  <text x="452" y="408" text-anchor="middle" font-size="10" fill="#6B7280">PrividiumTransactionFilterer 合约检查</text>
+
+  <!-- Arrow down from entry node -->
+  <line x1="450" y1="416" x2="450" y2="436" stroke="#D97706" stroke-width="2" marker-end="url(#arrowAmber)"/>
+
+  <!-- Decision diamond -->
+  <polygon points="450,437 530,465 450,493 370,465" fill="#FEF9C3" stroke="#D97706" stroke-width="2" filter="url(#cardShadow)"/>
+  <text x="450" y="461" text-anchor="middle" font-size="10" font-weight="700" fill="#92400E">发送方在</text>
+  <text x="450" y="474" text-anchor="middle" font-size="10" font-weight="700" fill="#92400E">白名单中？</text>
+
+  <!-- YES branch — left -->
+  <line x1="370" y1="465" x2="218" y2="465" stroke="#059669" stroke-width="2" marker-end="url(#arrowTeal)"/>
+  <text x="294" y="458" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">✅ 是</text>
+
+  <!-- Green pill — allowed -->
+  <rect x="70" y="445" width="148" height="40" rx="20" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.5" filter="url(#cardShadow)"/>
+  <text x="144" y="461" text-anchor="middle" font-size="10" font-weight="700" fill="#15803D">✅ 允许</text>
+  <text x="144" y="476" text-anchor="middle" font-size="9" fill="#166534">不受限的强制交易</text>
+
+  <!-- NO branch — right -->
+  <line x1="530" y1="465" x2="682" y2="465" stroke="#B45309" stroke-width="2" marker-end="url(#arrowOrange)"/>
+  <text x="606" y="458" text-anchor="middle" font-size="10" font-weight="700" fill="#B45309">❌ 否</text>
+
+  <!-- Amber pill — restricted -->
+  <rect x="682" y="438" width="178" height="54" rx="20" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5" filter="url(#cardShadow)"/>
+  <text x="771" y="457" text-anchor="middle" font-size="9.5" font-weight="700" fill="#92400E">⚠️ 仅允许</text>
+  <text x="771" y="471" text-anchor="middle" font-size="9" fill="#78350F">ETH 转账 + ERC-20 转账</text>
+  <text x="771" y="484" text-anchor="middle" font-size="8.5" fill="#92400E">（不允许合约部署或任意调用）</text>
+
+  <!-- Operator note at bottom -->
+  <rect x="150" y="508" width="600" height="60" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <rect x="150" y="508" width="4" height="60" rx="2" fill="#D97706"/>
+  <text x="170" y="527" font-size="10" font-weight="700" fill="#92400E">📌 运营商配置说明</text>
+  <text x="170" y="543" font-size="9.5" fill="#374151">L1-L2 强制交易通道不会自动禁用——即使 Proxy RPC 拦截了所有外部请求，</text>
+  <text x="170" y="557" font-size="9.5" fill="#374151">攻击者仍可绕过 Proxy 直接从 L1 提交强制交易。需运营商显式配置白名单策略。</text>
+
+</svg>

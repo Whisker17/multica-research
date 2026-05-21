@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="ag" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/></marker>
+    <marker id="ab" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/></marker>
+    <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.08"/></filter>
+  </defs>
+  <rect width="1200" height="750" fill="#ffffff"/>
+
+  <text x="600" y="38" text-anchor="middle" font-size="20" font-weight="600" fill="#111827">L1 Multi-Zone Architecture</text>
+  <text x="600" y="58" text-anchor="middle" font-size="13" fill="#6b7280">WHI-387 — Each Zone Has Independent Sequencer, DA, RPC, Keys, and Compliance</text>
+
+  <!-- Public Mainchain -->
+  <rect x="250" y="80" width="700" height="170" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" filter="url(#sh)"/>
+  <rect x="250" y="80" width="700" height="35" rx="12" fill="#16a34a"/>
+  <text x="600" y="104" text-anchor="middle" font-size="15" font-weight="600" fill="#ffffff">Public Mainchain — Transparent — 3-5K TPS</text>
+  <text x="600" y="135" text-anchor="middle" font-size="12" fill="#166534">BFT Validators · Public DA · Identity/Policy/Governance Registries</text>
+
+  <rect x="275" y="150" width="140" height="28" rx="5" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="345" y="168" text-anchor="middle" font-size="10" fill="#166534">Governance</text>
+  <rect x="430" y="150" width="140" height="28" rx="5" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="500" y="168" text-anchor="middle" font-size="10" fill="#166534">Identity Registry</text>
+  <rect x="585" y="150" width="140" height="28" rx="5" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="655" y="168" text-anchor="middle" font-size="10" fill="#166534">Policy Registry</text>
+  <rect x="740" y="150" width="140" height="28" rx="5" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="810" y="168" text-anchor="middle" font-size="10" fill="#166534">Asset Registry</text>
+
+  <text x="600" y="210" text-anchor="middle" font-size="11" fill="#6b7280">Identity, Policy, and Governance sync to all Zones ↓</text>
+
+  <!-- Sync arrows -->
+  <line x1="170" y1="250" x2="170" y2="298" stroke="#16a34a" stroke-width="1.5" marker-end="url(#ag)"/>
+  <line x1="450" y1="250" x2="450" y2="298" stroke="#16a34a" stroke-width="1.5" marker-end="url(#ag)"/>
+  <line x1="730" y1="250" x2="730" y2="298" stroke="#16a34a" stroke-width="1.5" marker-end="url(#ag)"/>
+  <line x1="1010" y1="250" x2="1010" y2="298" stroke="#16a34a" stroke-width="1.5" marker-end="url(#ag)"/>
+
+  <!-- RWA Zone -->
+  <rect x="40" y="300" width="260" height="275" rx="10" fill="#faf5ff" stroke="#a855f7" stroke-width="2" filter="url(#sh)"/>
+  <rect x="40" y="300" width="260" height="30" rx="10" fill="#a855f7"/>
+  <text x="170" y="320" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">RWA Zone</text>
+  <text x="170" y="350" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">100-500 TPS</text>
+  <text x="170" y="365" text-anchor="middle" font-size="10" fill="#6b7280">Sub-Transaction Privacy</text>
+  <rect x="55" y="380" width="230" height="22" rx="4" fill="#ffffff" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="170" y="395" text-anchor="middle" font-size="10" fill="#111827">Zone Sequencer</text>
+  <rect x="55" y="407" width="230" height="22" rx="4" fill="#ffffff" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="170" y="422" text-anchor="middle" font-size="10" fill="#111827">Private DA (Validium)</text>
+  <rect x="55" y="434" width="230" height="22" rx="4" fill="#ffffff" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="170" y="449" text-anchor="middle" font-size="10" fill="#111827">Authenticated RPC</text>
+  <rect x="55" y="461" width="230" height="22" rx="4" fill="#ffffff" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="170" y="476" text-anchor="middle" font-size="10" fill="#111827">ECIES Encryption</text>
+  <rect x="55" y="488" width="230" height="22" rx="4" fill="#ffffff" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="170" y="503" text-anchor="middle" font-size="10" fill="#111827">Regulator Audit Keys</text>
+  <rect x="55" y="515" width="230" height="22" rx="4" fill="#ffffff" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="170" y="530" text-anchor="middle" font-size="10" fill="#111827">DVP Settlement</text>
+  <rect x="55" y="542" width="230" height="22" rx="4" fill="#ffffff" stroke="#a855f7" stroke-width="0.8"/>
+  <text x="170" y="557" text-anchor="middle" font-size="10" fill="#111827">MIP-20 Compliance Tokens</text>
+
+  <!-- xStocks Zone -->
+  <rect x="320" y="300" width="260" height="275" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#sh)"/>
+  <rect x="320" y="300" width="260" height="30" rx="10" fill="#3b82f6"/>
+  <text x="450" y="320" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">xStocks Zone</text>
+  <text x="450" y="350" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">1,000-3,000 TPS</text>
+  <text x="450" y="365" text-anchor="middle" font-size="10" fill="#6b7280">ZK Order Privacy</text>
+  <rect x="335" y="380" width="230" height="22" rx="4" fill="#ffffff" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="450" y="395" text-anchor="middle" font-size="10" fill="#111827">Zone Sequencer</text>
+  <rect x="335" y="407" width="230" height="22" rx="4" fill="#ffffff" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="450" y="422" text-anchor="middle" font-size="10" fill="#111827">Private DA (Validium)</text>
+  <rect x="335" y="434" width="230" height="22" rx="4" fill="#ffffff" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="450" y="449" text-anchor="middle" font-size="10" fill="#111827">Market Surveillance</text>
+  <rect x="335" y="461" width="230" height="22" rx="4" fill="#ffffff" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="450" y="476" text-anchor="middle" font-size="10" fill="#111827">Dark Pool Logic</text>
+  <rect x="335" y="488" width="230" height="22" rx="4" fill="#ffffff" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="450" y="503" text-anchor="middle" font-size="10" fill="#111827">Trading Rules Engine</text>
+  <rect x="335" y="515" width="230" height="22" rx="4" fill="#ffffff" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="450" y="530" text-anchor="middle" font-size="10" fill="#111827">Encrypted Mempool</text>
+  <rect x="335" y="542" width="230" height="22" rx="4" fill="#ffffff" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="450" y="557" text-anchor="middle" font-size="10" fill="#111827">MIP-21 Equity Standard</text>
+
+  <!-- Payment Zone -->
+  <rect x="600" y="300" width="260" height="275" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="2" filter="url(#sh)"/>
+  <rect x="600" y="300" width="260" height="30" rx="10" fill="#f97316"/>
+  <text x="730" y="320" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">Payment Zone</text>
+  <text x="730" y="350" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">10,000+ TPS</text>
+  <text x="730" y="365" text-anchor="middle" font-size="10" fill="#6b7280">Zone-Internal Transparency</text>
+  <rect x="615" y="380" width="230" height="22" rx="4" fill="#ffffff" stroke="#f97316" stroke-width="0.8"/>
+  <text x="730" y="395" text-anchor="middle" font-size="10" fill="#111827">Zone Sequencer</text>
+  <rect x="615" y="407" width="230" height="22" rx="4" fill="#ffffff" stroke="#f97316" stroke-width="0.8"/>
+  <text x="730" y="422" text-anchor="middle" font-size="10" fill="#111827">Private DA (Validium)</text>
+  <rect x="615" y="434" width="230" height="22" rx="4" fill="#ffffff" stroke="#f97316" stroke-width="0.8"/>
+  <text x="730" y="449" text-anchor="middle" font-size="10" fill="#111827">Payment Lane Gas</text>
+  <rect x="615" y="461" width="230" height="22" rx="4" fill="#ffffff" stroke="#f97316" stroke-width="0.8"/>
+  <text x="730" y="476" text-anchor="middle" font-size="10" fill="#111827">Stablecoin Registry</text>
+  <rect x="615" y="488" width="230" height="22" rx="4" fill="#ffffff" stroke="#f97316" stroke-width="0.8"/>
+  <text x="730" y="503" text-anchor="middle" font-size="10" fill="#111827">Travel Rule Engine</text>
+  <rect x="615" y="515" width="230" height="22" rx="4" fill="#ffffff" stroke="#f97316" stroke-width="0.8"/>
+  <text x="730" y="530" text-anchor="middle" font-size="10" fill="#111827">Merchant SDK</text>
+  <rect x="615" y="542" width="230" height="22" rx="4" fill="#ffffff" stroke="#f97316" stroke-width="0.8"/>
+  <text x="730" y="557" text-anchor="middle" font-size="10" fill="#111827">FX Auto-Conversion</text>
+
+  <!-- Custom Zone -->
+  <rect x="880" y="300" width="260" height="275" rx="10" fill="#f0fdfa" stroke="#14b8a6" stroke-width="2" filter="url(#sh)"/>
+  <rect x="880" y="300" width="260" height="30" rx="10" fill="#14b8a6"/>
+  <text x="1010" y="320" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">Custom Zone</text>
+  <text x="1010" y="350" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">Configurable TPS</text>
+  <text x="1010" y="365" text-anchor="middle" font-size="10" fill="#6b7280">Configurable Privacy</text>
+  <rect x="895" y="380" width="230" height="22" rx="4" fill="#ffffff" stroke="#14b8a6" stroke-width="0.8"/>
+  <text x="1010" y="395" text-anchor="middle" font-size="10" fill="#111827">Zone Sequencer</text>
+  <rect x="895" y="407" width="230" height="22" rx="4" fill="#ffffff" stroke="#14b8a6" stroke-width="0.8"/>
+  <text x="1010" y="422" text-anchor="middle" font-size="10" fill="#111827">Configurable DA</text>
+  <rect x="895" y="434" width="230" height="22" rx="4" fill="#ffffff" stroke="#14b8a6" stroke-width="0.8"/>
+  <text x="1010" y="449" text-anchor="middle" font-size="10" fill="#111827">Custom Compliance</text>
+  <rect x="895" y="461" width="230" height="22" rx="4" fill="#ffffff" stroke="#14b8a6" stroke-width="0.8"/>
+  <text x="1010" y="476" text-anchor="middle" font-size="10" fill="#111827">Enterprise Keys</text>
+  <rect x="895" y="488" width="230" height="22" rx="4" fill="#ffffff" stroke="#14b8a6" stroke-width="0.8"/>
+  <text x="1010" y="503" text-anchor="middle" font-size="10" fill="#111827">Custom Token Standard</text>
+  <rect x="895" y="515" width="230" height="22" rx="4" fill="#ffffff" stroke="#14b8a6" stroke-width="0.8"/>
+  <text x="1010" y="530" text-anchor="middle" font-size="10" fill="#111827">Custom Workflow</text>
+  <rect x="895" y="542" width="230" height="22" rx="4" fill="#ffffff" stroke="#14b8a6" stroke-width="0.8"/>
+  <text x="1010" y="557" text-anchor="middle" font-size="10" fill="#111827">Per-Enterprise Config</text>
+
+  <!-- Cross-zone label -->
+  <text x="600" y="600" text-anchor="middle" font-size="11" fill="#6b7280">Cross-Zone: Withdraw from Zone A → Public Mainchain → Deposit to Zone B</text>
+
+  <!-- Ethereum Anchor -->
+  <rect x="200" y="625" width="800" height="55" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="2" filter="url(#sh)"/>
+  <text x="600" y="648" text-anchor="middle" font-size="14" font-weight="600" fill="#1e40af">Ethereum L1 — Optional ZK Anchor</text>
+  <text x="600" y="668" text-anchor="middle" font-size="11" fill="#3b82f6">State Commitments · ZK Verifier · Bridge Contracts · Public Assurance</text>
+
+  <!-- Legend -->
+  <rect x="40" y="705" width="620" height="35" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="55" y1="723" x2="85" y2="723" stroke="#16a34a" stroke-width="1.5" marker-end="url(#ag)"/>
+  <text x="92" y="727" font-size="11" fill="#6b7280">Policy/Identity Sync</text>
+  <line x1="240" y1="723" x2="270" y2="723" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#ab)"/>
+  <text x="277" y="727" font-size="11" fill="#6b7280">Optional ZK Anchor</text>
+  <text x="440" y="727" font-size="11" fill="#6b7280">Each Zone: Independent Sequencer + DA + RPC + Keys</text>
+</svg>

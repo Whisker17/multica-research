@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 760" width="800" height="760" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#EEF2F7;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Card drop shadow -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+    <filter id="shadowLight" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2.5" flood-color="#94A3B8" flood-opacity="0.13"/>
+    </filter>
+
+    <!-- Arrow marker -->
+    <marker id="arrowGray" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#94A3B8"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#60A5FA"/>
+    </marker>
+    <marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2DD4BF"/>
+    </marker>
+    <marker id="arrowIndigo" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#818CF8"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#FCD34D"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#FB923C"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="760" fill="url(#bgGrad)" rx="0"/>
+
+  <!-- ====== TITLE AREA ====== -->
+  <text x="400" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="#0F172A" letter-spacing="0.2">WHI-336 §1.3 — Canton Codebase Module Dependency Graph</text>
+  <text x="400" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="#94A3B8" letter-spacing="1.5">FLAT ICON STYLE · SCALA/SBT ARCHITECTURE</text>
+
+  <!-- ====== LEVEL 1 — base/ ====== -->
+  <!-- Card -->
+  <rect x="210" y="70" width="380" height="74" rx="14" fill="white" filter="url(#shadow)"/>
+  <!-- Accent bar -->
+  <rect x="210" y="70" width="8" height="74" rx="4" fill="#64748B"/>
+  <rect x="210" y="76" width="8" height="62" fill="#64748B"/>
+  <!-- Label tag -->
+  <rect x="226" y="80" width="88" height="20" rx="6" fill="#F1F5F9"/>
+  <text x="270" y="94" text-anchor="middle" font-size="10" font-weight="700" fill="#475569">📦  base/</text>
+  <!-- Layer badge -->
+  <rect x="543" y="80" width="36" height="18" rx="5" fill="#E2E8F0"/>
+  <text x="561" y="92.5" text-anchor="middle" font-size="9" font-weight="600" fill="#64748B">L1</text>
+  <!-- Title -->
+  <text x="340" y="106" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">🔧 基础工具层</text>
+  <!-- Chips -->
+  <rect x="228" y="116" width="42" height="16" rx="5" fill="#F1F5F9"/>
+  <text x="249" y="127.5" text-anchor="middle" font-size="9.5" fill="#475569">crypto</text>
+  <rect x="276" y="116" width="36" height="16" rx="5" fill="#F1F5F9"/>
+  <text x="294" y="127.5" text-anchor="middle" font-size="9.5" fill="#475569">grpc</text>
+  <rect x="318" y="116" width="28" height="16" rx="5" fill="#F1F5F9"/>
+  <text x="332" y="127.5" text-anchor="middle" font-size="9.5" fill="#475569">tls</text>
+  <rect x="352" y="116" width="42" height="16" rx="5" fill="#F1F5F9"/>
+  <text x="373" y="127.5" text-anchor="middle" font-size="9.5" fill="#475569">errors</text>
+  <text x="470" y="127.5" font-size="9.5" fill="#94A3B8" font-style="italic">no Canton business logic</text>
+
+  <!-- Arrow L1 → L2 -->
+  <line x1="400" y1="144" x2="400" y2="163" stroke="#94A3B8" stroke-width="2" stroke-dasharray="none" marker-end="url(#arrowGray)"/>
+
+  <!-- ====== LEVEL 2 — community/base ====== -->
+  <rect x="175" y="168" width="450" height="74" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="175" y="168" width="8" height="74" rx="4" fill="#3B82F6"/>
+  <rect x="175" y="174" width="8" height="62" fill="#3B82F6"/>
+  <!-- Label tag -->
+  <rect x="191" y="178" width="130" height="20" rx="6" fill="#EFF6FF"/>
+  <text x="256" y="192" text-anchor="middle" font-size="10" font-weight="700" fill="#2563EB">📦  community/base</text>
+  <!-- Layer badge -->
+  <rect x="570" y="178" width="36" height="18" rx="5" fill="#DBEAFE"/>
+  <text x="588" y="190.5" text-anchor="middle" font-size="9" font-weight="600" fill="#3B82F6">L2</text>
+  <!-- Title -->
+  <text x="400" y="206" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">🏗️ 核心数据结构层</text>
+  <!-- Chips -->
+  <rect x="193" y="216" width="74" height="16" rx="5" fill="#EFF6FF"/>
+  <text x="230" y="227.5" text-anchor="middle" font-size="9.5" fill="#2563EB">MerkleTree</text>
+  <rect x="273" y="216" width="54" height="16" rx="5" fill="#EFF6FF"/>
+  <text x="300" y="227.5" text-anchor="middle" font-size="9.5" fill="#2563EB">Protocol</text>
+  <rect x="333" y="216" width="36" height="16" rx="5" fill="#EFF6FF"/>
+  <text x="351" y="227.5" text-anchor="middle" font-size="9.5" fill="#2563EB">Data</text>
+  <rect x="375" y="216" width="60" height="16" rx="5" fill="#EFF6FF"/>
+  <text x="405" y="227.5" text-anchor="middle" font-size="9.5" fill="#2563EB">Topology</text>
+  <rect x="441" y="216" width="110" height="16" rx="5" fill="#EFF6FF"/>
+  <text x="496" y="227.5" text-anchor="middle" font-size="9.5" fill="#2563EB">Sequencing client</text>
+
+  <!-- Arrow L2 → L3 -->
+  <line x1="400" y1="242" x2="400" y2="261" stroke="#60A5FA" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <!-- ====== LEVEL 3 — community/common ====== -->
+  <rect x="155" y="266" width="490" height="76" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="155" y="266" width="8" height="76" rx="4" fill="#14B8A6"/>
+  <rect x="155" y="272" width="8" height="64" fill="#14B8A6"/>
+  <!-- Label tag -->
+  <rect x="171" y="276" width="148" height="20" rx="6" fill="#F0FDFA"/>
+  <text x="245" y="290" text-anchor="middle" font-size="10" font-weight="700" fill="#0D9488">📦  community/common</text>
+  <!-- Layer badge -->
+  <rect x="590" y="276" width="36" height="18" rx="5" fill="#CCFBF1"/>
+  <text x="608" y="288.5" text-anchor="middle" font-size="9" font-weight="600" fill="#14B8A6">L3</text>
+  <!-- Title -->
+  <text x="400" y="306" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">🔗 共享业务层</text>
+  <!-- Chips -->
+  <rect x="173" y="315" width="50" height="16" rx="5" fill="#F0FDFA"/>
+  <text x="198" y="326.5" text-anchor="middle" font-size="9.5" fill="#0D9488">Config</text>
+  <rect x="229" y="315" width="40" height="16" rx="5" fill="#F0FDFA"/>
+  <text x="249" y="326.5" text-anchor="middle" font-size="9.5" fill="#0D9488">Store</text>
+  <rect x="275" y="315" width="86" height="16" rx="5" fill="#F0FDFA"/>
+  <text x="318" y="326.5" text-anchor="middle" font-size="9.5" fill="#0D9488">Protocol msgs</text>
+  <rect x="367" y="315" width="88" height="16" rx="5" fill="#F0FDFA"/>
+  <text x="411" y="326.5" text-anchor="middle" font-size="9.5" fill="#0D9488">ContractStore</text>
+  <rect x="461" y="315" width="130" height="16" rx="5" fill="#F0FDFA"/>
+  <text x="526" y="326.5" text-anchor="middle" font-size="9.5" fill="#0D9488">SequencerInfoLoader</text>
+
+  <!-- Arrow L3 → L4-left (splits left) -->
+  <path d="M 310 342 L 310 360 L 195 360 L 195 400" stroke="#2DD4BF" stroke-width="2" fill="none" marker-end="url(#arrowTeal)"/>
+  <!-- Arrow L3 → L4-right (splits right) -->
+  <path d="M 490 342 L 490 360 L 605 360 L 605 400" stroke="#2DD4BF" stroke-width="2" fill="none" marker-end="url(#arrowTeal)"/>
+
+  <!-- ====== LEVEL 4 LEFT — community/participant ====== -->
+  <rect x="60" y="400" width="270" height="80" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="60" y="400" width="8" height="80" rx="4" fill="#22C55E"/>
+  <rect x="60" y="406" width="8" height="68" fill="#22C55E"/>
+  <!-- Label tag -->
+  <rect x="76" y="410" width="164" height="20" rx="6" fill="#F0FDF4"/>
+  <text x="158" y="424" text-anchor="middle" font-size="10" font-weight="700" fill="#16A34A">📦  community/participant</text>
+  <!-- Layer badge -->
+  <rect x="286" y="410" width="32" height="18" rx="5" fill="#DCFCE7"/>
+  <text x="302" y="422.5" text-anchor="middle" font-size="9" font-weight="600" fill="#22C55E">L4a</text>
+  <!-- Title -->
+  <text x="195" y="444" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">👤 Participant 节点</text>
+  <!-- Chips -->
+  <rect x="76" y="454" width="40" height="16" rx="5" fill="#F0FDF4"/>
+  <text x="96" y="465.5" text-anchor="middle" font-size="9.5" fill="#16A34A">Node</text>
+  <rect x="122" y="454" width="56" height="16" rx="5" fill="#F0FDF4"/>
+  <text x="150" y="465.5" text-anchor="middle" font-size="9.5" fill="#16A34A">Protocol</text>
+  <rect x="184" y="454" width="38" height="16" rx="5" fill="#F0FDF4"/>
+  <text x="203" y="465.5" text-anchor="middle" font-size="9.5" fill="#16A34A">Sync</text>
+  <rect x="228" y="454" width="50" height="16" rx="5" fill="#F0FDF4"/>
+  <text x="253" y="465.5" text-anchor="middle" font-size="9.5" fill="#16A34A">DAMLe</text>
+
+  <!-- "sibling" note between the two L4 boxes -->
+  <text x="400" y="448" text-anchor="middle" font-size="9" fill="#CBD5E1" font-style="italic">independent siblings</text>
+  <line x1="345" y1="443" x2="365" y2="443" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="435" y1="443" x2="455" y2="443" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- ====== LEVEL 4 RIGHT — community/synchronizer ====== -->
+  <rect x="470" y="400" width="270" height="80" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="470" y="400" width="8" height="80" rx="4" fill="#6366F1"/>
+  <rect x="470" y="406" width="8" height="68" fill="#6366F1"/>
+  <!-- Label tag -->
+  <rect x="486" y="410" width="176" height="20" rx="6" fill="#EEF2FF"/>
+  <text x="574" y="424" text-anchor="middle" font-size="10" font-weight="700" fill="#4F46E5">📦  community/synchronizer</text>
+  <!-- Layer badge -->
+  <rect x="700" y="410" width="32" height="18" rx="5" fill="#E0E7FF"/>
+  <text x="716" y="422.5" text-anchor="middle" font-size="9" font-weight="600" fill="#6366F1">L4b</text>
+  <!-- Title -->
+  <text x="605" y="444" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">⚙️ Synchronizer</text>
+  <!-- Chips -->
+  <rect x="486" y="454" width="60" height="16" rx="5" fill="#EEF2FF"/>
+  <text x="516" y="465.5" text-anchor="middle" font-size="9.5" fill="#4F46E5">Mediator</text>
+  <rect x="552" y="454" width="86" height="16" rx="5" fill="#EEF2FF"/>
+  <text x="595" y="465.5" text-anchor="middle" font-size="9.5" fill="#4F46E5">Block update</text>
+  <rect x="644" y="454" width="66" height="16" rx="5" fill="#EEF2FF"/>
+  <text x="677" y="465.5" text-anchor="middle" font-size="9.5" fill="#4F46E5">Sequencer</text>
+
+  <!-- Arrow L4-right → L5 -->
+  <line x1="605" y1="480" x2="605" y2="530" stroke="#818CF8" stroke-width="2" marker-end="url(#arrowIndigo)"/>
+  <!-- Redirect down to center -->
+  <path d="M 605 530 L 605 548 L 400 548 L 400 548" stroke="#818CF8" stroke-width="2" fill="none"/>
+  <line x1="400" y1="548" x2="400" y2="558" stroke="#818CF8" stroke-width="2" marker-end="url(#arrowIndigo)"/>
+
+  <!-- ====== LEVEL 5 — sequencer-driver (trait) ====== -->
+  <rect x="215" y="558" width="370" height="72" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="215" y="558" width="8" height="72" rx="4" fill="#F59E0B"/>
+  <rect x="215" y="564" width="8" height="60" fill="#F59E0B"/>
+  <!-- Label tag -->
+  <rect x="231" y="568" width="166" height="20" rx="6" fill="#FFFBEB"/>
+  <text x="314" y="582" text-anchor="middle" font-size="10" font-weight="700" fill="#B45309">🔌  sequencer-driver (trait)</text>
+  <!-- Layer badge -->
+  <rect x="540" y="568" width="36" height="18" rx="5" fill="#FEF3C7"/>
+  <text x="558" y="580.5" text-anchor="middle" font-size="9" font-weight="600" fill="#F59E0B">L5</text>
+  <!-- Title -->
+  <text x="400" y="598" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">🧩 Driver 接口</text>
+  <!-- Chip -->
+  <rect x="294" y="607" width="212" height="16" rx="5" fill="#FFFBEB"/>
+  <text x="400" y="618.5" text-anchor="middle" font-size="9.5" fill="#B45309">SPI — defines sequencer driver contract</text>
+
+  <!-- Arrow L5 → L6 -->
+  <line x1="400" y1="630" x2="400" y2="649" stroke="#FCD34D" stroke-width="2" marker-end="url(#arrowAmber)"/>
+
+  <!-- ====== LEVEL 6 — reference-sequencer-driver ====== -->
+  <rect x="215" y="654" width="370" height="72" rx="14" fill="white" filter="url(#shadow)"/>
+  <rect x="215" y="654" width="8" height="72" rx="4" fill="#F97316"/>
+  <rect x="215" y="660" width="8" height="60" fill="#F97316"/>
+  <!-- Label tag -->
+  <rect x="231" y="664" width="200" height="20" rx="6" fill="#FFF7ED"/>
+  <text x="331" y="678" text-anchor="middle" font-size="10" font-weight="700" fill="#C2410C">📦  reference-sequencer-driver</text>
+  <!-- Layer badge -->
+  <rect x="540" y="664" width="36" height="18" rx="5" fill="#FFEDD5"/>
+  <text x="558" y="676.5" text-anchor="middle" font-size="9" font-weight="600" fill="#F97316">L6</text>
+  <!-- Title -->
+  <text x="400" y="694" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">🗄️ 参考实现</text>
+  <!-- Chip -->
+  <rect x="294" y="703" width="212" height="16" rx="5" fill="#FFF7ED"/>
+  <text x="400" y="714.5" text-anchor="middle" font-size="9.5" fill="#C2410C">DB-backed in-process reference impl</text>
+
+  <!-- ====== LEGEND ====== -->
+  <rect x="30" y="570" width="158" height="152" rx="10" fill="white" filter="url(#shadowLight)" opacity="0.95"/>
+  <text x="109" y="587" text-anchor="middle" font-size="10" font-weight="700" fill="#475569" letter-spacing="0.5">LEGEND</text>
+  <!-- items -->
+  <rect x="42" y="595" width="10" height="10" rx="2" fill="#64748B"/>
+  <text x="58" y="604.5" font-size="9.5" fill="#475569">base/ (Gray/Slate)</text>
+  <rect x="42" y="612" width="10" height="10" rx="2" fill="#3B82F6"/>
+  <text x="58" y="621.5" font-size="9.5" fill="#475569">community/base (Blue)</text>
+  <rect x="42" y="629" width="10" height="10" rx="2" fill="#14B8A6"/>
+  <text x="58" y="638.5" font-size="9.5" fill="#475569">community/common (Teal)</text>
+  <rect x="42" y="646" width="10" height="10" rx="2" fill="#22C55E"/>
+  <text x="58" y="655.5" font-size="9.5" fill="#475569">participant (Green)</text>
+  <rect x="42" y="663" width="10" height="10" rx="2" fill="#6366F1"/>
+  <text x="58" y="672.5" font-size="9.5" fill="#475569">synchronizer (Indigo)</text>
+  <rect x="42" y="680" width="10" height="10" rx="2" fill="#F59E0B"/>
+  <text x="58" y="689.5" font-size="9.5" fill="#475569">driver trait (Amber)</text>
+  <rect x="42" y="697" width="10" height="10" rx="2" fill="#F97316"/>
+  <text x="58" y="706.5" font-size="9.5" fill="#475569">ref impl (Orange)</text>
+
+  <!-- ====== DEPENDENCY FLOW LABEL ====== -->
+  <text x="400" y="748" text-anchor="middle" font-size="9.5" fill="#94A3B8">▲  dependency flows upward  ·  arrows show "depends on" direction  ▲</text>
+</svg>

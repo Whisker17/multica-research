@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Drop shadow filter for cards -->
+    <filter id="cardShadow" x="-8%" y="-8%" width="116%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+
+    <!-- Lighter shadow for small cards -->
+    <filter id="smallShadow" x="-6%" y="-6%" width="112%" height="128%">
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#94A3B8" flood-opacity="0.14"/>
+    </filter>
+
+    <!-- Title bar gradient -->
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1E3A5F"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="700" fill="url(#bgGrad)"/>
+
+  <!-- ══════════════ TITLE BAR ══════════════ -->
+  <rect x="30" y="18" width="840" height="52" rx="14" fill="url(#titleGrad)" filter="url(#cardShadow)"/>
+  <text x="450" y="38" text-anchor="middle" fill="white" font-size="11" font-weight="500" opacity="0.75">WHI-338 §3.3</text>
+  <text x="450" y="57" text-anchor="middle" fill="white" font-size="15" font-weight="700" letter-spacing="0.3">合约函数权限层 — RBAC 六种权限类型</text>
+
+  <!-- ══════════════ START NODE ══════════════ -->
+  <!-- Dark pill -->
+  <rect x="240" y="90" width="420" height="50" rx="25" fill="#1E293B" filter="url(#cardShadow)"/>
+  <!-- Red accent left cap -->
+  <rect x="240" y="90" width="8" height="50" rx="4" fill="#EF4444"/>
+  <!-- Emoji + text -->
+  <text x="270" y="120" text-anchor="start" font-size="17">🚀</text>
+  <text x="298" y="113" fill="white" font-size="12" font-weight="600">部署合约</text>
+  <text x="298" y="129" fill="#94A3B8" font-size="11">所有函数默认状态：</text>
+  <rect x="430" y="101" width="100" height="26" rx="6" fill="#EF4444" opacity="0.9"/>
+  <text x="480" y="119" text-anchor="middle" fill="white" font-size="12" font-weight="700">Forbidden</text>
+
+  <!-- Arrow: Start → Config -->
+  <line x1="450" y1="140" x2="450" y2="162" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4,3"/>
+  <polygon points="450,167 445,157 455,157" fill="#94A3B8"/>
+
+  <!-- ══════════════ CONFIG NODE ══════════════ -->
+  <rect x="220" y="168" width="460" height="44" rx="14" fill="white" filter="url(#cardShadow)"/>
+  <!-- Left accent bar -->
+  <rect x="220" y="168" width="6" height="44" rx="3" fill="#6366F1"/>
+  <text x="245" y="187" fill="#374151" font-size="13" font-weight="600">⚙️  管理员在 Admin Dashboard 中逐个配置：</text>
+  <text x="245" y="203" fill="#6B7280" font-size="11">选择以下六种权限类型之一应用到每个合约函数</text>
+
+  <!-- ══════════════ TRUNK LINE ══════════════ -->
+  <!-- Vertical trunk from config node down -->
+  <line x1="450" y1="212" x2="450" y2="257" stroke="#CBD5E1" stroke-width="2"/>
+
+  <!-- ══════════════ BRANCH LAYOUT ══════════════ -->
+  <!--
+    Left column:  x=60   (cards 1,3,5)
+    Right column: x=490  (cards 2,4,6)
+    Card Y positions: row1=258, row2=368, row3=478
+    Card width=340, height=82
+  -->
+
+  <!-- Horizontal branch line -->
+  <line x1="130" y1="257" x2="770" y2="257" stroke="#CBD5E1" stroke-width="2"/>
+
+  <!-- Branch connectors to left cards -->
+  <line x1="230" y1="257" x2="230" y2="268" stroke="#CBD5E1" stroke-width="2"/>
+  <line x1="230" y1="378" x2="230" y2="389" stroke="#CBD5E1" stroke-width="2"/>
+  <line x1="230" y1="489" x2="230" y2="500" stroke="#CBD5E1" stroke-width="2"/>
+
+  <!-- Branch connectors to right cards -->
+  <line x1="670" y1="257" x2="670" y2="268" stroke="#CBD5E1" stroke-width="2"/>
+  <line x1="670" y1="378" x2="670" y2="389" stroke="#CBD5E1" stroke-width="2"/>
+  <line x1="670" y1="489" x2="670" y2="500" stroke="#CBD5E1" stroke-width="2"/>
+
+  <!-- Left vertical connector -->
+  <line x1="130" y1="257" x2="130" y2="540" stroke="#CBD5E1" stroke-width="2"/>
+  <!-- Right vertical connector -->
+  <line x1="770" y1="257" x2="770" y2="540" stroke="#CBD5E1" stroke-width="2"/>
+
+  <!-- Horizontal connectors at each row -->
+  <line x1="130" y1="309" x2="60" y2="309" stroke="#CBD5E1" stroke-width="2"/>
+  <line x1="770" y1="309" x2="840" y2="309" stroke="#CBD5E1" stroke-width="2"/>
+  <line x1="130" y1="420" x2="60" y2="420" stroke="#CBD5E1" stroke-width="2"/>
+  <line x1="770" y1="420" x2="840" y2="420" stroke="#CBD5E1" stroke-width="2"/>
+  <line x1="130" y1="531" x2="60" y2="531" stroke="#CBD5E1" stroke-width="2"/>
+  <line x1="770" y1="531" x2="840" y2="531" stroke="#CBD5E1" stroke-width="2"/>
+
+  <!-- ══════════════ CARD 1: FORBIDDEN (Left, Row 1) ══════════════ -->
+  <rect x="60" y="268" width="340" height="82" rx="14" fill="white" filter="url(#smallShadow)"/>
+  <rect x="60" y="268" width="6" height="82" rx="3" fill="#EF4444"/>
+  <!-- Emoji badge -->
+  <circle cx="94" cy="309" r="18" fill="#FEF2F2"/>
+  <text x="94" y="316" text-anchor="middle" font-size="18">🚫</text>
+  <!-- Label badge -->
+  <rect x="116" y="271" width="90" height="22" rx="6" fill="#EF4444"/>
+  <text x="161" y="286" text-anchor="middle" fill="white" font-size="11" font-weight="700">Forbidden</text>
+  <!-- Description -->
+  <text x="116" y="308" fill="#374151" font-size="12" font-weight="500">该函数永远不可调用</text>
+  <text x="116" y="322" fill="#6B7280" font-size="11">(保持默认状态)</text>
+  <text x="116" y="340" fill="#EF4444" font-size="10.5">适合：禁用危险或未启用的函数</text>
+
+  <!-- ══════════════ CARD 2: ALL USERS (Right, Row 1) ══════════════ -->
+  <rect x="500" y="268" width="340" height="82" rx="14" fill="white" filter="url(#smallShadow)"/>
+  <rect x="500" y="268" width="6" height="82" rx="3" fill="#22C55E"/>
+  <!-- Emoji badge -->
+  <circle cx="534" cy="309" r="18" fill="#F0FDF4"/>
+  <text x="534" y="316" text-anchor="middle" font-size="18">👥</text>
+  <!-- Label badge -->
+  <rect x="556" y="271" width="80" height="22" rx="6" fill="#22C55E"/>
+  <text x="596" y="286" text-anchor="middle" fill="white" font-size="11" font-weight="700">All Users</text>
+  <!-- Description -->
+  <text x="556" y="308" fill="#374151" font-size="12" font-weight="500">任何已认证用户均可调用</text>
+  <text x="556" y="322" fill="#6B7280" font-size="11">无角色限制，已登录即可</text>
+  <text x="556" y="340" fill="#22C55E" font-size="10.5">适合：公共查询函数 (read-only)</text>
+
+  <!-- ══════════════ CARD 3: CHECK ROLE (Left, Row 2) ══════════════ -->
+  <rect x="60" y="378" width="340" height="86" rx="14" fill="white" filter="url(#smallShadow)"/>
+  <rect x="60" y="378" width="6" height="86" rx="3" fill="#3B82F6"/>
+  <!-- Emoji badge -->
+  <circle cx="94" cy="421" r="18" fill="#EFF6FF"/>
+  <text x="94" y="428" text-anchor="middle" font-size="18">🎭</text>
+  <!-- Label badge -->
+  <rect x="116" y="381" width="100" height="22" rx="6" fill="#3B82F6"/>
+  <text x="166" y="396" text-anchor="middle" fill="white" font-size="11" font-weight="700">Check Role</text>
+  <!-- Description -->
+  <text x="116" y="418" fill="#374151" font-size="12" font-weight="500">仅持有特定角色的用户可调用</text>
+  <text x="116" y="432" fill="#6B7280" font-size="11">基于 JWT 中的 role claim 鉴权</text>
+  <text x="116" y="450" fill="#3B82F6" font-size="10.5">适合：交易执行、管理操作</text>
+
+  <!-- ══════════════ CARD 4: RESTRICT ARGUMENT (Right, Row 2) ══════════════ -->
+  <rect x="500" y="378" width="340" height="86" rx="14" fill="white" filter="url(#smallShadow)"/>
+  <rect x="500" y="378" width="6" height="86" rx="3" fill="#F59E0B"/>
+  <!-- Emoji badge -->
+  <circle cx="534" cy="421" r="18" fill="#FFFBEB"/>
+  <text x="534" y="428" text-anchor="middle" font-size="18">📏</text>
+  <!-- Label badge -->
+  <rect x="556" y="381" width="140" height="22" rx="6" fill="#F59E0B"/>
+  <text x="626" y="396" text-anchor="middle" fill="white" font-size="11" font-weight="700">Restrict Argument</text>
+  <!-- Description -->
+  <text x="556" y="418" fill="#374151" font-size="12" font-weight="500">任何已认证用户可调用</text>
+  <text x="556" y="432" fill="#6B7280" font-size="11">但特定参数值受限制</text>
+  <text x="556" y="450" fill="#F59E0B" font-size="10.5">适合：限制转账金额上限</text>
+
+  <!-- ══════════════ CARD 5: CHECK ROLE AND RESTRICT ARGUMENT (Left, Row 3) ══════════════ -->
+  <rect x="60" y="489" width="340" height="90" rx="14" fill="white" filter="url(#smallShadow)"/>
+  <rect x="60" y="489" width="6" height="90" rx="3" fill="#6366F1"/>
+  <!-- Emoji badge -->
+  <circle cx="94" cy="534" r="18" fill="#EEF2FF"/>
+  <text x="94" y="541" text-anchor="middle" font-size="18">🔒</text>
+  <!-- Label badge -->
+  <rect x="116" y="492" width="215" height="22" rx="6" fill="#6366F1"/>
+  <text x="223" y="507" text-anchor="middle" fill="white" font-size="10.5" font-weight="700">Check Role AND Restrict Argument</text>
+  <!-- Description -->
+  <text x="116" y="530" fill="#374151" font-size="12" font-weight="500">必须同时满足：</text>
+  <text x="116" y="544" fill="#6B7280" font-size="11">角色要求 + 参数限制 (双重条件)</text>
+  <text x="116" y="560" fill="#6366F1" font-size="10.5">适合：高价值交易 · Senior Trader + 金额 &lt; $10M</text>
+
+  <!-- ══════════════ CARD 6: CHECK ROLE OR RESTRICT ARGUMENT (Right, Row 3) ══════════════ -->
+  <rect x="500" y="489" width="340" height="90" rx="14" fill="white" filter="url(#smallShadow)"/>
+  <rect x="500" y="489" width="6" height="90" rx="3" fill="#14B8A6"/>
+  <!-- Emoji badge -->
+  <circle cx="534" cy="534" r="18" fill="#F0FDFA"/>
+  <text x="534" y="541" text-anchor="middle" font-size="18">🔓</text>
+  <!-- Label badge -->
+  <rect x="556" y="492" width="210" height="22" rx="6" fill="#14B8A6"/>
+  <text x="661" y="507" text-anchor="middle" fill="white" font-size="10.5" font-weight="700">Check Role OR Restrict Argument</text>
+  <!-- Description -->
+  <text x="556" y="530" fill="#374151" font-size="12" font-weight="500">满足其一即可：</text>
+  <text x="556" y="544" fill="#6B7280" font-size="11">角色要求 或 参数限制 (灵活条件)</text>
+  <text x="556" y="560" fill="#14B8A6" font-size="10.5">适合：灵活的降级策略</text>
+
+  <!-- ══════════════ LEGEND / FOOTER ══════════════ -->
+  <rect x="60" y="600" width="780" height="76" rx="14" fill="white" filter="url(#smallShadow)" opacity="0.92"/>
+  <rect x="60" y="600" width="6" height="76" rx="3" fill="#94A3B8"/>
+
+  <text x="90" y="618" fill="#374151" font-size="11" font-weight="700">权限类型速查</text>
+
+  <!-- Legend items row 1 -->
+  <rect x="90" y="626" width="10" height="10" rx="3" fill="#EF4444"/>
+  <text x="105" y="636" fill="#374151" font-size="10">Forbidden (默认)</text>
+
+  <rect x="220" y="626" width="10" height="10" rx="3" fill="#22C55E"/>
+  <text x="235" y="636" fill="#374151" font-size="10">All Users</text>
+
+  <rect x="320" y="626" width="10" height="10" rx="3" fill="#3B82F6"/>
+  <text x="335" y="636" fill="#374151" font-size="10">Check Role</text>
+
+  <rect x="430" y="626" width="10" height="10" rx="3" fill="#F59E0B"/>
+  <text x="445" y="636" fill="#374151" font-size="10">Restrict Argument</text>
+
+  <rect x="570" y="626" width="10" height="10" rx="3" fill="#6366F1"/>
+  <text x="585" y="636" fill="#374151" font-size="10">Role AND Argument</text>
+
+  <rect x="700" y="626" width="10" height="10" rx="3" fill="#14B8A6"/>
+  <text x="715" y="636" fill="#374151" font-size="10">Role OR Argument</text>
+
+  <!-- Legend note row 2 -->
+  <text x="90" y="657" fill="#9CA3AF" font-size="10">📌  配置粒度：每个合约函数单独配置  ·  修改实时生效，无需重新部署合约  ·  基于 Prividium Admin API</text>
+  <text x="90" y="670" fill="#9CA3AF" font-size="10">🔗  上游：WHI-337 §2.x  Prividium 架构  ·  下游：WHI-338 §4 访问控制实战</text>
+</svg>

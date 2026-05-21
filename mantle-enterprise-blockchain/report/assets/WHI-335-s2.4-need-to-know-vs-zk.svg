@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 650" width="1100" height="650" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EEF2F7;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Canton card gradient -->
+    <linearGradient id="cantonAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10B981;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- ZK card gradient -->
+    <linearGradient id="zkAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366F1;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Card drop shadow -->
+    <filter id="cardShadow" x="-4%" y="-4%" width="108%" height="114%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#94A3B8" flood-opacity="0.18"/>
+    </filter>
+
+    <!-- Row icon shadow -->
+    <filter id="iconShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
+
+    <!-- Title underline gradient -->
+    <linearGradient id="titleUnder" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10B981;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="650" fill="url(#bgGrad)" rx="0"/>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════ -->
+  <text x="550" y="44" text-anchor="middle" font-size="11" font-weight="600" letter-spacing="2.5" fill="#64748B" text-transform="uppercase">FLAT ICON STYLE · PRIVACY MODEL COMPARISON</text>
+  <text x="550" y="76" text-anchor="middle" font-size="22" font-weight="700" fill="#1E293B">WHI-335 §2.4 — Canton Need-to-Know vs ZK Prove-Not-Reveal</text>
+  <!-- Decorative underline -->
+  <rect x="220" y="88" width="660" height="3" rx="2" fill="url(#titleUnder)" opacity="0.7"/>
+
+  <!-- ═══════════════════════════════════════════
+       VS BADGE (center)
+  ═══════════════════════════════════════════ -->
+  <circle cx="550" cy="350" r="28" fill="#1E293B" filter="url(#cardShadow)"/>
+  <text x="550" y="356" text-anchor="middle" font-size="13" font-weight="800" fill="#F8FAFC" letter-spacing="1">VS</text>
+
+  <!-- ═══════════════════════════════════════════
+       CANTON CARD (left)
+  ═══════════════════════════════════════════ -->
+  <!-- Card base -->
+  <rect x="40" y="108" width="476" height="510" rx="18" fill="white" filter="url(#cardShadow)"/>
+  <!-- Accent top bar -->
+  <rect x="40" y="108" width="476" height="8" rx="18" fill="url(#cantonAccent)"/>
+  <rect x="40" y="116" width="476" height="4" fill="url(#cantonAccent)" opacity="0.4"/>
+
+  <!-- Canton header -->
+  <!-- Icon circle -->
+  <circle cx="82" cy="155" r="22" fill="#EFF6FF" filter="url(#iconShadow)"/>
+  <text x="82" y="162" text-anchor="middle" font-size="20">🏛️</text>
+  <!-- Title text -->
+  <text x="116" y="148" font-size="18" font-weight="700" fill="#0369A1">Canton: Need-to-Know</text>
+  <text x="116" y="168" font-size="11.5" font-weight="500" fill="#64748B" letter-spacing="0.5">Digital Asset · Selective Distribution Model</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="188" x2="496" y2="188" stroke="#E0F2FE" stroke-width="1.5"/>
+
+  <!-- ── Row helper positions ──
+       Rows at y: 210, 274, 338, 402, 466, 530, 582
+  -->
+
+  <!-- ROW 1: Philosophy -->
+  <rect x="60" y="200" width="36" height="36" rx="10" fill="#DBEAFE" filter="url(#iconShadow)"/>
+  <text x="78" y="223" text-anchor="middle" font-size="18">💡</text>
+  <text x="108" y="215" font-size="11" font-weight="700" fill="#0369A1" letter-spacing="0.8">PHILOSOPHY</text>
+  <text x="108" y="230" font-size="12.5" fill="#334155" font-weight="500">"Show data only to those who have a right to see it"</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="252" x2="496" y2="252" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 2: Mechanism -->
+  <rect x="60" y="262" width="36" height="36" rx="10" fill="#D1FAE5" filter="url(#iconShadow)"/>
+  <text x="78" y="285" text-anchor="middle" font-size="18">⚙️</text>
+  <text x="108" y="277" font-size="11" font-weight="700" fill="#065F46" letter-spacing="0.8">MECHANISM</text>
+  <text x="108" y="293" font-size="12.5" fill="#334155" font-weight="500">Encrypted routing + projections · selective distribution</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="315" x2="496" y2="315" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 3: Auditability -->
+  <rect x="60" y="325" width="36" height="36" rx="10" fill="#D1FAE5" filter="url(#iconShadow)"/>
+  <text x="78" y="348" text-anchor="middle" font-size="18">🔍</text>
+  <text x="108" y="340" font-size="11" font-weight="700" fill="#065F46" letter-spacing="0.8">AUDITABILITY</text>
+  <text x="108" y="356" font-size="12.5" fill="#334155" font-weight="500">Full audit trail available to authorized parties</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="378" x2="496" y2="378" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 4: Recovery -->
+  <rect x="60" y="388" width="36" height="36" rx="10" fill="#D1FAE5" filter="url(#iconShadow)"/>
+  <text x="78" y="411" text-anchor="middle" font-size="18">🛡️</text>
+  <text x="108" y="403" font-size="11" font-weight="700" fill="#065F46" letter-spacing="0.8">RECOVERY</text>
+  <text x="108" y="418" font-size="12.5" fill="#334155" font-weight="500">Compromise is detectable and recoverable</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="440" x2="496" y2="440" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 5: Trust Model -->
+  <rect x="60" y="450" width="36" height="36" rx="10" fill="#DBEAFE" filter="url(#iconShadow)"/>
+  <text x="78" y="473" text-anchor="middle" font-size="18">🤝</text>
+  <text x="108" y="465" font-size="11" font-weight="700" fill="#0369A1" letter-spacing="0.8">TRUST MODEL</text>
+  <text x="108" y="481" font-size="12.5" fill="#334155" font-weight="500">Participant operators + cryptographic protocol</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="503" x2="496" y2="503" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 6: Information -->
+  <rect x="60" y="513" width="36" height="36" rx="10" fill="#DBEAFE" filter="url(#iconShadow)"/>
+  <text x="78" y="536" text-anchor="middle" font-size="18">📊</text>
+  <text x="108" y="528" font-size="11" font-weight="700" fill="#0369A1" letter-spacing="0.8">INFORMATION</text>
+  <text x="108" y="543" font-size="12.5" fill="#334155" font-weight="500">Authorized parties see actual data — analysis, compliance</text>
+
+  <!-- Divider -->
+  <line x1="60" y1="565" x2="496" y2="565" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 7: Enterprise Fit — Canton (positive) -->
+  <rect x="60" y="574" width="456" height="34" rx="10" fill="#DCFCE7"/>
+  <text x="80" y="596" font-size="13" font-weight="700" fill="#15803D">✅  Enterprise Fit: Strong</text>
+  <text x="80" y="609" font-size="11.5" fill="#166534">Regulators can audit · GDPR possible · dispute resolution ready</text>
+
+  <!-- ═══════════════════════════════════════════
+       ZK CARD (right)
+  ═══════════════════════════════════════════ -->
+  <!-- Card base -->
+  <rect x="584" y="108" width="476" height="510" rx="18" fill="white" filter="url(#cardShadow)"/>
+  <!-- Accent top bar -->
+  <rect x="584" y="108" width="476" height="8" rx="18" fill="url(#zkAccent)"/>
+  <rect x="584" y="116" width="476" height="4" fill="url(#zkAccent)" opacity="0.4"/>
+
+  <!-- ZK header -->
+  <circle cx="626" cy="155" r="22" fill="#F5F3FF" filter="url(#iconShadow)"/>
+  <text x="626" y="162" text-anchor="middle" font-size="20">🔮</text>
+  <text x="660" y="148" font-size="18" font-weight="700" fill="#6D28D9">ZK: Prove-Not-Reveal</text>
+  <text x="660" y="168" font-size="11.5" font-weight="500" fill="#64748B" letter-spacing="0.5">Zero-Knowledge Proofs · Computational Hiding Model</text>
+
+  <!-- Divider -->
+  <line x1="604" y1="188" x2="1040" y2="188" stroke="#EDE9FE" stroke-width="1.5"/>
+
+  <!-- ROW 1: Philosophy -->
+  <rect x="604" y="200" width="36" height="36" rx="10" fill="#EDE9FE" filter="url(#iconShadow)"/>
+  <text x="622" y="223" text-anchor="middle" font-size="18">💡</text>
+  <text x="652" y="215" font-size="11" font-weight="700" fill="#5B21B6" letter-spacing="0.8">PHILOSOPHY</text>
+  <text x="652" y="230" font-size="12.5" fill="#334155" font-weight="500">"Prove computation correctness without revealing inputs"</text>
+
+  <line x1="604" y1="252" x2="1040" y2="252" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 2: Mechanism -->
+  <rect x="604" y="262" width="36" height="36" rx="10" fill="#EDE9FE" filter="url(#iconShadow)"/>
+  <text x="622" y="285" text-anchor="middle" font-size="18">⚙️</text>
+  <text x="652" y="277" font-size="11" font-weight="700" fill="#5B21B6" letter-spacing="0.8">MECHANISM</text>
+  <text x="652" y="293" font-size="12.5" fill="#334155" font-weight="500">Data is hidden · only proofs published on-chain</text>
+
+  <line x1="604" y1="315" x2="1040" y2="315" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 3: Auditability (warning) -->
+  <rect x="604" y="325" width="36" height="36" rx="10" fill="#FEE2E2" filter="url(#iconShadow)"/>
+  <text x="622" y="348" text-anchor="middle" font-size="18">⚠️</text>
+  <text x="652" y="340" font-size="11" font-weight="700" fill="#B91C1C" letter-spacing="0.8">AUDITABILITY</text>
+  <text x="652" y="356" font-size="12.5" fill="#334155" font-weight="500">Mathematically limited — "ZKPs fail invisibly"</text>
+
+  <line x1="604" y1="378" x2="1040" y2="378" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 4: Recovery (warning) -->
+  <rect x="604" y="388" width="36" height="36" rx="10" fill="#FEE2E2" filter="url(#iconShadow)"/>
+  <text x="622" y="411" text-anchor="middle" font-size="18">💀</text>
+  <text x="652" y="403" font-size="11" font-weight="700" fill="#B91C1C" letter-spacing="0.8">RECOVERY</text>
+  <text x="652" y="418" font-size="12.5" fill="#334155" font-weight="500">Single exploit can "permanently taint the ledger"</text>
+
+  <line x1="604" y1="440" x2="1040" y2="440" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 5: Trust Model -->
+  <rect x="604" y="450" width="36" height="36" rx="10" fill="#EDE9FE" filter="url(#iconShadow)"/>
+  <text x="622" y="473" text-anchor="middle" font-size="18">🧮</text>
+  <text x="652" y="465" font-size="11" font-weight="700" fill="#5B21B6" letter-spacing="0.8">TRUST MODEL</text>
+  <text x="652" y="481" font-size="12.5" fill="#334155" font-weight="500">Trust the math: circuit design, trusted setup, implementation</text>
+
+  <line x1="604" y1="503" x2="1040" y2="503" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 6: Information -->
+  <rect x="604" y="513" width="36" height="36" rx="10" fill="#FEF3C7" filter="url(#iconShadow)"/>
+  <text x="622" y="536" text-anchor="middle" font-size="18">🚫</text>
+  <text x="652" y="528" font-size="11" font-weight="700" fill="#92400E" letter-spacing="0.8">INFORMATION</text>
+  <text x="652" y="543" font-size="12.5" fill="#334155" font-weight="500">Nobody sees actual data · only boolean validity signals</text>
+
+  <line x1="604" y1="565" x2="1040" y2="565" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ROW 7: Enterprise Fit — ZK (challenging) -->
+  <rect x="604" y="574" width="456" height="34" rx="10" fill="#FEF2F2"/>
+  <text x="624" y="596" font-size="13" font-weight="700" fill="#B91C1C">⚠️  Enterprise Fit: Challenging</text>
+  <text x="624" y="609" font-size="11.5" fill="#7F1D1D">Regulators cannot audit actual txns · compliance gaps · dispute risk</text>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <text x="550" y="638" text-anchor="middle" font-size="10.5" fill="#94A3B8" letter-spacing="0.5">WHI-335 · M1 Canton Research · Enterprise Blockchain Feasibility Study · 2026</text>
+</svg>

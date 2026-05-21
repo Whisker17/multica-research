@@ -1,0 +1,2320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mantle Enterprise Blockchain Strategy Decision</title>
+<style>
+:root {
+  --bg: #101113;
+  --bg-card: #1a1c20;
+  --bg-card-alt: #282b31;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --accent: #3b82f6;
+  --accent-light: #60a5fa;
+  --green: #22c55e;
+  --green-dim: #166534;
+  --orange: #f97316;
+  --orange-dim: #9a3412;
+  --purple: #a855f7;
+  --purple-dim: #7c3aed;
+  --red: #ef4444;
+  --teal: #14b8a6;
+  --yellow: #eab308;
+  --border: #343841;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); }
+body { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+
+.slide {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  padding: clamp(24px, 4vh, 48px) clamp(32px, 5vw, 72px);
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+.slide.active { display: flex; }
+.slide.center { justify-content: center; align-items: center; text-align: center; }
+
+h1 { font-size: clamp(30px, 4vw, 42px); font-weight: 700; line-height: 1.2; margin-bottom: clamp(10px, 2vh, 16px); letter-spacing: 0; }
+h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 600; line-height: 1.25; margin-bottom: clamp(8px, 1.6vh, 12px); letter-spacing: 0; }
+h3 { font-size: clamp(16px, 1.8vw, 22px); font-weight: 600; margin-bottom: clamp(6px, 1vh, 8px); }
+.subtitle { font-size: clamp(16px, 2vw, 20px); color: var(--text-muted); margin-bottom: 8px; }
+.takeaway { font-size: clamp(13px, 1.4vw, 16px); color: var(--accent-light); margin-bottom: clamp(12px, 2.5vh, 24px); font-weight: 500; padding: clamp(8px, 1.4vh, 12px) clamp(12px, 1.8vw, 20px); border-left: 3px solid var(--accent); background: rgba(59,130,246,0.08); border-radius: 0 8px 8px 0; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 2vw, 24px); flex: 1; min-height: 0; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(12px, 1.6vw, 20px); flex: 1; min-height: 0; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: clamp(10px, 1.4vw, 16px); flex: 1; min-height: 0; }
+
+.card {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: clamp(14px, 2vw, 24px);
+  border: 1px solid var(--border);
+}
+.card h3 { margin-bottom: 12px; }
+.card ul { list-style: none; padding: 0; }
+.card li { font-size: clamp(11px, 1.2vw, 14px); color: var(--text-muted); padding: clamp(2px, 0.6vh, 4px) 0; line-height: 1.42; }
+.card li::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+
+.card.blue { border-color: var(--accent); }
+.card.blue h3 { color: var(--accent-light); }
+.card.blue li::before { background: var(--accent); }
+
+.card.green { border-color: var(--green); }
+.card.green h3 { color: var(--green); }
+.card.green li::before { background: var(--green); }
+
+.card.orange { border-color: var(--orange); }
+.card.orange h3 { color: var(--orange); }
+.card.orange li::before { background: var(--orange); }
+
+.card.purple { border-color: var(--purple); }
+.card.purple h3 { color: var(--purple); }
+.card.purple li::before { background: var(--purple); }
+
+.card.red { border-color: var(--red); }
+.card.red h3 { color: var(--red); }
+.card.red li::before { background: var(--red); }
+
+.card.teal { border-color: var(--teal); }
+.card.teal h3 { color: var(--teal); }
+.card.teal li::before { background: var(--teal); }
+
+.badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: clamp(10px, 1vw, 12px); font-weight: 600; margin-right: 8px; }
+.badge.blue { background: rgba(59,130,246,0.2); color: var(--accent-light); }
+.badge.green { background: rgba(34,197,94,0.2); color: var(--green); }
+.badge.orange { background: rgba(249,115,22,0.2); color: var(--orange); }
+.badge.purple { background: rgba(168,85,247,0.2); color: var(--purple); }
+.badge.red { background: rgba(239,68,68,0.2); color: var(--red); }
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: clamp(10px, 1vw, 13px);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+th {
+  background: var(--bg-card-alt);
+  padding: clamp(7px, 1.1vh, 12px) clamp(9px, 1.2vw, 16px);
+  text-align: left;
+  font-weight: 600;
+  font-size: clamp(10px, 1vw, 13px);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: clamp(6px, 1vh, 10px) clamp(8px, 1.2vw, 16px);
+  border-bottom: 1px solid rgba(51,65,85,0.5);
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) { background: rgba(30,41,59,0.5); }
+
+.svg-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  overflow: hidden;
+}
+.svg-container svg {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+}
+
+.progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+.slide-counter {
+  position: fixed;
+  bottom: 12px;
+  right: 24px;
+  font-size: 13px;
+  color: var(--text-dim);
+  z-index: 100;
+}
+.confidential {
+  position: fixed;
+  top: 12px;
+  right: 24px;
+  font-size: 11px;
+  color: var(--red);
+  font-weight: 600;
+  letter-spacing: 1px;
+  z-index: 100;
+}
+
+.big-number { font-size: 64px; font-weight: 700; line-height: 1; }
+.big-number.blue { color: var(--accent-light); }
+.big-number.green { color: var(--green); }
+.big-number.orange { color: var(--orange); }
+
+.flex-row { display: flex; gap: 24px; align-items: stretch; }
+.flex-col { display: flex; flex-direction: column; gap: 12px; }
+.flex-1 { flex: 1; }
+.mt-auto { margin-top: auto; }
+.mb-8 { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.text-sm { font-size: 14px; }
+.text-xs { font-size: 12px; }
+.text-muted { color: var(--text-muted); }
+.text-dim { color: var(--text-dim); }
+.text-center { text-align: center; }
+.text-accent { color: var(--accent-light); }
+
+.pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+.pill { padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; }
+.pill.full { background: rgba(34,197,94,0.2); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+.pill.partial { background: rgba(234,179,8,0.15); color: var(--yellow); border: 1px solid rgba(234,179,8,0.3); }
+.pill.inherited { background: rgba(249,115,22,0.15); color: var(--orange); border: 1px solid rgba(249,115,22,0.3); }
+.pill.none { background: rgba(100,116,139,0.15); color: var(--text-dim); border: 1px solid rgba(100,116,139,0.3); }
+
+.divider { width: 100%; height: 1px; background: var(--border); margin: 16px 0; }
+
+.highlight-box {
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 12px 0;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.transition-slide {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.transition-slide h1 { font-size: clamp(32px, 4.5vw, 48px); margin-bottom: 12px; }
+
+.agenda-grid { display:grid; grid-template-columns: 1.05fr 1fr; gap: clamp(16px, 2vw, 28px); flex:1; min-height:0; }
+.chapter-list { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.chapter-item { border:1px solid var(--border); border-radius:8px; padding:12px; background:rgba(255,255,255,0.025); }
+.chapter-item strong { color:var(--text); font-size:13px; }
+.chapter-item p { color:var(--text-muted); font-size:12px; line-height:1.35; margin-top:4px; }
+.decision-stack { display:grid; grid-template-columns: repeat(5, 1fr); gap:12px; flex:1; min-height:0; }
+.decision-card { border:1px solid var(--border); border-radius:8px; padding:14px; background:var(--bg-card); display:flex; flex-direction:column; gap:8px; }
+.decision-card .num { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(59,130,246,0.18); color:var(--accent-light); font-weight:700; font-size:13px; }
+.decision-card p { font-size:12px; color:var(--text-muted); line-height:1.35; }
+.flow-row { display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; align-items:stretch; }
+.flow-step { border:1px solid var(--border); border-radius:8px; padding:12px; background:rgba(255,255,255,0.025); min-height:72px; }
+.flow-step h3 { font-size:14px; margin-bottom:6px; }
+.flow-step p { font-size:11px; line-height:1.35; color:var(--text-muted); }
+.compact-table th, .compact-table td { padding:6px 8px; font-size:11px; line-height:1.25; }
+.note-line { font-size:11px; color:var(--text-dim); line-height:1.35; margin-top:10px; }
+.no-scroll { overflow:hidden !important; }
+.gate-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 12px; flex:1; min-height:0; }
+.gate-card { padding:12px !important; }
+.gate-card .gate-head { display:flex; align-items:center; gap:8px; margin-bottom:4px; }
+.gate-card h3 { margin:0; font-size:15px; }
+.gate-card li { font-size:11px; line-height:1.24; padding:2px 0; }
+
+@media (max-width: 1200px) {
+  .slide { padding: 28px 36px; }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+  .decision-stack { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+@media (max-height: 700px) {
+  .slide { padding-top: 22px; padding-bottom: 22px; }
+  .card { padding: 14px !important; }
+  .takeaway { margin-bottom: 12px; }
+  .card li { line-height: 1.32; }
+  h1[style], h2[style], h3[style] { font-size: clamp(18px, 2.6vw, 34px) !important; }
+  .subtitle[style] { font-size: clamp(14px, 1.8vw, 18px) !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="confidential">CONFIDENTIAL</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-counter" id="slideCounter"></div>
+
+<!-- ==================== SLIDE 1: Title ==================== -->
+<div class="slide center active" id="s1">
+  <div class="section-label mb-16">Mantle Enterprise Blockchain Strategy</div>
+  <h1 style="font-size:48px; margin-bottom:24px;">Enterprise Blockchain<br>Decision Presentation</h1>
+  <p class="subtitle" style="font-size:22px;">Mantle 企业级区块链战略路径选择</p>
+  <div style="margin-top:40px; color:var(--text-dim);">
+    <p>2026.05 | M6 Milestone Deliverable</p>
+    <p class="text-xs mt-16">Based on M1-M5 Research: Canton, Prividium, Tempo/Zones, Paladin</p>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 2: Decision Question ==================== -->
+<div class="slide center" id="s2">
+  <div class="section-label mb-24">THE ONE QUESTION</div>
+  <h1 style="font-size:40px; max-width:900px;">Mantle 要进入企业级区块链市场，<br>应该选择哪条技术路径？</h1>
+  <div class="divider" style="max-width:600px; margin: 32px auto;"></div>
+  <p class="subtitle" style="max-width:800px;">自建 L1 主权链、基于 OP Stack 的企业 L2 并行链、还是在 Mantle L2 上搭建 L3 应用链平台？<br>不同路径对应不同的企业客户需求、投资规模和上市时间。</p>
+</div>
+
+<!-- ==================== SLIDE 3: TL;DR Recommendation ==================== -->
+<div class="slide" id="s3">
+  <h2>TL;DR: 推荐策略</h2>
+  <div class="takeaway">结论先行：L2 快速入市 + L3 产品平台 + L1 有条件启动</div>
+
+  <div class="grid-3 mt-16">
+    <div class="card blue">
+      <div class="badge blue">Phase 1: 0-3 月</div>
+      <h3>Enterprise L2 MVP</h3>
+      <ul>
+        <li>基于 OP Stack 的企业 L2 并行链</li>
+        <li>Authenticated RPC + 合规 Sequencer</li>
+        <li>最快路径进入市场验证需求</li>
+        <li>团队 8-10 人 | $400K-$600K</li>
+      </ul>
+    </div>
+    <div class="card purple">
+      <div class="badge purple">Phase 2: 3-6 月</div>
+      <h3>L3 应用链平台</h3>
+      <ul>
+        <li>"一企业一链" 模型</li>
+        <li>企业拥有自己的 Sequencer / DA / 合规</li>
+        <li>Multi-Tenant 隔离 + 私有化部署</li>
+        <li>团队 12-15 人 | $600K-$900K</li>
+      </ul>
+    </div>
+    <div class="card green">
+      <div class="badge green">Gated: L1 PoC</div>
+      <h3>L1 有条件启动</h3>
+      <ul>
+        <li>Full Build 不是默认承诺</li>
+        <li>必须同时通过 G1/G4/资金/人才门</li>
+        <li>锚定客户需要主权结算</li>
+        <li>PoC 证明 sub-2s + 10K TPS 可行</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box mt-16">
+    <strong>核心判断公式：</strong> 客户买的是<span class="text-accent">受监管的 Ethereum/Mantle 扩展</span> → L2；买的是<span style="color:var(--purple);">专属企业环境</span> → L3；买的是<span style="color:var(--green);">主权结算基础设施</span> → L1
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4: Agenda & Reading Guide ==================== -->
+<div class="slide" id="s2b">
+  <h2>阅读路径与章节结构</h2>
+  <div class="takeaway">这是一份决策文档：先给结论，再给证据，附录用于技术深潜</div>
+
+  <div class="agenda-grid mt-16">
+    <div class="chapter-list">
+      <div class="chapter-item"><strong>0. 决策入口</strong><p>问题、推荐、领导层必须回答的 5 个问题</p></div>
+      <div class="chapter-item"><strong>1. 为什么不是白名单</strong><p>企业链改变 trust boundary，而不只是限制 RPC</p></div>
+      <div class="chapter-item"><strong>2. 参考项目</strong><p>Canton / Prividium / Tempo / Paladin 提供边界条件</p></div>
+      <div class="chapter-item"><strong>3. 8 个核心模块</strong><p>Execution、Finality、Privacy、Compliance、DA、Interop 等耦合决策</p></div>
+      <div class="chapter-item"><strong>4. 三条路径</strong><p>L1 / L2 / L3 是不同产品，不是成熟度阶梯</p></div>
+      <div class="chapter-item"><strong>5. 横向比较</strong><p>矩阵、决策树、场景映射、能力深度 vs 上市时间</p></div>
+      <div class="chapter-item"><strong>6. 路线图与决策门</strong><p>0-12 月执行、G1-G5、预算与停止条件</p></div>
+      <div class="chapter-item"><strong>7. 今天要批准什么</strong><p>Phase 1 授权、入口客户、operator 定位、风险承认</p></div>
+    </div>
+    <div class="flex-col">
+      <div class="card blue" style="flex:1;">
+        <h3>10 分钟 Executive Brief</h3>
+        <ul>
+          <li>Slides 1-3：问题与结论</li>
+          <li>Slides 4-5：阅读路径与领导层决策</li>
+          <li>Slides 20-25：三条路径的 fit 与限制</li>
+          <li>Slides 30-33：矩阵、决策树、场景映射</li>
+          <li>Slides 35-39：路线图、决策门、今天批准事项</li>
+        </ul>
+      </div>
+      <div class="card purple" style="flex:1;">
+        <h3>30 分钟 Full Presentation</h3>
+        <ul>
+          <li>完整主 deck：从市场教训到执行决策</li>
+          <li>附录：术语、来源、详细架构、风险、预算、决策模型</li>
+          <li>每页只承担一个判断；密集材料放入附录</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 3B: Five Leadership Decisions ==================== -->
+<div class="slide" id="s3b">
+  <h2>工程启动前，领导层必须回答 5 个问题</h2>
+  <div class="takeaway">如果这些问题没有答案，团队会自然滑向“通用基础设施建设”，而不是企业产品</div>
+
+  <div class="decision-stack mt-16">
+    <div class="decision-card">
+      <div class="num">1</div>
+      <h3>目标切入点</h3>
+      <p>先服务 RWA 发行方、托管方、支付公司、银行联盟，还是 Enterprise DeFi？</p>
+    </div>
+    <div class="decision-card">
+      <div class="num">2</div>
+      <h3>Operator 定位</h3>
+      <p>Mantle 是否愿意成为受监管 Sequencer / compliance operator？还是只做技术提供商？</p>
+    </div>
+    <div class="decision-card">
+      <div class="num">3</div>
+      <h3>隐私承诺</h3>
+      <p>Phase 1 只承诺 public-observer privacy，还是承诺 operator-blind privacy 路线？</p>
+    </div>
+    <div class="decision-card">
+      <div class="num">4</div>
+      <h3>最终性承诺</h3>
+      <p>产品暴露哪些 finality state？哪些业务动作可基于 soft / proven / L1-settled 状态执行？</p>
+    </div>
+    <div class="decision-card">
+      <div class="num">5</div>
+      <h3>L1 触发条件</h3>
+      <p>什么客户承诺、PoC 结果、资金与人才门槛会激活 Sovereign L1 full build？</p>
+    </div>
+  </div>
+
+  <div class="highlight-box mt-16">
+    <strong>Owner 建议：</strong>CEO/Strategy 负责市场入口与 Phase 1 授权；CTO/VP Engineering 负责技术门；Legal/Compliance 负责 operator-liability 接受边界。
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4: Why Enterprise != Public + Whitelist ==================== -->
+<div class="slide" id="s4">
+  <h2>为什么企业级区块链 ≠ 公链 + 白名单?</h2>
+  <div class="takeaway">白名单只解决了 "谁能进来"，没有解决 "进来之后怎么管"</div>
+
+  <div class="grid-2">
+    <div class="card red">
+      <h3>公链 + 白名单模式的局限</h3>
+      <ul>
+        <li>隐私：所有交易对所有验证者可见</li>
+        <li>合规：无法在执行层强制 KYC/AML</li>
+        <li>最终性：依赖概率性 finality，无法满足 DVP</li>
+        <li>数据主权：企业数据存储在公共节点</li>
+        <li>治理：企业无法控制升级、停机、回滚</li>
+      </ul>
+    </div>
+    <div class="card green">
+      <h3>真正的企业级区块链需要什么</h3>
+      <ul>
+        <li>协议层原生隐私 (非应用层包装)</li>
+        <li>执行层合规 — 不可绕过的 Policy Engine</li>
+        <li>确定性最终性 — 法律意义上的结算完成</li>
+        <li>数据主权 — 企业控制自己的 DA 层</li>
+        <li>灵活治理 — 独立升级、合规策略、准入控制</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box mt-16">
+    <strong>关键洞察：</strong>这是 Canton、Prividium、Tempo 等项目存在的根本原因 — 它们不是在公链上加白名单，而是重新设计了底层架构。
+  </div>
+</div>
+
+<!-- ==================== SLIDE 5: 8 Coupled Design Choices ==================== -->
+<div class="slide" id="s5">
+  <h2>企业级区块链的 8 个耦合设计决策</h2>
+  <div class="takeaway">隐私选择 → 改变 DA 模型 → 改变 Ethereum 结算关系 → 改变桥接设计：这是连锁反应，不是独立模块</div>
+
+  <div class="grid-4" style="flex:1;">
+    <div class="card blue" style="padding:16px;">
+      <h3 style="font-size:16px;">1. Execution Layer</h3>
+      <p class="text-xs text-muted">EVM 修改深度决定合规能力 vs 兼容性</p>
+    </div>
+    <div class="card blue" style="padding:16px;">
+      <h3 style="font-size:16px;">2. Consensus & Finality</h3>
+      <p class="text-xs text-muted">BFT vs Rollup 决定结算语义</p>
+    </div>
+    <div class="card blue" style="padding:16px;">
+      <h3 style="font-size:16px;">3. Privacy Layer</h3>
+      <p class="text-xs text-muted">隐私深度决定整个架构方向</p>
+    </div>
+    <div class="card" style="padding:16px;">
+      <h3 style="font-size:16px;">4. Compliance & Identity</h3>
+      <p class="text-xs text-muted">KYC/KYB + Policy Registry</p>
+    </div>
+    <div class="card" style="padding:16px;">
+      <h3 style="font-size:16px;">5. Access Control</h3>
+      <p class="text-xs text-muted">Authenticated RPC + 分层准入</p>
+    </div>
+    <div class="card" style="padding:16px;">
+      <h3 style="font-size:16px;">6. DA & Data Sovereignty</h3>
+      <p class="text-xs text-muted">Private Validium vs Public Blobs</p>
+    </div>
+    <div class="card" style="padding:16px;">
+      <h3 style="font-size:16px;">7. Interoperability</h3>
+      <p class="text-xs text-muted">跨链桥 + 合规路由</p>
+    </div>
+    <div class="card" style="padding:16px;">
+      <h3 style="font-size:16px;">8. Operations & Business</h3>
+      <p class="text-xs text-muted">MIP-20/21, DVP, Travel Rule</p>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:16px; margin-top:16px; font-size:12px;">
+    <div style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block;width:24px;height:3px;background:var(--accent);"></span> Privacy/DA 级联</div>
+    <div style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block;width:24px;height:3px;background:var(--orange);"></span> Compliance/Execution 级联</div>
+    <div style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block;width:24px;height:3px;background:var(--green);"></span> Finality/Business 级联</div>
+    <div style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block;width:24px;height:3px;background:var(--purple);"></span> Identity/Access 基础</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 5B: Constraint Propagation ==================== -->
+<div class="slide" id="s5b">
+  <h2>模块不是独立清单，而是 5 条约束链</h2>
+  <div class="takeaway">企业链设计的关键风险来自“局部正确、系统绕过”：一个模块的选择会改变后续架构边界</div>
+
+  <div class="flex-col mt-16" style="flex:1;">
+    <div class="flow-row">
+      <div class="flow-step"><h3 style="color:var(--accent-light);">Privacy</h3><p>隐藏对象是谁：public、tenant、operator、regulator？</p></div>
+      <div class="flow-step"><h3>DA Model</h3><p>敏感数据是否进入 public blobs？是否可删除？</p></div>
+      <div class="flow-step"><h3>L1 Relationship</h3><p>Ethereum 是 settlement、proof anchor，还是只是 bridge？</p></div>
+      <div class="flow-step"><h3>Bridge Design</h3><p>跨域消息是否泄漏 metadata？是否可强制进入？</p></div>
+      <div class="flow-step"><h3>Path Bias</h3><p>L2 for public-observer privacy；L3/L1 for tenant sovereignty</p></div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-step"><h3 style="color:var(--green);">Finality</h3><p>业务能否基于 soft confirmation 放款/交割？</p></div>
+      <div class="flow-step"><h3>Settlement Semantics</h3><p>BFT cert、ZK proof、L1 settlement 是不同法律语义</p></div>
+      <div class="flow-step"><h3>DVP / Payment</h3><p>证券 DVP 与终端支付需要 hard finality 边界</p></div>
+      <div class="flow-step"><h3>Risk Labels</h3><p>应用必须暴露 typed finality，而不是只显示“已确认”</p></div>
+      <div class="flow-step"><h3>Path Bias</h3><p>sub-second hard settlement 指向 L1</p></div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-step"><h3 style="color:var(--orange);">Compliance</h3><p>KYC/AML 是 advisory，还是 execution-time non-bypassable？</p></div>
+      <div class="flow-step"><h3>EVM Hooks</h3><p>predeploy、precompile、custom tx type 改变兼容性</p></div>
+      <div class="flow-step"><h3>Forced Inclusion</h3><p>只管 RPC 不够；L1-originated message 也要过滤</p></div>
+      <div class="flow-step"><h3>Identity Portability</h3><p>身份与 policy 必须随 bridge message 迁移</p></div>
+      <div class="flow-step"><h3>Path Bias</h3><p>越深的合规越推向 L1 或深定制 L3</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 6: Transition - Reference Projects ==================== -->
+<div class="slide transition-slide" id="s6">
+  <div class="section-label mb-24">REFERENCE PROJECTS</div>
+  <h1 style="color:var(--accent-light);">四个参考项目告诉我们什么</h1>
+  <p class="subtitle">Canton, Prividium, Tempo/Zones, Paladin</p>
+</div>
+
+<!-- ==================== SLIDE 7: Canton ==================== -->
+<div class="slide" id="s7">
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+    <h2 style="margin:0;">Canton (Digital Asset)</h2>
+    <span class="badge green">Production-Grade</span>
+  </div>
+  <div class="takeaway">Canton 证明了企业级区块链可以做到：协议层隐私 + 确定性最终性 + 跨域互操作</div>
+
+  <div class="grid-2" style="flex:1;">
+    <div>
+      <div class="card green mb-16" style="padding:20px;">
+        <h3>核心架构</h3>
+        <ul>
+          <li>Participant / Synchronizer / Mediator 三角分离</li>
+          <li>Need-to-Know 隐私：交易方只看到自己的部分</li>
+          <li>2PC (Two-Phase Commit) 盲共识协议</li>
+          <li>Sub-Transaction Merkle DAG</li>
+          <li>Daml 智能合约语言 (非 EVM)</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:20px;">
+        <h3>关键数据</h3>
+        <ul>
+          <li>450+ 项目接入 Canton Network</li>
+          <li>确定性最终性 ~1-2s</li>
+        <li>机构案例：Goldman Sachs, HSBC, Nasdaq, DTCC 等</li>
+          <li>非 EVM — 需要 Daml 开发者</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="padding:20px;">
+      <h3>Canton 的启示</h3>
+      <ul>
+        <li><strong>隐私不能后加：</strong>Canton 从第一天就设计了 need-to-know 隐私，这是架构级决策</li>
+        <li><strong>最终性决定业务可行性：</strong>DVP 和支付需要确定性最终性，概率性 finality 不够</li>
+        <li><strong>Sequencer ≠ 验证者：</strong>Canton 的 Sequencer 不看交易内容（opaque forwarding），这是隐私的前提</li>
+        <li><strong>非 EVM 是劣势：</strong>生态壁垒高，开发者获取困难</li>
+        <li><strong>治理复杂度高：</strong>Global Synchronizer + Synchronizer federation 治理模型复杂</li>
+      </ul>
+      <div class="divider"></div>
+      <p class="text-xs text-muted"><strong>对 Mantle 的意义：</strong>Canton 是 "完美形态" 参考，但它的路径（非 EVM + 私有语言）不可复制。Mantle 需要在 EVM 生态内实现类似能力。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 8: Prividium ==================== -->
+<div class="slide" id="s8">
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+    <h2 style="margin:0;">zkSync Prividium</h2>
+    <span class="badge purple">ZK-Powered</span>
+  </div>
+  <div class="takeaway">Prividium 证明了 Validium + STARK 可以隐藏交易数据并公开验证状态转换；但 DA、排序和权限执行仍是运营信任问题</div>
+
+  <div class="grid-2" style="flex:1;">
+    <div class="card purple" style="padding:20px;">
+      <h3>核心架构</h3>
+      <ul>
+        <li>zkSync 的 ZK Stack Validium 变体</li>
+        <li>链下 DA + ZK 证明到 L1</li>
+        <li>Airbender RISC-V STARK 证明系统</li>
+        <li>分层 Access Control: RPC → Sequencer → Bridge</li>
+        <li>Full EVM tooling: Solidity / Hardhat / Foundry</li>
+      </ul>
+      <div class="divider"></div>
+      <h3>关键数据</h3>
+      <ul>
+        <li>Validium 模式 — 数据不上 L1</li>
+        <li>ZK finality 官方声称 ~1s；生产 SLA 待验证</li>
+        <li>Full EVM tooling — 不是 Mantle 可直接复用的 OP Stack 代码</li>
+        <li>机构验证较多，但生产成熟度仍需验证</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:20px;">
+      <h3>Prividium 的启示</h3>
+      <ul>
+        <li><strong>ZK 验证状态转换：</strong>STARK 证明 correctness，不自动证明 DA、排序公平或权限执行</li>
+        <li><strong>Validium ≠ 完全隐私：</strong>Sequencer / operator 仍然看到交易明文</li>
+        <li><strong>Selective Disclosure 是路线：</strong>监管披露能力需要额外 audit portal / view-key / proof 设计</li>
+        <li><strong>DA 模式是关键选择：</strong>Private DA 带来隐私但增加了信任假设</li>
+      </ul>
+      <div class="divider"></div>
+      <p class="text-xs text-muted"><strong>对 Mantle 的意义：</strong>Prividium 的 ZK 合规验证方法值得借鉴，但其架构受限于 Sequencer 可见性。L3 路径可以通过让企业运行自己的 Sequencer 解决此问题。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9: Tempo/Zones ==================== -->
+<div class="slide" id="s9">
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+    <h2 style="margin:0;">Tempo / Zones</h2>
+    <span class="badge orange">Privacy Zones</span>
+  </div>
+  <div class="takeaway">Tempo 的关键启示不是“私有 Zone”本身，而是 Reth/EVM + BFT finality + payment-first block design 可以服务企业支付</div>
+
+  <div class="grid-2" style="flex:1;">
+    <div class="card orange" style="padding:20px;">
+      <h3>核心架构</h3>
+      <ul>
+        <li>Reth SDK + revm EVM execution</li>
+        <li>Commonware Simplex BFT — ~600ms deterministic finality</li>
+        <li>Payment Lane — stablecoin transfers with guaranteed throughput</li>
+        <li>TIP-20 stablecoin precompile + TIP-403 compliance registry</li>
+        <li>Encrypted Deposits / Confidential Transfers</li>
+      </ul>
+      <div class="divider"></div>
+      <h3>关键数据</h3>
+      <ul>
+        <li>Payment Lane 目标：高吞吐 + 低费用 stablecoin transfer</li>
+        <li>Zones = Validium-style sub-chain，数据不上 L1</li>
+        <li>TIP-403 policy rules 可随 token 跨 Zone 执行</li>
+        <li>Zone validity proofs 架构预留，但生产证明路径仍早期</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:20px;">
+      <h3>Tempo 的启示</h3>
+      <ul>
+        <li><strong>Reth/BFT 是 L1 参考：</strong>Tempo 是 Mantle L1 PoC 的最直接技术参照</li>
+        <li><strong>Payment Lane 是业务组件：</strong>企业支付需要专用吞吐和确定性费用</li>
+        <li><strong>Zone 模型是正确抽象：</strong>不同企业需要不同的隐私/合规策略</li>
+        <li><strong>"一企业一 Zone" 映射到 "一企业一 L3"：</strong>Mantle 的 L3 路径直接对应</li>
+        <li><strong>诚实 caveat：</strong>Zone sequencer 仍看明文；证明路径成熟度要作为门控</li>
+      </ul>
+      <div class="divider"></div>
+      <p class="text-xs text-muted"><strong>对 Mantle 的意义：</strong>Tempo 的 Zone 概念直接映射到 L3 App Chain 模型。L3 = 每个企业一个 Zone，拥有自己的 Sequencer、DA 和合规策略。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 10: Paladin ==================== -->
+<div class="slide" id="s10">
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+    <h2 style="margin:0;">Paladin (MPL)</h2>
+    <span class="badge teal">Privacy Middleware</span>
+  </div>
+  <div class="takeaway">Paladin 的最佳定位是独立 MPL 隐私产品评估，不是默认嵌入 Mantle L2/L3 的 sidecar</div>
+
+  <div class="grid-2" style="flex:1;">
+    <div class="card teal" style="padding:20px;">
+      <h3>Paladin / MPL 定位</h3>
+      <ul>
+        <li>Noto: privacy-preserving token layer</li>
+        <li>Zeto: KYC membership proof / private transfer</li>
+        <li>Pente: private EVM group</li>
+        <li>Atom: cross-domain atomic settlement</li>
+        <li>MPL: Paladin + Besu/QBFT standalone network</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:20px;">
+      <h3>Paladin 在战略中的位置</h3>
+      <ul>
+        <li><strong>不是 L2 默认组件：</strong>强行做 L2 sidecar 会损失 Atom atomicity 和确认语义</li>
+        <li><strong>独立产品评估：</strong>WHI-382 推荐 MPL Standalone，2-4 月 MVP，26/30，0 critical blockers</li>
+        <li><strong>与 L2/L3 关系：</strong>MPL 可作为独立 privacy network，通过 bridge / proof 与 Mantle 组合</li>
+        <li><strong>决策门 G5：</strong>验证 partner demand、业务 case、≥85% component reuse 后，资助 MPL 到 V1</li>
+      </ul>
+      <div class="divider"></div>
+      <p class="text-xs text-muted"><strong>推荐：</strong>$100K-$200K 独立评估 MPL，1-2 人团队，M6 G5 决定是否作为 standalone privacy product 继续。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 11: Project Comparison Summary ==================== -->
+<div class="slide" id="s11">
+  <h2>参考项目对比总结</h2>
+  <div class="takeaway">没有一个现有项目完美适配 Mantle — 但它们共同定义了企业级区块链的能力要求</div>
+
+  <table style="margin-top:16px;">
+    <thead>
+      <tr>
+        <th style="width:15%;">维度</th>
+        <th style="width:22%;">Canton</th>
+        <th style="width:22%;">Prividium</th>
+        <th style="width:22%;">Tempo/Zones</th>
+        <th style="width:19%;">Paladin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>隐私模型</strong></td>
+        <td style="color:var(--green);">协议原生 Need-to-Know</td>
+        <td>ZK Proof + Validium</td>
+        <td>Zone 级加密隔离</td>
+        <td>UTXO 隐私转账</td>
+      </tr>
+      <tr>
+        <td><strong>最终性</strong></td>
+        <td style="color:var(--green);">确定性 ~1-2s</td>
+        <td>ZK finality 官方声称 ~1s；待验证</td>
+        <td style="color:var(--green);">BFT ~600ms L1；Zone local finality</td>
+        <td>继承底层链</td>
+      </tr>
+      <tr>
+        <td><strong>EVM 兼容</strong></td>
+        <td style="color:var(--red);">否 (Daml)</td>
+        <td style="color:var(--green);">是 (Full EVM tooling)</td>
+        <td style="color:var(--green);">是 (Reth/revm)</td>
+        <td style="color:var(--green);">是</td>
+      </tr>
+      <tr>
+        <td><strong>合规深度</strong></td>
+        <td style="color:var(--green);">深 — 合约级</td>
+        <td>中 — gateway / contract / L1 filter</td>
+        <td style="color:var(--green);">深 — TIP-403 / Payment Lane</td>
+        <td>中 — privacy product / proof</td>
+      </tr>
+      <tr>
+        <td><strong>生产就绪</strong></td>
+        <td style="color:var(--green);">是 (450+ 项目)</td>
+        <td style="color:var(--yellow);">验证中 / 临近生产</td>
+        <td style="color:var(--yellow);">早期</td>
+        <td style="color:var(--yellow);">早期</td>
+      </tr>
+      <tr>
+        <td><strong>Mantle 适用</strong></td>
+        <td>架构参考</td>
+        <td>ZK 合规参考</td>
+        <td>Reth+BFT L1 + Zone/L3 模型</td>
+        <td>Standalone MPL 评估</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== SLIDE 11B: EVM Moat ==================== -->
+<div class="slide" id="s11b">
+  <h2>EVM 是企业路径的硬约束，不是偏好</h2>
+  <div class="takeaway">Canton 证明“完美隐私 + 非 EVM”会付出生态代价；Mantle 的机会是把企业能力留在 EVM/Mantle 生态内</div>
+
+  <div class="grid-2 mt-16">
+    <div class="card green">
+      <h3>为什么 EVM 必须保留</h3>
+      <ul>
+        <li>Solidity / Foundry / Hardhat 是企业和 crypto-native 团队共同语言</li>
+        <li>托管、钱包、审计、indexer、DeFi liquidity 已围绕 EVM 建成</li>
+        <li>RWA 与 Enterprise DeFi 需要与 Mantle/Ethereum liquidity 相邻</li>
+        <li>非 EVM 路径需要重建开发者、工具和合规集成生态</li>
+      </ul>
+    </div>
+    <div class="card orange">
+      <h3>但 EVM 也限制企业能力</h3>
+      <ul>
+        <li>Canton-style need-to-know sub-transaction privacy 无法直接搬进 account-based EVM</li>
+        <li>协议级合规越深，越接近 custom tx / precompile / client fork</li>
+        <li>Rollup 派生和 proof compatibility 限制 L2/L3 执行层改造深度</li>
+        <li>结论：L2/L3 保持 EVM，L1 才承担最深定制</li>
+      </ul>
+    </div>
+  </div>
+  <div class="highlight-box mt-16">
+    <strong>Mantle 的差异化：</strong>不是复制 Canton 或 Prividium，而是在 EVM/Mantle 生态中组合 sequencer policy、private DA、finality labels、compliance bridge 和 L3 tenant isolation。
+  </div>
+</div>
+
+<!-- ==================== SLIDE 11C: Mantle Unique Position ==================== -->
+<div class="slide" id="s11c">
+  <h2>Mantle 的独特位置：Sequencer 既是资产，也是责任</h2>
+  <div class="takeaway">中心化 Sequencer 让合规控制几乎“零新增信任假设”，但也让 Mantle 进入 regulated operator 角色</div>
+
+  <div class="grid-3 mt-16">
+    <div class="card blue">
+      <h3>天然控制点</h3>
+      <ul>
+        <li>交易进入 sequencing 前可执行 KYC / KYT / sanctions / jurisdiction policy</li>
+        <li>可生成结构化 audit events</li>
+        <li>可暴露 finality labeling API 给应用和风控系统</li>
+      </ul>
+    </div>
+    <div class="card orange">
+      <h3>结构性代价</h3>
+      <ul>
+        <li>Sequencer 默认看明文 order flow、counterparty、amount</li>
+        <li>企业是 tenant，不是 owner</li>
+        <li>Soft confirmation 不是法律意义上的 hard settlement</li>
+      </ul>
+    </div>
+    <div class="card purple">
+      <h3>战略含义</h3>
+      <ul>
+        <li>若客户接受 operator trust，L2 是最快入市路径</li>
+        <li>若客户要自己运营 sequencer，转向 L3</li>
+        <li>若客户要自有 validators + sub-second hard finality，才触发 L1</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 12: Transition - Three Paths ==================== -->
+<div class="slide transition-slide" id="s12">
+  <div class="section-label mb-24">THREE STRATEGIC PATHS</div>
+  <h1 style="color:var(--accent-light);">三条战略路径</h1>
+  <p class="subtitle">Enterprise L1 | Enterprise L2 | Enterprise L3</p>
+  <p class="text-muted mt-16">这不是成熟度阶梯 — 三条路径交付不同的企业保证</p>
+</div>
+
+<!-- ==================== SLIDE 13: L1 Architecture ==================== -->
+<div class="slide" id="s13">
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px;">
+    <h2 style="margin:0;">Path A: Enterprise L1 — 自建主权链</h2>
+    <span class="badge green">Sovereign</span>
+  </div>
+  <div class="takeaway">客户购买的是主权结算基础设施 — Mantle 完全控制从共识到执行的每一层</div>
+
+  <div class="flex-row" style="flex:1;">
+    <div style="flex:1;" class="flex-col">
+      <div class="card green" style="padding:16px; flex:1;">
+        <h3 style="font-size:16px;">架构要点</h3>
+        <ul>
+          <li>Reth SDK + revm + Enterprise Precompiles</li>
+          <li>Permissioned BFT Validators (7-15 初始)</li>
+          <li>Multi-Zone: RWA / xStocks / Payment / Custom</li>
+          <li>每个 Zone 有独立 Sequencer + Private DA</li>
+          <li>可选 Ethereum Anchor (ZK Verifier)</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:16px;">
+        <h3 style="font-size:16px;">关键性能</h3>
+        <div class="flex-row" style="gap:32px;">
+          <div><div class="big-number green" style="font-size:36px;">~600ms</div><p class="text-xs text-muted">Hard Finality</p></div>
+          <div><div class="big-number green" style="font-size:36px;">3-5K</div><p class="text-xs text-muted">TPS (Mainchain)</p></div>
+          <div><div class="big-number green" style="font-size:36px;">>10K</div><p class="text-xs text-muted">TPS (Payment Zone)</p></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;" class="flex-col">
+      <div class="card red" style="padding:16px; flex:1;">
+        <h3 style="font-size:16px;">投资要求</h3>
+        <ul>
+          <li><strong>团队：</strong>15-25 名核心工程师</li>
+          <li><strong>时间：</strong>18-24 个月</li>
+          <li><strong>工程：</strong>$5M-$12M</li>
+          <li><strong>审计：</strong>$850K-$1.7M</li>
+          <li><strong>月运维：</strong>~$85K-$130K</li>
+          <li><strong>需要 Rust/BFT/ZK 深度人才</strong></li>
+        </ul>
+        <div class="divider"></div>
+        <p class="text-xs" style="color:var(--red);"><strong>这是平台公司级别的决策，不是短期产品实验</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 14: L1 适用场景 ==================== -->
+<div class="slide" id="s14">
+  <h2>L1: 什么时候选 / 什么时候不选</h2>
+
+  <div class="grid-2 mt-16" style="flex:1;">
+    <div class="card green">
+      <h3>选 L1 当：</h3>
+      <ul>
+        <li>客户需要 sub-2 秒硬最终性 (DVP / 高频支付)</li>
+        <li>大型金融联盟愿意出资/共建/运营验证者</li>
+        <li>监管要求完整 Validator 所有权 + 事件响应权</li>
+        <li>xStocks 等合成股权需要主权结算</li>
+        <li>跨境支付需要协议级 Travel Rule 合规</li>
+      </ul>
+    </div>
+    <div class="card red">
+      <h3>不选 L1 当：</h3>
+      <ul>
+        <li>没有 $10M+ 预算和 18+ 月时间表</li>
+        <li>没有锚定客户 (anchor customer) 承诺</li>
+        <li>"Settled on Ethereum" 叙事对客户有价值</li>
+        <li>EVM 生态兼容性是硬需求</li>
+        <li>只需要数据隐私 (不需要主权控制)</li>
+        <li>需要 3-6 个月内上线 Pilot</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box mt-16">
+    <strong>L1 不是默认选项：</strong>它是在特定条件（锚定客户 + 充足预算 + 硬最终性需求）下才值得追求的路径。PoC 验证是前置条件。
+  </div>
+</div>
+
+<!-- ==================== SLIDE 15: L2 Architecture ==================== -->
+<div class="slide" id="s15">
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px;">
+    <h2 style="margin:0;">Path B: Enterprise L2 — Mantle 企业并行链</h2>
+    <span class="badge blue">Market Entry</span>
+  </div>
+  <div class="takeaway">客户购买的是受监管的 Ethereum/Mantle 扩展 — 复用 OP Stack + Mantle 运维 + EVM 工具链</div>
+
+  <div class="flex-row" style="flex:1;">
+    <div style="flex:1;" class="flex-col">
+      <div class="card blue" style="padding:16px; flex:1;">
+        <h3 style="font-size:16px;">架构要点</h3>
+        <ul>
+          <li>OP Stack Enterprise Fork (独立 Chain ID)</li>
+          <li>Authenticated RPC: OIDC/SAML/JWT/mTLS</li>
+          <li>Enterprise Sequencer: Admission + Policy Engine</li>
+          <li>Hybrid DA: Public Blobs + Private Validium</li>
+          <li>Enterprise Bridge: Compliance-Filtered Portal</li>
+          <li>Identity Registry: KYC/KYB + ERC-3643</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:16px;">
+        <h3 style="font-size:16px;">关键性能</h3>
+        <div class="flex-row" style="gap:32px;">
+          <div><div class="big-number blue" style="font-size:36px;">~1-2s</div><p class="text-xs text-muted">Soft Confirmation</p></div>
+          <div><div class="big-number blue" style="font-size:36px;">15-30m</div><p class="text-xs text-muted">ZK Hard Finality</p></div>
+          <div><div class="big-number blue" style="font-size:36px;">8-15</div><p class="text-xs text-muted">人团队</p></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;" class="flex-col">
+      <div class="card orange" style="padding:16px; flex:1;">
+        <h3 style="font-size:16px;">结构性约束 (诚实评估)</h3>
+        <ul>
+          <li><strong>Sequencer 可见性：</strong>Sequencer 看到所有交易明文</li>
+          <li><strong>租户角色：</strong>企业是租户，不是所有者</li>
+          <li><strong>Soft ≠ Hard：</strong>Soft Confirmation ≠ 法律意义结算</li>
+          <li><strong>无法独立恢复：</strong>依赖 Mantle 运维团队</li>
+          <li><strong>Force-inclusion 风险：</strong>L1 Bridge 可绕过合规</li>
+          <li><strong>运营者信任是结构性的，不是过渡性的</strong></li>
+        </ul>
+      </div>
+      <div class="card" style="padding:16px;">
+        <p class="text-xs text-muted"><strong>投资：</strong>团队 8-15 人 | 时间 8-12 月 (MVP 3-4 月) | 完全 EVM 兼容</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 16: L2 适用场景 ==================== -->
+<div class="slide" id="s16">
+  <h2>L2: 什么时候选 / 什么时候不选</h2>
+
+  <div class="grid-2 mt-16" style="flex:1;">
+    <div class="card blue">
+      <h3>选 L2 当：</h3>
+      <ul>
+        <li>需要 3-6 个月内上线 Pilot 验证市场</li>
+        <li>"Settled on Ethereum" 叙事对客户有价值</li>
+        <li>RWA Tokenization 是首要用例</li>
+        <li>Enterprise DeFi (受监管的 DeFi 协议)</li>
+        <li>Mantle 公链流动性互操作是需求</li>
+        <li>EVM 生态完全兼容是硬需求</li>
+      </ul>
+    </div>
+    <div class="card red">
+      <h3>不选 L2 当：</h3>
+      <ul>
+        <li>客户要求 operator-blind privacy（Mantle / operator 不能看到明文）</li>
+        <li>需要协议层不可绕过的合规 (不只是 Sequencer 策略)</li>
+        <li>需要 Sub-Second 硬最终性</li>
+        <li>客户需要运行自己的 Sequencer</li>
+        <li>需要 per-tenant 策略隔离</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box mt-16">
+    <strong>L2 的核心价值：</strong>最快的入市路径，利用 Mantle 现有的 OP Stack 经验和 Ethereum 结算叙事。但要诚实告知客户其结构性约束。<br>
+    <strong>风险：</strong>可能吸引低价值客户；最高价值机构客户可能从第一天就拒绝运营者信任模型。
+  </div>
+</div>
+
+<!-- ==================== SLIDE 17: L3 Architecture ==================== -->
+<div class="slide" id="s17">
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px;">
+    <h2 style="margin:0;">Path C: Enterprise L3 — 应用链平台</h2>
+    <span class="badge purple">Tenant Sovereignty</span>
+  </div>
+  <div class="takeaway">客户购买的是专属企业环境 — "一企业一链"，每个企业拥有自己的 Sequencer、DA、合规策略</div>
+
+  <div class="flex-row" style="flex:1;">
+    <div style="flex:1;" class="flex-col">
+      <div class="card purple" style="padding:16px; flex:1;">
+        <h3 style="font-size:16px;">架构要点</h3>
+        <ul>
+          <li>每个 L3 = 独立实例 (Bank A / RWA Issuer / Payment...)</li>
+          <li>Own Sequencer + Private DA + Policy + Auth RPC</li>
+          <li>Own Governance Keys + Upgrade Cadence</li>
+          <li>Mantle L2 = Settlement Hub (ZonePortal + Proof)</li>
+          <li>Cross-L3 Relay + Shared Liquidity Pools</li>
+          <li>SDK / Chain Templates 快速部署</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:16px;">
+        <h3 style="font-size:16px;">关键性能</h3>
+        <div class="flex-row" style="gap:32px;">
+          <div><div class="big-number purple" style="font-size:36px;">~1-2s</div><p class="text-xs text-muted">L3 Soft Confirm</p></div>
+          <div><div class="big-number purple" style="font-size:36px;">~1h</div><p class="text-xs text-muted">External Finality</p></div>
+          <div><div class="big-number purple" style="font-size:36px;">$60-600K</div><p class="text-xs text-muted">Per-Zone 年成本</p></div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;" class="flex-col">
+      <div class="card orange" style="padding:16px; flex:1;">
+        <h3 style="font-size:16px;">结构性约束 (诚实评估)</h3>
+        <ul>
+          <li><strong>最长外部最终性：</strong>三层结算 — L3→L2→L1</li>
+          <li><strong>Cross-L3 DVP 非原子：</strong>Phase 1 无法跨 L3 原子结算</li>
+          <li><strong>流动性碎片化：</strong>每个 L3 独立 → 二级市场分散</li>
+          <li><strong>三层调试复杂度：</strong>事故排查难度增加</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:16px;">
+        <p class="text-xs text-muted"><strong>投资：</strong>平台搭建 10-15 人 | 9-13 月 | L3 上线后企业承担运维成本</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 18: L3 适用场景 ==================== -->
+<div class="slide" id="s18">
+  <h2>L3: 什么时候选 / 什么时候不选</h2>
+
+  <div class="grid-2 mt-16" style="flex:1;">
+    <div class="card purple">
+      <h3>选 L3 当：</h3>
+      <ul>
+        <li>客户需要 per-tenant 策略隔离</li>
+        <li>客户要求运行自己的 Sequencer</li>
+        <li>银行内部账本 — 完全私有化运行</li>
+        <li>B2B Payment Domain — 独立合规域</li>
+        <li>Multi-Tenant Enterprise SaaS 模式</li>
+        <li>数据主权要求（Mantle L2 不接收私有 DA 明文；L3 operator 仍需被信任）</li>
+      </ul>
+    </div>
+    <div class="card red">
+      <h3>不选 L3 当：</h3>
+      <ul>
+        <li>需要 Cross-L3 原子结算 (DVP)</li>
+        <li>需要 sub-second 硬最终性</li>
+        <li>需要最大化二级市场流动性</li>
+        <li>xStocks 等需要主权结算能力</li>
+        <li>三层运维复杂度不可接受</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box mt-16">
+    <strong>L3 的核心价值：</strong>Mantle 变成 "企业链平台" — 收取 L3 部署费 + 结算手续费 + SDK 服务费。类似于 AWS 的 "你的基础设施，我的平台"。<br>
+    <strong>与 Tempo Zone 的对应：</strong>L3 = Tempo 的 Zone 概念在 EVM 生态中的实现。
+  </div>
+</div>
+
+<!-- ==================== SLIDE 19: Transition - Comparison ==================== -->
+<div class="slide transition-slide" id="s19">
+  <div class="section-label mb-24">HORIZONTAL COMPARISON</div>
+  <h1 style="color:var(--accent-light);">三路径水平对比</h1>
+  <p class="subtitle">同一把尺子衡量三条路径</p>
+</div>
+
+<!-- ==================== SLIDE 19B: What Not To Promise ==================== -->
+<div class="slide" id="s19b">
+  <h2>三条路径各自不能承诺什么</h2>
+  <div class="takeaway">决策安全的关键不是把路径讲得更好，而是把结构性限制讲清楚</div>
+
+  <table class="compact-table mt-16">
+    <thead>
+      <tr>
+        <th style="width:18%;">路径</th>
+        <th>Do NOT Promise</th>
+        <th>必须主动披露</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color:var(--green);"><strong>Sovereign L1</strong></td>
+        <td>不能承诺便宜、快速、继承 Ethereum economic security、立刻获得 Mantle liquidity</td>
+        <td>15-25 人、18-24 月、$8M-$18M+ all-in exposure；无锚定客户时不应 full build</td>
+      </tr>
+      <tr>
+        <td style="color:var(--accent-light);"><strong>Enterprise L2</strong></td>
+        <td>不能承诺完整主权、operator-blind privacy、deterministic hard settlement</td>
+        <td>企业是 Mantle-operated infrastructure 的 tenant；Sequencer 默认看明文；soft confirmation 不是法律结算</td>
+      </tr>
+      <tr>
+        <td style="color:var(--purple);"><strong>Enterprise L3</strong></td>
+        <td>不能承诺 sub-second external hard settlement、Phase 1 cross-zone atomic DVP、深二级市场流动性</td>
+        <td>外部 finality 受 L3→L2→L1 约束；L3 operator 在 Phase 1 看明文；ZonePortal 会暴露桥接 metadata</td>
+      </tr>
+      <tr>
+        <td style="color:var(--teal);"><strong>Paladin/MPL</strong></td>
+        <td>不能承诺直接解决 L2 Sequencer 可见性或 DA 主权问题</td>
+        <td>MPL 是 standalone privacy product evaluation；不是默认嵌入 Mantle L2 core path</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight-box mt-16">
+    <strong>销售纪律：</strong>把 finality、privacy、operator trust 用明确标签写进产品和合同，避免“体验上已完成”被误读为“法律上已结算”。
+  </div>
+</div>
+
+<!-- ==================== SLIDE 20: Module x Path Control Matrix ==================== -->
+<div class="slide" id="s20">
+  <h2>模块 x 路径控制权矩阵</h2>
+  <div class="takeaway">L1 在所有 8 个模块上拥有完全控制权；L2/L3 在核心模块上受限于 Rollup 约束</div>
+
+  <table style="margin-top:12px;">
+    <thead>
+      <tr>
+        <th style="width:25%;">Module</th>
+        <th style="width:25%;">Enterprise L1<br><span class="text-xs text-muted">Sovereign Chain</span></th>
+        <th style="width:25%;">Enterprise L2<br><span class="text-xs text-muted">Mantle Extension</span></th>
+        <th style="width:25%;">Enterprise L3<br><span class="text-xs text-muted">App Chain / Zone</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>1. Execution Layer</strong></td><td><span class="pill full">Full</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td></tr>
+      <tr><td><strong>2. Consensus & Finality</strong></td><td><span class="pill full">Full</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill inherited">Inherited</span></td></tr>
+      <tr><td><strong>3. Privacy Layer</strong></td><td><span class="pill full">Full</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td></tr>
+      <tr><td><strong>4. Compliance & Identity</strong></td><td><span class="pill full">Full</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td></tr>
+      <tr><td><strong>5. Access Control</strong></td><td><span class="pill full">Full</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td></tr>
+      <tr><td><strong>6. DA & Data Sovereignty</strong></td><td><span class="pill full">Full</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td></tr>
+      <tr><td><strong>7. Interoperability</strong></td><td><span class="pill full">Full</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill inherited">Inherited</span></td></tr>
+      <tr><td><strong>8. Operations & Business</strong></td><td><span class="pill full">Full</span></td><td><span class="pill partial">Partial</span></td><td><span class="pill partial">Partial</span></td></tr>
+    </tbody>
+  </table>
+  <div style="display:flex; gap:24px; margin-top:12px; font-size:12px;">
+    <div><span class="pill full" style="font-size:11px;">Full</span> 从创世块即有主权控制</div>
+    <div><span class="pill partial" style="font-size:11px;">Partial</span> 受 Rollup/Stack 兼容性约束</div>
+    <div><span class="pill inherited" style="font-size:11px;">Inherited</span> 依赖父层</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 21: Master Comparison Matrix ==================== -->
+<div class="slide" id="s21">
+  <h2>Master 对比矩阵</h2>
+  <div class="takeaway">不存在"无条件最优路径" — 选择取决于具体的企业需求和组织能力</div>
+
+  <table style="margin-top:12px; font-size:12px;">
+    <thead>
+      <tr>
+        <th>维度</th>
+        <th style="color:var(--green);">Enterprise L1</th>
+        <th style="color:var(--accent-light);">Enterprise L2</th>
+        <th style="color:var(--purple);">Enterprise L3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Hard Finality</strong></td><td style="color:var(--green);">~600ms-2s (BFT)</td><td>~15-30min (ZK)</td><td>~1h (ZK via L2)</td></tr>
+      <tr><td><strong>隐私深度</strong></td><td style="color:var(--green);">协议原生 (Zone 级)</td><td>应用层 + Validium</td><td>Per-L3 Sequencer 隔离</td></tr>
+      <tr><td><strong>EVM 兼容</strong></td><td>部分 (Precompile 修改)</td><td style="color:var(--green);">完全兼容</td><td style="color:var(--green);">完全兼容</td></tr>
+      <tr><td><strong>合规深度</strong></td><td style="color:var(--green);">执行层不可绕过</td><td>Sequencer 策略层</td><td>Per-L3 策略独立</td></tr>
+      <tr><td><strong>数据主权</strong></td><td style="color:var(--green);">完全自主</td><td style="color:var(--red);">Sequencer 可见</td><td>Per-L3 私有 DA</td></tr>
+      <tr><td><strong>Time-to-Market</strong></td><td style="color:var(--red);">18-24 月</td><td style="color:var(--green);">3-12 月</td><td>9-13 月</td></tr>
+      <tr><td><strong>团队规模</strong></td><td>15-25 人</td><td style="color:var(--green);">8-15 人</td><td>10-15 人</td></tr>
+      <tr><td><strong>成本口径</strong></td><td style="color:var(--red);">Full Build $8M-$18M+</td><td style="color:var(--green);">Phase 1 $400K-$600K</td><td>Phase 2 incremental $600K-$900K</td></tr>
+      <tr><td><strong>Ethereum 关系</strong></td><td>可选 Anchor</td><td style="color:var(--green);">原生结算</td><td>Via Mantle L2</td></tr>
+    </tbody>
+  </table>
+  <p class="note-line">注：L2/L3 数字为 WHI-396 的 0-12 月阶段预算口径；L1 数字为 full-build program exposure，不应直接与 MVP 阶段预算比较。</p>
+</div>
+
+<!-- ==================== SLIDE 22: Capability vs Time Chart ==================== -->
+<div class="slide" id="s22">
+  <h2>能力深度 vs 上市时间定位</h2>
+  <div class="takeaway">推荐路径轨迹：L2 快速入市 → L3 能力扩展 → L1 仅在满足条件时启动</div>
+
+  <div style="flex:1; display:flex; justify-content:center; align-items:center; position:relative;">
+    <div style="width:100%; max-width:860px; position:relative; padding: 40px;">
+      <!-- Axes -->
+      <div style="position:absolute; left:30px; bottom:30px; right:30px; height:2px; background:var(--text-dim);"></div>
+      <div style="position:absolute; left:30px; bottom:30px; width:2px; top:20px; background:var(--text-dim);"></div>
+      <!-- X labels -->
+      <div style="position:absolute; bottom:6px; left:30px; right:30px; display:flex; justify-content:space-between; font-size:11px; color:var(--text-dim);">
+        <span>3 月</span><span>6 月</span><span>12 月</span><span>18 月</span><span>24 月</span>
+      </div>
+      <div style="position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); font-size:13px; font-weight:600; color:var(--text-muted);">Time-to-Market →</div>
+      <!-- Y label -->
+      <div style="position:absolute; left:-10px; top:50%; transform:rotate(-90deg) translateX(50%); font-size:13px; font-weight:600; color:var(--text-muted);">Enterprise Capability Depth →</div>
+
+      <!-- L2 bubble -->
+      <div style="position:absolute; left:15%; bottom:25%; width:180px; height:120px; border:2px solid var(--accent); border-radius:50%; display:flex; flex-direction:column; justify-content:center; align-items:center; background:rgba(59,130,246,0.1);">
+        <span style="font-size:22px; font-weight:700; color:var(--accent-light);">L2</span>
+        <span style="font-size:11px; color:var(--accent-light);">3-12 月 | 8-15 人</span>
+      </div>
+      <!-- L3 bubble -->
+      <div style="position:absolute; left:42%; bottom:50%; width:160px; height:120px; border:2px solid var(--purple); border-radius:50%; display:flex; flex-direction:column; justify-content:center; align-items:center; background:rgba(168,85,247,0.1);">
+        <span style="font-size:22px; font-weight:700; color:var(--purple);">L3</span>
+        <span style="font-size:11px; color:var(--purple);">9-13 月 | 10-15 人</span>
+      </div>
+      <!-- L1 bubble -->
+      <div style="position:absolute; right:8%; top:8%; width:160px; height:100px; border:2px solid var(--green); border-radius:50%; display:flex; flex-direction:column; justify-content:center; align-items:center; background:rgba(34,197,94,0.1);">
+        <span style="font-size:22px; font-weight:700; color:var(--green);">L1</span>
+        <span style="font-size:11px; color:var(--green);">18-24 月 | 15-25 人</span>
+        <span style="font-size:10px; color:var(--text-dim);">$8M-$18M+</span>
+      </div>
+      <!-- Trajectory arrows -->
+      <div style="position:absolute; left:33%; bottom:38%; font-size:10px; color:var(--purple); font-weight:600;">推荐轨迹 →</div>
+      <!-- No-path annotation -->
+      <div style="position:absolute; left:5%; top:5%; padding:8px 12px; border:1px dashed var(--red); border-radius:6px; font-size:11px; color:var(--red); background:rgba(239,68,68,0.08);">不存在此象限<br>(深能力 + 快交付)</div>
+      <!-- Canton reference -->
+      <div style="position:absolute; right:5%; top:8%; font-size:10px; color:var(--text-dim); font-style:italic;">Canton (参考)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 23: Decision Tree ==================== -->
+<div class="slide" id="s23">
+  <h2>路径选择决策树</h2>
+  <div class="takeaway">从客户的硬需求出发，逐层排除，找到正确路径</div>
+
+  <div style="flex:1; display:flex; justify-content:center; align-items:flex-start; overflow:hidden; padding-top:12px;">
+    <div style="width:100%; max-width:900px;">
+      <!-- Q1 -->
+      <div style="text-align:center; margin-bottom:4px;">
+        <div style="display:inline-block; background:rgba(234,179,8,0.15); border:1px solid rgba(234,179,8,0.3); padding:12px 24px; border-radius:8px; transform:rotate(0deg);">
+          <strong>Q1:</strong> 需要 Sub-Second 硬最终性？
+        </div>
+      </div>
+      <div style="display:flex; justify-content:center; gap:200px; margin-bottom:4px;">
+        <div style="text-align:center;">
+          <div style="color:var(--green); font-weight:600; font-size:13px;">YES ↓</div>
+          <div style="padding:8px 16px; background:rgba(234,179,8,0.1); border:1px solid rgba(234,179,8,0.2); border-radius:6px; font-size:13px; margin:4px 0;">预算 >$10M + 18 月?</div>
+          <div style="display:flex; gap:40px; justify-content:center; margin-top:4px;">
+            <div><span style="color:var(--green); font-size:12px;">YES →</span> <span style="background:var(--green-dim); padding:4px 12px; border-radius:4px; font-size:12px; font-weight:600;">L1 Sovereign</span></div>
+            <div><span style="color:var(--red); font-size:12px;">NO →</span> <span style="background:rgba(59,130,246,0.3); padding:4px 12px; border-radius:4px; font-size:12px; font-weight:600; border:1px dashed var(--accent);">L2 Discovery</span></div>
+          </div>
+        </div>
+        <div style="text-align:center;">
+          <div style="color:var(--text-dim); font-weight:600; font-size:13px;">NO ↓</div>
+        </div>
+      </div>
+      <!-- Q2 -->
+      <div style="text-align:center; margin:4px 0;">
+        <div style="display:inline-block; background:rgba(234,179,8,0.15); border:1px solid rgba(234,179,8,0.3); padding:10px 20px; border-radius:8px;">
+          <strong>Q2:</strong> 数据主权？(Mantle L2 不接收私有 DA 明文)
+        </div>
+      </div>
+      <div style="display:flex; justify-content:center; gap:200px; margin-bottom:4px;">
+        <div style="text-align:center;">
+          <div style="color:var(--green); font-size:13px;">YES → 客户运营 Sequencer?</div>
+          <div style="margin-top:4px;"><span style="color:var(--green); font-size:12px;">YES →</span> <span style="background:rgba(168,85,247,0.3); padding:4px 12px; border-radius:4px; font-size:12px; font-weight:600;">L3 App Chain</span></div>
+        </div>
+        <div style="text-align:center;">
+          <div style="color:var(--text-dim); font-size:13px;">NO ↓</div>
+        </div>
+      </div>
+      <!-- Q3 -->
+      <div style="text-align:center; margin:4px 0;">
+        <div style="display:inline-block; background:rgba(234,179,8,0.15); border:1px solid rgba(234,179,8,0.3); padding:10px 20px; border-radius:8px;">
+          <strong>Q3:</strong> 不可绕过的协议级合规？
+        </div>
+      </div>
+      <div style="display:flex; justify-content:center; gap:200px; margin-bottom:4px;">
+        <div><span style="color:var(--green); font-size:12px;">YES →</span> L1 预算门 (同 Q1)</div>
+        <div style="color:var(--text-dim); font-size:13px;">NO ↓</div>
+      </div>
+      <!-- Q4 -->
+      <div style="text-align:center; margin:4px 0;">
+        <div style="display:inline-block; background:rgba(234,179,8,0.15); border:1px solid rgba(234,179,8,0.3); padding:10px 20px; border-radius:8px;">
+          <strong>Q4:</strong> Per-Tenant 策略隔离？
+        </div>
+      </div>
+      <div style="display:flex; justify-content:center; gap:200px; margin-bottom:4px;">
+        <div><span style="color:var(--green); font-size:12px;">YES →</span> <span style="background:rgba(168,85,247,0.3); padding:4px 12px; border-radius:4px; font-size:12px; font-weight:600;">L3 App Chain</span></div>
+        <div style="color:var(--text-dim); font-size:13px;">NO ↓</div>
+      </div>
+      <!-- Q5 -->
+      <div style="text-align:center; margin:4px 0;">
+        <div style="display:inline-block; background:rgba(234,179,8,0.15); border:1px solid rgba(234,179,8,0.3); padding:10px 20px; border-radius:8px;">
+          <strong>Q5:</strong> Speed vs Depth? | "Settled on Ethereum" 有价值?
+        </div>
+      </div>
+      <div style="display:flex; justify-content:center; gap:100px; margin-top:8px;">
+        <div><span style="font-size:12px;">速度优先 →</span> <span style="background:rgba(59,130,246,0.3); padding:4px 12px; border-radius:4px; font-size:12px; font-weight:600;">L2 Enterprise</span></div>
+        <div><span style="font-size:12px;">深度优先 + 不需 ETH 叙事 →</span> <span style="background:rgba(168,85,247,0.3); padding:4px 12px; border-radius:4px; font-size:12px; font-weight:600;">L3 App Chain</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 24: Scenario Matrix ==================== -->
+<div class="slide" id="s24">
+  <h2>业务场景 → 路径映射</h2>
+  <div class="takeaway">多数场景是条件性推荐：先问 finality、sovereignty、operator trust，再选路径</div>
+
+  <table style="margin-top:12px;">
+    <thead>
+      <tr>
+        <th style="width:28%;">业务场景</th>
+        <th style="width:24%; color:var(--green);">L1 Sovereign</th>
+        <th style="width:24%; color:var(--accent-light);">L2 Enterprise</th>
+        <th style="width:24%; color:var(--purple);">L3 App Chain</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>RWA Tokenization</strong></td><td><span class="pill partial">Possible</span></td><td><span class="pill full">Primary</span></td><td><span class="pill full">Scale</span></td></tr>
+      <tr><td><strong>xStocks / 合成股权</strong></td><td><span class="pill full">Best Fit</span></td><td><span class="pill partial">Conditional</span></td><td><span class="pill none">Not Fit</span></td></tr>
+      <tr><td><strong>跨境支付 (B2C)</strong></td><td><span class="pill full">Preferred</span></td><td><span class="pill partial">Acceptable</span></td><td><span class="pill partial">Conditional</span></td></tr>
+      <tr><td><strong>Enterprise DeFi</strong></td><td><span class="pill none">Not Fit</span></td><td><span class="pill full">Best Fit</span></td><td><span class="pill partial">Possible</span></td></tr>
+      <tr><td><strong>银行内部账本</strong></td><td><span class="pill partial">Possible</span></td><td><span class="pill none">Not Fit</span></td><td><span class="pill full">Best Fit</span></td></tr>
+      <tr><td><strong>B2B Payment Domain</strong></td><td><span class="pill partial">Possible</span></td><td><span class="pill partial">Possible</span></td><td><span class="pill full">Best Fit</span></td></tr>
+      <tr><td><strong>Securities DVP</strong></td><td><span class="pill full">High-Value</span></td><td><span class="pill none">Not Fit</span></td><td><span class="pill partial">Single-Zone</span></td></tr>
+      <tr><td><strong>Multi-Tenant SaaS</strong></td><td><span class="pill none">Not Fit</span></td><td><span class="pill partial">Possible</span></td><td><span class="pill full">Best Fit</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== SLIDE 25: Transition - Roadmap ==================== -->
+<div class="slide transition-slide" id="s25">
+  <div class="section-label mb-24">ROADMAP & DECISION GATES</div>
+  <h1 style="color:var(--accent-light);">分阶段路线图与决策门</h1>
+  <p class="subtitle">12 个月执行计划 | 5 个决策门 | $2.5M-$3.9M 总预算</p>
+</div>
+
+<!-- ==================== SLIDE 25B: Roadmap Source of Truth ==================== -->
+<div class="slide" id="s25b">
+  <h2>路线图口径：M6 将 M5 战略转成执行门</h2>
+  <div class="takeaway">M5 给出方向；WHI-396 把它运营化为 0-3 / 3-6 / 6-12 月阶段与 G1-G5 gates</div>
+
+  <div class="grid-3 mt-16">
+    <div class="card blue">
+      <h3>M5 Final Report</h3>
+      <ul>
+        <li>最终建议：L2 core + L3 satellites</li>
+        <li>L1 = 有门控的战略选项</li>
+        <li>短期路线图按 0-4 / 4-8 / 8-12 月描述</li>
+        <li>重点是战略方向和能力积累</li>
+      </ul>
+    </div>
+    <div class="card purple">
+      <h3>WHI-396 Operationalization</h3>
+      <ul>
+        <li>Phase 1: M0-M3 L2 MVP</li>
+        <li>Phase 2: M3-M6 L3 Framework</li>
+        <li>Phase 3: M6-M12 Productization</li>
+        <li>G1-G5 = 投资门，不是自动承诺</li>
+      </ul>
+    </div>
+    <div class="card green">
+      <h3>Deck 使用规则</h3>
+      <ul>
+        <li>阶段预算来自 WHI-396 planning envelope</li>
+        <li>Gate 阈值是 M6 synthesis，需用证据关闭</li>
+        <li>Paladin/MPL 是新增 portfolio track，不覆盖 M5 主推荐</li>
+        <li>L3 full-scale investment 仍由 G2/G3 决定</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 26: Phased Roadmap ==================== -->
+<div class="slide" id="s26">
+  <h2>分阶段路线图 (0-12 月)</h2>
+  <div class="takeaway">总预算 $2.5M-$3.9M（不含 L1 Full Build）| 三条平行轨道同时推进</div>
+
+  <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
+    <!-- Timeline header -->
+    <div style="display:flex; padding:0 20px; margin-bottom:4px;">
+      <div style="width:180px;"></div>
+      <div style="flex:1; display:flex; justify-content:space-between; font-size:12px; color:var(--text-dim); font-weight:600;">
+        <span>M0</span><span>M3</span><span>M6</span><span>M9</span><span>M12</span>
+      </div>
+    </div>
+    <!-- Phase 1 -->
+    <div style="display:flex; align-items:center;">
+      <div style="width:180px; font-size:13px; font-weight:600; color:var(--accent-light);">Phase 1: L2 MVP</div>
+      <div style="flex:1; position:relative; height:48px;">
+        <div style="position:absolute; left:0; width:25%; height:100%; background:rgba(59,130,246,0.2); border:1px solid var(--accent); border-radius:8px; display:flex; align-items:center; padding:0 12px; font-size:11px;">
+          Auth RPC + Sequencer Policy + Bridge | 8-10 人 | $400-600K
+        </div>
+      </div>
+    </div>
+    <!-- Phase 2 -->
+    <div style="display:flex; align-items:center;">
+      <div style="width:180px; font-size:13px; font-weight:600; color:var(--purple);">Phase 2: L3 Platform</div>
+      <div style="flex:1; position:relative; height:48px;">
+        <div style="position:absolute; left:25%; width:25%; height:100%; background:rgba(168,85,247,0.15); border:1px solid var(--purple); border-radius:8px; display:flex; align-items:center; padding:0 12px; font-size:11px;">
+          L3 Template + ZonePortal + Private DA | 12-15 人 | $600-900K
+        </div>
+      </div>
+    </div>
+    <!-- Phase 3 -->
+    <div style="display:flex; align-items:center;">
+      <div style="width:180px; font-size:13px; font-weight:600; color:var(--teal);">Phase 3: Productization</div>
+      <div style="flex:1; position:relative; height:48px;">
+        <div style="position:absolute; left:50%; width:50%; height:100%; background:rgba(20,184,166,0.12); border:1px solid var(--teal); border-radius:8px; display:flex; align-items:center; padding:0 12px; font-size:11px;">
+          Compliance Framework + ZKP + ERC-3643 + SDK | 14-18 人 | $1.2-1.8M
+        </div>
+      </div>
+    </div>
+    <!-- Divider -->
+    <div class="divider" style="margin:4px 0;"></div>
+    <div style="font-size:11px; color:var(--text-dim); font-weight:600; margin-left:0;">PARALLEL TRACKS</div>
+    <!-- L1 PoC -->
+    <div style="display:flex; align-items:center;">
+      <div style="width:180px; font-size:13px; font-weight:600; color:var(--orange);">L1 PoC (Benchmark)</div>
+      <div style="flex:1; position:relative; height:40px;">
+        <div style="position:absolute; left:0; width:50%; height:100%; background:rgba(249,115,22,0.12); border:1px solid var(--orange); border-radius:8px; display:flex; align-items:center; padding:0 12px; font-size:11px;">
+          Reth+BFT Testnet + Payment Lane | 2-3 人 | $200-400K
+        </div>
+      </div>
+    </div>
+    <!-- Paladin -->
+    <div style="display:flex; align-items:center;">
+      <div style="width:180px; font-size:13px; font-weight:600; color:var(--purple-dim);">Paladin Eval</div>
+      <div style="flex:1; position:relative; height:40px;">
+        <div style="position:absolute; left:0; width:50%; height:100%; background:rgba(124,58,237,0.1); border:1px solid var(--purple-dim); border-radius:8px; display:flex; align-items:center; padding:0 12px; font-size:11px;">
+          MPL Scoping + MVP Assessment | 1-2 人 | $100-200K
+        </div>
+      </div>
+    </div>
+    <!-- Decision Gates -->
+    <div style="display:flex; align-items:center; margin-top:8px;">
+      <div style="width:180px; font-size:13px; font-weight:600; color:var(--yellow);">Decision Gates</div>
+      <div style="flex:1; position:relative; height:32px; display:flex; justify-content:space-between; padding-right:20px;">
+        <div style="position:absolute; left:25%; transform:translateX(-50%);">
+          <span style="display:inline-block; width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:16px solid var(--yellow); opacity:0.8;"></span>
+          <div style="font-size:10px; color:var(--yellow); text-align:center;">G2</div>
+        </div>
+        <div style="position:absolute; left:50%; transform:translateX(-50%);">
+          <span style="display:inline-block; width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:16px solid var(--orange); opacity:0.8;"></span>
+          <div style="font-size:10px; color:var(--orange); text-align:center;">G4/G5</div>
+        </div>
+        <div style="position:absolute; left:75%; transform:translateX(-50%);">
+          <span style="display:inline-block; width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:16px solid var(--green); opacity:0.8;"></span>
+          <div style="font-size:10px; color:var(--green); text-align:center;">G3</div>
+        </div>
+        <div style="position:absolute; left:100%; transform:translateX(-50%);">
+          <span style="display:inline-block; width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:16px solid var(--red); opacity:0.8;"></span>
+          <div style="font-size:10px; color:var(--red); text-align:center;">G1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 27: Decision Gates ==================== -->
+<div class="slide" id="s27">
+  <h2>5 个决策门 (Decision Gates)</h2>
+  <div class="takeaway">每个决策门有明确的 Go/No-Go 标准 — 不通过就不投</div>
+
+  <div class="gate-grid">
+    <div class="card blue gate-card">
+      <div class="gate-head">
+        <span class="badge blue">G2 | M3-M6</span>
+        <h3 style="margin:0; font-size:16px;">付费需求验证</h3>
+      </div>
+      <ul>
+        <li>≥1 paying pilot / LOI + ≥2 design partners</li>
+        <li>Legal 接受 operator trust model</li>
+        <li>Policy engine red-team 无 critical bypass</li>
+        <li>L1→L2 forced inclusion 过滤可审计</li>
+        <li>YES → 启动 Phase 2 (L3)</li>
+        <li>NO → 重新评估企业战略</li>
+      </ul>
+    </div>
+    <div class="card green gate-card">
+      <div class="gate-head">
+        <span class="badge green">G3 | M9</span>
+        <h3 style="margin:0; font-size:16px;">L3 可行性验证</h3>
+      </div>
+      <ul>
+        <li>至少 2 个 L3 Pilot 实例运行</li>
+        <li>不同 compliance/privacy 配置同时运行</li>
+        <li>YES → 继续/加速 Phase 3 Productization</li>
+        <li>NO → 评估更深定制 (可能指向 L1)</li>
+      </ul>
+    </div>
+    <div class="card orange gate-card">
+      <div class="gate-head">
+        <span class="badge orange">G4 | M6</span>
+        <h3 style="margin:0; font-size:16px;">L1 PoC 验证</h3>
+      </div>
+      <ul>
+        <li>Reth+BFT 测试网通过 Benchmark</li>
+        <li>Payment Lane >= 10K TPS</li>
+        <li>Privacy deposit audit 通过</li>
+        <li>Policy bypass red-team 无 critical</li>
+        <li>YES → 进入 G1 锚定客户评估</li>
+        <li>NO → L1 保持理论状态</li>
+      </ul>
+    </div>
+    <div class="card red gate-card">
+      <div class="gate-head">
+        <span class="badge red">G1 | M12</span>
+        <h3 style="margin:0; font-size:16px;">L1 全面建设决策</h3>
+      </div>
+      <ul>
+        <li>锚定客户需要主权结算?</li>
+        <li>PoC 通过 G4?</li>
+        <li>>$10M 资金 + 可招募核心团队?</li>
+        <li>全部 YES → 才进入 full-build funding review</li>
+        <li><strong>任一缺失 → L1 保持 PoC / R&D</strong></li>
+      </ul>
+    </div>
+    <div class="card purple gate-card" style="grid-column: 1 / -1;">
+      <div class="gate-head">
+        <span class="badge purple">G5 | M6</span>
+        <h3 style="margin:0; font-size:16px;">Paladin MPL 价值验证</h3>
+      </div>
+      <div style="display:flex; gap:18px;">
+        <div style="flex:1;"><ul><li>MPL 在隐私转账和 KYC Proof 上提供独立价值?</li><li>YES → 追求 Paladin 合作，资助 MPL 到 V1 (月 14)</li></ul></div>
+        <div style="flex:1;"><ul><li>NO → 搁置 Paladin；使用 L2/L3 原生隐私能力</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 28: What Leadership Decides Today ==================== -->
+<div class="slide" id="s27b">
+  <h2>前 90 天执行计划：产出证据，不产出幻觉</h2>
+  <div class="takeaway">Phase 1 的价值不是“上线一条链”，而是验证买家、信任模型、合规责任和最小可交付架构</div>
+
+  <table class="compact-table mt-16">
+    <thead>
+      <tr>
+        <th style="width:18%;">时间</th>
+        <th style="width:24%;">工作流</th>
+        <th>必须产出的证据</th>
+        <th style="width:24%;">失败时动作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>D0-D15</td><td>客户切入点选择</td><td>选择 2 个入口：RWA/托管式 L2 + 租户隔离 L3</td><td>不进入泛化开发</td></tr>
+      <tr><td>D0-D30</td><td>Operator / legal 定位</td><td>Mantle 是 regulated operator 还是 technology provider 的初步法律意见</td><td>无法承担 operator role → 提前转向 L3/self-operated</td></tr>
+      <tr><td>D15-D45</td><td>L3 foundation brief</td><td>首个 template、ZonePortal API、private DA 假设、finality labels</td><td>若租户需求不成立，暂缓 L3 full build</td></tr>
+      <tr><td>D30-D75</td><td>L2 MVP + L1 PoC</td><td>Auth RPC、policy engine、bridge filter；Reth/BFT benchmark 计划</td><td>若 forced inclusion 不能过滤，停止宣称 enterprise permissioning</td></tr>
+      <tr><td>D75-D90</td><td>G2 checkpoint</td><td>≥2 design partners、≥1 paid/LOI signal、red-team / legal 初评</td><td>无 qualified demand → 暂停 broad platform expansion</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="slide" id="s27c">
+  <h2>12-24 月不是自动扩张，而是按信号分流</h2>
+  <div class="takeaway">12 个月后，领导层应做 portfolio review：加倍投 L2、加速 L3、触发 L1，或停止企业平台扩张</div>
+
+  <div class="grid-2 mt-16">
+    <div class="card blue">
+      <h3>继续 / 扩张信号</h3>
+      <ul>
+        <li><strong>L2 scale:</strong> ≥3 可信企业客户接受 Mantle-operated sequencing 并为 production pilot 付费</li>
+        <li><strong>L3 platform:</strong> 客户接受 Mantle settlement，但要求 dedicated environment、自有 sequencer / private DA</li>
+        <li><strong>MPL product:</strong> ≥2 institutional evaluation partners + 正向商业 case</li>
+        <li><strong>L1 trigger:</strong> 客户需要自有 validators + sub-second hard finality，且 G4/资金/人才同时通过</li>
+      </ul>
+    </div>
+    <div class="card red">
+      <h3>暂停 / 转向信号</h3>
+      <ul>
+        <li>Pilots 仍是 unpaid innovation-lab experiments</li>
+        <li>客户拒绝 operator trust、sequencer visibility 或 delayed hard finality</li>
+        <li>每个 L3 都变成 bespoke engineering project，模板无法复用</li>
+        <li>Legal 判断 Mantle 作为 sequencing/compliance operator 暴露不可接受</li>
+        <li>无法识别付费细分市场或 repeatable product</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="s27d">
+  <h2>长期组合愿景：企业结算平台，而不是单一路径押注</h2>
+  <div class="takeaway">L2、L3、L1 对应三种公司形态；Composite strategy 保留战略可选性，同时避免 18 个月零收入窗口</div>
+
+  <div class="grid-3 mt-16">
+    <div class="card blue">
+      <h3>Enterprise L2</h3>
+      <ul>
+        <li>受监管的 Mantle/Ethereum access layer</li>
+        <li>服务 RWA、代币化基金、Enterprise DeFi</li>
+        <li>收入：platform fee、compliance tooling、private DA、audit access</li>
+      </ul>
+    </div>
+    <div class="card purple">
+      <h3>Enterprise L3</h3>
+      <ul>
+        <li>客户专属链环境和 SaaS 平台</li>
+        <li>服务银行账本、B2B payment domain、per-tenant compliance</li>
+        <li>收入：managed L3、SDK、ZonePortal、proof/DA coordination</li>
+      </ul>
+    </div>
+    <div class="card green">
+      <h3>Sovereign L1</h3>
+      <ul>
+        <li>主权金融基础设施</li>
+        <li>服务金融联盟、支付网络、确定性 DVP</li>
+        <li>收入：consortium infrastructure、SLA、enterprise SDK、compliance tooling</li>
+      </ul>
+    </div>
+  </div>
+  <div class="highlight-box mt-16">
+    <strong>战略问题：</strong>Mantle 是只做 enterprise rollup provider，还是成为更广义的 enterprise settlement platform？本 deck 建议先用 L2/L3 验证答案，再用客户证据触发 L1。
+  </div>
+</div>
+
+<div class="slide" id="s27e">
+  <h2>最大风险与缓解措施</h2>
+  <div class="takeaway">最危险的失败不是技术失败，而是用错误路径验证错误客户，或在无需求时建设完整基础设施</div>
+
+  <table class="compact-table mt-16">
+    <thead>
+      <tr>
+        <th style="width:22%;">风险</th>
+        <th>表现</th>
+        <th>缓解措施</th>
+        <th style="width:18%;">Owner</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>L2-first 验证低价值客户</strong></td><td>最高价值机构第一天就拒绝 operator trust / delayed finality</td><td>并行 L1 discovery + G1/G4；客户访谈必须覆盖主权结算买家</td><td>CEO / Strategy</td></tr>
+      <tr><td><strong>合规责任不可承受</strong></td><td>Mantle 被视为 regulated sequencing / compliance operator</td><td>D0-D30 明确 legal posture；必要时转 L3 self-operated / L1 consortium</td><td>Legal</td></tr>
+      <tr><td><strong>L3 模板无法复用</strong></td><td>每个客户都是定制链项目，无法 SaaS 化</td><td>G3 要求 2 个不同配置 L3 同时运行且 ops 可 provisioning</td><td>CTO / Platform</td></tr>
+      <tr><td><strong>Finality 被误卖</strong></td><td>业务系统把 soft confirmation 当法律结算</td><td>Typed finality API + 合同定义 permitted actions per state</td><td>Product / Legal</td></tr>
+      <tr><td><strong>L1 full build 过早</strong></td><td>无 anchor demand 即投入 18-24 月、$8M-$18M+</td><td>全部 L1 条件同时通过才 funding review</td><td>CEO / CFO / CTO</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="slide" id="s28">
+  <h2>领导层今天需要做的决策</h2>
+  <div class="takeaway">不是选 L1/L2/L3 — 而是批准分阶段策略并启动 Phase 1 + 平行 PoC</div>
+
+  <div class="grid-2 mt-16" style="flex:1;">
+    <div>
+      <div class="card green mb-16" style="padding:20px;">
+        <h3>需要立即批准</h3>
+        <ul>
+          <li><strong>1. 启动 Phase 1:</strong> Enterprise L2 MVP (8-10 人, $400-600K)</li>
+          <li><strong>2. 启动 L1 PoC:</strong> Reth+BFT Benchmark (2-3 人, $200-400K)</li>
+          <li><strong>3. 启动 Paladin Eval:</strong> MPL Standalone (1-2 人, $100-200K)</li>
+          <li><strong>4. 设定 G2 决策门:</strong> M3-M6 验证付费需求 + legal/security gates</li>
+          <li><strong>5. 锁定 D0-D30 定义:</strong> target entry point + operator/privacy/finality commitments</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:20px;">
+        <h3>不需要今天决定</h3>
+        <ul>
+          <li>L1 Full Build (G1 决策门在 M12)</li>
+          <li>L3 平台全量投资 (G2/G3 决策门后；但 Phase 1 要做 L3 foundation)</li>
+          <li>Paladin 长期合作 (G5 决策门在 M6)</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card blue" style="padding:20px;">
+        <h3>5 个核心结论</h3>
+        <ol style="list-style:none; padding:0;">
+          <li style="padding:8px 0; border-bottom:1px solid var(--border); color:var(--text-muted);">
+            <strong style="color:var(--text);">1.</strong> 企业级区块链 ≠ 公链 + 白名单 — 需要架构级重设计
+          </li>
+          <li style="padding:8px 0; border-bottom:1px solid var(--border); color:var(--text-muted);">
+            <strong style="color:var(--text);">2.</strong> 三条路径不是成熟度阶梯 — 它们交付不同的企业保证
+          </li>
+          <li style="padding:8px 0; border-bottom:1px solid var(--border); color:var(--text-muted);">
+            <strong style="color:var(--text);">3.</strong> L2 先行 + L3 产品化 是风险最低的入市策略
+          </li>
+          <li style="padding:8px 0; border-bottom:1px solid var(--border); color:var(--text-muted);">
+            <strong style="color:var(--text);">4.</strong> L1 是有条件的战略期权 — 不是默认路径
+          </li>
+          <li style="padding:8px 0; color:var(--text-muted);">
+            <strong style="color:var(--text);">5.</strong> 决策门机制确保每一步投资都有验证
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 29: Transition - Appendix ==================== -->
+<div class="slide transition-slide" id="s29">
+  <div class="section-label mb-24">APPENDIX</div>
+  <h1 style="color:var(--text-dim);">附录</h1>
+  <p class="subtitle">术语表 | 来源索引 | 架构细节 | 决策模型 | 风险口径</p>
+</div>
+
+<!-- ==================== SLIDE 30: Terminology ==================== -->
+<div class="slide" id="s30">
+  <h2>术语表</h2>
+
+  <div class="grid-2 mt-16" style="flex:1; overflow:hidden;">
+    <table>
+      <thead><tr><th>术语</th><th>定义</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hard Finality</strong></td><td>不可逆转的最终确认 — BFT 证书确认后交易不可回滚</td></tr>
+        <tr><td><strong>Soft Confirmation</strong></td><td>Sequencer 确认 — 快但可被 L1 覆盖</td></tr>
+        <tr><td><strong>DVP</strong></td><td>Delivery vs Payment — 证券交易的原子结算</td></tr>
+        <tr><td><strong>Validium</strong></td><td>数据存链下 + ZK 证明到 L1 的模式</td></tr>
+        <tr><td><strong>BFT</strong></td><td>Byzantine Fault Tolerance — 拜占庭容错共识</td></tr>
+        <tr><td><strong>DA</strong></td><td>Data Availability — 数据可用性层</td></tr>
+        <tr><td><strong>RWA</strong></td><td>Real World Assets — 现实世界资产代币化</td></tr>
+        <tr><td><strong>KYC/KYB</strong></td><td>Know Your Customer / Business — 客户/企业身份验证</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th>术语</th><th>定义</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ERC-3643</strong></td><td>Security Token 标准 — 带 Identity Registry 的代币</td></tr>
+        <tr><td><strong>Travel Rule</strong></td><td>FATF 要求的跨机构交易信息共享</td></tr>
+        <tr><td><strong>MIP-20/21</strong></td><td>Mantle 治理提案 — Token 标准和升级机制</td></tr>
+        <tr><td><strong>HSM</strong></td><td>Hardware Security Module — 硬件密钥管理</td></tr>
+        <tr><td><strong>MPL</strong></td><td>Mantle Privacy Layer — Paladin 的隐私中间件</td></tr>
+        <tr><td><strong>OP Stack</strong></td><td>Optimism 的模块化 Rollup 框架</td></tr>
+        <tr><td><strong>Reth SDK</strong></td><td>Rust Ethereum 客户端的开发框架</td></tr>
+        <tr><td><strong>ZonePortal</strong></td><td>L3 到 L2 的桥接合约</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 31: Sources ==================== -->
+<div class="slide" id="s31">
+  <h2>研究来源索引</h2>
+
+  <div class="grid-2 mt-16" style="flex:1; overflow:hidden;">
+    <div class="card" style="padding:20px;">
+      <h3>M1-M4 深度研究</h3>
+      <ul>
+        <li>WHI-334~336: Canton 架构、代码、共识分析</li>
+        <li>WHI-337~338: Prividium ZK 栈、隐私、合规研究</li>
+        <li>WHI-339~340: Tempo/Zones 架构、隐私 Zone 研究</li>
+        <li>WHI-341: Mantle v2 Baseline 分析</li>
+        <li>WHI-342: 行业调研</li>
+        <li>WHI-343~368: 横向比较、Gap Analysis、架构蓝图</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:20px;">
+      <h3>M5-M6 综合分析</h3>
+      <ul>
+        <li>WHI-386: 企业级区块链设计概览</li>
+        <li>WHI-390: 企业级区块链解决方案报告</li>
+        <li>WHI-391: 执行叙事框架</li>
+        <li>WHI-392: 参考项目综述</li>
+        <li>WHI-393: 企业级区块链核心模块</li>
+        <li>WHI-394: 三种 Layer 方案</li>
+        <li>WHI-395: 决策矩阵</li>
+        <li>WHI-396: 推荐方案与路线图</li>
+        <li>WHI-382: Paladin Final Recommendation</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="s31b">
+  <h2>附录: Finality Labels 与允许业务动作</h2>
+  <div class="takeaway">产品不能只显示“已确认”；必须告诉应用和客户这个状态可承载什么业务动作</div>
+  <table class="compact-table mt-16">
+    <thead>
+      <tr>
+        <th>Finality Label</th>
+        <th>L2 / L3 含义</th>
+        <th>可允许动作</th>
+        <th>不可允许动作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>SOFT_CONFIRMED</strong></td><td>Sequencer / L3 local confirmation</td><td>UX feedback、内部预留、低额操作</td><td>释放法币、证券所有权转移、高额 collateral release</td></tr>
+      <tr><td><strong>POLICY_ACCEPTED</strong></td><td>合规策略和身份检查通过</td><td>审计日志、订单进入执行</td><td>外部结算声明</td></tr>
+      <tr><td><strong>PROOF_SUBMITTED</strong></td><td>ZK / commitment 已提交到父层</td><td>中等风险业务确认、对账</td><td>不可逆法律结算声明</td></tr>
+      <tr><td><strong>L1_SETTLED</strong></td><td>Ethereum 或 L1 anchor 接受 proof / state root</td><td>跨域提款、外部对手方结算</td><td>仍需处理 fraud/fallback 模式例外</td></tr>
+      <tr><td><strong>BFT_FINAL</strong></td><td>L1 BFT certificate 达成 hard finality</td><td>支付终端、DVP、实时 treasury</td><td>不适用于 L2/L3 soft confirmation</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="slide" id="s31c">
+  <h2>附录: 三种战略权重模型</h2>
+  <div class="takeaway">“最优路径”取决于领导层愿意优化哪个目标函数</div>
+  <table class="compact-table mt-16">
+    <thead>
+      <tr>
+        <th>模型</th>
+        <th>权重逻辑</th>
+        <th>获胜路径</th>
+        <th>适用情境</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Fast Enterprise Revenue</strong></td><td>Time-to-market 25%, Cost 20%, Ecosystem 20%, Compliance MVP 15%</td><td style="color:var(--accent-light);">Enterprise L2</td><td>需要 3-6 月内验证需求和客户付费</td></tr>
+      <tr><td><strong>Institutional Settlement</strong></td><td>Hard finality 25%, Autonomy 25%, Data sovereignty 15%, Protocol compliance 15%</td><td style="color:var(--green);">Sovereign L1</td><td>支付网络、证券 DVP、金融联盟主权结算</td></tr>
+      <tr><td><strong>Enterprise Platform Scale</strong></td><td>Tenant isolation 25%, Business scalability 20%, Compliance config 20%</td><td style="color:var(--purple);">Enterprise L3</td><td>一企业一链、银行账本、B2B payment domain</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box mt-16">
+    <strong>Composite strategy 的理由：</strong>当前无法确定市场权重，因此先用 L2/L3 收集付费信号，同时用 L1 PoC 保留主权路径。
+  </div>
+</div>
+
+<div class="slide" id="s31d">
+  <h2>附录: 成本与预算口径</h2>
+  <div class="takeaway">阶段预算、年度路径成本、L1 full-build program exposure 不能混在同一口径下比较</div>
+  <table class="compact-table mt-16">
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>时间/团队</th>
+        <th>预算口径</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Phase 1: Enterprise L2 MVP</td><td>0-3 月；8-10 人</td><td>$400K-$600K</td><td>验证需求、policy engine、bridge filter、auth RPC</td></tr>
+      <tr><td>Phase 2: L3 Framework</td><td>3-6 月；12-15 人</td><td>$600K-$900K incremental</td><td>L3 template、ZonePortal、private DA、deployment automation</td></tr>
+      <tr><td>Phase 3: Productization</td><td>6-12 月；14-18 人</td><td>$1.2M-$1.8M incremental</td><td>Compliance audit、selective disclosure、SDK、ERC-3643、Travel Rule</td></tr>
+      <tr><td>L1 PoC</td><td>0-6 月；2-3 人</td><td>$200K-$400K</td><td>Reth+BFT benchmark、Payment Lane、privacy deposit prototype</td></tr>
+      <tr><td>Paladin/MPL Eval</td><td>0-6 月；1-2 人</td><td>$100K-$200K</td><td>Standalone MPL scoping and product value validation</td></tr>
+      <tr><td>L1 Full Build</td><td>18-24 月；15-25 人</td><td>$8M-$18M+ total exposure</td><td>只有 G1/G4/资金/人才全过才进入 funding review</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="slide" id="s31e">
+  <h2>附录: Paladin/MPL G5 评估标准</h2>
+  <div class="takeaway">G5 的问题不是“是否把 Paladin 塞进 L2”，而是 MPL 是否值得成为独立 privacy product / partnership</div>
+  <table class="compact-table mt-16">
+    <thead>
+      <tr>
+        <th>Criterion</th>
+        <th>Threshold</th>
+        <th>YES Outcome</th>
+        <th>NO Outcome</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Customer Demand</td><td>≥1 enterprise customer 明确需要 confidential transfer / selective disclosure</td><td rowspan="5">Pursue Paladin partnership；fund MPL to V1；设计 L2↔MPL bridge / proof path</td><td rowspan="5">Table Paladin；用 L2/L3 private DA、selective disclosure 和 Validium routing 覆盖近期需求</td></tr>
+      <tr><td>Product-Market Fit</td><td>6 个月内 ≥2 institutional evaluation partners</td></tr>
+      <tr><td>Business Case</td><td>121-247 person-days customization + ops 成本有收入/战略价值支撑</td></tr>
+      <tr><td>Technical Viability</td><td>Paladin component reuse ≥85%</td></tr>
+      <tr><td>Bridge Feasibility</td><td>L2↔MPL bridge 不引入不可接受安全风险</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="slide" id="s31f">
+  <h2>附录: L1 Full Build 触发条件</h2>
+  <div class="takeaway">L1 不是“满足任一触发条件就启动”；必须同时满足客户、技术、资金和人才四个门</div>
+  <table class="compact-table mt-16">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Condition</th>
+        <th>Evidence Required</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Anchor customer commitment</td><td>金融联盟、支付网络或证券场所签署 LOI / co-funding / regulatory mandate，明确要求 sovereign settlement</td></tr>
+      <tr><td>2</td><td>PoC passes technical gates</td><td>7+ validators 下 BFT latency ≤2s；Payment Lane ≥10K TPS；privacy deposit audit 通过；policy bypass red-team 无 critical</td></tr>
+      <tr><td>3</td><td>Funding secured</td><td>>$10M program envelope，包含 ≥$5M engineering + audit / infra / bounty / integration reserves</td></tr>
+      <tr><td>4</td><td>Talent acquisition plan</td><td>consensus、cryptography、security、SRE 核心团队 3 个月内可招募</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-box mt-16">
+    <strong>Gate coupling:</strong> 有 anchor client 但 PoC 未过，只能加速 benchmark 和商业谈判；PoC 过但无 anchor demand，仍然只是 validated R&D。
+  </div>
+</div>
+
+<div class="slide" id="s31g">
+  <h2>附录: 主要未决问题清单</h2>
+  <div class="takeaway">这些问题不阻止 Phase 1，但必须进入 30/90/180 天治理节奏</div>
+  <div class="grid-2 mt-16">
+    <div class="card orange">
+      <h3>30 天内</h3>
+      <ul>
+        <li>目标入口客户：RWA / custodian / payment / bank consortium / Enterprise DeFi</li>
+        <li>Mantle operator liability 和监管身份</li>
+        <li>第一阶段 privacy promise：public observer only vs operator privacy roadmap</li>
+        <li>Finality labels 与 permitted business actions</li>
+      </ul>
+    </div>
+    <div class="card purple">
+      <h3>90-180 天内</h3>
+      <ul>
+        <li>G2 付费需求、legal acceptance、forced inclusion filter 是否成立</li>
+        <li>L3 是否可模板化，不变成定制交付业务</li>
+        <li>L1 PoC 是否证明 BFT/Payment Lane/security gates</li>
+        <li>MPL 是否有独立 partner demand 和正向 business case</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 32: Architecture Detail - L1 (Formal SVG: WHI-394) ==================== -->
+<div class="slide" id="s32">
+  <h2>附录: Enterprise L1 架构详图</h2>
+  <div class="svg-container" style="background:white; border-radius:12px; padding:16px;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 820" width="960" height="820">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="l1-arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1e3a5f"/>
+    </marker>
+    <filter id="l1-shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="960" height="820" fill="#ffffff"/>
+  <text x="480" y="32" text-anchor="middle" font-size="18" font-weight="600" fill="#1e3a5f">Enterprise L1 High-Level Architecture</text>
+  <text x="480" y="50" text-anchor="middle" font-size="12" fill="#6b7280">Self-Built Sovereign Chain — Permissioned BFT + Multi-Zone</text>
+  <rect x="40" y="65" width="880" height="55" rx="8" fill="#e8eef6" stroke="#1e3a5f" stroke-width="1" filter="url(#l1-shadow)"/>
+  <text x="50" y="82" font-size="11" font-weight="600" fill="#1e3a5f">ENTERPRISE APPLICATIONS</text>
+  <rect x="140" y="76" width="140" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="210" y="97" text-anchor="middle" font-size="13" fill="#1e3a5f">RWA</text>
+  <rect x="330" y="76" width="140" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="400" y="97" text-anchor="middle" font-size="13" fill="#1e3a5f">xStocks</text>
+  <rect x="520" y="76" width="140" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="590" y="97" text-anchor="middle" font-size="13" fill="#1e3a5f">Payment</text>
+  <rect x="710" y="76" width="140" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="780" y="97" text-anchor="middle" font-size="13" fill="#1e3a5f">Treasury</text>
+  <rect x="40" y="135" width="880" height="55" rx="8" fill="#dce6f2" stroke="#1e3a5f" stroke-width="1" filter="url(#l1-shadow)"/>
+  <text x="50" y="152" font-size="11" font-weight="600" fill="#1e3a5f">BUSINESS COMPONENTS</text>
+  <rect x="140" y="146" width="140" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="210" y="167" text-anchor="middle" font-size="12" fill="#1e3a5f">MIP-20/21</text>
+  <rect x="330" y="146" width="140" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="400" y="167" text-anchor="middle" font-size="12" fill="#1e3a5f">DVP Module</text>
+  <rect x="520" y="146" width="140" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="590" y="167" text-anchor="middle" font-size="12" fill="#1e3a5f">Payment Lane</text>
+  <rect x="710" y="146" width="140" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="780" y="167" text-anchor="middle" font-size="12" fill="#1e3a5f">Travel Rule</text>
+  <rect x="40" y="205" width="880" height="120" rx="8" fill="#cdd8ea" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="6,3" filter="url(#l1-shadow)"/>
+  <text x="50" y="222" font-size="11" font-weight="600" fill="#1e3a5f">PRIVACY / ZONE LAYER</text>
+  <rect x="55" y="232" width="195" height="82" rx="6" fill="#e3edfa" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="152" y="253" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a5f">RWA Zone</text>
+  <text x="152" y="270" text-anchor="middle" font-size="10" fill="#4a6a8a">Private DA</text>
+  <text x="152" y="283" text-anchor="middle" font-size="10" fill="#4a6a8a">Own Compliance</text>
+  <text x="152" y="296" text-anchor="middle" font-size="10" fill="#4a6a8a">Own Sequencer</text>
+  <rect x="275" y="232" width="195" height="82" rx="6" fill="#dce8f8" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="372" y="253" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a5f">xStocks Zone</text>
+  <text x="372" y="270" text-anchor="middle" font-size="10" fill="#4a6a8a">Private DA</text>
+  <text x="372" y="283" text-anchor="middle" font-size="10" fill="#4a6a8a">Own Compliance</text>
+  <text x="372" y="296" text-anchor="middle" font-size="10" fill="#4a6a8a">Own Sequencer</text>
+  <rect x="495" y="232" width="195" height="82" rx="6" fill="#d5e3f6" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="592" y="253" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a5f">Payment Zone</text>
+  <text x="592" y="270" text-anchor="middle" font-size="10" fill="#4a6a8a">Private DA</text>
+  <text x="592" y="283" text-anchor="middle" font-size="10" fill="#4a6a8a">Own Compliance</text>
+  <text x="592" y="296" text-anchor="middle" font-size="10" fill="#4a6a8a">Own Sequencer</text>
+  <rect x="715" y="232" width="195" height="82" rx="6" fill="#cfddf4" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="812" y="253" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a5f">Custom Zones</text>
+  <text x="812" y="270" text-anchor="middle" font-size="10" fill="#4a6a8a">Private DA</text>
+  <text x="812" y="283" text-anchor="middle" font-size="10" fill="#4a6a8a">Own Compliance</text>
+  <text x="812" y="296" text-anchor="middle" font-size="10" fill="#4a6a8a">Own Sequencer</text>
+  <rect x="40" y="340" width="880" height="50" rx="8" fill="#b8c9e0" stroke="#1e3a5f" stroke-width="1" filter="url(#l1-shadow)"/>
+  <text x="480" y="370" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a5f">Execution: Reth SDK + revm + Enterprise Precompiles (Identity, Policy, ECIES, BLS)</text>
+  <rect x="40" y="405" width="880" height="50" rx="8" fill="#a3b8d4" stroke="#1e3a5f" stroke-width="1" filter="url(#l1-shadow)"/>
+  <text x="50" y="425" font-size="11" font-weight="600" fill="#1e3a5f">COMPLIANCE &amp; IDENTITY</text>
+  <rect x="220" y="413" width="170" height="32" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="305" y="433" text-anchor="middle" font-size="12" fill="#1e3a5f">KYC/KYB Registry</text>
+  <rect x="440" y="413" width="170" height="32" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="525" y="433" text-anchor="middle" font-size="12" fill="#1e3a5f">Policy Registry</text>
+  <rect x="680" y="413" width="170" height="32" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="765" y="433" text-anchor="middle" font-size="12" fill="#1e3a5f">Selective Disclosure</text>
+  <rect x="40" y="470" width="880" height="75" rx="8" fill="#8da6c4" stroke="#1e3a5f" stroke-width="1.5" filter="url(#l1-shadow)"/>
+  <text x="50" y="490" font-size="11" font-weight="600" fill="#ffffff">CONSENSUS: PERMISSIONED BFT VALIDATORS</text>
+  <rect x="80" y="500" width="190" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="175" y="521" text-anchor="middle" font-size="11" fill="#1e3a5f">BLS12-381 Threshold Certs</text>
+  <rect x="290" y="500" width="160" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="370" y="521" text-anchor="middle" font-size="11" fill="#1e3a5f">VRF Leader Election</text>
+  <rect x="470" y="500" width="140" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="540" y="521" text-anchor="middle" font-size="11" fill="#1e3a5f">HSM-backed Keys</text>
+  <rect x="630" y="500" width="130" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="695" y="521" text-anchor="middle" font-size="11" fill="#1e3a5f">Epoch Rotation</text>
+  <rect x="40" y="560" width="880" height="60" rx="8" fill="#7896b8" stroke="#1e3a5f" stroke-width="1" filter="url(#l1-shadow)"/>
+  <text x="50" y="580" font-size="11" font-weight="600" fill="#ffffff">DATA LAYER</text>
+  <rect x="140" y="575" width="220" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="250" y="596" text-anchor="middle" font-size="12" fill="#1e3a5f">Public Mainchain Data</text>
+  <rect x="400" y="575" width="200" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="500" y="596" text-anchor="middle" font-size="12" fill="#1e3a5f">Private Zone DA</text>
+  <rect x="650" y="575" width="200" height="34" rx="6" fill="#ffffff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="750" y="596" text-anchor="middle" font-size="12" fill="#1e3a5f">Audit Archive</text>
+  <rect x="40" y="640" width="880" height="60" rx="8" fill="#f0f4f8" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="8,4" filter="url(#l1-shadow)"/>
+  <text x="50" y="660" font-size="11" font-weight="600" fill="#6b7280">OPTIONAL ETHEREUM ANCHOR</text>
+  <rect x="200" y="655" width="180" height="34" rx="6" fill="#ffffff" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="290" y="676" text-anchor="middle" font-size="12" fill="#6b7280">ZK Verifier Contract</text>
+  <rect x="430" y="655" width="140" height="34" rx="6" fill="#ffffff" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="500" y="676" text-anchor="middle" font-size="12" fill="#6b7280">Asset Bridge</text>
+  <rect x="620" y="655" width="180" height="34" rx="6" fill="#ffffff" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="710" y="676" text-anchor="middle" font-size="12" fill="#6b7280">State Commitments</text>
+  <line x1="480" y1="120" x2="480" y2="135" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#l1-arrow-blue)"/>
+  <line x1="480" y1="190" x2="480" y2="205" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#l1-arrow-blue)"/>
+  <line x1="480" y1="325" x2="480" y2="340" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#l1-arrow-blue)"/>
+  <line x1="480" y1="390" x2="480" y2="405" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#l1-arrow-blue)"/>
+  <line x1="480" y1="455" x2="480" y2="470" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#l1-arrow-blue)"/>
+  <line x1="480" y1="545" x2="480" y2="560" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#l1-arrow-blue)"/>
+  <line x1="480" y1="620" x2="480" y2="640" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#l1-arrow-blue)"/>
+  <rect x="40" y="720" width="420" height="85" rx="8" fill="#eff6ff" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="55" y="740" font-size="12" font-weight="600" fill="#1e3a5f">Key Properties</text>
+  <text x="55" y="758" font-size="11" fill="#4a6a8a">Hard Finality: ~600ms-2s (BFT certificate)</text>
+  <text x="55" y="773" font-size="11" fill="#4a6a8a">TPS: 3,000-5,000 mainchain / &gt;10,000 Payment Zone</text>
+  <text x="55" y="788" font-size="11" fill="#4a6a8a">Validators: 7-15 initial, scaling to 21-50</text>
+  <rect x="500" y="720" width="420" height="85" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1"/>
+  <text x="515" y="740" font-size="12" font-weight="600" fill="#dc2626">Investment Required</text>
+  <text x="515" y="758" font-size="11" fill="#7f1d1d">Team: 15-25 engineers for 18-24 months</text>
+  <text x="515" y="773" font-size="11" fill="#7f1d1d">Engineering: $5M-$12M + $850K-$1.7M audits</text>
+  <text x="515" y="788" font-size="11" fill="#7f1d1d">Monthly Infra: ~$85K-$130K (initial scale)</text>
+</svg>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 33: Architecture Detail - L2 (Formal SVG: WHI-394) ==================== -->
+<div class="slide" id="s33">
+  <h2>附录: Enterprise L2 架构详图</h2>
+  <div class="svg-container" style="background:white; border-radius:12px; padding:16px;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 780" width="960" height="780">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="l2-arrow-teal" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0d7377"/>
+    </marker>
+    <marker id="l2-arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ea580c"/>
+    </marker>
+    <filter id="l2-shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="960" height="780" fill="#ffffff"/>
+  <text x="480" y="32" text-anchor="middle" font-size="18" font-weight="600" fill="#0d7377">Enterprise L2 High-Level Architecture</text>
+  <text x="480" y="50" text-anchor="middle" font-size="12" fill="#6b7280">Mantle Enterprise L2 Parallel Chain — OP Stack + Enterprise Controls</text>
+  <rect x="30" y="70" width="180" height="530" rx="10" fill="#f0fdf4" stroke="#059669" stroke-width="1.5" filter="url(#l2-shadow)"/>
+  <text x="120" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#059669">Ethereum L1</text>
+  <text x="120" y="108" text-anchor="middle" font-size="10" fill="#6b7280">Settlement Layer</text>
+  <rect x="50" y="135" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="155" text-anchor="middle" font-size="11" fill="#065f46">State Root</text>
+  <rect x="50" y="175" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="195" text-anchor="middle" font-size="11" fill="#065f46">Verification</text>
+  <rect x="50" y="260" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="280" text-anchor="middle" font-size="11" fill="#065f46">Bridge Portal</text>
+  <rect x="50" y="340" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="360" text-anchor="middle" font-size="11" fill="#065f46">Proof</text>
+  <rect x="50" y="380" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="400" text-anchor="middle" font-size="11" fill="#065f46">Submission</text>
+  <rect x="50" y="460" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="480" text-anchor="middle" font-size="11" fill="#065f46">Economic</text>
+  <rect x="50" y="500" width="140" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="120" y="520" text-anchor="middle" font-size="11" fill="#065f46">Security</text>
+  <rect x="750" y="70" width="180" height="530" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5" filter="url(#l2-shadow)"/>
+  <text x="840" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#ea580c">Public Mantle L2</text>
+  <text x="840" y="108" text-anchor="middle" font-size="10" fill="#6b7280">Public Network</text>
+  <rect x="770" y="135" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="155" text-anchor="middle" font-size="11" fill="#9a3412">DeFi</text>
+  <rect x="770" y="175" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="195" text-anchor="middle" font-size="11" fill="#9a3412">Protocols</text>
+  <rect x="770" y="260" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="280" text-anchor="middle" font-size="11" fill="#9a3412">MNT Token</text>
+  <rect x="770" y="300" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="320" text-anchor="middle" font-size="11" fill="#9a3412">Ecosystem</text>
+  <rect x="770" y="400" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="420" text-anchor="middle" font-size="11" fill="#9a3412">Public</text>
+  <rect x="770" y="440" width="140" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+  <text x="840" y="460" text-anchor="middle" font-size="11" fill="#9a3412">Liquidity</text>
+  <rect x="230" y="70" width="500" height="530" rx="10" fill="#f0fdfa" stroke="#0d7377" stroke-width="2" filter="url(#l2-shadow)"/>
+  <text x="480" y="92" text-anchor="middle" font-size="15" font-weight="600" fill="#0d7377">Mantle Enterprise L2</text>
+  <text x="480" y="108" text-anchor="middle" font-size="10" fill="#6b7280">Permissioned Parallel Chain (Own Chain ID)</text>
+  <rect x="250" y="120" width="460" height="45" rx="6" fill="#ccfbf1" stroke="#0d7377" stroke-width="1"/>
+  <text x="260" y="138" font-size="10" font-weight="600" fill="#0d7377">ENTERPRISE APPLICATIONS</text>
+  <rect x="265" y="142" width="120" height="18" rx="4" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+  <text x="325" y="155" text-anchor="middle" font-size="10" fill="#0d7377">RWA Issuance</text>
+  <rect x="395" y="142" width="120" height="18" rx="4" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+  <text x="455" y="155" text-anchor="middle" font-size="10" fill="#0d7377">Institutional DeFi</text>
+  <rect x="525" y="142" width="120" height="18" rx="4" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+  <text x="585" y="155" text-anchor="middle" font-size="10" fill="#0d7377">Custodian Ops</text>
+  <rect x="250" y="178" width="460" height="40" rx="6" fill="#99f6e4" stroke="#0d7377" stroke-width="1"/>
+  <text x="480" y="195" text-anchor="middle" font-size="12" font-weight="600" fill="#0d7377">Authenticated RPC Gateway</text>
+  <text x="480" y="210" text-anchor="middle" font-size="10" fill="#115e59">OIDC / SAML / JWT / mTLS / Wallet Binding</text>
+  <rect x="250" y="230" width="460" height="55" rx="6" fill="#5eead4" stroke="#0d7377" stroke-width="1.5"/>
+  <text x="480" y="250" text-anchor="middle" font-size="13" font-weight="600" fill="#042f2e">Enterprise Sequencer</text>
+  <rect x="265" y="257" width="115" height="20" rx="4" fill="#ffffff" stroke="#0d7377" stroke-width="0.8"/>
+  <text x="322" y="271" text-anchor="middle" font-size="10" fill="#0d7377">Admission Filters</text>
+  <rect x="395" y="257" width="115" height="20" rx="4" fill="#ffffff" stroke="#0d7377" stroke-width="0.8"/>
+  <text x="452" y="271" text-anchor="middle" font-size="10" fill="#0d7377">Policy Engine</text>
+  <rect x="525" y="257" width="115" height="20" rx="4" fill="#ffffff" stroke="#0d7377" stroke-width="0.8"/>
+  <text x="582" y="271" text-anchor="middle" font-size="10" fill="#0d7377">KYT/AML</text>
+  <rect x="250" y="298" width="225" height="60" rx="6" fill="#ccfbf1" stroke="#0d7377" stroke-width="1"/>
+  <text x="362" y="318" text-anchor="middle" font-size="11" font-weight="600" fill="#0d7377">Execution Client</text>
+  <text x="362" y="334" text-anchor="middle" font-size="10" fill="#115e59">op-geth + Enterprise</text>
+  <text x="362" y="348" text-anchor="middle" font-size="10" fill="#115e59">Predeployments</text>
+  <rect x="485" y="298" width="225" height="60" rx="6" fill="#ccfbf1" stroke="#0d7377" stroke-width="1"/>
+  <text x="597" y="318" text-anchor="middle" font-size="11" font-weight="600" fill="#0d7377">Identity &amp; Compliance</text>
+  <text x="597" y="334" text-anchor="middle" font-size="10" fill="#115e59">KYC/KYB Registry</text>
+  <text x="597" y="348" text-anchor="middle" font-size="10" fill="#115e59">ERC-3643 / PolicyExecutor</text>
+  <rect x="250" y="372" width="460" height="55" rx="6" fill="#99f6e4" stroke="#0d7377" stroke-width="1"/>
+  <text x="480" y="392" text-anchor="middle" font-size="12" font-weight="600" fill="#0d7377">Hybrid Data Availability</text>
+  <rect x="270" y="398" width="170" height="22" rx="4" fill="#ffffff" stroke="#0d7377" stroke-width="0.8"/>
+  <text x="355" y="413" text-anchor="middle" font-size="10" fill="#0d7377">Public Blobs (non-sensitive)</text>
+  <rect x="460" y="398" width="230" height="22" rx="4" fill="#ffffff" stroke="#0d7377" stroke-width="0.8"/>
+  <text x="575" y="413" text-anchor="middle" font-size="10" fill="#0d7377">Private Validium (encrypted off-chain)</text>
+  <rect x="250" y="440" width="460" height="40" rx="6" fill="#5eead4" stroke="#0d7377" stroke-width="1.5"/>
+  <text x="480" y="460" text-anchor="middle" font-size="12" font-weight="600" fill="#042f2e">Enterprise Bridge (Compliance-Filtered)</text>
+  <text x="480" y="474" text-anchor="middle" font-size="10" fill="#115e59">EnterpriseOptimismPortal / Deposit-Withdrawal Whitelist</text>
+  <rect x="250" y="494" width="460" height="36" rx="6" fill="#ccfbf1" stroke="#0d7377" stroke-width="1"/>
+  <text x="480" y="517" text-anchor="middle" font-size="11" fill="#0d7377">Audit Events / Selective Disclosure Portal / Regulator Export</text>
+  <line x1="250" y1="460" x2="210" y2="460" stroke="#0d7377" stroke-width="2" marker-end="url(#l2-arrow-teal)"/>
+  <rect x="213" y="445" width="30" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="228" y="456" text-anchor="middle" font-size="9" fill="#0d7377">Proofs</text>
+  <line x1="250" y1="350" x2="210" y2="350" stroke="#0d7377" stroke-width="1.5" marker-end="url(#l2-arrow-teal)"/>
+  <rect x="205" y="338" width="42" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="226" y="349" text-anchor="middle" font-size="9" fill="#0d7377">Settlement</text>
+  <line x1="710" y1="300" x2="750" y2="300" stroke="#ea580c" stroke-width="2" marker-end="url(#l2-arrow-orange)"/>
+  <rect x="713" y="286" width="35" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="730" y="297" text-anchor="middle" font-size="9" fill="#ea580c">Interop</text>
+  <line x1="750" y1="440" x2="710" y2="440" stroke="#ea580c" stroke-width="1.5" marker-end="url(#l2-arrow-orange)"/>
+  <rect x="713" y="426" width="35" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="730" y="437" text-anchor="middle" font-size="9" fill="#ea580c">Liquidity</text>
+  <line x1="250" y1="610" x2="280" y2="610" stroke="#0d7377" stroke-width="2" marker-end="url(#l2-arrow-teal)"/>
+  <text x="286" y="614" font-size="10" fill="#6b7280">Settlement / Proofs</text>
+  <line x1="430" y1="610" x2="460" y2="610" stroke="#ea580c" stroke-width="2" marker-end="url(#l2-arrow-orange)"/>
+  <text x="466" y="614" font-size="10" fill="#6b7280">Controlled Interop</text>
+  <rect x="30" y="625" width="440" height="140" rx="8" fill="#f0fdfa" stroke="#0d7377" stroke-width="1"/>
+  <text x="45" y="647" font-size="12" font-weight="600" fill="#0d7377">Key Properties</text>
+  <text x="45" y="665" font-size="11" fill="#115e59">Soft Confirmation: ~1-2s (Sequencer)</text>
+  <text x="45" y="681" font-size="11" fill="#115e59">ZK Hard Finality: ~15-30 min (target)</text>
+  <text x="45" y="697" font-size="11" fill="#115e59">Optimistic Fallback: 7 days</text>
+  <text x="45" y="713" font-size="11" fill="#115e59">EVM Compatible: Full Solidity/Hardhat/Foundry</text>
+  <text x="45" y="729" font-size="11" fill="#115e59">Timeline: 8-12 months (MVP in 3-4)</text>
+  <text x="45" y="745" font-size="11" fill="#115e59">Team: 8-15 engineers</text>
+  <rect x="490" y="625" width="440" height="140" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1"/>
+  <text x="505" y="647" font-size="12" font-weight="600" fill="#dc2626">Structural Constraints (Honest)</text>
+  <text x="505" y="665" font-size="11" fill="#7f1d1d">Sequencer sees all tx data in plaintext</text>
+  <text x="505" y="681" font-size="11" fill="#7f1d1d">Enterprises are tenants, not owners</text>
+  <text x="505" y="697" font-size="11" fill="#7f1d1d">Soft confirmation ≠ legal hard settlement</text>
+  <text x="505" y="713" font-size="11" fill="#7f1d1d">Cannot independently sequence or recover</text>
+  <text x="505" y="729" font-size="11" fill="#7f1d1d">Force-inclusion bypass risk at L1 bridge</text>
+  <text x="505" y="745" font-size="11" fill="#7f1d1d">Operator trust is structural, not interim</text>
+</svg>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 34: Architecture Detail - L3 (Formal SVG: WHI-394) ==================== -->
+<div class="slide" id="s34">
+  <h2>附录: Enterprise L3 架构详图</h2>
+  <div class="svg-container" style="background:white; border-radius:12px; padding:16px;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 780" width="960" height="780">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="l3-arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+    <marker id="l3-arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <filter id="l3-shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="960" height="780" fill="#ffffff"/>
+  <text x="480" y="32" text-anchor="middle" font-size="18" font-weight="600" fill="#5b21b6">Enterprise L3 High-Level Architecture</text>
+  <text x="480" y="50" text-anchor="middle" font-size="12" fill="#6b7280">Multi-Tenant App Chains — One Enterprise, One Chain</text>
+  <rect x="20" y="65" width="920" height="250" rx="10" fill="#faf5ff" stroke="#7c3aed" stroke-width="1" stroke-dasharray="6,3"/>
+  <text x="35" y="82" font-size="11" font-weight="600" fill="#7c3aed">ENTERPRISE L3 CHAINS (INDEPENDENT INSTANCES)</text>
+  <rect x="35" y="95" width="210" height="205" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5" filter="url(#l3-shadow)"/>
+  <text x="140" y="117" text-anchor="middle" font-size="13" font-weight="600" fill="#5b21b6">Bank A L3</text>
+  <rect x="45" y="130" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="145" text-anchor="middle" font-size="10" fill="#5b21b6">Own Sequencer</text>
+  <rect x="45" y="157" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="172" text-anchor="middle" font-size="10" fill="#5b21b6">Own Private DA</text>
+  <rect x="45" y="184" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="199" text-anchor="middle" font-size="10" fill="#5b21b6">Own Policy / Compliance</text>
+  <rect x="45" y="211" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="226" text-anchor="middle" font-size="10" fill="#5b21b6">Own Auth RPC</text>
+  <rect x="45" y="238" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="253" text-anchor="middle" font-size="10" fill="#5b21b6">Own Governance Keys</text>
+  <rect x="45" y="265" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="140" y="280" text-anchor="middle" font-size="10" fill="#5b21b6">Own Upgrade Cadence</text>
+  <rect x="260" y="95" width="210" height="205" rx="8" fill="#e9d5ff" stroke="#7c3aed" stroke-width="1.5" filter="url(#l3-shadow)"/>
+  <text x="365" y="117" text-anchor="middle" font-size="13" font-weight="600" fill="#5b21b6">RWA Issuer L3</text>
+  <rect x="270" y="130" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="145" text-anchor="middle" font-size="10" fill="#5b21b6">Own Sequencer</text>
+  <rect x="270" y="157" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="172" text-anchor="middle" font-size="10" fill="#5b21b6">Own Private DA</text>
+  <rect x="270" y="184" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="199" text-anchor="middle" font-size="10" fill="#5b21b6">Own Policy / Compliance</text>
+  <rect x="270" y="211" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="226" text-anchor="middle" font-size="10" fill="#5b21b6">Own Auth RPC</text>
+  <rect x="270" y="238" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="253" text-anchor="middle" font-size="10" fill="#5b21b6">Own Governance Keys</text>
+  <rect x="270" y="265" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="365" y="280" text-anchor="middle" font-size="10" fill="#5b21b6">Own Upgrade Cadence</text>
+  <rect x="485" y="95" width="210" height="205" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5" filter="url(#l3-shadow)"/>
+  <text x="590" y="117" text-anchor="middle" font-size="13" font-weight="600" fill="#5b21b6">Payment Proc. L3</text>
+  <rect x="495" y="130" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="145" text-anchor="middle" font-size="10" fill="#5b21b6">Own Sequencer</text>
+  <rect x="495" y="157" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="172" text-anchor="middle" font-size="10" fill="#5b21b6">Own Private DA</text>
+  <rect x="495" y="184" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="199" text-anchor="middle" font-size="10" fill="#5b21b6">Own Policy / Compliance</text>
+  <rect x="495" y="211" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="226" text-anchor="middle" font-size="10" fill="#5b21b6">Own Auth RPC</text>
+  <rect x="495" y="238" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="253" text-anchor="middle" font-size="10" fill="#5b21b6">Own Governance Keys</text>
+  <rect x="495" y="265" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="590" y="280" text-anchor="middle" font-size="10" fill="#5b21b6">Own Upgrade Cadence</text>
+  <rect x="710" y="95" width="210" height="205" rx="8" fill="#e9d5ff" stroke="#7c3aed" stroke-width="1.5" filter="url(#l3-shadow)"/>
+  <text x="815" y="117" text-anchor="middle" font-size="13" font-weight="600" fill="#5b21b6">Custom L3 ...</text>
+  <rect x="720" y="130" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="145" text-anchor="middle" font-size="10" fill="#5b21b6">Own Sequencer</text>
+  <rect x="720" y="157" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="172" text-anchor="middle" font-size="10" fill="#5b21b6">Own Private DA</text>
+  <rect x="720" y="184" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="199" text-anchor="middle" font-size="10" fill="#5b21b6">Own Policy / Compliance</text>
+  <rect x="720" y="211" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="226" text-anchor="middle" font-size="10" fill="#5b21b6">Own Auth RPC</text>
+  <rect x="720" y="238" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="253" text-anchor="middle" font-size="10" fill="#5b21b6">Own Governance Keys</text>
+  <rect x="720" y="265" width="190" height="22" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="815" y="280" text-anchor="middle" font-size="10" fill="#5b21b6">Own Upgrade Cadence</text>
+  <line x1="140" y1="300" x2="140" y2="340" stroke="#7c3aed" stroke-width="2" marker-end="url(#l3-arrow-purple)"/>
+  <line x1="365" y1="300" x2="365" y2="340" stroke="#7c3aed" stroke-width="2" marker-end="url(#l3-arrow-purple)"/>
+  <line x1="590" y1="300" x2="590" y2="340" stroke="#7c3aed" stroke-width="2" marker-end="url(#l3-arrow-purple)"/>
+  <line x1="815" y1="300" x2="815" y2="340" stroke="#7c3aed" stroke-width="2" marker-end="url(#l3-arrow-purple)"/>
+  <rect x="65" y="310" width="90" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="110" y="321" text-anchor="middle" font-size="9" fill="#7c3aed">State roots, proofs</text>
+  <rect x="300" y="310" width="100" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="350" y="321" text-anchor="middle" font-size="9" fill="#7c3aed">Bridge messages</text>
+  <rect x="520" y="310" width="100" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="570" y="321" text-anchor="middle" font-size="9" fill="#7c3aed">Withdrawal hashes</text>
+  <rect x="750" y="310" width="90" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="795" y="321" text-anchor="middle" font-size="9" fill="#7c3aed">Batch commits</text>
+  <rect x="20" y="345" width="920" height="180" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#l3-shadow)"/>
+  <text x="480" y="368" text-anchor="middle" font-size="15" font-weight="600" fill="#1e40af">Mantle L2 — Settlement Hub</text>
+  <text x="480" y="384" text-anchor="middle" font-size="11" fill="#3b82f6">Proof Verification / Cross-L3 Relay / Shared Liquidity / SDK Provider</text>
+  <rect x="45" y="398" width="170" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="130" y="421" text-anchor="middle" font-size="11" fill="#1e40af">ZonePortal Contracts</text>
+  <rect x="235" y="398" width="150" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="310" y="421" text-anchor="middle" font-size="11" fill="#1e40af">Proof Verification</text>
+  <rect x="405" y="398" width="140" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="475" y="421" text-anchor="middle" font-size="11" fill="#1e40af">Cross-L3 Relay</text>
+  <rect x="565" y="398" width="170" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="650" y="421" text-anchor="middle" font-size="11" fill="#1e40af">Shared Liquidity Pools</text>
+  <rect x="755" y="398" width="155" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="832" y="421" text-anchor="middle" font-size="11" fill="#1e40af">Compliance Routing</text>
+  <rect x="45" y="448" width="170" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="130" y="471" text-anchor="middle" font-size="11" fill="#1e40af">SDK / Chain Templates</text>
+  <rect x="235" y="448" width="160" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="315" y="471" text-anchor="middle" font-size="11" fill="#1e40af">Enterprise Onboarding</text>
+  <rect x="415" y="448" width="150" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="490" y="471" text-anchor="middle" font-size="11" fill="#1e40af">Observability / SRE</text>
+  <rect x="585" y="448" width="155" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="662" y="471" text-anchor="middle" font-size="11" fill="#1e40af">Governance / Guardian</text>
+  <rect x="760" y="448" width="150" height="38" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <text x="835" y="471" text-anchor="middle" font-size="11" fill="#1e40af">DA Coordinator</text>
+  <text x="480" y="506" text-anchor="middle" font-size="10" fill="#3b82f6">Aggregates state from multiple L3s → submits to Ethereum L1</text>
+  <line x1="480" y1="525" x2="480" y2="560" stroke="#2563eb" stroke-width="2.5" marker-end="url(#l3-arrow-blue)"/>
+  <rect x="430" y="530" width="100" height="14" rx="2" fill="#ffffff" opacity="0.95"/>
+  <text x="480" y="541" text-anchor="middle" font-size="9" fill="#2563eb">Aggregated proof + root</text>
+  <rect x="20" y="565" width="920" height="80" rx="10" fill="#f0fdf4" stroke="#059669" stroke-width="2" filter="url(#l3-shadow)"/>
+  <text x="480" y="590" text-anchor="middle" font-size="15" font-weight="600" fill="#059669">Ethereum L1 — Final Settlement Anchor</text>
+  <rect x="80" y="602" width="180" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="170" y="621" text-anchor="middle" font-size="11" fill="#065f46">State Root Verification</text>
+  <rect x="310" y="602" width="170" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="395" y="621" text-anchor="middle" font-size="11" fill="#065f46">Asset Exit Execution</text>
+  <rect x="530" y="602" width="190" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="625" y="621" text-anchor="middle" font-size="11" fill="#065f46">Public Settlement Guarantee</text>
+  <rect x="770" y="602" width="145" height="30" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1"/>
+  <text x="842" y="621" text-anchor="middle" font-size="11" fill="#065f46">Economic Security</text>
+  <line x1="320" y1="655" x2="350" y2="655" stroke="#7c3aed" stroke-width="2" marker-end="url(#l3-arrow-purple)"/>
+  <text x="356" y="659" font-size="10" fill="#6b7280">L3 → L2 Settlement</text>
+  <line x1="500" y1="655" x2="530" y2="655" stroke="#2563eb" stroke-width="2" marker-end="url(#l3-arrow-blue)"/>
+  <text x="536" y="659" font-size="10" fill="#6b7280">L2 → L1 Proof/Root</text>
+  <rect x="20" y="670" width="450" height="100" rx="8" fill="#faf5ff" stroke="#7c3aed" stroke-width="1"/>
+  <text x="35" y="692" font-size="12" font-weight="600" fill="#5b21b6">Key Properties</text>
+  <text x="35" y="710" font-size="11" fill="#5b21b6">L3 Soft Confirmation: ~1-2s</text>
+  <text x="35" y="726" font-size="11" fill="#5b21b6">External Hard Finality: ~1 hour (ZK) / 7 days (optimistic)</text>
+  <text x="35" y="742" font-size="11" fill="#5b21b6">Per-Zone Cost: $60K-$600K/year</text>
+  <text x="35" y="758" font-size="11" fill="#5b21b6">Platform Timeline: 9-13 months / Team: 10-15</text>
+  <rect x="490" y="670" width="450" height="100" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1"/>
+  <text x="505" y="692" font-size="12" font-weight="600" fill="#dc2626">Structural Constraints (Honest)</text>
+  <text x="505" y="710" font-size="11" fill="#7f1d1d">Longest external finality of all three paths</text>
+  <text x="505" y="726" font-size="11" fill="#7f1d1d">Cross-L3 DVP is non-atomic in Phase 1</text>
+  <text x="505" y="742" font-size="11" fill="#7f1d1d">Per-enterprise L3s fragment secondary liquidity</text>
+  <text x="505" y="758" font-size="11" fill="#7f1d1d">Three-layer debugging / incident response complexity</text>
+</svg>
+  </div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+
+function showSlide(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  document.getElementById('progressBar').style.width = ((current + 1) / slides.length * 100) + '%';
+  document.getElementById('slideCounter').textContent = (current + 1) + ' / ' + slides.length;
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); showSlide(current + 1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); showSlide(current - 1); }
+  else if (e.key === 'Home') { e.preventDefault(); showSlide(0); }
+  else if (e.key === 'End') { e.preventDefault(); showSlide(slides.length - 1); }
+});
+
+document.addEventListener('click', (e) => {
+  if (e.clientX > window.innerWidth / 2) showSlide(current + 1);
+  else showSlide(current - 1);
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+document.addEventListener('touchend', (e) => {
+  const diff = touchStartX - e.changedTouches[0].screenX;
+  if (Math.abs(diff) > 50) { diff > 0 ? showSlide(current + 1) : showSlide(current - 1); }
+});
+
+showSlide(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="ab" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/></marker>
+    <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.08"/></filter>
+  </defs>
+  <rect width="1200" height="900" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="600" y="38" text-anchor="middle" font-size="20" font-weight="600" fill="#111827">Solution 1: Self-Built L1 Enterprise Chain Architecture</text>
+  <text x="600" y="58" text-anchor="middle" font-size="13" fill="#6b7280">WHI-387 — Full Ground-Up L1 with BFT Consensus, Native Privacy Zones, Protocol-Level Compliance</text>
+
+  <!-- Layer 1: Enterprise Applications -->
+  <rect x="60" y="80" width="1080" height="60" rx="10" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="600" y="102" text-anchor="middle" font-size="14" font-weight="600" fill="#c2410c">Enterprise Applications</text>
+  <rect x="100" y="110" width="160" height="24" rx="4" fill="#ffffff" stroke="#fed7aa" stroke-width="1"/>
+  <text x="180" y="126" text-anchor="middle" font-size="10" fill="#9a3412">RWA Platform</text>
+  <rect x="280" y="110" width="160" height="24" rx="4" fill="#ffffff" stroke="#fed7aa" stroke-width="1"/>
+  <text x="360" y="126" text-anchor="middle" font-size="10" fill="#9a3412">xStocks Venue</text>
+  <rect x="460" y="110" width="160" height="24" rx="4" fill="#ffffff" stroke="#fed7aa" stroke-width="1"/>
+  <text x="540" y="126" text-anchor="middle" font-size="10" fill="#9a3412">Payment Network</text>
+  <rect x="640" y="110" width="160" height="24" rx="4" fill="#ffffff" stroke="#fed7aa" stroke-width="1"/>
+  <text x="720" y="126" text-anchor="middle" font-size="10" fill="#9a3412">Treasury Ops</text>
+  <rect x="820" y="110" width="160" height="24" rx="4" fill="#ffffff" stroke="#fed7aa" stroke-width="1"/>
+  <text x="900" y="126" text-anchor="middle" font-size="10" fill="#9a3412">Enterprise DeFi</text>
+  <line x1="600" y1="140" x2="600" y2="155" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <!-- Layer 2: Business Components -->
+  <rect x="60" y="160" width="1080" height="60" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="600" y="182" text-anchor="middle" font-size="14" font-weight="600" fill="#dc2626">Business Components</text>
+  <rect x="85" y="190" width="155" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="162" y="206" text-anchor="middle" font-size="10" fill="#991b1b">MIP-20/21 Tokens</text>
+  <rect x="255" y="190" width="155" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="332" y="206" text-anchor="middle" font-size="10" fill="#991b1b">DVP Engine</text>
+  <rect x="425" y="190" width="155" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="502" y="206" text-anchor="middle" font-size="10" fill="#991b1b">Payment Lane</text>
+  <rect x="595" y="190" width="155" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="672" y="206" text-anchor="middle" font-size="10" fill="#991b1b">Travel Rule</text>
+  <rect x="765" y="190" width="155" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="842" y="206" text-anchor="middle" font-size="10" fill="#991b1b">Stablecoin Registry</text>
+  <rect x="935" y="190" width="155" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="1012" y="206" text-anchor="middle" font-size="10" fill="#991b1b">Treasury SDK</text>
+  <line x1="600" y1="220" x2="600" y2="237" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <!-- Layer 3: Privacy & Zone Layer -->
+  <rect x="60" y="242" width="1080" height="105" rx="10" fill="#faf5ff" stroke="#c084fc" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="600" y="264" text-anchor="middle" font-size="14" font-weight="600" fill="#7c3aed">Privacy &amp; Zone Layer</text>
+
+  <rect x="80" y="275" width="240" height="60" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <text x="200" y="298" text-anchor="middle" font-size="12" font-weight="600" fill="#111827">Public Mainchain</text>
+  <text x="200" y="315" text-anchor="middle" font-size="10" fill="#6b7280">3-5K TPS · Transparent</text>
+
+  <rect x="340" y="275" width="240" height="60" rx="6" fill="#faf5ff" stroke="#c084fc" stroke-width="1.5"/>
+  <text x="460" y="298" text-anchor="middle" font-size="12" font-weight="600" fill="#111827">RWA Zone</text>
+  <text x="460" y="315" text-anchor="middle" font-size="10" fill="#6b7280">100-500 TPS · Sub-Tx Privacy</text>
+
+  <rect x="600" y="275" width="240" height="60" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="720" y="298" text-anchor="middle" font-size="12" font-weight="600" fill="#111827">xStocks Zone</text>
+  <text x="720" y="315" text-anchor="middle" font-size="10" fill="#6b7280">1-3K TPS · ZK Order Privacy</text>
+
+  <rect x="860" y="275" width="240" height="60" rx="6" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+  <text x="980" y="298" text-anchor="middle" font-size="12" font-weight="600" fill="#111827">Payment Zone</text>
+  <text x="980" y="315" text-anchor="middle" font-size="10" fill="#6b7280">10K+ TPS · Zone Transparent</text>
+  <line x1="600" y1="347" x2="600" y2="362" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <!-- Layer 4: Execution -->
+  <rect x="60" y="367" width="1080" height="60" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="600" y="389" text-anchor="middle" font-size="14" font-weight="600" fill="#2563eb">Execution Layer</text>
+  <rect x="95" y="397" width="180" height="24" rx="4" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="185" y="413" text-anchor="middle" font-size="10" fill="#1e40af">Reth SDK + Node Builder</text>
+  <rect x="290" y="397" width="180" height="24" rx="4" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="380" y="413" text-anchor="middle" font-size="10" fill="#1e40af">revm v38+ (EVM Extended)</text>
+  <rect x="485" y="397" width="180" height="24" rx="4" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="575" y="413" text-anchor="middle" font-size="10" fill="#1e40af">Enterprise Precompiles</text>
+  <rect x="680" y="397" width="180" height="24" rx="4" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="770" y="413" text-anchor="middle" font-size="10" fill="#1e40af">Custom Tx Types</text>
+  <rect x="875" y="397" width="180" height="24" rx="4" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="965" y="413" text-anchor="middle" font-size="10" fill="#1e40af">Block-STM Parallel Exec</text>
+  <line x1="600" y1="427" x2="600" y2="442" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <!-- Layer 5: Compliance -->
+  <rect x="60" y="447" width="1080" height="60" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="600" y="469" text-anchor="middle" font-size="14" font-weight="600" fill="#166534">Compliance &amp; Identity</text>
+  <rect x="95" y="477" width="195" height="24" rx="4" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="192" y="493" text-anchor="middle" font-size="10" fill="#166534">KYC/KYB Registry</text>
+  <rect x="305" y="477" width="195" height="24" rx="4" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="402" y="493" text-anchor="middle" font-size="10" fill="#166534">PolicyRegistry</text>
+  <rect x="515" y="477" width="195" height="24" rx="4" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="612" y="493" text-anchor="middle" font-size="10" fill="#166534">IdentityRegistry</text>
+  <rect x="725" y="477" width="195" height="24" rx="4" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="822" y="493" text-anchor="middle" font-size="10" fill="#166534">Selective Disclosure</text>
+  <rect x="935" y="477" width="160" height="24" rx="4" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="1015" y="493" text-anchor="middle" font-size="10" fill="#166534">Audit Reports</text>
+  <line x1="600" y1="507" x2="600" y2="522" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <!-- Layer 6: Consensus -->
+  <rect x="60" y="527" width="1080" height="60" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="600" y="549" text-anchor="middle" font-size="14" font-weight="600" fill="#dc2626">Consensus — Permissioned BFT</text>
+  <rect x="95" y="557" width="180" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="185" y="573" text-anchor="middle" font-size="10" fill="#991b1b">Simplex BFT</text>
+  <rect x="290" y="557" width="180" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="380" y="573" text-anchor="middle" font-size="10" fill="#991b1b">VRF Leader Selection</text>
+  <rect x="485" y="557" width="180" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="575" y="573" text-anchor="middle" font-size="10" fill="#991b1b">Threshold Certificates</text>
+  <rect x="680" y="557" width="180" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="770" y="573" text-anchor="middle" font-size="10" fill="#991b1b">BLS12-381 DKG</text>
+  <rect x="875" y="557" width="180" height="24" rx="4" fill="#ffffff" stroke="#fecaca" stroke-width="1"/>
+  <text x="965" y="573" text-anchor="middle" font-size="10" fill="#991b1b">HSM Key Mgmt</text>
+  <line x1="600" y1="587" x2="600" y2="602" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <!-- Layer 7: Data -->
+  <rect x="60" y="607" width="1080" height="55" rx="10" fill="#f0fdfa" stroke="#5eead4" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="600" y="627" text-anchor="middle" font-size="14" font-weight="600" fill="#0d9488">Data Layer</text>
+  <rect x="130" y="635" width="260" height="22" rx="4" fill="#ffffff" stroke="#99f6e4" stroke-width="1"/>
+  <text x="260" y="650" text-anchor="middle" font-size="10" fill="#0f766e">Public Mainchain (MDBX)</text>
+  <rect x="420" y="635" width="260" height="22" rx="4" fill="#ffffff" stroke="#99f6e4" stroke-width="1"/>
+  <text x="550" y="650" text-anchor="middle" font-size="10" fill="#0f766e">Private Zone DA (Validium)</text>
+  <rect x="710" y="635" width="260" height="22" rx="4" fill="#ffffff" stroke="#99f6e4" stroke-width="1"/>
+  <text x="840" y="650" text-anchor="middle" font-size="10" fill="#0f766e">Audit Archives</text>
+  <line x1="600" y1="662" x2="600" y2="682" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#ab)"/>
+
+  <!-- Layer 8: Ethereum Anchor -->
+  <rect x="200" y="688" width="800" height="50" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="2" filter="url(#sh)"/>
+  <text x="600" y="710" text-anchor="middle" font-size="13" font-weight="600" fill="#1e40af">Optional Ethereum Anchor</text>
+  <rect x="280" y="717" width="200" height="18" rx="3" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="380" y="730" text-anchor="middle" font-size="10" fill="#1e40af">ZK Verifier Contract</text>
+  <rect x="500" y="717" width="200" height="18" rx="3" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="600" y="730" text-anchor="middle" font-size="10" fill="#1e40af">Bridge Contracts</text>
+  <rect x="720" y="717" width="200" height="18" rx="3" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="820" y="730" text-anchor="middle" font-size="10" fill="#1e40af">State Commitments</text>
+
+  <!-- Finality Levels -->
+  <rect x="30" y="765" width="1140" height="55" rx="8" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="600" y="785" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Three Finality Levels</text>
+  <rect x="80" y="795" width="320" height="20" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1"/>
+  <text x="240" y="809" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">BFT Hard Finality: ~600ms-2s</text>
+  <rect x="430" y="795" width="320" height="20" rx="4" fill="#faf5ff" stroke="#9333ea" stroke-width="1"/>
+  <text x="590" y="809" text-anchor="middle" font-size="11" font-weight="600" fill="#9333ea">ZK-Proven Finality: ~5-30 min</text>
+  <rect x="780" y="795" width="320" height="20" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+  <text x="940" y="809" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">L1-Anchored: ETH + proof delay</text>
+
+  <!-- Side labels -->
+  <text x="25" y="445" text-anchor="middle" font-size="11" fill="#6b7280" transform="rotate(-90,25,445)">Full Sovereign Stack</text>
+  <text x="1180" y="445" text-anchor="middle" font-size="11" fill="#6b7280" transform="rotate(90,1180,445)">Reth SDK · Rust · EVM Compatible</text>
+</svg>

@@ -1,0 +1,256 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#EEF2F7"/>
+    </linearGradient>
+
+    <!-- Red accent gradient for left panel -->
+    <linearGradient id="redPanelGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF5F5"/>
+      <stop offset="100%" stop-color="#FEF0EC"/>
+    </linearGradient>
+
+    <!-- Green accent gradient for right panel -->
+    <linearGradient id="greenPanelGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F0FDF4"/>
+      <stop offset="100%" stop-color="#ECFDF5"/>
+    </linearGradient>
+
+    <!-- Bottom panel gradient -->
+    <linearGradient id="bottomGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F0F4FF"/>
+      <stop offset="100%" stop-color="#F5F0FF"/>
+    </linearGradient>
+
+    <!-- Card shadow filter -->
+    <filter id="cardShadow" x="-5%" y="-5%" width="115%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#CBD5E1" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Panel shadow filter -->
+    <filter id="panelShadow" x="-3%" y="-3%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#94A3B8" flood-opacity="0.2"/>
+    </filter>
+
+    <!-- Archived badge gradient -->
+    <linearGradient id="archivedGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FCA5A5"/>
+      <stop offset="100%" stop-color="#F87171"/>
+    </linearGradient>
+
+    <!-- Active badge gradient -->
+    <linearGradient id="activeGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6EE7B7"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+
+    <!-- Arrow marker -->
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10B981"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748B"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#EF4444"/>
+    </marker>
+  </defs>
+
+  <!-- ── BACKGROUND ── -->
+  <rect width="1000" height="600" fill="url(#bgGrad)"/>
+
+  <!-- ── TITLE AREA ── -->
+  <rect x="0" y="0" width="1000" height="64" fill="#1E293B" rx="0"/>
+  <text x="500" y="26" text-anchor="middle" fill="#F8FAFC" font-size="15" font-weight="700" letter-spacing="0.3">WHI-335 §4.3 — Account Model vs UTxO-like Model (Daml)</text>
+  <text x="500" y="46" text-anchor="middle" fill="#94A3B8" font-size="10" font-weight="500" letter-spacing="2">FLAT ICON STYLE · IMMUTABLE CONTRACT PARADIGM</text>
+
+  <!-- ── DIVIDER LINE ── -->
+  <line x1="500" y1="72" x2="500" y2="398" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- ════════════════════════════════════════════
+       LEFT PANEL — Account Model (Solidity/EVM)
+       ════════════════════════════════════════════ -->
+
+  <!-- Left panel background -->
+  <rect x="20" y="76" width="462" height="316" rx="16" fill="url(#redPanelGrad)" filter="url(#panelShadow)"/>
+  <!-- Left accent bar -->
+  <rect x="20" y="76" width="462" height="6" rx="3" fill="#EF4444"/>
+  <rect x="20" y="79" width="462" height="3" fill="#EF4444" rx="0"/>
+
+  <!-- Left panel header -->
+  <text x="32" y="105" fill="#EF4444" font-size="11" font-weight="700" letter-spacing="1.5">⬡  ACCOUNT MODEL</text>
+  <text x="32" y="120" fill="#64748B" font-size="10" font-weight="500">Solidity / EVM</text>
+
+  <!-- Contract box (main card) -->
+  <rect x="52" y="132" width="372" height="224" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <!-- Top accent bar on card -->
+  <rect x="52" y="132" width="372" height="5" rx="3" fill="#EF4444"/>
+  <rect x="52" y="135" width="372" height="2" fill="#EF4444"/>
+
+  <!-- Contract label / icon -->
+  <text x="238" y="162" text-anchor="middle" fill="#1E293B" font-size="13" font-weight="700">📄  Contract</text>
+  <text x="238" y="178" text-anchor="middle" fill="#94A3B8" font-size="9" font-weight="500">0x7f3a...d4c2  ·  Ethereum State Trie</text>
+
+  <!-- Separator -->
+  <line x1="68" y1="185" x2="408" y2="185" stroke="#F1F5F9" stroke-width="1.5"/>
+
+  <!-- BEFORE state box -->
+  <rect x="68" y="195" width="120" height="72" rx="8" fill="#FFF5F5" stroke="#FCA5A5" stroke-width="1.5"/>
+  <text x="128" y="214" text-anchor="middle" fill="#64748B" font-size="9" font-weight="600" letter-spacing="0.5">BEFORE</text>
+  <text x="128" y="234" text-anchor="middle" fill="#1E293B" font-size="13" font-weight="700">balance:</text>
+  <text x="128" y="254" text-anchor="middle" fill="#EF4444" font-size="20" font-weight="800">100</text>
+
+  <!-- Mutation arrow -->
+  <line x1="196" y1="231" x2="294" y2="231" stroke="#EF4444" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowRed)"/>
+  <rect x="205" y="215" width="80" height="18" rx="6" fill="#FEE2E2"/>
+  <text x="245" y="227" text-anchor="middle" fill="#DC2626" font-size="8.5" font-weight="700">mutate in place</text>
+  <text x="245" y="244" text-anchor="middle" fill="#94A3B8" font-size="8" font-weight="400">SSTORE opcode</text>
+
+  <!-- AFTER state box -->
+  <rect x="298" y="195" width="120" height="72" rx="8" fill="#FFF5F5" stroke="#FCA5A5" stroke-width="1.5"/>
+  <text x="358" y="214" text-anchor="middle" fill="#64748B" font-size="9" font-weight="600" letter-spacing="0.5">AFTER</text>
+  <text x="358" y="234" text-anchor="middle" fill="#1E293B" font-size="13" font-weight="700">balance:</text>
+  <text x="358" y="254" text-anchor="middle" fill="#EF4444" font-size="20" font-weight="800">80</text>
+
+  <!-- Warning note -->
+  <rect x="68" y="278" width="350" height="60" rx="8" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+  <text x="243" y="298" text-anchor="middle" fill="#991B1B" font-size="10.5" font-weight="700">⚠  Same address, mutable state</text>
+  <text x="243" y="315" text-anchor="middle" fill="#DC2626" font-size="9.5" font-weight="400">旧值被覆盖 · 无历史记录 · 存在竞态条件</text>
+  <text x="243" y="329" text-anchor="middle" fill="#EF4444" font-size="8.5" font-weight="400">Race conditions · Lost history · Re-entrancy risk</text>
+
+  <!-- ════════════════════════════════════════════
+       RIGHT PANEL — UTxO-like Model (Daml)
+       ════════════════════════════════════════════ -->
+
+  <!-- Right panel background -->
+  <rect x="518" y="76" width="462" height="316" rx="16" fill="url(#greenPanelGrad)" filter="url(#panelShadow)"/>
+  <!-- Right accent bar -->
+  <rect x="518" y="76" width="462" height="6" rx="3" fill="#10B981"/>
+  <rect x="518" y="79" width="462" height="3" fill="#10B981" rx="0"/>
+
+  <!-- Right panel header -->
+  <text x="530" y="105" fill="#10B981" font-size="11" font-weight="700" letter-spacing="1.5">◈  UTxO-LIKE MODEL</text>
+  <text x="530" y="120" fill="#64748B" font-size="10" font-weight="500">Daml / Canton Ledger</text>
+
+  <!-- IOU v1 (ARCHIVED) card -->
+  <rect x="610" y="132" width="220" height="80" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <rect x="610" y="132" width="220" height="5" rx="3" fill="#F87171"/>
+  <rect x="610" y="135" width="220" height="2" fill="#F87171"/>
+
+  <!-- Archived badge -->
+  <rect x="756" y="140" width="68" height="18" rx="9" fill="url(#archivedGrad)"/>
+  <text x="790" y="152" text-anchor="middle" fill="white" font-size="8.5" font-weight="700">ARCHIVED ✗</text>
+
+  <text x="620" y="153" fill="#94A3B8" font-size="9" font-weight="600" letter-spacing="0.3">📄  IOU v1  ·  ContractId #A1f9</text>
+  <text x="620" y="170" fill="#475569" font-size="10" font-weight="500">owner: <tspan fill="#1E293B" font-weight="700">Alice</tspan></text>
+  <text x="620" y="185" fill="#475569" font-size="10" font-weight="500">amount: <tspan fill="#EF4444" font-weight="700">100</tspan></text>
+  <text x="620" y="200" fill="#94A3B8" font-size="8.5" font-style="italic">signatories: [Alice]</text>
+
+  <!-- Vertical arrow from IOU v1 -->
+  <line x1="720" y1="214" x2="720" y2="248" stroke="#10B981" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- Arrow label -->
+  <rect x="534" y="218" width="168" height="28" rx="8" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="618" y="231" text-anchor="middle" fill="#065F46" font-size="8.5" font-weight="700">Exercise Transfer</text>
+  <text x="618" y="242" text-anchor="middle" fill="#059669" font-size="7.5" font-weight="500">atomic: archive old + create new</text>
+
+  <!-- Split arrow lines to two output boxes -->
+  <!-- Vertical stem -->
+  <line x1="720" y1="252" x2="720" y2="270" stroke="#10B981" stroke-width="2"/>
+  <!-- Horizontal bar -->
+  <line x1="624" y1="270" x2="816" y2="270" stroke="#10B981" stroke-width="2"/>
+  <!-- Left branch -->
+  <line x1="624" y1="270" x2="624" y2="288" stroke="#10B981" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <!-- Right branch -->
+  <line x1="816" y1="270" x2="816" y2="288" stroke="#10B981" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- IOU v2 card (Alice, 80) -->
+  <rect x="534" y="290" width="176" height="82" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <rect x="534" y="290" width="176" height="5" rx="3" fill="#10B981"/>
+  <rect x="534" y="293" width="176" height="2" fill="#10B981"/>
+
+  <!-- Active badge v2 -->
+  <rect x="648" y="298" width="56" height="18" rx="9" fill="url(#activeGrad)"/>
+  <text x="676" y="310" text-anchor="middle" fill="white" font-size="8.5" font-weight="700">ACTIVE ✓</text>
+
+  <text x="544" y="313" fill="#94A3B8" font-size="9" font-weight="600" letter-spacing="0.3">📄  IOU v2  ·  #B3c7</text>
+  <text x="544" y="330" fill="#475569" font-size="10" font-weight="500">owner: <tspan fill="#1E293B" font-weight="700">Alice</tspan></text>
+  <text x="544" y="346" fill="#475569" font-size="10" font-weight="500">amount: <tspan fill="#10B981" font-weight="700">80</tspan></text>
+  <text x="544" y="361" fill="#94A3B8" font-size="8.5" font-style="italic">NEW ContractId</text>
+
+  <!-- IOU v3 card (Bob, 20) -->
+  <rect x="728" y="290" width="176" height="82" rx="10" fill="white" filter="url(#cardShadow)"/>
+  <rect x="728" y="290" width="176" height="5" rx="3" fill="#10B981"/>
+  <rect x="728" y="293" width="176" height="2" fill="#10B981"/>
+
+  <!-- Active badge v3 -->
+  <rect x="842" y="298" width="56" height="18" rx="9" fill="url(#activeGrad)"/>
+  <text x="870" y="310" text-anchor="middle" fill="white" font-size="8.5" font-weight="700">ACTIVE ✓</text>
+
+  <text x="738" y="313" fill="#94A3B8" font-size="9" font-weight="600" letter-spacing="0.3">📄  IOU v3  ·  #C8e2</text>
+  <text x="738" y="330" fill="#475569" font-size="10" font-weight="500">owner: <tspan fill="#1E293B" font-weight="700">Bob</tspan></text>
+  <text x="738" y="346" fill="#475569" font-size="10" font-weight="500">amount: <tspan fill="#10B981" font-weight="700">20</tspan></text>
+  <text x="738" y="361" fill="#94A3B8" font-size="8.5" font-style="italic">NEW ContractId</text>
+
+  <!-- "New ContractIds" label -->
+  <text x="816" y="385" text-anchor="middle" fill="#059669" font-size="9.5" font-weight="700">✦  New ContractIds, immutable content</text>
+
+  <!-- ════════════════════════════════════════════
+       BOTTOM — UTxO Advantages
+       ════════════════════════════════════════════ -->
+
+  <rect x="20" y="404" width="960" height="178" rx="16" fill="url(#bottomGrad)" filter="url(#panelShadow)"/>
+  <rect x="20" y="404" width="960" height="5" rx="3" fill="#6366F1"/>
+  <rect x="20" y="407" width="960" height="2" fill="#6366F1"/>
+
+  <!-- Bottom header -->
+  <text x="500" y="430" text-anchor="middle" fill="#4338CA" font-size="11" font-weight="700" letter-spacing="2">✦  UTxO MODEL ADVANTAGES  ·  UTxO 模型优势</text>
+
+  <!-- Divider under header -->
+  <line x1="40" y1="438" x2="960" y2="438" stroke="#C7D2FE" stroke-width="1"/>
+
+  <!-- 4 advantage cards -->
+
+  <!-- Card 1 -->
+  <rect x="36" y="448" width="220" height="118" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="36" y="448" width="220" height="5" rx="3" fill="#6366F1"/>
+  <text x="146" y="475" text-anchor="middle" font-size="26">🔒</text>
+  <text x="146" y="496" text-anchor="middle" fill="#312E81" font-size="11" font-weight="700">天然并发安全</text>
+  <text x="146" y="512" text-anchor="middle" fill="#64748B" font-size="9.5" font-weight="500">不可变合约消除竞态</text>
+  <line x1="56" y1="520" x2="236" y2="520" stroke="#E0E7FF" stroke-width="1"/>
+  <text x="146" y="536" text-anchor="middle" fill="#818CF8" font-size="8.5" font-style="italic">Immutable contracts eliminate races</text>
+  <text x="146" y="551" text-anchor="middle" fill="#818CF8" font-size="8.5" font-style="italic">No TOCTOU · No re-entrancy</text>
+
+  <!-- Card 2 -->
+  <rect x="272" y="448" width="220" height="118" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="272" y="448" width="220" height="5" rx="3" fill="#0EA5E9"/>
+  <text x="382" y="475" text-anchor="middle" font-size="26">📋</text>
+  <text x="382" y="496" text-anchor="middle" fill="#0C4A6E" font-size="11" font-weight="700">完整审计轨迹</text>
+  <text x="382" y="512" text-anchor="middle" fill="#64748B" font-size="9.5" font-weight="500">历史完全可追溯</text>
+  <line x1="292" y1="520" x2="472" y2="520" stroke="#E0F2FE" stroke-width="1"/>
+  <text x="382" y="536" text-anchor="middle" fill="#38BDF8" font-size="8.5" font-style="italic">Full audit trail, never overwritten</text>
+  <text x="382" y="551" text-anchor="middle" fill="#38BDF8" font-size="8.5" font-style="italic">Archive log is tamper-evident</text>
+
+  <!-- Card 3 -->
+  <rect x="508" y="448" width="220" height="118" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="508" y="448" width="220" height="5" rx="3" fill="#F59E0B"/>
+  <text x="618" y="475" text-anchor="middle" font-size="26">🔄</text>
+  <text x="618" y="496" text-anchor="middle" fill="#78350F" font-size="11" font-weight="700">Transient 合约</text>
+  <text x="618" y="512" text-anchor="middle" fill="#64748B" font-size="9.5" font-weight="500">中间值不持久化</text>
+  <line x1="528" y1="520" x2="708" y2="520" stroke="#FEF3C7" stroke-width="1"/>
+  <text x="618" y="536" text-anchor="middle" fill="#D97706" font-size="8.5" font-style="italic">Intermediate contracts vanish</text>
+  <text x="618" y="551" text-anchor="middle" fill="#D97706" font-size="8.5" font-style="italic">No storage bloat from temp state</text>
+
+  <!-- Card 4 -->
+  <rect x="744" y="448" width="220" height="118" rx="12" fill="white" filter="url(#cardShadow)"/>
+  <rect x="744" y="448" width="220" height="5" rx="3" fill="#10B981"/>
+  <text x="854" y="475" text-anchor="middle" font-size="26">🛡️</text>
+  <text x="854" y="496" text-anchor="middle" fill="#064E3B" font-size="11" font-weight="700">隐私友好</text>
+  <text x="854" y="512" text-anchor="middle" fill="#64748B" font-size="9.5" font-weight="500">每个合约有唯一 ContractId</text>
+  <line x1="764" y1="520" x2="944" y2="520" stroke="#D1FAE5" stroke-width="1"/>
+  <text x="854" y="536" text-anchor="middle" fill="#34D399" font-size="8.5" font-style="italic">Selective disclosure per ContractId</text>
+  <text x="854" y="551" text-anchor="middle" fill="#34D399" font-size="8.5" font-style="italic">Sub-transaction privacy by design</text>
+
+</svg>
