@@ -1,7 +1,7 @@
 ---
 project: "解析 Base 的性能提升方式"
 project_slug: base-perf-analysis
-updated_at: "2026-05-22T13:00:00Z"
+updated_at: "2026-05-22T12:50:00Z"
 updated_by: "agent:orchestrator (Orchestrator, id=273629f0-3fe7-47c4-aae7-846a11dbbe13)"
 ---
 
@@ -9,7 +9,7 @@ updated_by: "agent:orchestrator (Orchestrator, id=273629f0-3fe7-47c4-aae7-846a11
 
 | order | topic_slug | multica_issue_id | final_path | dependencies | status | caveats |
 |-------|-----------|------------------|------------|--------------|--------|---------|
-| 1 | execution-layer-reth-fork-comparison | 747cb2ba-6502-41a3-9b08-35b743402f09 | base-perf-analysis/research-sections/execution-layer-reth-fork-comparison/final.md | - | done | - |
+| 1 | execution-layer-reth-fork-comparison | 747cb2ba-6502-41a3-9b08-35b743402f09 | base-perf-analysis/research-sections/execution-layer-reth-fork-comparison/final.md | - | done | C1 (rerun-round-1, three-way comparison, supersedes previous two-way integration) |
 | 2 | block-builder-flashblocks-throughput | 49cd3543-e373-48d9-918b-55a167873968 | base-perf-analysis/research-sections/block-builder-flashblocks-throughput/final.md | - | done | C2, C3 (rerun-round-1, supersedes previous round-3 integration) |
 | 3 | gas-protocol-perf-config | b5b2870f-fe64-42e5-a232-9acce565c195 | base-perf-analysis/research-sections/gas-protocol-perf-config/final.md | - | done | - |
 | 4 | sequencer-consensus-pipeline-perf | c0a26a72-9c25-42ca-9b0d-2563078d82c5 | base-perf-analysis/research-sections/sequencer-consensus-pipeline-perf/final.md | order-1,order-2 | done | - |
@@ -22,5 +22,6 @@ updated_by: "agent:orchestrator (Orchestrator, id=273629f0-3fe7-47c4-aae7-846a11
 
 | ID | Section | Description | Re-verification target | Downstream issues |
 |----|---------|-------------|----------------------|-------------------|
+| C1 | execution-layer-reth-fork-comparison | Go-to-Rust `1.3x-2.8x` execution-layer speedup estimate is an upper-bound model (not a Mantle production TPS claim). Documented gaps remain: Mantle replay benchmark, MetaTx/TokenRatio microbenchmarks, and exact MDBX runtime defaults. Three-way comparison (Base reth / Mantle op-geth / Mantle reth) supersedes the previous two-way comparison. | TW report: cite speedup as upper-bound estimate; note missing benchmarks as known gaps. | WHI-55, WHI-63 |
 | C2 | block-builder-flashblocks-throughput | Mantle-aware assessment (`feat/flashblocks-mantle-aware@58741b2`) is branch-range/tree-state evidence at the `58741b2` tip — preserve this nuance when summarizing; do not treat the assessment as a single-commit analysis. | TW and downstream consumers should note branch-range scope when citing Mantle compatibility conclusions. | WHI-56, WHI-63 |
 | C3 | block-builder-flashblocks-throughput | diag-2 compresses the rollup-boost proxy path in the Flashblocks lifecycle diagram. Keep diag-1 as the authoritative Engine API routing diagram; do not imply a direct Seq → Builder FCU path in report prose. | TW report: use diag-1 for Engine API routing references; diag-2 is lifecycle overview only. | WHI-56, WHI-63 |
