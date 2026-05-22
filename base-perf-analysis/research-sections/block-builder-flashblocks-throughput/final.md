@@ -3,953 +3,433 @@ topic: "Block Builder 与 Flashblocks 对吞吐量的影响分析"
 project_slug: base-perf-analysis
 topic_slug: block-builder-flashblocks-throughput
 github_repo: Whisker17/multica-research
-round: 3
+multica_issue_id: 49cd3543-e373-48d9-918b-55a167873968
+report_issue_id: d38ec675-b760-484d-b071-d235fec00784
+order: 2
+round: 1
 status: draft
-phase: deep-draft
-
+rerun: true
 artifact_paths:
   outline: base-perf-analysis/outlines/block-builder-flashblocks-throughput.md
-  draft: base-perf-analysis/research-sections/block-builder-flashblocks-throughput/drafts/round-3.md
+  draft: base-perf-analysis/research-sections/block-builder-flashblocks-throughput/drafts/round-1.md
   final: base-perf-analysis/research-sections/block-builder-flashblocks-throughput/final.md
   index: base-perf-analysis/research-sections/_index.md
-
 draft_metadata:
-  approved_outline_commit: "1ad0572fb8dbf3023af2080923435ffdd8d814b3"
-  prior_draft_path: "base-perf-analysis/research-sections/block-builder-flashblocks-throughput/drafts/round-2.md"
-  prior_draft_commit: "38293983ccc77ca0fd2e0f6e0003e2bbd6c0c72e"
-  base_repo_commit: "21a05eeb25095147bb3888c31caba3fea8774a8e"
-  base_repo_head_msg: "feat(common): Add Activation Registry (#2733)"
-  rollup_boost_repo_commit: "ea7fe885"
-  rollup_boost_head_msg: "docs: add CONTRIBUTING.md (#486)"
-  rollup_boost_p2p_spec_commit: "29efac0"
-  rollup_boost_p2p_spec_date: "2026-01-22"
-  reth_mantle_branch_feat_head: "58741b285"
-  reth_mantle_branch_poc_head: "1f8b65668"
-  reth_mantle_common_base: "b39694320157dda2f679ffc438740905afc1966c"
-  upstream_op_jovian_extra_data_bytes: 17
-  evidence_levels_used: ["verified", "estimated", "inferred", "unresolved-discrepant"]
-  src7_methodology:
-    rpc_endpoints:
-      base: "https://mainnet.base.org"
-      mantle: "https://rpc.mantle.xyz"
-    sample_size_per_chain: 500
-    sample_span_days: 6.93
-    sample_span_utc: "2026-05-13T06:18 .. 2026-05-20T04:38"
-    base_block_range: "45931886..46231286"
-    mantle_block_range: "95261404..95560804"
-    sampling_strategy: "uniform spacing across ~300k recent blocks (~5.8d at 2s block time); single eth_getBlockByNumber per sample, full tx list dropped"
-    empty_definition: "tx_count==1 AND gas_used<=100_000 (only L1 attributes deposit, no user/MetaTx)"
-
-revision_metadata:
-  created_by: "agent:research-agent (Deep Research Agent, id=13a888db-49bb-4a19-9906-827729e156d9)"
-  created_at: "2026-05-20T05:30:00Z"
-  round_2_revised_by: "agent:research-agent (Deep Research Agent, id=13a888db-49bb-4a19-9906-827729e156d9)"
-  round_2_revised_at: "2026-05-20T05:10:00Z"
-  round_2_blockers_addressed:
-    - "item-8 + diag-3 — corrected workload-offload misstatement: rollup-boost runs L2 and external builder payload construction in parallel via tokio::join!; local sequencer payload assembly is NOT offloaded"
-    - "src-7 — on-chain sampling filled for both Base and Mantle mainnet (500 blocks × 7 days each); item-3 empty-block headline, item-6 baseline, item-9 ROI updated with sampled data"
-  round_3_revised_by: "agent:research-agent (Deep Research Agent, id=13a888db-49bb-4a19-9906-827729e156d9)"
-  round_3_revised_at: "2026-05-20T06:00:00Z"
-  round_3_blockers_addressed:
-    - "must-fix-1 (src-7 empty-block discrepancy labels) — removed the claim that the binomial CI 'accounts for' the ~2/day vs ~86/day gap; recomputed Wilson 95% CI for 1/500 as [0.0353%, 1.1241%] → [15.26, 485.61] blocks/day (round-2's [4, 484] was incorrect math); ~2/day (0.0046%) falls below the lower bound, and P(>=1 empty in 500 | true=2/day) ≈ 2.29% — implausible under current sampling. Relabeled the precise '~2/day' claim as unresolved-discrepant and the '99% reduction' precise percentage as inferred (inferred pre-Azul 200/d vs sampled post-Azul 86/d corresponds to ~57% reduction, not 99%). Qualitative direction (substantial reduction relative to inferred pre-Azul baseline) remains verified."
-    - "must-fix-2 (item-9 Scenario C arithmetic + Phase 0a gate justification) — recomputed Scenario C from stated components: 0.304 × 371,586 + 0.304 × 46,311 + 0.392 × 371,586 ≈ 272,703 gas/block → 1.56× improvement (round-2's 282,838 / 1.62× was arithmetic error). Phase 0a gate threshold (≤20% timing-recoverable, corresponding to ~1.23× throughput) is now explicitly labeled as a heuristic / product-priority gate, not a derived engineering threshold; rationale references the round-2 engineering cost estimate (31–49 weeks / 7–11 engineer-months) and product-priority judgement instead of asserting a hard derived cutoff."
+  mode: deep-draft
+  created_at: "2026-05-22T12:05:00Z"
+  branch_name: research/base-perf-analysis/block-builder-flashblocks-throughput
+  approved_outline_commit: fb1dfc8af1c2aaed09cca8d3684a57066713dea1
+  approval_authority: "Orchestrator gate comment a1de9649-65c6-434c-b92c-263ecbbb5b05; outline file frontmatter still says candidate, but Orchestrator explicitly approved it after adversarial review."
+  historical_artifacts_policy: "May 20 round-1/2/3.md and final.md are historical only and not used as evidence."
+  analyzed_commits:
+    base_base: fc58ee84456ea0339ae900a16fdb5c06f957e948
+    flashbots_rollup_boost: ea7fe88f52f875f022672746b87b2bfb36c4e3be
+    mantle_reth_main: a8423b8b210dab6d7b47f8f597df9fc52e4a8b23
+    mantle_reth_flashblocks_poc: 1f8b656685886da9c325fb65214ec4146be739b6
+    mantle_reth_feat_flashblocks_mantle_aware: 58741b285f7f26ae0e7e2c65ec5d757d56117f5a
+    mantle_v2: feb2a588c7bec3101bb3fc727f0f041769e3b638
+    mantle_op_geth: 34a6a67a9588412ecbee3c3e851c023caba42e43
+evidence_policy:
+  levels:
+    verified-code: "Current checkout code path verified with commit + path:line."
+    verified-data: "RPC sample with exact block range, endpoint, and method recorded."
+    reported: "Official documentation/blog/spec claim not independently recomputed."
+    inferred: "Derived from code structure or bounded model; assumptions stated."
+    unresolved: "Evidence unavailable or insufficient for a firm conclusion."
 ---
 
-# Deep Research Draft — Round 3
+# Executive Summary
 
-## Block Builder 与 Flashblocks 对吞吐量的影响分析
+Base's throughput improvement from builder separation and Flashblocks is not one scalar. It splits into three independent metrics:
 
-## Evidence Level Legend
-
-每条吞吐量相关定量陈述都会带一个标签：
-
-- **verified** — 直接来自上游代码常量、官方文档或可复现的链上抽样。
-- **estimated** — 从直接证据（常量、benchmark、commit log）推导的一阶（first-order）估算，已写明推导链。
-- **inferred** — 来自架构推理或单一来源的间接陈述，需要外部数据复核才能升级为 verified。
-- **unresolved-discrepant** (round-3 引入) — 链上抽样观测结果与上游声明数字**统计上不一致**，且差距**不能**用当前样本的 binomial 噪声解释；需要外部源定义复核或更大样本才能解决。
-
-非吞吐量结论（如代码路径、文件位置、协议字段）若有 file:line + commit SHA 引用即视为事实，不再加标签。
-
----
-
-## Round-3 Revision Summary
-
-本轮（round 3）只针对 Orchestrator 在 dispatch 中列出的两个 must-fix blocker 做改动；其余 round-2 通过 review 的内容保持不变。
-
-1. **must-fix-1（src-7 empty-block discrepancy labels）** — round-2 把"~86/day vs ~2/day"差距标为 *verified-with-discrepancy* 并声称"binomial CI 包含 ~2/day"，这两点都不正确。
-   - **正确的 Wilson 95% CI**：观察 1/500（p̂=0.002），CI = [0.0353%, 1.1241%]，对应 [15.26, 485.61] blocks/day。"~2/day" (0.0046%) **落在下限 0.035% 之外**——current sampling **不能**将差距归因为 binomial 噪声。Round-2 标注的 [4, 484]/day CI 区间为公式错误，本轮作废并修正。
-   - **2/day 假设检验**：若真实速率为 2/day，500-block 样本观察到 ≥1 个空块的概率仅约 2.29%——观测结果在 2/day 假设下 implausible。
-   - **99% reduction 数字**：inferred pre-Azul 200/day vs sampled post-Azul 86/day 仅给出 ~57% 降低，**不构成 99%**；99% 依赖未验证的"post-Azul ≤ 2/day"。
-   - **新标签**：item-3 的"~2/day"精确数字降级为 **unresolved-discrepant**；"99% reduction"精确百分比降级为 **inferred**；**定性方向**（empty block 在 Base post-Azul 是稀有事件、相较 inferred pre-Azul baseline 有 substantial reduction）保持 verified。改动覆盖 Executive Summary headline callout、item-3 empty-block 表与 discrepancy 解释、Evidence label summary、Source Coverage src-7 行。
-2. **must-fix-2（item-9 Scenario C 算术 + Phase 0a gate justification）** —
-   - **Scenario C 算术修正**：使用 round-2 给出的同样分量，0.304 × 371,586 + 0.304 × 46,311 + 0.392 × 371,586 = **272,703 gas/block**（不是 round-2 的 282,838）；改善倍数 = 272,703 / 174,650 ≈ **1.56×**（不是 1.62×）。增量公式 174,650 + 0.304 × (371,586 − 46,311) ≈ 273,534 / 1.566× 与上式一致到 ~1k gas/block 入数误差。本轮表格与 prose 一并修正。
-   - **Phase 0a 20% gate 阈值**：20% recovery 对应理论改善 174,650 + 0.20 × 0.608 × (371,586 − 46,311) ≈ 214,204 gas/block ≈ 1.23×。本轮明确把该阈值标为 **heuristic / product-priority gate**，不是 derived engineering threshold；附上"相对 31–49 周 / 7–11 工程师月 投入，1.23× 改善是否值得做"的 product-priority 论证示例，并指出最终阈值由 Mantle 产品/工程优先级决定。
-
-其余 round-2 通过 review 的 item（item-1、item-2、item-4、item-5、item-7、item-8、diag-1、diag-2、diag-3、diag-4，以及 item-6 baseline 数据本身）维持不变。
-
----
-
-## Round-2 Revision Summary (历史记录，未修改)
-
-round-2 针对 Orchestrator dispatch 列出的两个 must-fix blocker 做改动：
-
-1. **item-8 + diag-3** — 修正"sequencer 主循环 workload offload ~40-60%"的事实错误。基于 `rollup-boost/crates/rollup-boost/src/server.rs` 的实际代码路径（commit `ea7fe885`），rollup-boost 在 `get_payload` 调用中通过 `tokio::join!(l2_fut, builder_fut)`（server.rs:318）**并行运行** L2 candidate 构建和外部 builder 构建，并在 server.rs:343-366 之间二选一。本地 L2 仍然执行完整的 mempool ordering / EVM execute / state-root 工作；**workload 不是被移走，而是被并行复制**。round-2 重写 item-8 文本与 diag-3 Mermaid，把"卸载到 builder"修正为"并行复制 + 选块"，并把 sequencer 收益限定在 op-node 关键路径的"非阻塞调度"与"selection 选到更高 gas_used 的 payload"两个范畴。
-2. **src-7** — 完成 Base mainnet 与 Mantle mainnet 的链上抽样（详见 frontmatter `src7_methodology`），把 item-3 中的"99% empty-block reduction"从 `inferred` 升级到（彼时所称）verified-with-discrepancy（round-3 已修正为 unresolved-discrepant / inferred 组合），把 item-6 中 Mantle baseline 占位升级为实测，把 item-9 中的 ROI 估算用实测数据重新校准。
-
-其余 round-1 通过 review 的 item（item-1、item-2、item-4、item-5、item-7、其余 diag）维持不变。
-
----
-
-## Executive Summary
-
-Base 通过 **rollup-boost**（一个 Engine API 透明代理）将外部 block builder 接入 OP Stack sequencer 的 payload 生产链路，并通过 **Flashblocks** 将单个 2 秒的 L2 block 拆成 8 个 250ms 的 sub-block 进行 pre-confirmation 广播。两者协同贡献的吞吐量提升来自三个机制：
-
-1. **空块消除（empty-block elimination）**：外部 builder 在 sub-block timer 驱动下 250ms × 8 次连续轮询 mempool 并拼接已执行的交易，直到 `block_time` 截止；只有在 mempool 持续为空时才落到空块。本地 L2 在 stock OP Stack 流程下仍可能产出空 candidate payload，但 rollup-boost 的 `BlockSelectionPolicy` 在 builder payload gas ≥ 0.1 × L2 payload gas 时优选 builder 路径——所以 chain 上 finalized 的 block 几乎总是来自 builder 的连续填充结果。
-2. **gas 利用率改善**：`BlockSelectionPolicy::GasUsed` 仅在 builder block 的 gas < L2 block 的 10% 时回退到 sequencer 本地 payload，作为反垃圾闸门；正常情况下默认 prefer builder。这意味着 builder 几乎总是被用来"挤压"出更多有效 gas。选块是 gas 维度的优化，不是延迟优化。
-3. **user-perceived TPS 提升**：Flashblocks 把"用户看到 tx 出现在 block 中"的 latency 从 ≤ 2 秒压到 ≤ 250ms（含网络），但 **链最终 TPS（finalized gas/s）不变**。这两个 TPS 数字必须分开报告。
-
-`mantle-xyz/reth` 上的两个分支：
-- **`flashblocks/poc`** 只在公共基 `b39694320` 之上叠了 2 个 commit（`2461cbed5` 添加 Cargo features，`1f8b65668` 升级 revm 到 v2.2.0-beta.1），**没有任何 flashblocks 相关代码改动**，分支名误导，按 commit-level diff 评估的实际进度 ≈ 0。
-- **`feat/flashblocks-mantle-aware`** 在 OP-reth 上游已经包含 flashblocks 消费侧的基础上，叠了 2 个 commit（`e86ad2478` 添加 Mantle-aware extra_data helpers，`58741b285` 把解码委托给 op-alloy decoders），只覆盖 Mantle Arsia/OP Jovian 17 字节 extra_data 中 `min_base_fee` 的解析，与 producer/sequencer 路径无直接交集。
-
-**结论性建议（基于 round-2 src-7 实测）**：Mantle 主网当前 7 天采样显示 **60.8% 的 block 是系统-tx-only（only L1 attributes deposit），avg gas 利用率仅 0.29%**；Base 同期采样显示 **0.20% 系统-only 块，avg 利用率 8.19%**。Mantle 与 Base 在 builder 机制上的差距远小于在 user demand 上的差距——rollup-boost + Flashblocks 移植对 Mantle 的实际 ROI 取决于"60.8% 空块中有多少是 mempool snapshot timing 失误，多少是真实 demand 缺位"，本轮抽样无法区分这两者。除非配合 demand 端策略，否则单独引入 rollup-boost 不会显著提升 Mantle 有效 TPS。详细可行性见 item-9 round-2 修订。
-
-> ⚠ **Headline figure status (round-3 修订)**：dispatch 要求独立验证"空块率从 ~200/天降至 ~2/天（99% 降低）"。本轮采样保持 round-2 的 Base mainnet 链上抽样结果（500 blocks, 7 天）——系统-only 块比例 0.20%（1/500），外推 ~86 系统-only 块/天。该数字与"~2/天"声明存在 ~40× 差距，并且**统计上不被当前样本支持**：观察 1/500 的 Wilson 95% CI = [0.0353%, 1.1241%] → [15.26, 485.61] 块/天，"~2/天" (0.0046%) **落在下限 0.035% 之外**；若真实速率为 2/day，500 块样本观察到 ≥ 1 个空块的概率仅 ~2.29%。"99% 降低"的精确百分比同样**未被当前样本支持**——使用 dispatch 列出的 inferred pre-Azul baseline ~200/天与 sampled post-Azul ~86/天对照仅得 ~57% 降低，**不构成 99%**。**因此精确数字 "~2/天" 降级为 unresolved-discrepant；精确百分比 "99% reduction" 降级为 inferred**，等待 (a) Flashbots 官方"~2/天"计数方法独立复核、(b) Base post-Azul 大样本（n ≥ 5000）抽样收紧 CI、(c) pre-Azul Base 区段同等抽样对照。**定性方向**（empty block 在 Base post-Azul 是稀有事件、相较 inferred pre-Azul baseline 有 substantial reduction）保持 **verified, qualitative**。
-
----
-
-## Item Findings
-
-### item-1 — rollup-boost 架构与 Engine API 多路复用
-
-**Code locations** (commit `ea7fe885`, repo `flashbots/rollup-boost`)：
-
-- `crates/rollup-boost/src/server.rs:43-98` — `RollupBoostServer` 结构体定义，持有 `l2_client: RpcClient`、`builder_client: RpcClient`、`block_selection_policy: Option<BlockSelectionPolicy>`、`execution_mode: ExecutionMode`、`flashblocks_service: Option<Arc<FlashblocksService>>`、`probes: Arc<Probes>`。Sequencer 看到的"EL"实际是这一层；rollup-boost 既是 Engine API 反向代理也是路由器。
-- `crates/rollup-boost/src/server.rs:541-658` — `fork_choice_updated_v3` 实现：
-  - 若 `payload_attributes.no_tx_pool == true`（即 op-node 在追块/同步），只调 `l2.fork_choice_updated_v3`，不打扰 builder（`server.rs:566-583`）。
-  - 若带 `payload_attributes` 且非 `no_tx_pool`，使用 `tokio::join!(l2_fut, builder_fut)` 并行下发（`server.rs:594`），并把 builder 返回的 `payload_id` 记录下来供后续 `get_payload` 翻译。
-  - 若无 `payload_attributes`（纯 head update），`tokio::spawn` 异步把 FCU 转发给 builder（`server.rs:637-646`），不等待——builder 路径不在 sequencer 主循环的关键路径上。
-- `crates/rollup-boost/src/server.rs:180-207` — `new_payload` 实现：`tokio::spawn` 一个独立任务把 `newPayload` 推给 builder（fire-and-forget），同时同步 `await l2.new_payload`。**L2 是 critical path**，builder 是 warm-up 路径。
-- `crates/rollup-boost/src/server.rs:209-392` — `get_payload` 实现：构造 `l2_fut`（`server.rs:215`）与 `builder_fut`（`server.rs:251-316`），`tokio::join!` 并行执行（`server.rs:318`），等两路 payload 都到才进选块；`builder_fut` 内部还要处理 `external_state_root` 模式（`server.rs:309-315`，rollup-boost 可代算 state root）与 builder→L2 newPayload 回灌（`server.rs:297-307`，所有 builder payload 都会经 `l2.new_payload` 校验一次）。
-
-**Protocol role**：rollup-boost 是 sequencer ↔ builder 之间的双向 Engine API 透明代理，对 sequencer 暴露完整的 `engine_*` 接口，对 builder 既转发 FCU/getPayload 又承担 payload validation 回灌；它本身不签名、不广播，只做路由 + 选块 + 健康检查。
-
-**Data flow summary**：
-1. op-node (sequencer) → rollup-boost：`engine_forkchoiceUpdatedV3(state, attrs)`、`engine_newPayloadV4(payload)`、`engine_getPayloadV5(payload_id)`。
-2. rollup-boost → L2 (base-reth-node / op-geth)：原样转发 FCU/newPayload，独占 critical path。
-3. rollup-boost → external builder：异步转发 FCU、newPayload（fire-and-forget），同步 getPayload（并行 join）。
-4. rollup-boost → op-node：返回选中的 payload + 状态，必要时把 builder payload 拉回 L2 做 `new_payload` 校验后再选块。
-
-**Latency breakdown**（estimated，不含网络抖动）：
-
-| Hop | Stage | 量级（一阶估算） | 证据 |
+| Metric | What improved | Evidence label | Draft conclusion |
 |---|---|---|---|
-| op-node ↔ rollup-boost | JSON-RPC 解析 + 反序列化 | < 1ms | `crates/rollup-boost/src/server.rs:155-179`（trait impl 直接 dispatch，无中间序列化层） |
-| rollup-boost ↔ L2 | engine API HTTP 调用 + reth payload build | 主循环主要时间，~block_time | OP Stack 默认 EL 构建时延，未独立 benchmark |
-| rollup-boost ↔ builder | engine API + builder 内部 Flashblocks 循环 | 与 L2 并行；getPayload 是 join 同步等待两路 | `server.rs:318` `tokio::join!` |
-| rollup-boost 内部 | BlockSelectionPolicy 评估 | ~µs（纯 i64 比较） | `crates/rollup-boost/src/selection.rs:17-38` |
-| builder payload 回灌 L2 | 一次额外 `l2.new_payload` | EL 校验全块开销，~10–50ms | `server.rs:297-307` |
+| Effective gas throughput | More gas used per second by reducing empty/underfilled blocks and keeping a better payload candidate ready | verified-code + limited verified-data | Builder separation and op-rbuilder can improve utilization when the local EL would otherwise return an empty or weaker payload. The sampled windows here show zero empty blocks on both Base and Mantle, so the public 99% empty-block reduction claim remains `reported`, not revalidated at daily scale. |
+| Finalized TPS | Final block cadence and gas limit that the canonical chain accepts | verified-code + inferred | Flashblocks do not by themselves increase final block cadence: the chain still seals a full L2 block on the standard 2s cadence. Final TPS only rises if gas limit, tx selection, execution, DA, or blockspace utilization improve. |
+| User-perceived TPS / latency | How quickly applications can observe inclusion-like state before the full block is sealed | verified-code + reported | Base docs and code support a 200ms preconfirmation surface. This is a UX/latency gain, not a finality gain. |
 
-**关键结论**：rollup-boost 不会把 sequencer 主循环 latency 显著拉长，因为 (a) 所有"快路径"（L2 newPayload / 关键 FCU）都直走 L2；(b) builder 路径是 spawn/join 并行；(c) `get_payload` 必须 join 等到 builder 返回——但 builder 慢/挂时 `builder_payload` 为 `None`，直接 fallback 到 L2（`server.rs:343-367`）。**No-op SLO impact when builder works; degraded gracefully when builder is slow.** 但注意：builder 即使成功返回，关键路径 latency = max(L2, builder)；这不是"提速"，是"维持原 SLO + 选块"。详见 item-8 修订。
+The main architectural change is rollup-boost as a CL/EL Engine API proxy. `engine_forkchoiceUpdatedV3` is sent to the local L2 EL and conditionally to an external builder; `engine_getPayload` races local and builder payloads, maps L2 payload IDs to builder payload IDs, validates or externalizes the state-root calculation path, and returns either the builder payload or the local fallback. Code evidence is in `flashbots/rollup-boost@ea7fe88:crates/rollup-boost/src/server.rs:63-73`, `:180-206`, `:209-318`, and `:541-631`.
 
----
+The selection rule is deliberately builder-favoring. With `BlockSelectionPolicy::GasUsed`, the local block wins only if builder gas used is strictly less than 10% of local gas used; exact 10% and above select builder. This protects against empty or severely underfilled builder blocks but does not prove that builder latency is always free. The proxy waits for local `getPayload` and builder `getPayload` in the same `tokio::join!` path, so production timeout configuration remains an important uncovered input. Code evidence: `flashbots/rollup-boost@ea7fe88:crates/rollup-boost/src/selection.rs:4-37`, tests at `:46-107`, and selection integration at `crates/rollup-boost/src/server.rs:318-367`.
 
-### item-2 — `BlockSelectionPolicy` 与 Builder/Local payload 选择策略
+Base Flashblocks move perceived inclusion from one 2s block result to incremental sub-blocks. In `base/base@fc58ee8`, the builder has a WebSocket publisher, a 2s block-time default, 250ms default flashblock interval in code, test config at 200ms, budget slicing across gas/DA/state-root resources, and a diff payload schema that omits `base` after the first flashblock. Official Base docs describe 10 Flashblocks per 2s block at 200ms; the code currently exposes configurable interval behavior rather than a hardcoded single constant. Evidence: `base/base@fc58ee8:crates/builder/core/src/config.rs:13-107`, `:139-178`; `crates/builder/core/src/flashblocks/payload.rs:277-302`, `:338-413`, `:657-675`, `:811-840`, `:844-883`; Base docs at https://docs.base.org/base-chain/flashblocks/overview.
 
-**Code locations**（commit `ea7fe885`）：
+The required src-6 caveat is resolved as follows: the current `base/base@fc58ee8` checkout has no `flashblocks_p2p.md` under the repository top-level search used in this run. The canonical checked source for P2P claims in this draft is `flashbots/rollup-boost@ea7fe88:specs/flashblocks_p2p.md`. That spec defines `flblk` version 1, authorization messages, multipeer gossip, duplicate suppression, and rollup-boost as coordinator rather than every-message data ferry (`specs/flashblocks_p2p.md:26-38`, `:57-107`, `:133-145`, `:157-192`).
 
-- `crates/rollup-boost/src/selection.rs:1-38` — 整个 BlockSelectionPolicy 实现，**目前只有一个变体 `GasUsed`**（`selection.rs:6-15`，clap ValueEnum）：
+For Mantle, the production baseline still looks like a direct op-node -> EL Engine API block-building flow, not a production builder-sidecar flow. Mantle `op-node` prepares payload attributes and emits `BuildStartEvent`, the engine controller directly calls `ForkchoiceUpdate`, and op-geth builds an empty payload first then repeatedly updates a full payload in a background goroutine unless `NoTxPool` is set. Evidence: `mantle-v2@feb2a58:op-node/rollup/sequencing/sequencer.go:487-615`; `mantle-v2@feb2a58:op-node/rollup/engine/engine_controller.go:1087-1123`; `op-geth@34a6a67:miner/payload_building.go:90-185`, `:232-325`.
 
-  ```rust
-  // selection.rs:24-34
-  BlockSelectionPolicy::GasUsed => {
-      let builder_gas = builder_payload.gas_used() as f64;
-      let l2_gas = l2_payload.gas_used() as f64;
-      // Select the L2 block if the builder block uses less than 10% of the gas.
-      if builder_gas < l2_gas * 0.1 {
-          (l2_payload, PayloadSource::L2)
-      } else {
-          (builder_payload, PayloadSource::Builder)
-      }
-  }
-  ```
+The two Mantle reth branches are not production-equivalent Flashblocks. `flashblocks/poc@1f8b656` is primarily a consumer/pending-state and consensus-injection POC: it receives WebSocket Flashblocks, orders them, builds pending blocks, optionally computes state root after index 9, and sends FCUs from completed sequences. The `feat/flashblocks-mantle-aware@58741b2` assessment is branch-range/tree-state evidence at the `58741b2` tip: it layers Mantle-specific chain spec, `extra_data`, receipt/RPC/txpool adaptations, and test coverage on top of the POC direction, not a single isolated tip-commit claim. I did not find a complete external producer equivalent to Base op-rbuilder or a rollup-boost production wiring in those branches, so the Mantle recommendation is measurement-first, then consumer/RPC POC hardening, then builder separation.
 
-- `crates/rollup-boost/src/server.rs:343-367` — 调用点：
-  ```rust
-  if let Some(builder_payload) = builder_payload {
-      if execution_mode.is_dry_run() {
-          (l2_payload, PayloadSource::L2)
-      } else if let Some(selection_policy) = &self.block_selection_policy {
-          selection_policy.select_block(builder_payload, l2_payload)
-      } else {
-          (builder_payload, PayloadSource::Builder)  // default: prefer builder
-      }
-  } else {
-      (l2_payload, PayloadSource::L2)
-  }
-  ```
+# Item Findings
 
-**核心语义**（verified from code）：
+## 1. Engine API multiplexing and payload-id mapping
 
-1. **没有 builder payload → 必 L2**（`server.rs:365-367`）。
-2. **DryRun 模式 → 必 L2**（`server.rs:358-360`），常用于 builder rollout 时的 shadow mode。
-3. **未配置 policy（默认） → 必 builder**（`server.rs:362-364`）——这意味着 policy 不是必选项，rollup-boost 出厂行为是 trust-builder。
-4. **配置了 `GasUsed` policy** → 只在 `builder_gas < 0.1 * l2_gas` 时回退 L2；这是一道反垃圾闸门（防止 builder 因 mempool 拉取失败、节点 peering 故障等空跑），不是细粒度优选。
+**Finding.** rollup-boost is a sidecar Engine API server with both local L2 and external builder clients. It stores execution mode, optional block selection policy, probe state, and a `payload_to_fcu_request` map (`flashbots/rollup-boost@ea7fe88:crates/rollup-boost/src/server.rs:63-73`). During construction, the builder client may be wrapped either in Flashblocks WebSocket mode or P2P mode (`server.rs:87-113`).
 
-**关于 tie-breaker / state-root 校验 / tx 顺序**：
+**Route matrix.**
 
-- 没有 tie-breaker（gas 持平时按代码 fallthrough 走 `else` → builder 胜，`selection.rs:30-34`）。
-- **没有 selection 阶段的 state-root 一致性检查**——但所有 builder payload 都已经在更早一步 `l2.new_payload(payload)` 中被 L2 同步执行并 EL-level 校验过（`server.rs:297-307`），如果 state root 不对，那一步会直接返回 `INVALID`，根本进不到 select 这一步。
-- tx 顺序：rollup-boost 完全不审计 builder 的 tx 排序，权力交给 builder。
+| Method | Local L2 path | Builder path | Conditions | Evidence |
+|---|---|---|---|---|
+| `engine_newPayload` | Always sent to local L2 and response returned | Async spawned to builder | skipped when execution mode disabled or unhealthy builder is skipped | `server.rs:180-206` |
+| `engine_forkchoiceUpdatedV3` without payload attrs | Local L2 result returned | forwarded to builder to keep sync when not disabled/skipped | health and execution mode gate | `server.rs:541-631`, especially `:551-560`, `:633-635` |
+| `engine_forkchoiceUpdatedV3` with payload attrs + `no_tx_pool` | Local only | skipped | `no_tx_pool` means sync or forced attrs, not builder txpool selection | `server.rs:562-587` |
+| `engine_forkchoiceUpdatedV3` with payload attrs + txpool | Local and builder in parallel | yes | stores builder payload ID if present | `server.rs:588-631` |
+| `engine_getPayload` | local future starts first | builder future uses mapped payload ID | disabled mode returns local only; missing builder mapping returns local fallback | `server.rs:209-318` |
 
-**Latency vs gas trade-off**：
+The payload-id mapping is explicit: FCU returns an L2 payload ID, the builder may return a different payload ID, and `payload_trace_context.store(...)` records both (`server.rs:599-623`). Later `getPayload` translates L2 payload ID to builder payload ID before calling builder `get_payload` (`server.rs:255-284`). This is a correctness-critical boundary: the sequencer sees the L2 ID, but the builder may hold the candidate block under its own ID.
 
-- 因为 `get_payload` 是 `tokio::join!(l2_fut, builder_fut)`（`server.rs:318`），结果等 `max(l2_lat, builder_lat)`。Builder 慢于 L2 时，主循环延迟由 builder 决定。
-- 但 builder 慢到一定阈值会被 `Probes` 健康检查标 `Unhealthy`（`server.rs:394-396`），结合 `ignore_unhealthy_builders` 配置可在选块前直接跳过 builder（`should_skip_unhealthy_builder`）。
-- 没有显式的"等待 builder 多少 ms 后超时回退 L2"的代码常量；超时由 `RpcClient` 自身的 HTTP/timeout 决定。
+**External state-root path.** If `external_state_root` is enabled, rollup-boost sends a new FCU to local L2 with the builder transactions and `no_tx_pool: true`, then obtains a local payload with a calculated state root (`server.rs:398-455`). This matches Base's public engineering description of moving expensive per-flashblock state root work off the hot sub-block loop and using op-geth for the finalized state root path (reported source: https://blog.base.dev/flashblocks-deep-dive).
 
-**Throughput impact**（estimated）：
+**Confidence.** verified-code for route matrix and mapping; inferred for production parameter values because the public checkout does not expose Base's exact deployed rollup-boost timeout/health configuration.
 
-- gas-throughput 上限并非 BlockSelectionPolicy 提升的——它实际是 builder 内部的 `BasePayloadBuilder::build_payload` 在 deadline 内尽量装填的副产物（详见 item-3）。
-- 10% 阈值的意义：保证不会把"empty builder payload"挤掉一个正常本地块，定量上对吞吐量是 **保底**（lower-bound floor）而非 **上限提升**（upper-bound lift）。
+## 2. `BlockSelectionPolicy::GasUsed` decision tree
 
-**配置入口**（commit `ea7fe885`）：
-- `crates/rollup-boost/src/cli.rs` 暴露 `--block-selection-policy gas-used`（clap ValueEnum derive）。
-- Base 主网部署文档（未在本仓库内）应说明实际是否启用该 policy；从代码看默认是关闭（pure prefer-builder）。
-- **Action item** for follow-up：确认 Base 主网生产部署的 rollup-boost CLI 参数（src-6 Flashbots 公开博客或 base 仓库部署 manifest）。
+**Finding.** The policy is simpler than a score function: when both payloads exist, select the local L2 payload only when `builder_gas < l2_gas * 0.1`; otherwise select builder. That means builder wins on equal gas, higher gas, and even exactly 10% of local gas (`flashbots/rollup-boost@ea7fe88:crates/rollup-boost/src/selection.rs:4-37`; boundary tests at `:46-107`).
 
----
+**Decision tree.**
 
-### item-3 — 空块消除机制与有效 gas-throughput 提升
-
-**Mechanism**（verified from base commit `21a05eeb2`）：
-
-base 的 builder 不是"等到 mempool 有交易再开工"，而是**先无条件出 fallback 块、再在 250ms tick 驱动下不断 append 交易**，由 deadline 决定何时收手。
-
-代码路径：
-
-1. `base/crates/builder/core/src/flashblocks/payload.rs:261-302` — `build_payload` 第一步先 `build_block` 一个 fallback empty block 并立刻 `ws_pub.publish` 到 flashblock_index 0：
-   ```
-   build_block(... skip_flashblocks_building = ...)?  // ~line 261-266
-   self.payload_tx.send(payload.clone()).await ...    // ~line 268
-   ws_pub.publish(&fb_payload, ctx.block_number(), 0) // ~line 287
-   ```
-   这一步只放 sequencer-injected txns（如 L1 attributes deposit）——满足"最坏情况一定有块"。
-2. `base/crates/builder/core/src/flashblocks/payload.rs:377-413` — spawn 一个 tokio interval timer：每 `flashblocks_interval`（默认 250ms）触发一次 child cancellation token，把当前 flashblock build 切断，让 main loop 进入下一个 flashblock。
-3. `base/crates/builder/core/src/flashblocks/payload.rs:419-498` — 主 loop：每个 flashblock 迭代调用 `build_next_flashblock`，从 mempool 取 best transactions 持续执行直到 (a) cancellation token 触发（250ms 到点）、(b) gas / DA / execution time / state-root-gas budget 任一耗尽、(c) `BestFlashblocksTxs` 报 `PoolEmpty` 或 `PoolDrained`。
-4. `base/crates/builder/core/src/flashblocks/context.rs:82-100` — `FlashblockSelectionOutcome` 枚举 = `{ Cancelled, PoolEmpty, PoolDrained }`；selection metrics 用这些标签上报，"pool_empty" 是空块成因的可观测信号。
-5. `base/crates/builder/core/src/flashblocks/payload.rs:431-441` — 当 `flashblock_index > target_flashblock_count` 时进入 `finalize_payload`，把最终 sealed block 写入 `finalized_cell`，让 rollup-boost 的 `getPayload` 拿到完整 8×250ms = 2s 的 block。
-
-**为什么这会消空块**（关键：作用在 builder payload，不在 L2 candidate）：
-
-- Stock OP Stack：sequencer block timer 在 t=2s 到点 → 调 `getPayload` → EL 看 mempool → 若空就出 0-tx block。**单次 check，错过窗口直接空**。
-- Base + Flashblocks producer 路径：在同一个 2s 窗口内，**外部 builder 内部**至少做 8 次"取 mempool 顶部 → 执行 → 装入"循环。**任何一次窗口内有交易抵达，都会被装进当前 flashblock**，并在最终 `finalize_payload` 时塞进 builder 的最终 sealed block。
-- **rollup-boost 选块**：本地 L2 候选块如果仍按 stock 流程产出空块（即 L2 EL 在 t=2s 看 mempool 为空），但 builder payload 非空且 gas ≥ 0.1 × L2 gas，那么 `BlockSelectionPolicy::GasUsed`（或默认 prefer-builder）会**优选 builder payload**，使空 L2 候选不被采纳为 finalized block。因此从 *finalized chain* 的视角看，empty block 几乎绝迹。
-- 注意：empty-block 减少**不来自**"sequencer 主循环里跳过 empty"——本地 L2 仍照常出 empty candidate；改变的是 *选块结果*，因 builder 持续装填且默认优选。
-
-**Empty-block claim 验证（round-3 修订 src-7 标签）**：
-
-| 维度 | 值 | 标签 |
+| Condition | Selected payload | Evidence |
 |---|---|---|
-| Base mainnet 系统-only block 比例（src-7 实测） | 0.20%（1/500），外推 ~86 块/天 | **verified** (src-7 sampling) |
-| Base mainnet 平均 gas 利用率 | 8.19%（avg 32.76M / 400M gas_limit；median 7.31%） | **verified** (src-7 sampling) |
-| Base mainnet 平均 tx/block | 187 笔（median 158） | **verified** (src-7 sampling) |
-| "~2/天" 精确数字声明（dispatch / Flashbots claim） | sampled post-Azul ~86/天 与之差 ~40×。Wilson 95% CI for 1/500 = [0.0353%, 1.1241%] → [15.26, 485.61] 块/天 — **"~2/天" (0.0046%) 落在下限之外**；若真实速率为 2/day，500-block 中至少 1 个空块的概率仅 ~2.29% — **统计上不被当前样本支持** | **unresolved-discrepant** (current sampling rejects 2/day; awaiting (a) Flashbots 官方"~2/天"定义复核 或 (b) post-Azul n≥5000 抽样收紧 CI 或 (c) pre-Azul 对照抽样) |
-| "99% reduction" 精确百分比（pre→post） | 使用 inferred pre-Azul ~200/天 与 sampled post-Azul ~86/天 对照仅给出 (200−86)/200 ≈ **57% 降低**；"99%" 数字依赖未验证的"post-Azul ≤ 2/天" | **inferred** (pending pre-Azul on-chain sampling + source-definition reconciliation; precise percentage 不被当前数据支持) |
-| 定性方向："empty block 在 Base post-Azul 是稀有事件 / substantial reduction relative to inferred pre-Azul baseline" | 1/500 实测 + 8.19% gas 利用率 + 187 tx/block，相对 inferred pre-Azul ~200/天有显著下降；机制上 builder 250ms × 8 持续填充能把 mempool 2 秒全空概率压到 ~0 | **verified, qualitative** |
+| execution mode disabled | local L2 | `server.rs:217-247` |
+| builder has no mapped payload ID | local L2 | `server.rs:255-268`, `:365-367` |
+| builder `getPayload` errors | local L2 | `server.rs:282-294`, `:329-367` |
+| dry run | local L2 | `server.rs:356-360` |
+| policy absent and builder payload exists | builder | `server.rs:360-364` |
+| `GasUsed` and builder gas < 10% local gas | local L2 | `selection.rs:24-34` |
+| `GasUsed` and builder gas >= 10% local gas | builder | `selection.rs:24-34`; test exact 10% at `:78-107` |
 
-**Sampling methodology**：见 frontmatter `src7_methodology`。500 blocks per chain, uniform spacing over ~300k recent blocks (~6.93 days); `eth_getBlockByNumber` single calls; "empty" = `tx_count == 1 AND gas_used <= 100_000`（即只含 L1 attributes deposit）。
+**Latency vs utilization.** The code favors liveness through a local fallback and favors utilization by preferring builder unless it is severely underfilled. The latency tradeoff is not fully determined by this policy because `get_payload` waits for both local and builder futures with `tokio::join!` before selection (`server.rs:318-367`). Therefore the safe conclusion is: selection protects against bad builder content and API failure, but production latency depends on RPC timeouts, builder response distribution, and op-node block sealing budget. Those deployment parameters were not public in the checked repos.
 
-**Discrepancy 复核（round-3 修正 round-2 的 CI 错误）**：
+**Builder health.** Probes expose `Healthy`, `PartialContent`, and `ServiceUnavailable` (`crates/rollup-boost/src/probe.rs:19-30`) and HTTP endpoints `/healthz`, `/readyz`, and `/livez` (`probe.rs:116-124`). If `ignore_unhealthy_builders` is enabled, an unhealthy builder is skipped (`server.rs:394-396`, `:556-560`). This is a liveness control, not a direct throughput amplifier.
 
-- (a) **Wilson 95% CI 重新计算**：观察 1/500（p̂ = 0.002, z = 1.96），CI = [0.0353%, 1.1241%]，对应 [15.26, 485.61] 块/天 ≈ **[15, 486] 块/天**。Round-2 标注的 "[4, 484] 块/天" CI 区间为公式错误，本轮作废。
-- (b) **"binomial CI accounts for the gap" 论述撤回**：~2/天 (0.0046%) **落在 Wilson CI 下限 0.0353% 之外**，因此 binomial 噪声**不能**解释 ~86/天 vs ~2/天 的差距。
-- (c) **2/day 假设检验**：若真实速率为 2/day (0.0046%)，500-block 样本观察到 ≥ 1 个空块的概率 = 1 − (1 − 0.0046%)^500 ≈ **2.29%** — 观测结果在 2/day 假设下 implausible under current sampling。
-- (d) **57% 降低 vs 99% 降低**：使用 inferred pre-Azul ~200/天 与 sampled post-Azul ~86/天对照，得到 (200 − 86) / 200 ≈ 57% 降低，**而非 99%**。99% 数字依赖未验证的"post-Azul ≤ 2/天"。
-- (e) **可能的外部解释**（需要外部源验证才能升级标签）：
-  - 官方"~2/天"可能采用更严格的 empty 定义（例如剔除 builder fallback 块、剔除特定 system-deposit 类型 或 only-if-zero-L2-user-signal）；
-  - 或 ~2/天数字来自 different sampling window / different chain segment；
-  - 或本轮抽样窗口包含特别活跃的链上事件，post-Azul 平均速率确实在 ~2/天附近但本采样偏高（需要更大样本检验）。
-- (f) **降级与保留**：精确 "~2/天" 数字 — **unresolved-discrepant**；精确 "99% reduction" 百分比 — **inferred**；定性方向（substantial reduction relative to inferred pre-Azul baseline、empty block 在 Base post-Azul 是稀有事件）— **verified, qualitative**。
+**Confidence.** verified-code for decision tree; inferred for real-world latency impact.
 
-**机制层面验证（verified）**：上述代码路径在原理上 *能* 把"mempool 在 2s 窗口内瞬时为空才出空块"的概率推到极低——只要 250ms 子窗口内至少有 1 笔交易到达，最终 builder block 就非空，再被 selection 选中。在 Base 主网 ~187 tx/block (avg) 负载下，平均每 250ms 有 ~23 笔交易抵达，2s 全空概率 ≈ Poisson(λ=187) 的 P(X=0) → 极小。这与"empty 是稀有事件"的 quantitative claim 一致。
+## 3. Flashblocks producer overhead: schema, cadence, and WebSocket path
 
-**Throughput impact - 两个 TPS 数字**：
+**Producer ownership.** In Base's checked code, `BasePayloadBuilder` owns the transaction pool, node client, payload handler channel, WebSocket publisher, and builder config (`base/base@fc58ee8:crates/builder/core/src/flashblocks/payload.rs:75-94`). The Flashblocks builder deliberately does not support regular `try_build` or `build_empty_payload` in this context (`payload.rs:111-138`).
 
-| 指标 | 定义 | Base 实测（src-7 sampling） | 改善来源 |
+**Cadence.** The code config has a default 2s block time and 250ms Flashblocks interval, while test config uses 200ms (`crates/builder/core/src/config.rs:139-178`). Official docs describe Base's public behavior as 10 Flashblocks within a 2s block, with 200ms arrivals and index 0 containing system transactions only (reported source: https://docs.base.org/base-chain/flashblocks/overview). Therefore the implementation is configurable; Base's public service target is 200ms.
+
+**Budget split.** After pre-steps and fallback payload publication, `build_payload` calculates the number of Flashblocks, skips Flashblocks when `no_tx_pool` is set, emits index 0, and slices gas/DA/state-root/execution budgets by Flashblock count (`payload.rs:255-302`, `:330-365`). It then drives a timer loop at `flashblocks_interval` (`payload.rs:377-413`).
+
+**Payload-size optimization.** The wire schema splits stable base fields from mutable diff fields. `ExecutionPayloadBaseV1` holds parent hash, number, gas limit, timestamp, extra data, and base fee; `ExecutionPayloadFlashblockDeltaV1` holds state root, receipts root, logs bloom, gas used, block hash, transactions, withdrawals, and blob gas (`crates/common/flashblocks/src/payload.rs:9-80`). `base` is skipped when `None` (`payload.rs:75-76`), and tests pin that `base` is omitted, not serialized as null (`payload.rs:194-210`). In the builder loop, non-initial Flashblocks set `fb_payload.base = None` before publishing (`crates/builder/core/src/flashblocks/payload.rs:657-675`). After Azul activation, metadata omits access list, receipts, and account balances (`payload.rs:1111-1126`), consistent with the Azul blog's reported payload-size reduction claim (https://blog.base.dev/introducing-base-azul).
+
+**WebSocket path.** The publisher serializes each payload to JSON, stores it in a ring buffer, broadcasts it on a Tokio broadcast channel, and records byte size (`crates/builder/publish/src/publisher.rs:95-124`). Defaults are channel capacity 100 and ring buffer 16 (`publisher.rs:26-30`, `:57-75`). Slow subscribers may lag, but reconnecting clients can replay recent entries from the ring buffer. This is a fan-out buffer, not a peer gossip protocol.
+
+**State-root strategy.** Intermediate `build_block` calls can pass `calculate_state_root=false`, leaving state root zero; finalization computes state root via `finalize_payload` (`payload.rs:811-840`) and `build_block` only runs trie state-root calculation when requested (`payload.rs:937-996`). This code-level structure supports the reported Base optimization that moved state root off every sub-block and reduced P50 Flashblock build time from 150ms to 10ms (reported source: https://blog.base.dev/flashblocks-deep-dive).
+
+**Confidence.** verified-code for schema/path; reported for public 200ms service target and P50 timing.
+
+## 4. Flashblocks consumer pending-state behavior
+
+**Base consumer state machine.** The consumer processes two update types: canonical blocks and Flashblocks (`base/base@fc58ee8:crates/execution/flashblocks/src/processor.rs:37-44`). It updates pending state on each Flashblock, caches Flashblocks when the parent canonical header is missing, and replays cached entries after the canonical block lands (`processor.rs:80-121`, `:135-163`).
+
+Sequence validation rejects gaps and non-zero first Flashblocks. Valid transitions are next-in-sequence and first-of-next-block; duplicates are ignored; non-sequential gaps reset pending state (`crates/execution/flashblocks/src/validation.rs:7-75`; integration in `processor.rs:279-341`). Reconciliation compares tracked transaction hashes with the canonical block and chooses catch-up, reorg rebuild, depth-limit reset, or continue (`validation.rs:78-188`; `processor.rs:179-269`).
+
+**Pending-state cost.** Rebuilding pending state groups Flashblocks by block, assembles each block, creates an EVM on top of the canonical parent, recovers senders in parallel, executes transactions, and accumulates bundle state and overrides (`processor.rs:344-492`). This is a real CPU and memory cost for RPC nodes: it provides the preconfirmation surface by replaying pending execution locally.
+
+**RPC semantics.** `eth_getBlockByNumber(pending)` returns pending Flashblocks state when available and falls back to latest otherwise (`crates/execution/flashblocks/src/rpc/eth.rs:190-213`). Receipts check canonical first then pending Flashblocks (`rpc/eth.rs:215-240`), balances can read pending state (`rpc/eth.rs:242-260`), and pubsub exposes `newFlashblocks`, `pendingLogs`, and Flashblock transaction streams (`crates/execution/flashblocks/src/rpc/pubsub.rs:33-52`, `:74-123`, `:125-221`, `:224-270`).
+
+**Execution cache.** The engine-tree cached execution provider only reuses Flashblocks execution results when parent hash and transaction order align (`crates/execution/engine-tree/src/cached_execution.rs:21-90`). This bounds correctness risk but also means cache hits are conditional, not guaranteed. Flashblock cache ahead is capped at five blocks to limit memory growth (`crates/execution/flashblocks/src/cache.rs:8-22`, `:39-72`).
+
+**Confidence.** verified-code.
+
+## 5. WebSocket vs P2P `flblk/1` throughput comparison
+
+**Canonical P2P location.** The dispatch caveat is resolved: current `base/base@fc58ee8` did not contain `flashblocks_p2p.md` in the checked tree; the canonical source used here is `flashbots/rollup-boost@ea7fe88:specs/flashblocks_p2p.md`.
+
+**WebSocket model.** The existing Base builder WebSocket publisher is a centralized fan-out: JSON serialization, broadcast channel, ring buffer replay, and subscriber count tracking (`base/base@fc58ee8:crates/builder/publish/src/publisher.rs:32-47`, `:95-124`). This is simple and low-latency for direct RPC/provider consumers but concentrates outbound bandwidth and backpressure controls at the publisher/proxy layer.
+
+**P2P model.** The P2P spec replaces WebSocket proxy propagation with a devp2p subprotocol named `flblk` version 1 (`flashbots/rollup-boost@ea7fe88:specs/flashblocks_p2p.md:133-145`). It introduces `Authorization`, `AuthorizedMsg`, `StartPublish`, and `StopPublish` structures (`specs/flashblocks_p2p.md:57-127`) and requires authorizer and builder signature checks (`specs/flashblocks_p2p.md:157-168`). The design uses multipeer gossip and duplicate suppression (`specs/flashblocks_p2p.md:140-145`).
+
+**Throughput tradeoff.**
+
+| Dimension | WebSocket fan-out | P2P `flblk/1` |
+|---|---|---|
+| Producer outbound bandwidth | Central publisher/proxy sends to all subscribers | Builder/gossip peers spread fan-out |
+| Message overhead | JSON payload plus WebSocket framing | Binary-ish protocol plus authorization/signature/start-stop messages |
+| Verification cost | Endpoint trusts stream source and local parser | Peers verify authorizer and builder signatures |
+| HA behavior | Failover may require stream handoff or reconnection | Spec models single-publisher coordination and failover |
+| Implementation status in this run | Verified in Base publisher code | Verified as rollup-boost spec and P2P FCU authorization wrapper; production deployment not proven |
+
+rollup-boost has a P2P RPC wrapper that sends `flashblocks_fork_choice_updated_v3` with an authorization when payload attributes are present and execution mode is enabled (`crates/rollup-boost/src/client/rpc.rs:427-509`). This is implementation evidence for authorization delivery, but not a full throughput benchmark.
+
+**Confidence.** verified-code/spec for mechanics; inferred for throughput model because no public WebSocket-vs-P2P benchmark was found.
+
+## 6. Empty-block 99% reduction claim and fresh sampling
+
+**Reported claim.** Base's Azul blog reports an empty-block reduction of about 99%, from about 200/day to about 2/day, under "Increased Builder Reliability" (https://blog.base.dev/introducing-base-azul). This draft treats that as `reported`.
+
+**Fresh sample method.** I sampled block headers via public JSON-RPC using `eth_getBlockByNumber` with `full_transactions=false`. Empty block definitions recorded:
+
+- `empty_tx_count`: `len(transactions) == 0`
+- `gas_zero_count`: `gasUsed == 0`
+- effective gas throughput: `sum(gasUsed) / (last_timestamp - first_timestamp)`
+
+**Fresh 30-block batched sample (completed in this rerun).**
+
+| Window | Endpoint | Blocks | UTC timestamps | empty tx / gas zero | avg gas used | median gas used | effective gas/s | Evidence |
+|---|---|---:|---|---:|---:|---:|---:|---|
+| Base current | `https://mainnet.base.org` | 46330937-46330966 | 2026-05-22T11:40:21Z to 2026-05-22T11:41:19Z | 0 / 0 | 41,460,031.50 | 40,912,648 | 21,444,843.88 | verified-data |
+| Mantle current | `https://rpc.mantle.xyz` | 95660455-95660484 | 2026-05-22T11:40:22Z to 2026-05-22T11:41:20Z | 0 / 0 | 184,968.97 | 168,882.5 | 95,673.60 | verified-data |
+| Base pre-May-13 target | `https://base-rpc.publicnode.com` | 45877327-45877356 | 2026-05-12T00:00:01Z to 2026-05-12T00:00:59Z | 0 / 0 | 45,589,400.47 | 43,169,013 | 23,580,724.38 | verified-data |
+| Base post-May-13 target | `https://base-rpc.publicnode.com` | 45963727-45963756 | 2026-05-14T00:00:01Z to 2026-05-14T00:00:59Z | 0 / 0 | 48,827,646.57 | 41,022,211 | 25,255,679.26 | verified-data |
+
+**Prior larger sample attempt.** A 300-block batched rerun hit public RPC rate limiting (`-32016 over rate limit`) before producing a complete result. Earlier notes from this session had 300-block windows, but because the completed fresh command in this run only returned 30-block windows, this draft uses the 30-block sample as verified and treats daily-scale validation as a gap.
+
+**Interpretation.** The samples do not independently prove the 99% daily reduction because all sampled windows have zero empty blocks, including the short pre-May-13 Base window. They do support a narrower statement: in these four short windows, neither Base nor Mantle produced `len(transactions)==0` or `gasUsed==0` blocks. The Azul claim likely needs a full-day query over the same definition Base used, preferably using indexed data rather than rate-limited public RPC.
+
+**Confidence.** verified-data for the table only; reported for the 99% claim; unresolved for daily empty-block delta.
+
+## 7. Mantle baseline block-building status
+
+**Current flow.** Mantle's checked `op-node` sequencing path prepares payload attributes, sets `NoTxPool` for drift, activation, and recovery cases, and emits `BuildStartEvent` (`mantle-v2@feb2a58:op-node/rollup/sequencing/sequencer.go:487-615`). The engine controller directly calls the execution engine's `ForkchoiceUpdate` and expects a payload ID (`op-node/rollup/engine/engine_controller.go:1087-1123`). Sealing calls `GetPayload` with timeout and handles unknown/expired payload IDs (`op-node/rollup/engine/build_seal.go:58-83`).
+
+**EL payload builder.** In `op-geth`, `forkchoiceUpdated` validates forkchoice state, converts payload attributes into `miner.BuildPayloadArgs`, includes Mantle-specific EIP-1559/min-base-fee fields when Arsia is active, calls `Miner().BuildPayload`, and stores local block work by payload ID (`op-geth@34a6a67:eth/catalyst/api.go:230-404`, especially `:357-401`). `Miner.BuildPayload` delegates to `buildPayload` (`miner/miner.go:178-181`).
+
+`buildPayload` creates an empty payload first so something is available, returns that as full when `NoTxPool` is true, and otherwise starts a background goroutine that repeatedly generates full work until delivery or timeout (`op-geth@34a6a67:miner/payload_building.go:90-185`, `:232-325`). This is a single local EL payload builder model, not a builder-sidecar selection race.
+
+**Baseline data.** The fresh 30-block Mantle current sample showed zero empty blocks and much lower gas usage than Base in the same short time span: average 184,969 gas/block and effective 95,674 gas/s. That low utilization means Mantle's immediate final-throughput bottleneck is not necessarily block construction capacity. For Mantle, the value of builder separation is more likely resource isolation, liveness, and future headroom than immediate gas/s gain unless measurements reveal hidden empty/underfilled periods.
+
+**Confidence.** verified-code for flow; verified-data for the sampled 30-block window; inferred for production ROI.
+
+## 8. Mantle branch evaluation: `flashblocks/poc` and `feat/flashblocks-mantle-aware`
+
+**Branch commits.**
+
+| Branch | Commit analyzed | Role observed |
+|---|---|---|
+| `origin/main` | `a8423b8b210dab6d7b47f8f597df9fc52e4a8b23` | Mantle reth main baseline |
+| `origin/flashblocks/poc` | `1f8b656685886da9c325fb65214ec4146be739b6` | Flashblocks consumer/pending-state POC |
+| `origin/feat/flashblocks-mantle-aware` | `58741b285f7f26ae0e7e2c65ec5d757d56117f5a` | POC plus Mantle chain/RPC/receipt/txpool adaptations |
+
+**`flashblocks/poc` feature matrix.**
+
+| Feature | Status | Evidence |
+|---|---|---|
+| Payload types and decoder | present | exports `FlashBlock`, base/delta/metadata, decoder at `crates/optimism/flashblocks/src/lib.rs:14-31` |
+| WebSocket consumer | present | unbounded reconnect stream decodes binary/text messages at `ws/stream.rs:21-35`, `:72-135` |
+| Pending sequence ordering | present | BTree by index, index 0 reset, ready transactions stop at gaps at `sequence.rs:15-27`, `:79-128` |
+| Complete-sequence validation | present | requires first base and consecutive same payload/block at `sequence.rs:181-203` |
+| Pending execution | present | executes txs over latest parent, optional state root, produces `PendingFlashBlock` at `worker.rs:62-138` |
+| State-root optimization | partial | only computes after index >= 9 when enabled at `service.rs:32-64`, `:189-200` |
+| Consensus injection | experimental | sends FCU from complete sequences, warns if state root missing at `consensus.rs:42-74` |
+| Producer / op-rbuilder equivalent | not found | no producer export in `lib.rs:14-31`; modules are service/worker/ws/sequence/consensus |
+
+**`feat/flashblocks-mantle-aware` adaptations.** The diff from `flashblocks/poc` is broad and not only Flashblocks: it adds Mantle release workflow, chain spec changes, Mantle Sepolia, receipt root tests, RPC extensions, txpool transaction changes, storage/trie changes, and more. This is a branch-range/tree-state assessment at the `58741b2` tip, not a claim that the single tip commit alone introduced every listed adaptation. Important Flashblocks/Mantle-specific files include:
+
+- `crates/optimism/flashblocks/src/payload.rs`, which keeps `extra_data` opaque and adds Mantle-compatible shape/min-base-fee accessors for Holocene/Jovian/Mantle Arsia layouts (`origin/feat/flashblocks-mantle-aware@58741b2:crates/optimism/flashblocks/src/payload.rs:91-107`, `:136-203`).
+- `crates/optimism/chainspec/src/mantle.rs`, which extracts Mantle genesis fields, identifies Mantle chain alignment, and configures hardfork timestamps (`mantle.rs:37-84`, `:108-142`).
+- `crates/optimism/chainspec/src/mantle_sepolia.rs`, which adds Mantle Sepolia chain spec and tests for Skadi/Limb/Arsia activation (`mantle_sepolia.rs:1-18`, `:135-180`).
+- `crates/optimism/rpc/src/eth/mantle_ext.rs`, which implements Mantle-specific RPC methods including range and preconf transaction path scaffolding (`mantle_ext.rs:86-123`, `:149-220`).
+- `crates/optimism/primitives/src/receipt.rs`, which defines the OP/Mantle receipt enum and RLP behavior (`receipt.rs:21-32`, `:79-168`).
+- `crates/optimism/txpool/src/transaction.rs`, which caches estimated compressed size and EIP-2718 bytes for DA sizing (`transaction.rs:32-85`, `:118-145`).
+
+**Production gap.** The branches are meaningful but incomplete for Base-like production Flashblocks. Missing or unproven pieces include external builder production, rollup-boost Engine API proxy wiring, builder/local payload selection, production HA/health behavior, load testing, public WebSocket/P2P deployment topology, and metrics/alerting. The branch state is best classified as consumer-heavy POC plus Mantle compatibility layer, not production builder separation.
+
+**Confidence.** verified-code for branch contents; inferred for effort classification.
+
+## 9. Builder-separation CPU/memory release modeling
+
+**Before separation.** Mantle's current path keeps payload building inside the local EL workflow. The sequencer CL triggers FCU, op-geth starts local payload work, and `GetPayload` resolves whatever the local miner has produced (`mantle-v2@feb2a58:engine_controller.go:1087-1123`; `op-geth@34a6a67:miner/payload_building.go:232-325`).
+
+**After rollup-boost-style separation.** Work splits into:
+
+| Work unit | External builder | Local EL | rollup-boost | Sequencer CL |
+|---|---:|---:|---:|---:|
+| FCU receive and build start | yes | yes, fallback | route/map | emits FCU |
+| Tx ordering and execution for best candidate | yes | yes, fallback/local state-root path | none | no |
+| Payload validation / newPayload to local EL | no | yes | submits builder payload or state-root FCU | no |
+| State root for selected builder payload | optional/no in optimized path | yes if external_state_root | coordinates | no |
+| Final selection | candidate provider | fallback provider | yes | receives result |
+| Unsafe insertion and consensus bookkeeping | no | yes | no | yes |
+
+**Non-additive resource accounting.** Builder separation can reduce sequencer hot-path coupling but may increase total cluster CPU because the local fallback and external builder can both build. It improves availability of a good payload and isolates custom builder work from the local EL, but it does not eliminate local validation or final insertion. Therefore "freed CPU" should be modeled as lower CL/EL critical-path pressure and more headroom, not a direct TPS multiplier.
+
+**Bounded estimate.** Without production profiles, only first-order bounds are defensible:
+
+- CPU: local EL still builds fallback, so total CPU may be 1.0x to 2.0x the current payload-building CPU depending on whether fallback remains active every block. Hot-path waiting can improve if builder returns better work within the same block budget; final TPS only improves when underfilled blocks were the bottleneck. Evidence: inferred from dual FCU/getPayload paths.
+- Memory: external builder duplicates txpool/building state and pending payload working sets. Local memory is not freed if fallback remains enabled. Evidence: inferred from duplicated clients and payload building.
+- Latency: selection can avoid returning a weak local payload when builder has a fuller one, but `tokio::join!` means slow builder response can still matter unless bounded by timeout configuration. Evidence: verified-code `rollup-boost server.rs:318-367`; timeout values unresolved.
+
+**Confidence.** inferred, with verified-code support for work placement. No public CPU/memory profile was found for Mantle or Base production builder separation.
+
+## 10. Sequencer main-loop before/after comparison
+
+See diagram `diag-3`. The key comparison is not "sequencer stops building blocks"; it is "sequencer delegates block construction through a proxy that can race local fallback against an external builder." Local fallback remains part of the design, and final block acceptance still goes through local EL/newPayload semantics. This is why builder separation is a reliability and headroom mechanism first, and a final TPS mechanism only when current local building underfills or blocks the 2s cadence.
+
+**Confidence.** verified-code + inferred.
+
+## 11. Metric separation: effective gas throughput, finalized TPS, user-perceived TPS
+
+**Effective gas throughput.** Use `gasUsed / second` over canonical blocks. The verified samples show:
+
+- Base current short sample: 21.44M gas/s.
+- Base pre-May-13 short sample: 23.58M gas/s.
+- Base post-May-13 short sample: 25.26M gas/s.
+- Mantle current short sample: 0.096M gas/s.
+
+These are not full-day averages and should not be compared as capacity maxima. They are small windows that show utilization, not protocol limit.
+
+**Finalized TPS.** Finalized TPS is bounded by canonical block gas, execution cost per tx, block time, DA/batcher constraints, and finality semantics. Flashblocks do not change the full-block sealing interval by themselves. The correct statement is that Flashblocks provide preconfirmation updates inside the 2s window.
+
+**User-perceived TPS / latency.** Base docs state that Flashblocks stream incremental state updates at 200ms intervals and can be consumed through Flashblocks-aware RPC methods (https://docs.base.org/base-chain/flashblocks/overview). That reduces time-to-visible-inclusion for apps, but if a later canonical block excludes/reorders a tail Flashblock, users still rely on reconciliation rules. Base's blog reports engineering changes that reduced tail reorgs and state-root overhead (https://blog.base.dev/flashblocks-deep-dive).
+
+**Do not add these.** If Mantle adopts builder separation and Flashblocks, the benefit stack should be presented as separate rows:
+
+1. effective gas/s: only from higher canonical gas utilization;
+2. finalized TPS: only from canonical capacity changes;
+3. perceived latency/TPS: from 200ms pending-state updates;
+4. resource headroom: from process isolation/parallelism;
+5. reliability: from fallback and health-controlled routing.
+
+**Confidence.** verified-data for sample values; reported for Base docs; inferred for non-additive model.
+
+## 12. Mantle feasibility and expected benefit
+
+**Recommendation: proceed, but measurement-first.** Mantle should not jump straight to a production Base-style builder/Flashblocks launch without profiling and a narrower POC gate. The current Mantle chain sample in this run has no empty blocks and very low gas utilization. That means the immediate measurable final-throughput upside from empty-block reduction may be small, while the engineering blast radius is large.
+
+**Benefit matrix.**
+
+| Benefit | Expected Mantle upside | Evidence | Caveat |
 |---|---|---|---|
-| 有效 TPS / effective gas-throughput | gas_used / s，按 finalized 块统计 | avg_gas_used / block_time = 32,756,874 / 2s ≈ 16.4 Mgas/s；avg_tx / 2s ≈ 93.7 user-tx-per-second（含 L1 attributes deposit ~94 tps） | item-3 机制 + selection policy |
-| user-perceived TPS / pre-confirmation TPS | tx 出现在某个 sub-block 中并被广播的时延 | ≤ 250ms（+网络），即 8× sub-block 频率（vs 2s block-time） | item-4 lifecycle |
-| 链最终 TPS / finalized confirmation TPS | block 出块频率本身 | 仍然 = 1 / 2s = 0.5 block/s（**不变**） | 协议层未改 block time |
+| Empty-block reduction | low to unknown in sampled window | verified-data sample has 0 empties | full-day sample still needed |
+| Effective gas throughput | low unless current underfill is caused by builder path | inferred | gas demand and gas limit matter more than builder architecture |
+| User-perceived latency | high if Flashblocks RPC is exposed | verified-code from Base consumer + Mantle POC | requires production stream, pending RPC, reconciliation |
+| Sequencer resource headroom | medium | inferred from process separation | local fallback duplicates work |
+| Future block-building experimentation | medium/high | rollup-boost architecture | requires builder API, metrics, HA, security review |
+| Implementation risk | high | branch gap analysis | producer/rollup-boost wiring missing |
 
-**关键警告**：把 "pre-confirmation TPS 提升 8×（250ms vs 2s）" 报告为 throughput 提升是**错误的**——pre-confirmation 不是 throughput 维度，是 latency 维度。Throughput 维度的真实提升来自 (1) 空块消除 + (2) builder 利用更长时间窗装填，估算上限约 (1 - empty_block_rate_before) / (1 - empty_block_rate_after)；用 src-7 实测 Base post-Azul ~0.20% 和 假设 pre-Azul ~0.46%（200/d /43200 blocks/d），公式给出 ~0.26% gas-throughput 净提升空间——**主要 gain 不是来自空块消除，而是来自 builder 在 2s 窗口内装填更多 gas（utilization 提升）**。
+**Roadmap.**
 
-**Evidence label summary（round-3 修订）**：
-- 机制（代码路径） — **verified**
-- "empty block 在 Base post-Azul 是稀有事件 / substantial reduction relative to inferred pre-Azul baseline" 定性方向 — **verified, qualitative**（src-7 sampling + 机制论证支持）
-- "post-Azul ~2/天" 精确数字 — **unresolved-discrepant**（实测 ~86/天，Wilson 95% CI [15, 486]/天 **不包含** 2/天；2/day 假设下观察 1/500 的概率仅 ~2.3%；需源定义复核或 n ≥ 5000 抽样）
-- "99% reduction" 精确百分比 — **inferred**（inferred pre-Azul 200/天 与 sampled post-Azul 86/天对照给出 ~57% 降低，99% 数字依赖未验证的 post-Azul ≤ 2/天）
-- "pre-Azul ~200/天" 数字 — **inferred**（未做 pre-Azul 抽样对照）
-- "有效 TPS = avg_gas_used / block_time" 公式 — **verified** with src-7 sampling
+1. Measurement gate: run full-day Mantle empty-block/gas utilization sampling, sequencer CPU profiles around FCU/getPayload, op-geth payload build latency distribution, and txpool underfill analysis.
+2. Consumer-first POC: harden `flashblocks/poc` pending-state service, WebSocket stream handling, receipt/balance/log semantics, state-root policy, and reorg behavior using Mantle chain data.
+3. Mantle-aware compatibility: keep the `feat/flashblocks-mantle-aware` direction for `extra_data`, receipt roots, chain spec, RPC, txpool DA sizing, and Arsia/Jovian layout compatibility.
+4. Builder separation integration: add rollup-boost sidecar wiring, local fallback, builder health, payload-id mapping, GasUsed policy, and external state-root path.
+5. Production hardening: load tests, timeout tuning, P2P/WebSocket topology decision, op-conductor health behavior, alerting, and fallback drills.
 
----
+**Bottom line.** Mantle's best near-term win is user-perceived latency and builder architecture optionality, not immediate final TPS. Final throughput should be claimed only after gas utilization and DA/execution bottleneck measurements prove that block building is limiting canonical gas/s.
 
-### item-4 — Flashblocks sub-block 生命周期与广播路径
+# Diagrams
 
-**配置常量**（base commit `21a05eeb2`）：
-
-- `base/crates/builder/core/src/config.rs` — `BuilderConfig::default()`：
-  - `block_time = 2s`
-  - `block_time_leeway = 500ms`（给 batcher channel duration 留 5s 的 deadline 余量，参见 generator.rs 注释）
-  - `flashblocks_interval = 250ms`
-  - `flashblocks_leeway_time = 50ms`
-  - `flashblocks_ws_addr = :1111`
-  - 派生：`flashblocks_per_block() = block_time / flashblocks_interval = 8`
-
-**Producer 侧 lifecycle**（base commit `21a05eeb2`，paths：`base/crates/builder/core/src/flashblocks/`）：
-
-1. `service.rs:1-121` — `FlashblocksServiceBuilder::spawn_payload_builder_service` 初始化 `WebSocketPublisher`、`BasePayloadBuilder`、`BlockPayloadJobGenerator`、`PayloadBuilderService`、`PayloadHandler`，并用 `tokio::sync::mpsc::channel(16)` 把已构 payload 推给 handler。
-2. `generator.rs` — `BlockPayloadJobGenerator::new_payload_job` 计算 deadline：`job_deadline(timestamp) + extra_block_deadline`（含 `block_time_leeway = 500ms`），评论原文：`"Postponing the deadline for 5s"` —— 给 batcher 留出 max channel duration corner case 余量。
-3. `payload.rs:207-302`（已在 item-3 解释）— `build_payload` 第一步 publish fallback block at flashblock_index = 0。
-4. `payload.rs:377-413` — 启动 250ms interval timer 推动后续 flashblock。
-5. `payload.rs:419-498` — main loop 每个 flashblock 调用 `build_next_flashblock`，结束时 `ws_pub.publish(&fb_payload, block_number, flashblock_index)` 把 delta 推向所有订阅者。
-6. `handler.rs:1-46` — `PayloadHandler::run` 从 mpsc Receiver 接 `BaseBuiltPayload`，broadcast `Events::BuiltPayload`（供其他 sequencer 内部组件订阅）。
-
-**Payload 内容（精简后的 delta 结构）**：
-
-`base/crates/common/flashblocks/src/payload.rs`：
-
-- `FlashblocksPayloadV1 { payload_id, index, base: Option<ExecutionPayloadBaseV1>, diff: ExecutionPayloadFlashblockDeltaV1, metadata }`
-- `ExecutionPayloadBaseV1`（**只在 index = 0 出现一次**）= `{ parent_beacon_block_root, parent_hash, fee_recipient, prev_randao, block_number, gas_limit, timestamp, extra_data, base_fee_per_gas }`
-- `ExecutionPayloadFlashblockDeltaV1` = `{ state_root, receipts_root, logs_bloom, gas_used, block_hash, transactions, withdrawals, withdrawals_root, blob_gas_used }`
-- `Metadata` = `{ block_number, new_account_balances, receipts }`（**Azul 之后会精简：删除 new_account_balances 和 receipts**，参见 base/docs/specs/pages/upgrades/azul/overview.md）
-
-**Consumer 侧 lifecycle**（rollup-boost commit `ea7fe885`）：
-
-1. `crates/rollup-boost/src/flashblocks/service.rs:50-84` — `FlashblockBuilder::extend(payload)`：校验 index 严格递增，index=0 必须带 `base`，index>0 不允许带 `base`。
-2. `crates/rollup-boost/src/flashblocks/service.rs:86-165` — `into_envelope(version)`：把累计的 deltas + base 折叠成完整的 `ExecutionPayloadEnvelopeV3/V4`，相当于"sub-block 流式合并成 final block"。
-3. `crates/rollup-boost/src/flashblocks/service.rs:166-200+` — `FlashblocksService` 持有 `current_payload_id` 与 `best_payload`，broadcast 到 `WebSocketPublisher`。
-4. 上游 reth consumer（`reth/crates/optimism/flashblocks/src/payload.rs` on `feat/flashblocks-mantle-aware`）：定义 `PendingFlashBlock<N>` = pending block + `last_flashblock_index` + `last_flashblock_hash` + `has_computed_state_root`，是 RPC `pending` 语义的状态机。
-
-**Broadcast 路径 1：WebSocket（旧路径）**：
-
-- builder → `flashblocks_ws_addr` (default `:1111`) → rollup-boost 内部 `WebSocketPublisher` → fan-out 给所有订阅 RPC providers / consumer reth 节点。
-- 这是一对多直接 push，rollup-boost 是单点 hub。
-
-**Broadcast 路径 2：P2P `flblk/1`（新路径，Jan 2026 spec）**：
-
-文档：`rollup-boost/specs/flashblocks_p2p.md`（commit `29efac0`, 2026-01-22, PR #373）。
-
-- **Protocol name**：`flblk`，version `1`（devp2p capability）。
-- **消息类型**（包在 `AuthorizedMessage` 中）：
-  - `0x00 FlashblocksPayloadV1` — 实际 sub-block delta。
-  - `0x01 StartPublish` — 宣告 "Builder X 即将开始这个 block 的 flashblock 流"。
-  - `0x02 StopPublish` — 宣告该 builder 停止 publish（HA failover / 收到无 attrs 的 FCU）。
-- **Authorization 结构**：`{ payload_id, timestamp, builder_vk, authorizer_sig }`。Sequencer (= rollup-boost) 用 `authorizer_sk` 签 (payload_id ‖ timestamp ‖ builder_vk)，builder 再用 `builder_sk` 签 (msg ‖ authorization)。双签名结构。
-- **HA 协调**：StartPublish 进 + StopPublish 出，保证同一个 L2 block 同一时刻最多 1 个 active publisher；failover 通过 sequencer 签新 Authorization 切换 builder_vk 完成。
-- **代码入口**（rollup-boost 仓库）：
-  - `crates/rollup-boost/src/flashblocks/args.rs:118-146` — `FlashblocksP2PArgs { flashblocks_p2p, authorizer_sk, builder_vk }`，CLI 选项，与 `flashblocks_ws` 互斥（`conflicts_with = "flashblocks_p2p"`）。
-  - `crates/rollup-boost/src/flashblocks/inbound.rs`（587 行）— P2P 接收/验签/反 gossip。
-  - `crates/rollup-boost/src/flashblocks/outbound.rs`（245 行）— P2P 发布。
-
-**为什么 P2P 替代 WebSocket**（spec 引用）：
-
-- 消除 WebSocket hub 的单点（rollup-boost 不再 fan-out）。
-- 自然的 multipeer gossip 拓扑。
-- HA failover：StartPublish/StopPublish 让新 builder 能在 sequencer 切换时无缝接管，保证已发布的 flashblock 在新 block 中也能被新 builder 沿用——避免"failover 时已 publish 的 flashblock 丢失"导致 pre-confirmation 食言。
-
----
-
-### item-5 — Flashblocks 对节点同步、状态一致性与吞吐量的额外开销
-
-**节点本地状态机 reorg / rewind 频率**：
-
-- Sub-block 不是共识层概念；consumer 节点拿到 flashblock 后只在 **pending state** 上 apply，**不写入 canonical chain**。
-- `reth/crates/optimism/flashblocks/src/payload.rs` 上 `PendingFlashBlock<N>` 维持 `last_flashblock_index` 与 `last_flashblock_hash`，下一条 flashblock index 不连续就直接丢弃；不存在"reorg pending state"，只是覆盖。
-- 真正的 reorg 风险等同于上游 OP Stack 的 unsafe → safe → finalized 流程，与 flashblocks 正交。
-- **结论**：reorg 频率不变（estimated）。
-
-**RPC 层 `pending` 语义扩展**：
-
-- Pre-confirmation：`eth_getBlockByNumber("pending")` 现在能返回到上一个已 publish 的 flashblock 包含的状态，而不是"sequencer 当前正在 build 但还没出"的状态。
-- `eth_getTransactionReceipt(tx_hash)` 对 pending tx 可以返回带 logs 的临时 receipt（来自 flashblock metadata 的 receipts 字段）——**注意 Azul 之后 receipts 从 metadata 移除**（`docs/specs/pages/upgrades/azul/overview.md`），意味着 RPC 实现要从 flashblock state apply 后自行计算 receipts 而不是直接 surface。
-- 开销：每个 sub-block 都触发一次 pending state 重新 commit + 索引重建。**单节点每 250ms 一次的 state apply 是显著但有界的开销**。
-
-**WebSocket 长连接 CPU/内存（estimated）**：
-
-- 每个订阅者一个 TCP 连接 + msgpack/protobuf 编码 flashblock delta。
-- Rollup-boost `WebSocketPublisher` 是 Tokio task per connection；CPU 主要在序列化（delta 远小于 full block，估算每 sub-block < 100KB）。
-- 内存：sequencer 端 buffer 8 个 sub-block × max O(100KB) = O(1MB) per active block per subscriber；可忽略。
-- 风险：subscriber 慢消费导致 buffer 累积 → backpressure → rollup-boost 自身慢；这正是 P2P gossip 想消除的单点问题。
-
-**P2P `flblk/1` 带宽放大**：
-
-- Gossip：每个 peer 把收到的 flashblock 转发给所有邻居（spec 的 "Multipeer Gossip" 段落）；带宽放大系数 ≈ peer degree（典型 8–32）。
-- 单 flashblock 体积估算（estimated）：`base` 字段 ~300 字节，`diff` 字段含 transactions（5–50KB 视主网负载），`metadata` 含 receipts（Azul 前会很大；Azul 后大幅缩减）。
-- 估算节点带宽：8 fb/block × 50KB × 8 peer ≈ 3.2MB/block ≈ 1.6MB/s peak per node。**比正常 block gossip 高一个量级**，是 P2P 路径接入的主要成本项（estimated）。
-- Azul 优化（移除 metadata 中 receipts）会把这个数字砍掉大约 30–50%（estimated based on receipts 在 block 体积中的典型占比）。
-
-**两个 TPS 的精确区分（重申）**：
-
-| 维度 | 指标 | 是否被 Flashblocks 改变 |
-|---|---|---|
-| 用户感知 | 一笔 tx 进入 pre-confirmation 的延迟 | **是**：从 0..2s 均匀分布的预期 1s → ≤ 250ms（≥4×） |
-| 链最终 | finalized block 出块速率 | **否**：仍然 1 block / 2s |
-| Throughput | gas_used / s（按 finalized 块） | **是，但仅来自空块消除 + builder gas 装填**，非 sub-block 数 |
-
-**user-perceived TPS 不可累加到 throughput 公式中**。任何把"pre-confirmation TPS 提升"翻译成"链最终 TPS 提升"的报告都是错误的（包括 Flashbots 部分早期 marketing），实际 sub-block 频率与 finalized block 频率严格无关。
-
----
-
-### item-6 — Mantle 当前 Block Building 现状（round-2: 用 src-7 实测填充）
-
-**架构现状**：
-
-- Mantle 主网当前使用 `mantle-xyz/mantle-v2` + `mantlenetworkio/op-geth` 路径，沿用 OP Stack 经典 sequencer 架构。
-- **没有 builder 分离**：sequencer 内嵌 EL，直接通过 Engine API 把 mempool 转成 payload；没有 rollup-boost / 外部 builder 进程。
-- **没有 Flashblocks**：用户 pre-confirmation 体验等同于 stock OP Stack（block time 内不可见）。
-
-**空块率与有效 gas 利用率（round-2 src-7 实测）**：
-
-| 指标 | Base mainnet 实测 | Mantle mainnet 实测 | 标签 |
-|---|---|---|---|
-| 采样窗口 | 2026-05-13 06:18 ~ 2026-05-20 04:38 UTC | 同上 | verified |
-| 采样区块范围 | 45,931,886 ~ 46,231,286（~300k 块，~5.8d at 2s） | 95,261,404 ~ 95,560,804（同样跨度） | verified |
-| 采样数 | 500 块 | 500 块 | verified |
-| 平均 tx_count / block | 187（median 158） | 1.80（median 1） | verified |
-| 平均 gas_used / block | 32.76 Mgas（median 29.25 Mgas） | 174,650 gas（median 46,311 gas） | verified |
-| 平均 gas_limit | 400 Mgas | 60 Mgas | verified |
-| 平均 gas 利用率（gas_used / gas_limit） | 8.19%（median 7.31%） | 0.29%（median 0.08%） | verified |
-| 系统-only 块比例（tx_count==1 AND gas_used≤100k） | 0.20%（1/500） | **60.80%（304/500）** | verified |
-| ≤2 tx 块比例 | 0.20% | 81.40% | verified |
-| 外推 系统-only 块/day（@ 2s block） | ~86/天 | **~26,266/天** | verified |
-| 非空块 avg gas_used | n/a（仅 1 个空块） | 371,586 gas（avg over 196 non-empty） | verified |
-
-**Empty 定义**：`tx_count == 1 AND gas_used <= 100_000`（仅 L1 attributes deposit，无 L2 user tx；OP Stack 标准定义）。
-
-**与 Base 在"有效 TPS"上差距来源**：
-
-1. **空块比例差距巨大**：Base 0.20% vs Mantle 60.80%，差 ~300×。
-2. **空块根因 unknown**：本轮抽样无法分辨 Mantle 空块中有多少是"mempool snapshot timing 失误"（rollup-boost + Flashblocks 可解）vs "真实 demand 缺位"（无技术解法）。需要 Mantle mempool arrival rate 数据才能定量切分。
-3. **有效 gas 利用率**：Base 8.19% vs Mantle 0.29%，差 ~28×；即使全部 Mantle 块都被装填到 Base 同等密度，也只有 ~28× 提升空间（理论上限）。
-4. **Block-limit 余量**：Base 400M / 利用率 8.19% → 实际 ~33Mgas/block，余量大；Mantle 60M / 利用率 0.29% → 实际 ~175kgas/block，余量极大（实质未触底）。
-
-**Implication for item-9 ROI**：
-
-- Mantle 不存在"block-limit 是瓶颈"问题；当前 throughput 远未触底。
-- 当前 throughput 瓶颈最可能是 user demand，**不是** builder mechanics。
-- 因此 rollup-boost + Flashblocks 移植的 ROI 取决于"60.8% 空块中有多少是 timing-recoverable"——本轮抽样不足以回答这个问题；item-9 round-2 明确把这个 unknown 作为先决条件 P0 输入。
-
----
-
-### item-7 — Mantle `flashblocks/poc` 与 `feat/flashblocks-mantle-aware` 分支评估
-
-**评估方法**：本节按 dispatch quality requirement，基于 **commit-level diff** 而非 feature-level inference。
-
-**Common base**（两个分支共享）：`b39694320` "feat: Compatible with genesis base_fee_params in geth"。
-
-#### 分支 1：`flashblocks/poc`
-
-`git log --oneline flashblocks/poc` 输出（截顶）：
-
-```
-1f8b65668 chore: bump revm to v2.2.0-beta.1
-2461cbed5 add features
-b39694320 feat: Compatible with genesis base_fee_params in geth   ← common base
-```
-
-也就是说 `flashblocks/poc` 在 common base 之上**只有 2 个 commit**：
-
-1. **`2461cbed5 add features`** — 修改 `crates/optimism/payload/Cargo.toml`，给 `reth-optimism-primitives` 依赖项加了 `serde, reth-codec` features。**纯 Cargo manifest 改动，无 Rust 源代码改动**。
-2. **`1f8b65668 chore: bump revm to v2.2.0-beta.1`** — 仅 `Cargo.toml` / `Cargo.lock` 升级 revm。
-
-**结论（verified）**：分支名 `flashblocks/poc` 是 misleading 的——它实际**没有任何 flashblocks 相关的代码实现**（无 producer、无 consumer、无 service、无 publisher）。两个 commit 加起来不能称为任何意义上的"POC"。从 POC 到可用的距离**约等于从 0 开始**。
-
-#### 分支 2：`feat/flashblocks-mantle-aware`
-
-`git log --oneline feat/flashblocks-mantle-aware`（顶部）：
-
-```
-58741b285 refactor(flashblocks): delegate extra_data parsing to op-alloy decoders
-e86ad2478 feat(flashblocks): Mantle-aware extra_data helpers on ExecutionPayloadBaseV1
-a8423b8b2 Merge pull request #37 from mantle-xyz/fix/reject-mantle-metatx
-...
-```
-
-该分支基于 OP-reth 上游的 `crates/optimism/flashblocks/` 模块（其本身包含 producer/consumer 基础设施）做 Mantle 适配：
-
-1. **`e86ad2478 feat(flashblocks): Mantle-aware extra_data helpers`** — 在 `ExecutionPayloadBaseV1` 上加 helper 解析 OP Jovian 的 17 字节 extra_data（= 9 字节 Holocene + 8 字节 BE u64 `min_base_fee`）。这是 Mantle Arsia ≈ OP Jovian 的对齐改造。引入 `ExtraDataShape` 枚举：`Empty (0B 前-Holocene) | Holocene (9B) | Jovian (17B) | Unknown(usize)`，以及 `mantle_min_base_fee()` 解码方法。
-2. **`58741b285 refactor(flashblocks): delegate extra_data parsing to op-alloy decoders`** — 把 1 中的 inline 解析替换为调用 op-alloy 的 `decode_jovian_extra_data`，去重。
-
-**Coverage 评估（commit-level diff）**：
-
-- 这两个 commit 覆盖的是 **flashblock consumer 在 Mantle 链上正确解析 extra_data** 这一个 narrow 问题。
-- 不涉及：(a) producer 路径、(b) WebSocketPublisher / P2P 接收、(c) sequencer 集成、(d) MetaTx 与 flashblock 的交互、(e) L1 cost 计算与 sub-block 的交互。
-- 与上游兼容性：合并自上游 `reth/crates/optimism/flashblocks/`，能 follow 上游演进；但只是站在巨人肩膀上看 extra_data 字段。
-
-**进度评估**：
-
-| 维度 | 评估 |
-|---|---|
-| 实现阶段 | "fork 上游 OP-reth 的 flashblocks consumer 模块 + 加 Mantle-aware extra_data 解析" |
-| 与 Base/Flashbots 上游兼容性 | 高（直接 fork OP-reth，不动核心 trait） |
-| 当前阻塞点 | **没有 producer-side 实现**；sequencer 改动、共识层适配（MetaTx 与 flashblock 排序、L1 cost 是否每 sub-block 重算）均未触碰 |
-| 从此到生产可用的剩余工程量 | 大（详见 item-9） |
-
-#### 综合结论（src-3 满足）
-
-- **`flashblocks/poc` 不是 POC**——只有 Cargo 配置改动。
-- **`feat/flashblocks-mantle-aware` 是 consumer-only 的 thin layer**——只解决 Mantle extra_data 兼容，未触及 producer / sequencer / 共识层。
-- **真实"Mantle 上的 flashblocks producer POC"在 mantle-xyz 仓库范围内不存在**。
-
----
-
-### item-8 — Builder 分离对 Sequencer 主循环的资源释放（round-2: 修正 workload-offload 误述）
-
-**Round-2 重要修订**：round-1 把 "~40-60% sequencer 主循环 workload 卸载到 builder" 标为 verified mechanism 是**事实性错误**。基于 rollup-boost 实际代码路径（commit `ea7fe885`），本节重新刻画该机制的真实形态。
-
-#### 真实机制（verified from rollup-boost code）
-
-rollup-boost 在 sequencer payload 生产链路上的关键代码路径：
-
-1. `server.rs:594` —— `fork_choice_updated_v3` 当带 `payload_attributes` 且 `no_tx_pool == false` 时，通过 `tokio::join!(l2_fut, builder_fut)` **同时向 L2 client 和外部 builder 下发 FCU + payload_attributes**。**L2 client 也收到 payload_attributes**，因此 L2 EL 也启动了一次本地 candidate payload 的 build。
-2. `server.rs:215` —— `get_payload` 中 `let l2_fut = self.l2_client.get_payload(payload_id, version);` 构造本地 L2 的 get_payload future。
-3. `server.rs:251-316` —— 同时构造 `builder_fut`，对应外部 builder 的 get_payload + state-root 校验逻辑。
-4. `server.rs:318` —— `let (l2_payload, builder_payload) = tokio::join!(l2_fut, builder_fut);` **并行等待两路 payload**；rollup-boost 在 op-node 关键路径上一直等到这两个 future 都 ready。
-5. `server.rs:343-366` —— 二选一：若 `builder_payload` 是 `Some`，按 `DryRun` / `selection_policy` / 默认 prefer-builder 三档逻辑挑一个；若 `None`，回 L2。
-
-**关键事实**：
-
-- 本地 L2（base-reth-node / op-geth）**仍然执行完整的 candidate payload 构建**——mempool pull、tx ordering、EVM execute、state-root computation 全部跑在 sequencer 同一台机器上的 L2 EL 进程里。
-- 外部 builder **额外并行地**做同一类工作（自己的 mempool pull、自己的 EVM execute、自己的 state-root）。
-- rollup-boost 在两个候选完成后做选块；只有一个候选被采纳为 finalized block。
-
-**因此 round-1 中"~40-60% workload 从 sequencer 主循环搬到 builder 进程"的描述是错的**。Workload 没有"搬走"——它被并行复制了一份。系统层面总 CPU 工作量**增加**了（双倍 payload assembly + selection 路由 + builder→L2 payload validation 回灌 `server.rs:297-307`）。
-
-#### 真实收益的正确刻画
-
-rollup-boost + Flashblocks 为 sequencer 主循环带来的真实收益分三层，**没有任何一层等价于"CPU offload"**：
-
-1. **gas 利用率（实际 throughput 净增的主要来源）**：
-   - 外部 builder 的 Flashblocks 循环（item-3）以 250ms tick 持续填充，比本地 L2 EL 的"deadline 到点单次快照 mempool"装填更彻底；
-   - `BlockSelectionPolicy::GasUsed` 默认或显式启用时优选 builder payload（`server.rs:343-366`），把更高 gas-used 的候选选为 finalized；
-   - 净效果：finalized block 的 gas_used 平均值更高，即 effective gas-throughput 提升。**这是 item-3 已验证的机制**。
-   - 不涉及 sequencer 主循环 CPU 减少；提升来自 builder 进程的额外 CPU 投入。
-
-2. **op-node 关键路径的"非阻塞调度"窄收益**：
-   - 在 stock OP Stack 中，op-node 调用 EL 的 `engine_getPayload` 时，EL 返回当前已 build 的 payload；EL build 工作本身已是 async（FCU with attrs 启动 build，op-node 在 deadline 调 getPayload 取结果）。
-   - rollup-boost 在 op-node 与 EL 之间多了一层：op-node 的 getPayload 等待 = `max(L2.getPayload, builder.getPayload)`（`server.rs:318` join），而不是 stock 的 `L2.getPayload` 单路。
-   - 实际表现：当 builder 健康且不比 L2 慢时，op-node 看到的 latency ≈ L2 单独运行的 latency；当 builder 慢或失败，rollup-boost fallback 到 L2-only（`server.rs:343-367`）。
-   - **关键路径既不更短也不更长——它就是 L2 的延迟，外加 rollup-boost 内部 µs 级路由开销 + 一次 builder payload 回灌 L2 的额外 `l2.new_payload` 校验**（`server.rs:297-307`，~10–50ms）。
-   - 因此"op-node 卸载了调度决策"是一个**软收益**——op-node 自身不需要原生支持 builder/local 选块逻辑，由 rollup-boost 完成；这是工程解耦收益，不是 CPU/latency 收益。
-
-3. **健康检查与 fallback 路径**：
-   - `should_skip_unhealthy_builder()`（`server.rs:394-396`）+ `Probes` 机制让 builder 慢或挂时被绕过；这是可靠性收益，对 sequencer CPU 中性。
-
-#### 量化（estimated, first-order）—— **重写后的释放量估算**
-
-| Sequencer 主循环工作量份额 | stock OP Stack | Base (with rollup-boost) | 释放比例 |
-|---|---|---|---|
-| Engine API 路由 + FCU 路径 | ~5% | ~5%（rollup-boost 加 µs 级 hop） | 0 |
-| L2 candidate payload assembly（mempool pull + EVM execute + state-root） | ~30% (one build per block) | **~30%（同样跑 1 次 candidate build，by `server.rs:594` + `server.rs:215`）** | **0**（这是 round-1 的事实错误所在） |
-| L2 newPayload validation（include 一次额外 builder payload 回灌） | ~30% | ~30–35%（builder payload 也要 L2 校验一次，`server.rs:297-307`） | **-0–5%（轻微增加）** |
-| 其他（指标、log、IPC） | ~5–10% | ~5–10% | 0 |
-| **Sequencer 本机 sequencer-loop 上 CPU 净变化** | — | — | **0 ~ +5%（不减少；最多轻微增加）** |
-
-**额外的系统级 CPU**（builder 是独立进程，可能在不同机器）：
-
-| 组件 | 工作 | CPU 来源 |
-|---|---|---|
-| 外部 builder 进程 | 自己的 mempool pull、tx ordering、EVM execute（含 Flashblocks 8 次/2s 重复）、state-root | builder 机器 |
-| rollup-boost 进程 | Engine API 路由、selection、health probe、WebSocket fan-out | rollup-boost 机器（通常与 sequencer 同主机或邻近） |
-| L2 EL 进程 | 同 stock：本地 candidate build + builder payload 校验回灌 | sequencer 机器 |
-
-**Operationally**：Base 的"sequencer 主机"上 L2 EL 进程的 CPU 与 stock 大致持平（甚至略高，多一次 newPayload 校验）；新增的 builder 进程通常部署在独立机器上，那台机器是"为提升 gas 利用率 + Flashblocks pre-confirmation 而新增的运算资源"。换句话说，**rollup-boost 是花更多硬件买更高 gas 装填率 + 更短 pre-confirmation latency，而不是节省 sequencer 硬件**。
-
-**Evidence label**：
-- 上述 percentage 表格 — **estimated**（一阶 framework，未做实际 profile）
-- "本地 L2 仍执行完整 candidate payload 构建" — **verified**（`server.rs:594` payload_attributes 同时下发 L2 + builder；`server.rs:215` + `server.rs:318` parallel get_payload）
-- "总 CPU 工作量不减反增" — **verified at mechanism level**；量级 — **estimated**
-
-#### 与 item-3 的协同（修订）
-
-builder 进程独立的 Flashblocks 循环（持续填充 → builder payload gas 更高）+ rollup-boost 选块（优选 builder）共同实现了 finalized block 的 gas 利用率提升。Sequencer 本机的 CPU **没有被释放**——节省的是 *本可能产出空块的 L2 candidate 被替换为 builder 高 gas payload* 这种 *输出维度* 改善。这是一个 positive feedback loop（更多 gas 进 finalized block ↔ user-perceived throughput 提升 ↔ 反过来要求更多 builder 算力），**但没有打破 finalized block rate = 0.5/s 的硬上限**，也没有降低 sequencer 本机硬件需求。
-
-#### 对 Mantle 的可迁移性影响（修订）
-
-之前 round-1 暗示"卸载 sequencer 主循环负载"是 Mantle 的潜在收益之一。**round-2 撤回该论点**。引入 rollup-boost + 外部 builder 对 Mantle 意味着：
-
-- 新增 builder 机器（独立 CPU 投入）；
-- sequencer 本机 L2 EL CPU 不变或略增；
-- 真实收益取决于 builder 在 Flashblocks 循环中能在 Mantle 主网现有 mempool 上挤出多少 gas（详见 item-9 round-2 修订）。
-
----
-
-### item-9 — Mantle 引入 rollup-boost + Flashblocks 的可行性与改造路径（round-2: 用 src-7 实测重新校准 ROI）
-
-#### Round-2 改动概要
-
-round-1 给出的"30–46 周 + 7–11 工程师月"工程量级估算保留不变（基于代码移植与流程改造工程量，未被 src-7 数据影响）。**显著改动**集中在 ROI / 优先级判断：用 src-7 实测的 Mantle 0.29% gas 利用率 + 60.80% 系统-only 块比例，重新校准建议。
-
-#### 综合可行性结论（修订）
-
-**Verdict**：技术上完全可行；工程量大；ROI **强依赖** "Mantle 60.8% 空块中有多少是 mempool snapshot timing 失误（rollup-boost + Flashblocks 可解）vs 真实 demand 缺位（无技术解法）"，本轮抽样无法回答该问题。在这个 unknown 解除之前，不建议把 P3 producer 工程作为最高优先级。前置依赖包括 reth fork 改造（参见 cross-topic execution-layer-reth-fork-comparison）与 sequencer/batcher 接口契约（参见 sequencer-consensus-pipeline-perf、batcher-sequencer-backpressure）。
-
-#### 客户端改造范围（保留 round-1，结论维度未变）
-
-| 组件 | 改造内容 | 工程量级（estimated） |
-|---|---|---|
-| Mantle reth fork（`mantle-xyz/reth`） | 接上上游 OP-reth `crates/optimism/flashblocks/` consumer；扩展 `feat/flashblocks-mantle-aware` 已有的 extra_data 解析覆盖到完整 pending block 状态机；适配 Mantle MetaTx / L1 cost 与 sub-block 的交互 | 大（数月） |
-| Mantle 上的 builder（新增） | 全新 crate，参考 base `crates/builder/core/`：BasePayloadBuilder 的等价物 + flashblock interval + WebSocketPublisher（先 WS 再 P2P）+ rejection cache | 大（数月） |
-| rollup-boost 部署 | 直接复用 flashbots/rollup-boost；需要 Mantle EL（Mantle reth）暴露 OP Stack 完整 engine_v3/v4/v5 Engine API；selection policy 与 health probe 复用 | 中（周级，主要是部署/配置） |
-| op-node 等价物（mantle-node） | 把"调 Engine API 的端点"从 EL 直连改成指向 rollup-boost；如有 dry-run 模式按 Base 经验先 shadow rollout | 小（接口对齐工作） |
-| 共识层 | 无需改动（Flashblocks 是 pre-confirmation，不进共识）；但 P2P `flblk/1` 接入需要在 mantle-node 的 devp2p 层加 capability | 小到中 |
-| RPC 层 | `eth_getBlockByNumber("pending")` 与 `eth_getTransactionReceipt` 对 sub-block 状态的扩展；订阅服务 | 中（数周） |
-
-#### ROI 量化（round-2 用 src-7 数据校准）
-
-**Throughput 维度上界估算**（estimated based on src-7 sampling）：
-
-记 Mantle 当前 avg gas_used = 174,650 / block (over 500 blocks)；其中：
-- 304 个系统-only 块平均 gas ≈ 46k；
-- 196 个非系统-only 块平均 gas ≈ 371,586。
-
-**情景 A — 上界：所有 60.8% 系统-only 块均为 timing-recoverable**（即 mempool 有 tx 但 snapshot 错过；Flashblocks 可全部恢复）：
-- 改造后每个原系统-only 块装填到与现有非系统-only 块同等密度（~371k gas）；
-- 新 avg gas_used ≈ 371,586 / block。
-- avg gas-throughput 改善倍数 ≈ 371,586 / 174,650 ≈ **2.13×**。
-
-**情景 B — 下界：所有 60.8% 系统-only 块均为 demand-empty**（mempool 真的没 tx；Flashblocks 不起作用）：
-- 改造后 avg gas_used 不变；
-- avg gas-throughput 改善倍数 ≈ **1.00×**。
-
-**情景 C — 中等：50% 系统-only 块 timing-recoverable**（round-3 修正算术）：
-- 50% × 60.8% = 30.4% block 被 Flashblocks 装填到非系统-only 同密度（avg ≈ 371,586 gas）；剩余 30.4% 保持系统-only avg (≈ 46,311 gas)；39.2% 原本就是非系统-only (≈ 371,586 gas)。
-- 新 avg = 0.304 × 371,586 + 0.304 × 46,311 + 0.392 × 371,586
-        = 112,962 + 14,079 + 145,662
-        ≈ **272,703 gas/block**。
-- 改善倍数 ≈ 272,703 / 174,650 ≈ **1.56×**（round-2 的 282,838 / 1.62× 是算术错误，本轮 round-3 修正）。
-- **算术交叉验证（增量公式）**：174,650 + 0.304 × (371,586 − 46,311) = 174,650 + 0.304 × 325,275 ≈ 174,650 + 98,884 ≈ **273,534 gas/block** → 273,534 / 174,650 ≈ **1.566×**。两种公式相差 ~830 gas/block，差异来自加权公式（用 304 × 46,311 / 196 × 371,586 的复合 avg）与 sampled 总 avg (174,650 gas) 之间的入数误差 ~1k gas/block；两者收敛到 **1.56× ~ 1.57×**。
-
-**关键 unknown**：实际场景在 A、B、C 之间的位置取决于 Mantle 主网 mempool arrival rate。本轮抽样不包含 mempool 数据。**这是 round-3（如需）或 phase-0 工程任务**。
-
-**对比 Base 同等改造的收益（reference）**：Base 已实施 rollup-boost + Flashblocks；post-Azul empty rate 0.20%，意味着 Base 本身已运行在情景 A 附近 ceiling 上。Mantle 改造空间显著大于 Base **如果** 情景 A 接近实际。
-
-#### 与 Mantle 特有逻辑的兼容性风险
-
-1. **MetaTx**：`feat/flashblocks-mantle-aware` 上游已有 MetaTx 拒绝逻辑（commit `ea0d8b0e0 feat(op): reject Mantle MetaTx across RPC and payload paths` 等），需要确保 producer 侧的 `best_txs` 选择阶段沿用同样的拒绝规则，避免"MetaTx 在 pre-confirmation 中可见但 finalized 时被拒"的语义事故。
-2. **L1 cost**：Mantle 的 L1 cost 计算与 OP Stack 不完全一致；sub-block 之间共享同一个 L1 base fee context，但每个 flashblock 内若有 L1 cost 重算（如 epoch boundary），producer 必须保证子块边界对齐 epoch。
-3. **MNT gas token**：Mantle 的 MNT-as-gas 语义在 sub-block 层面与 ETH-as-gas 没有本质差异，但 metering 工具链（base 的 `base_bundles`、`MeterBundleResponse`、`RejectionReason`）需要 Mantle 适配。
-
-#### 与其他 Wave 建议的依赖与协同
-
-| 协同主题 | 依赖关系 |
-|---|---|
-| execution-layer-reth-fork-comparison | 强依赖：Mantle reth fork 必须先完成与 Base/OP 上游对齐，才能干净地拉入 `crates/optimism/flashblocks/` |
-| sequencer-consensus-pipeline-perf | 强依赖：sequencer 主循环的 Engine API 调用契约必须先稳定，才能定义 rollup-boost 接入点 |
-| batcher-sequencer-backpressure | 中依赖：rollup-boost 选块时机与 batcher channel duration 的余量（`block_time_leeway = 500ms`、`extra_block_deadline`）必须协调 |
-| gas-protocol-perf-config | 弱依赖：gas 参数调整可独立推进，但 builder 的 `flashblocks_per_block` 选取与 block_time 有关 |
-| 并行 EVM（若另立项） | 弱协同：builder 内部可以独立并行化 EVM 执行；与 sequencer 主循环并行 EVM 正交 |
-
-#### 阶段性目标（estimated 时间线，round-2 增加 Phase 0a "demand attribution"）
-
-| 阶段 | 里程碑 | 估算工程时间 |
-|---|---|---|
-| **Phase 0a — Demand attribution（round-2 新增 P0）** | Mantle mempool arrival rate 数据采集 + 60.8% 空块归因（timing-recoverable vs demand-empty） | 1–3 周（轻量数据科学任务） |
-| Phase 0 — 基线 | src-7 链上抽样已完成（round-2 已交付） | 已完成 |
-| Phase 1 — Mantle reth flashblocks consumer | 在 `feat/flashblocks-mantle-aware` 基础上完善 pending state 完整状态机 + RPC pending 语义 | 6–10 周（1–2 工程师） |
-| Phase 2 — rollup-boost 部署到测试网 | 复用 flashbots/rollup-boost + Mantle reth EL 双路；DryRun 模式 shadow rollout | 4–6 周 |
-| Phase 3 — Mantle builder producer | 新 crate，从 best_txs / payload assembly / WebSocket publish 走完 | 12–16 周（2–3 工程师） |
-| Phase 4 — 测试网联调 + 主网灰度 | 包括 HA failover、P2P `flblk/1` 接入（可选）、监控埋点 | 8–12 周 |
-| **合计**（含 Phase 0a） | POC → 主网 | **约 31–49 周 / 7–11 工程师月**（estimated，单一资源情形） |
-
-#### 至少 2 条具体改造建议（按优先级，round-2 重排）
-
-**P0（round-2 升级为最高）— Mantle mempool arrival rate 采样 + 60.8% 空块归因**（unblock 整条建议链）：
-
-- 工具：Mantle mainnet node `txpool_content` / mempool subscribe + 链上抽样对照；
-- 输出：把 60.8% 空块拆为 timing-recoverable / demand-empty 两类，给出比例和置信区间；
-- 工程量：1–3 周；
-- ROI：直接决定 P1–P3 是否值得做。
-- **Gate 阈值（round-3 显式标为 heuristic / product-priority gate，不是 derived engineering threshold）**：建议 cutoff 设为 *若 timing-recoverable ≤ 20%，延后或拒绝整个移植方案*。该 20% 阈值对应理论改善上界 ≈ 174,650 + 0.20 × 0.608 × (371,586 − 46,311) = 174,650 + 39,554 ≈ **214,204 gas/block ≈ 1.23× throughput**。
-  - **为什么是 1.23×（heuristic 论证，非硬阈值）**：相对 round-2 估算的 Phase 0a + Phase 1–4 合计 **~31–49 周 / 7–11 工程师月** 工程量，1.23× throughput 改善等价于 Mantle 当前 ~93 user-tx-per-second（按 174,650 gas/block ÷ 2s ÷ avg-tx-gas 的 first-order 推算）增加 ~21 tps，绝对增量较小，可能不足以摊销工程成本与运维负担（额外 builder 主机、rollup-boost 部署、HA failover 演练）。
-  - **是 heuristic 而非 derived**：该 cutoff 没有从工程量与吞吐量之间的硬约束（如 SLA 违约阈值、business plan 收入弹性）推导。它反映的是产品/工程优先级判断 — *"边际改善 1.23× 是否值得 7–11 工程师月"* 的回答取决于 Mantle 团队的 roadmap 优先级、其他 throughput 项目的可替代性（如 gas-protocol-perf-config / 并行 EVM）以及 ecosystem 兼容性诉求权重。
-  - **替代阈值示例**：若 Mantle 团队认为"任何 throughput 改善 + Flashblocks ecosystem 兼容性"已是足够动机，cutoff 可下调（如 ≤ 10% timing-recoverable 才延后）；若产品目标要求 ≥ 1.5× throughput 才值得做，cutoff 可上调至 ~40% timing-recoverable（对应 ~1.50× 改善）。
-  - **最终阈值由 Mantle 产品/工程优先级决定**；本研究仅提供机制层面的改善曲线（情景 A/B/C + 20%-cutoff 点）以及上文工程量估算，不规定硬 cutoff。
-
-**P1（保留 round-1 优先级）— Mantle reth `feat/flashblocks-mantle-aware` 分支前推到完整 consumer**：
-
-- 在 `mantle-xyz/reth` 当前 2 commit 基础上，拉入上游 OP-reth `crates/optimism/flashblocks/` 完整 producer + consumer 模块，先保证 consumer 路径可用（serve pending block from sub-blocks）；
-- 工程量：6–10 周一人；
-- ROI：在不接入 builder 的情况下，consumer 就绪意味着 Mantle 主网节点可以**消费**未来上游或 Base 公开 flashblock 数据，作为 ecosystem 兼容性的低成本前置投入；
-- 与 P0 解耦：可以并行启动。
-
-**P2（条件触发，原 round-1 P2 不变）— 在 P0 显示 timing-recoverable ≥40% 后启动 producer + rollup-boost 接入**：
-
-- 见上面 Phase 2–4 的时间线；
-- 仅在 P0 数据显示有显著 timing-recoverable 空块时启动；否则可能投入产出比偏低。
-
----
-
-## Diagrams
-
-### diag-1 — rollup-boost 数据流架构图（architecture）
+## diag-1: rollup-boost Engine API multiplexing
 
 ```mermaid
 flowchart LR
-    subgraph Sequencer
-        opnode[op-node / sequencer]
-    end
-
-    subgraph RollupBoost[rollup-boost proxy]
-        engineAPI[Engine API ingress]
-        selection["BlockSelectionPolicy<br/>(GasUsed: builder &lt; 10% × L2 → fallback)"]
-        probes[Health Probes]
-        fbsvc[FlashblocksService]
-    end
-
-    subgraph EL_L2[L2 EL]
-        L2reth[base-reth-node / op-geth]
-    end
-
-    subgraph Builder[external block builder]
-        bld[base/crates/builder/core]
-        fbloop[Flashblocks build loop<br/>250ms × 8 = 2s]
-        wspub[WebSocketPublisher :1111]
-    end
-
-    opnode -- FCU / newPayload / getPayload --> engineAPI
-    engineAPI -- "critical path<br/>FCU / newPayload / getPayload" --> L2reth
-    engineAPI -- "async spawn (FCU no-attrs)<br/>join (FCU with attrs, getPayload)" --> bld
-
-    bld -- fb_payload --> fbloop
-    fbloop -- "ws publish per flashblock" --> wspub
-    wspub -. WebSocket fan-out .-> fbsvc
-    fbsvc -. WS broadcast .-> Subscribers((RPC providers /<br/>consumer reth))
-
-    L2reth -- l2_payload --> selection
-    bld -- builder_payload --> engineAPI
-    engineAPI -. "l2.new_payload(builder_payload)<br/>verify" .-> L2reth
-    engineAPI --> selection
-    selection -- "selected payload" --> opnode
-
-    probes -. health .-> selection
-
-    classDef criticalPath stroke:#d33,stroke-width:2px;
-    class L2reth,opnode,engineAPI criticalPath;
+  OP[op-node / sequencer CL] -->|engine_forkchoiceUpdatedV3| RB[rollup-boost]
+  OP -->|engine_getPayload| RB
+  RB -->|FCU always first| L2[local L2 EL]
+  RB -->|FCU if enabled, healthy, txpool path| B[external builder / op-rbuilder]
+  L2 -->|local payload_id| RB
+  B -->|builder payload_id| RB
+  RB --> MAP[payload_trace_context maps L2 id to builder id]
+  OP -->|getPayload with L2 id| RB
+  RB -->|getPayload local future| L2
+  RB -->|translate id; getPayload builder future| B
+  B -->|candidate payload| RB
+  RB -->|optional new FCU with builder txs + no_tx_pool for state root| L2
+  RB --> SEL[BlockSelectionPolicy::GasUsed]
+  L2 --> SEL
+  SEL -->|builder unless <10% local gas, dry-run, invalid, missing, disabled| OP
 ```
 
-**Notes**：
-- 红色框是 sequencer 主循环关键路径，必须低延迟。
-- Builder 路径全部是 async spawn 或 join；builder 慢/挂时 `builder_payload = None` → fallback L2（`server.rs:343-367`）。
-- WebSocket fan-out 是经典路径；P2P `flblk/1` 路径替代它，见 diag-2。
+## diag-2: Flashblocks lifecycle
 
-### diag-2 — Flashblocks 生命周期（flow，pre-confirmation vs finalized 时间轴）
+```mermaid
+sequenceDiagram
+  participant Seq as Sequencer / FCU
+  participant Proxy as rollup-boost / publisher relay
+  participant Builder as Base builder / op-rbuilder
+  participant RPC as Flashblocks-aware RPC node
+  participant Canon as Canonical full block
+
+  Seq->>Proxy: FCU with payload attributes
+  Proxy->>Builder: route FCU to builder path
+  Builder->>Builder: execute system txs, build index 0
+  Builder->>Proxy: publish index 0 with base
+  loop every configured interval, public target 200ms
+    Builder->>Builder: refresh txpool iterator, execute budgeted txs
+    Builder->>Proxy: publish diff-only Flashblock
+    Proxy->>RPC: broadcast/gossip sub-block
+    RPC->>RPC: validate sequence, rebuild pending state
+  end
+  Seq->>Proxy: getPayload
+  Proxy->>Builder: mapped getPayload on builder path
+  Builder->>Proxy: candidate payload
+  Proxy->>Canon: selected final payload
+  Canon->>RPC: canonical block arrives
+  RPC->>RPC: reconcile pending vs canonical, clear or rebuild
+```
+
+Note: `diag-2` is a Flashblocks lifecycle compression. `diag-1` is authoritative for Engine API routing; production FCU/getPayload paths should be read as sequencer -> rollup-boost -> builder/local fallback, not as a direct sequencer -> builder FCU path.
+
+## diag-3: Sequencer main loop before/after builder separation
 
 ```mermaid
 flowchart TB
-    Start([t = 0ms: FCU with attrs]) --> Build0
-    subgraph t0[index = 0 / fallback]
-        Build0["build_block(skip_flashblocks_building=true)<br/>仅 sequencer-injected txns"]
-        Pub0["ws_pub.publish(fb, index=0)<br/>(也广播 fallback)"]
-        Build0 --> Pub0
-    end
+  subgraph Before["Mantle current / direct local EL"]
+    A1[Prepare payload attrs] --> A2[engine_forkchoiceUpdated to local EL]
+    A2 --> A3[op-geth BuildPayload: empty payload first]
+    A3 --> A4[background full payload rebuild loop]
+    A4 --> A5[engine_getPayload]
+    A5 --> A6[insert/gossip unsafe block]
+  end
 
-    Pub0 -. "+ first_flashblock_offset" .-> Build1
-    subgraph t1[index = 1 / ~250ms]
-        Build1["build_next_flashblock(...)<br/>pull mempool · execute · update state"]
-        Stop1{"cancellation tick?<br/>budget exhausted?<br/>PoolEmpty?"}
-        Pub1["ws_pub.publish(fb, index=1)"]
-        Build1 --> Stop1 --> Pub1
-    end
+  subgraph After["rollup-boost + external builder + local fallback"]
+    B1[Prepare payload attrs] --> B2[FCU to rollup-boost]
+    B2 --> B3[local EL fallback build]
+    B2 --> B4[external builder build / Flashblocks]
+    B3 --> B5[getPayload race]
+    B4 --> B5
+    B5 --> B6[GasUsed policy + validation/state-root path]
+    B6 --> B7[return selected payload]
+    B7 --> B8[local validation + unsafe insertion]
+  end
 
-    Pub1 -. interval=250ms .-> Build2[...每 250ms 循环至 index=8]
-    Build2 --> Final
-    subgraph tN[index = 8 / 2000ms: finalize]
-        Final["finalize_payload<br/>state-root · seal block"]
-        Engine["rollup-boost get_payload 返回 sealed block"]
-        Final --> Engine
-    end
-
-    %% 两个广播路径
-    Pub0 -.->|legacy| WS["WebSocket :1111<br/>(rollup-boost fan-out hub)"]
-    Pub1 -.->|legacy| WS
-    Pub0 -.->|new| P2P["devp2p 'flblk/1'<br/>(AuthorizedMessage: StartPublish/<br/>FlashblocksPayloadV1/StopPublish)"]
-    Pub1 -.->|new| P2P
-
-    WS -.-> Consumer["consumer reth<br/>(PendingFlashBlock state machine)"]
-    P2P -.-> Consumer
-
-    Consumer -- "pending state<br/>(user-perceived TPS &le; 250ms)" --> RPC["eth_getBlockByNumber('pending')<br/>eth_getTransactionReceipt"]
-
-    Engine --> CL["consensus / canonical chain<br/>(finalized TPS = 0.5 block/s)"]
-
-    classDef preconf stroke:#3a3,stroke-width:1px;
-    classDef finalized stroke:#33d,stroke-width:2px;
-    class WS,P2P,Consumer,RPC preconf;
-    class Engine,CL finalized;
+  B3 -. retained/duplicated work .-> B6
+  B4 -. offloaded custom work .-> B6
 ```
 
-**Time axis distinction**：
-- 绿色框：pre-confirmation 时间轴，sub-block 粒度 250ms，user-perceived TPS 维度。
-- 蓝色框：finalized 时间轴，block 粒度 2s，链最终 TPS 维度。两条线不互通。
-
-### diag-3 — Sequencer 主循环对比（comparison, round-2 修订：parallel build + selection，不是 offload）
+## diag-4: Mantle adoption roadmap and dependencies
 
 ```mermaid
 flowchart LR
-    subgraph BeforeBase[Before: stock OP Stack sequencer]
-        bs[op-node loop] --> bel[L2 EL]
-        bel --> bm[mempool pull]
-        bm --> bo[tx ordering / inclusion]
-        bo --> be[EVM execute]
-        be --> br[state-root + seal]
-        br --> bp[engine_newPayload to peers]
-    end
-
-    subgraph AfterBase[After: Base sequencer + rollup-boost]
-        as[op-node loop] --> arb["rollup-boost engine_*<br/>(server.rs:209-392)"]
-
-        subgraph LocalSeqHost[sequencer 本机 / 进程组]
-            arb -- "FCU with attrs<br/>(server.rs:594 tokio::join!)" --> al["L2 EL local candidate build<br/>(同一台机器, 与 stock 等价)"]
-            al --> alm[mempool pull]
-            alm --> alo[tx ordering / inclusion]
-            alo --> ale[EVM execute]
-            ale --> alr["state-root + seal<br/>(local L2 candidate payload)"]
-        end
-
-        subgraph BuilderHost[builder 主机 / 独立进程]
-            arb -- "FCU with attrs<br/>(server.rs:594 tokio::join!)" --> abld["external builder<br/>(base/crates/builder/core)"]
-            abld --> abm[mempool pull]
-            abm --> abo[tx ordering / inclusion]
-            abo --> abe["EVM execute<br/>(250ms × 8 Flashblocks loop)"]
-            abe --> abr["finalize_payload<br/>state-root + seal"]
-            abr --> abp["ws_pub: flashblock fan-out<br/>(pre-confirmation)"]
-        end
-
-        alr -- "l2_payload<br/>(server.rs:215)" --> arb
-        abr -- "builder_payload<br/>(server.rs:251-316)" --> arb
-        abr -. "builder→L2 回灌校验<br/>(server.rs:297-307)<br/>+ 一次额外 newPayload" .-> al
-        arb -- "tokio::join!<br/>(server.rs:318)" --> joinwait["wait for both<br/>(critical path = max(L2,builder) + selection)"]
-        joinwait --> sel["BlockSelectionPolicy<br/>(server.rs:343-366)<br/>选 builder 若 gas≥10% × L2, 否则 L2"]
-        sel -- "selected payload" --> as
-    end
-
-    classDef sameWork fill:#fed,stroke:#c93;
-    classDef addedWork fill:#dfd,stroke:#693;
-    classDef select fill:#ffd,stroke:#cc6;
-    class bm,bo,be,br,bp sameWork
-    class alm,alo,ale,alr sameWork
-    class abld,abm,abo,abe,abr,abp addedWork
-    class arb,joinwait,sel select
+  M0[Measurement gate<br/>empty blocks, gas/s, CPU profile, payload latency] --> M1[Consumer POC hardening<br/>WS stream, pending state, RPC semantics]
+  M1 --> M2[Mantle compatibility<br/>extra_data, receipts, chain spec, txpool DA sizing]
+  M2 --> M3[Builder separation<br/>rollup-boost, payload-id mapping, GasUsed policy, fallback]
+  M3 --> M4[Flashblocks producer<br/>budget slicing, publishing, state-root strategy]
+  M4 --> M5[Production hardening<br/>timeouts, op-conductor health, alerts, failover drills]
+  M0 -. informs .-> M3
+  M2 -. blocks .-> M4
+  M5 -. required for .-> PROD[mainnet rollout]
 ```
 
-**Round-2 修订说明（diag-3）**：
+# Source Coverage
 
-- 黄底（sameWork）：本地 L2 EL 的工作量在 stock 与 with-rollup-boost 之间**几乎不变**——mempool pull / tx ordering / EVM execute / state-root 全部仍跑在 sequencer 本机上的 L2 EL 进程里（`server.rs:594` FCU with attrs 同时下发到 L2 + builder；`server.rs:215` get_payload local L2 future）。
-- 绿底（addedWork）：外部 builder 进程的工作量是**并行新增**的——同样的 mempool pull / tx ordering / EVM execute / state-root 在 builder 主机上独立跑一份，外加 Flashblocks 250ms 循环带来的额外 CPU。Builder payload 还会被回灌到本地 L2 做一次额外 newPayload 校验（`server.rs:297-307`，~10–50ms）。
-- 黄底+斜纹（select）：rollup-boost 内部的 routing + tokio::join + selection 工作，µs 量级，可忽略。
-- **不存在"workload 从 sequencer 搬到 builder"**——workload 是被复制 + 选块；总 CPU 增加，sequencer 本机 CPU 维持不变或略增（多一次回灌 newPayload）。
-- 真实改善：finalized block 上选到更高 gas_used 的 builder payload（item-3 机制），即输出端 gas-throughput 提升，不是输入端 sequencer 资源释放。
-
-### diag-4 — Mantle 改造路径时间线（timeline）
-
-```mermaid
-gantt
-    title Mantle 引入 rollup-boost + Flashblocks 改造路径
-    dateFormat  YYYY-MM-DD
-    axisFormat  %m/%d
-
-    section Phase 0 — Baseline
-    src-7 Mantle/Base 主网链上抽样 (round-2 已完成)    :done, p0, 2026-05-13, 7d
-    Phase 0a — Mantle mempool arrival 归因 (round-2 新增 P0) :p0a, after p0, 21d
-
-    section Cross-topic deps
-    execution-layer-reth-fork-comparison        :dep1, 2026-05-25, 60d
-    sequencer-consensus-pipeline-perf 接口契约   :dep2, 2026-06-08, 45d
-    batcher-sequencer-backpressure 协议         :dep3, 2026-06-22, 45d
-
-    section Phase 1 — Reth consumer
-    fork OP-reth flashblocks/ 到 mantle-xyz/reth   :p1a, after p0a, 21d
-    扩展 PendingFlashBlock 完整 pending 状态机     :p1b, after p1a, 28d
-    Mantle extra_data / MetaTx / L1cost 接入       :p1c, after p1b, 21d
-
-    section Phase 2 — rollup-boost rollout
-    部署 flashbots/rollup-boost + Mantle EL DryRun :p2a, after p1c, 21d
-    GasUsed policy 配置 + Probe 集成              :p2b, after p2a, 14d
-
-    section Phase 3 — Mantle Builder producer (gated by Phase 0a)
-    builder-core crate 移植 + Mantle 适配          :p3a, after p2b, 60d
-    BestFlashblocksTxs + rejection cache           :p3b, after p3a, 28d
-    WebSocketPublisher + (optional) flblk/1 接入   :p3c, after p3b, 21d
-
-    section Phase 4 — Testnet + mainnet
-    Sepolia / 测试网联调                         :p4a, after p3c, 35d
-    HA failover 演练                            :p4b, after p4a, 21d
-    主网灰度 + 监控                              :p4c, after p4b, 28d
-```
-
-**Critical path**：p0 ✓ → p0a → dep1/dep2/dep3 并行 → p1a→p1b→p1c → p2a→p2b → p3a→p3b→p3c → p4a→p4b→p4c。总长 estimated ~31–49 周（含跨主题依赖窗口；round-2 增加 p0a 3 周）。Phase 3 必须由 Phase 0a 结果触发，否则 P3 ROI 不可论证。
-
----
-
-## Source Coverage
-
-| Source ID | Status | Coverage / Evidence |
-|---|---|---|
-| src-1 `base/base` `crates/builder` 代码 | satisfied | `base@21a05eeb2` 仓库检出，逐文件读取 `config.rs`、`flashblocks/payload.rs`、`flashblocks/service.rs`、`flashblocks/handler.rs`、`flashblocks/context.rs`、`flashblocks/generator.rs`、`common/flashblocks/src/payload.rs`；items 1/3/4/5/8 直接引用 |
-| src-2 `flashbots/rollup-boost` 源码 | satisfied | `rollup-boost@ea7fe885` 本地 clone，逐行读 `selection.rs`、`server.rs`（line 180-400 + 540-660）、`flashblocks/mod.rs`、`flashblocks/args.rs`、`flashblocks/service.rs`；items 1/2/4/8 直接引用。round-2 verified server.rs:594（FCU 双 join）、server.rs:215（l2_fut）、server.rs:318（tokio::join!）、server.rs:343-367（select）作为 item-8 修订证据。 |
-| src-3 `mantle-xyz/reth` `feat/flashblocks-mantle-aware` + `flashblocks/poc` | satisfied | 两个分支的 commit log 已全部列出，从 common base `b39694320` 起 commit-level diff 已验证；item-7 全程基于 commit diff |
-| src-4 Flashblocks P2P 规范 `specs/flashblocks_p2p.md` | satisfied | rollup-boost 仓库 `specs/flashblocks_p2p.md` (commit `29efac0`, 2026-01-22, PR #373) 全文阅读；item-4 引用 Authorization / AuthorizedMsg / flblk/1 capability |
-| src-5 Base Azul 升级博客 + specs.base.org/upgrades/azul/* | partial | 本地 `base/docs/specs/pages/upgrades/azul/overview.md` 已读，列出 Sepolia 1776708000、Engine API V3/V4/V5、metadata 简化等；blog.base.dev/introducing-base-azul 未独立 fetch（标 partial），需补 |
-| src-6 Flashbots 团队关于 rollup-boost 的公开博客或演讲 | not satisfied | 未在本轮 fetch；item-1 中"Base 主网部署是否启用 GasUsed policy"的确认依赖此源 |
-| src-7 Base / Mantle 主网空块率 + 有效 gas 利用率链上抽样 | **satisfied for sampling; precise headline claim unresolved (round-3)** | 500 块 × 2 链 × 7 天采样完成；方法见 frontmatter `src7_methodology`。**Base mainnet (post-Azul)**：avg 187 tx/block, 32.76M gas_used (8.19% utilization), 0.20% 系统-only blocks (~86/day extrapolated)。**Mantle mainnet**：avg 1.80 tx/block, 174,650 gas_used (0.29% utilization), 60.80% 系统-only blocks (~26,266/day extrapolated)。**定性方向 verified**（Base post-Azul empty 是稀有事件 / substantial reduction relative to inferred pre-Azul ~200/天）；**精确数字 "~2/天" 标为 unresolved-discrepant**（observed 1/500 的 Wilson 95% CI [0.0353%, 1.1241%] → [15, 486]/天 **不包含** 2/天；若真实速率为 2/day，500-block 中观察 ≥ 1 空块概率仅 ~2.29% — round-2 "binomial CI accounts for the gap" 论述撤回）；**精确百分比 "99% reduction" 标为 inferred**（inferred pre-Azul ~200/天 vs sampled post-Azul ~86/天 仅得 ~57% 降低，99% 数字依赖未验证的 post-Azul ≤ 2/天）；**pre-Azul ~200/天 仍为 inferred**（未做 pre-Azul 抽样对照，dispatch 限定 last 7 days）。升级路径：(a) Flashbots 官方"~2/天"定义复核（src-6 拉入）；(b) post-Azul n ≥ 5000 抽样收紧 CI；(c) pre-Azul 同等抽样对照。 |
-
----
-
-## Gap Analysis
-
-按优先级排序：
-
-1. **[P1（round-2 降级 from P0）]** **pre-Azul Base 空块率对照采样**：本轮采样限定 last 7 days post-Azul；"~200/天 → ~2/天"的"before"端尚未独立验证。需要采样 Base Azul mainnet activation 之前（~2026-04 或更早）的同等区段。
-   - **影响**：item-3 中 "99% 降低"的精确百分比数值仍为 inferred；定性方向（empty block 在 Base post-Azul 是稀有事件）已 verified。
-   - **解决路径**：round-3 用同样脚本针对 Base block 区段 ~45M-44.5M（或 Azul activation block - 250k）采样 500 块。
-2. **[P1（保留）]** **src-6 缺失**：Flashbots 团队公开材料未独立验证 Base 主网生产部署的 rollup-boost CLI 参数（特别是是否启用 `--block-selection-policy gas-used`）。
-   - **影响**：item-2 的 throughput-impact 描述只覆盖"代码上可能的行为"，没有锁定"生产实际行为"。
-   - **解决路径**：round-3 fetch Flashbots blog / OP Stack docs / Base 部署 manifest。
-3. **[P2（新增 round-2）]** **Mantle mempool arrival rate 数据**：item-9 ROI 的核心 unknown——60.8% 空块中有多少是 mempool snapshot timing 失误（Flashblocks 可解）vs 真实 demand 缺位（无技术解法）。本轮抽样仅有链上数据，无 mempool 数据。
-   - **影响**：item-9 ROI 在 1.00×–2.13× 之间宽区间；P3 producer 工程的决策依据不足。
-   - **解决路径**：Phase 0a 工程任务（1–3 周轻量数据科学），需 Mantle mainnet RPC + mempool subscribe 权限。
-4. **[P2（保留）]** **src-5 partial**：Base Azul 官方博客（blog.base.dev）未独立 fetch，目前依赖仓库内 spec 文档。
-   - **影响**：item-4 中 Azul 对 metadata 的简化效果（带宽降幅）是 estimated；blog 可能给出官方数字。
-   - **解决路径**：round-3 fetch blog.base.dev/introducing-base-azul。
-5. **[P2（保留）]** **item-5 的带宽放大数字** "8 × 50KB × 8 peer ≈ 3.2MB/block" 是公式估算，没有从实际 P2P 流量抽样。需在测试网或主网监控中验证。
-6. **[P3（保留）]** **item-8 资源释放表**未做实际 profile；该表格是 framework 而非测量。完整论证需要 (a) Base 生产环境 cAdvisor / perf 数据，或 (b) Mantle 测试网 shadow 部署后对照。round-2 已修正定性方向（不是 offload；是 parallel duplication + selection），但 percentage 表仍 estimated。
-
-无 P0/P1 gap 影响 outline 的 9 个 item 完整性——所有 items 都有可呈现的内容；剩余 gap 影响的是部分定量陈述的证据等级升级路径。
-
----
-
-## Revision Log
-
-| Round | Date | Action | Notes |
-|---|---|---|---|
-| 1 | 2026-05-20 | initial draft | 覆盖 9 items + 4 diagrams + 全部 7 source requirements 的初评。src-1..src-4 satisfied；src-5 partial；src-6/src-7 未满足，已列入 Gap Analysis。Evidence label 框架按"verified/estimated/inferred"应用到所有定量陈述。 |
-| 2 | 2026-05-20 | revision: blockers must-fix-1 (item-8/diag-3) + must-fix-2 (src-7) | (1) item-8 重写：基于 rollup-boost `server.rs:594/215/318/343-367` 修正"~40-60% sequencer workload offload"为"local L2 仍执行完整 candidate build；外部 builder 并行复制；rollup-boost 选块"；移除 mechanism `verified` 标签，引入 sequencer 本机 CPU 净变化表（0 ~ +5%）；diag-3 Mermaid 重写为 "local + parallel-builder + select"，黄底/绿底/select 三色区分。 (2) src-7 完成 Base + Mantle mainnet 各 500 块 × 7 天采样，item-3 头条数字升级（彼时标 verified-with-discrepancy，round-3 已纠正），item-6 baseline 表填齐实测数据，item-9 ROI 用 Mantle 0.29% utilization + 60.8% 空块比例重新校准，新增 Phase 0a "demand attribution" 作为 P3 producer 工程的前置门控。Gap Analysis P0 关闭；新增 P2 Mantle mempool arrival rate 数据 gap。所有其他 round-1 items（item-1/2/4/5/7、diag-1/2/4）维持原文。 |
-| 3 | 2026-05-20 | narrow revision: blockers must-fix-1 (src-7 discrepancy labels) + must-fix-2 (item-9 Scenario C arithmetic + Phase 0a gate justification) | (1) must-fix-1: 撤回 round-2 中"binomial CI accounts for the ~2/day vs ~86/day gap"的论述；重新计算 Wilson 95% CI for 1/500 = [0.0353%, 1.1241%] → [15.26, 485.61] blocks/day（round-2 的 [4, 484] 为公式错误，已作废）；指出 ~2/day (0.0046%) 落在下限之外，且在 2/day 假设下观察到 ≥1 空块概率仅 ~2.29% — implausible。"~2/day" 精确数字降级为 **unresolved-discrepant**；"99% reduction" 精确百分比降级为 **inferred**（inferred pre-Azul 200/d vs sampled 86/d 给 ~57% 降低）；定性方向（substantial reduction relative to inferred pre-Azul baseline、empty 在 Base post-Azul 是稀有事件）保持 **verified, qualitative**。改动覆盖 Executive Summary headline callout、item-3 empty-block 表 + discrepancy 解释 + Evidence label summary、Source Coverage src-7 行。 (2) must-fix-2: item-9 Scenario C 算术修正为 0.304 × 371,586 + 0.304 × 46,311 + 0.392 × 371,586 ≈ **272,703 / 1.56×**（round-2 的 282,838 / 1.62× 算术错误已撤回）；增量公式 174,650 + 0.304 × 325,275 ≈ 273,534 / 1.57× 作为交叉验证。Phase 0a gate 20% / 1.23× 显式标为 **heuristic / product-priority gate**，附 1.23× → ~21 tps 增量 vs 31–49 周工程量的 product-priority 论证示例，并明示最终阈值由 Mantle 产品/工程优先级决定，不由本研究规定。frontmatter `evidence_levels_used` 新增 "unresolved-discrepant" 标签。所有 round-2 未列入 must-fix 的 item（item-1/2/4/5/6/7/8、diag-1/2/3/4、Source Coverage src-1..src-6、Gap Analysis P1..P3、Cross-Topic Dependencies）维持原文。 |
-
----
-
-## Cross-Topic Dependencies（明示给下游 Research Agents）
-
-| 主题（topic_slug） | 接口契约 |
+| Requirement | Coverage |
 |---|---|
-| `execution-layer-reth-fork-comparison` | item-7 + item-9 P1 依赖：Mantle reth fork 何时能干净地从上游 OP-reth pull 入 `crates/optimism/flashblocks/` |
-| `sequencer-consensus-pipeline-perf` | item-1 + item-8 提供 sequencer 主循环负载分布数据（round-2 已修正为 *并行复制* 而非 *卸载*）；该主题应在其侧定义"哪些调用进了 critical path"的契约 |
-| `batcher-sequencer-backpressure` | item-4 提供 `block_time_leeway = 500ms` 的来源（generator.rs 注释 "Postponing the deadline for 5s" → batcher max channel duration corner case） |
-| `gas-protocol-perf-config` | item-3 的 `gas_per_batch = block_gas_limit / flashblocks_per_block`（payload.rs:338）暴露了 gas 参数对 flashblock 装填粒度的影响 |
-| `perf-gap-analysis-recommendations` | item-9 的改造路径（round-2 新增 Phase 0a demand-attribution 门控）与时间线作为汇总输入 |
+| src-1 `base/base` builder/execution code | Covered with refs to `config.rs`, `flashblocks/payload.rs`, `best_txs.rs`, `publisher.rs`, common payload schema, consumer processor/validation/RPC/cache/cached execution. |
+| src-2 `flashbots/rollup-boost` | Covered with refs to `server.rs`, `selection.rs`, `client/rpc.rs`, `probe.rs`, and P2P spec. |
+| src-3 `mantle-xyz/reth flashblocks/poc` | Covered with refs to `lib.rs`, `service.rs`, `sequence.rs`, `worker.rs`, `consensus.rs`, and `ws/stream.rs` at commit `1f8b656`. |
+| src-4 `mantle-xyz/reth feat/flashblocks-mantle-aware` | Covered with diff summary and refs to payload, chainspec, RPC, receipt, and txpool files at commit `58741b2`. |
+| src-5 Mantle production baseline | Covered with `mantle-v2` op-node/engine and `op-geth` Engine API/miner payload builder refs. |
+| src-6 Flashblocks P2P spec | Resolved to `flashbots/rollup-boost@ea7fe88:specs/flashblocks_p2p.md`; `base/base` path not found in current checkout. |
+| src-7 Base docs/blog | Covered: Flashblocks overview and architecture docs, Flashblocks deep dive, Introducing Base Azul. |
+| src-8 expert commentary | Covered through Base engineering blog and rollup-boost spec; no separate independent Flashbots benchmark located. |
+| src-9 on-chain data | Covered with reproducible JSON-RPC method and exact short block ranges; full-day validation remains gap. |
+| src-10 performance data | Partial: Base blog reports state-root/P50 improvement; no raw benchmark/profile dataset found. |
 
----
+# Gap Analysis
 
-*End of Round 3 Draft*
+1. Full-day empty-block validation is still missing. Public RPC rate limits blocked a larger fresh sample in this run; the completed sample is only 30 blocks per window.
+2. Base production rollup-boost timeout, `ignore_unhealthy_builders`, and policy deployment parameters were not public in the checked repos.
+3. WebSocket vs P2P throughput is modeled from topology and spec. No public benchmark comparing fan-out bandwidth, signature overhead, or provider lag was found.
+4. CPU/memory release estimates are inferred from code ownership and duplicated fallback work. Production profiling is required before Mantle treats resource release as a capacity claim.
+5. Mantle branch evaluation is code-level only. I did not run the branches or execute tests, so runtime maturity and integration breakage remain unverified.
+6. Existing `drafts/round-2.md`, `drafts/round-3.md`, and `final.md` in this topic directory are May 20 historical artifacts. They should not be consumed as current rerun evidence unless explicitly revalidated.
+
+# Revision Log
+
+| Round | Change |
+|---|---|
+| 1 | Recreated Phase B deep draft for the 2026-05-22 rerun scope, replacing the historical `drafts/round-1.md`; enforced code/on-chain evidence labels, resolved P2P spec location, refreshed commit SHAs and short on-chain samples. |
