@@ -13,811 +13,823 @@ artifact_paths:
 
 draft_metadata:
   created_by: "agent:research-agent (Deep Research Agent, id=13a888db-49bb-4a19-9906-827729e156d9)"
-  created_at: "2026-05-26T14:45:00+08:00"
-  data_collection_time: "2026-05-26T14:30:00+08:00 UTC"
-  time_window: "2026-02-26 至 2026-05-26 UTC"
+  created_at: "2026-05-26T14:55:00+08:00"
+  data_collection_window: "2026-02-26 to 2026-05-26 UTC"
+  data_collection_timestamp: "2026-05-26T06:40:00Z"
+  primary_data_source: "GitHub API via gh CLI"
   outline_commit: "fd72d1d037c6161edc8f7281522f486410f17f73"
   items_covered: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
   fields_investigated: ["repo_universe_record", "activity_metrics", "activity_score", "pr_evidence", "classification_label", "implementation_status", "evidence_confidence", "hardfork_status", "narrative_signal", "reth_client_maturity", "mantle_implication", "gaps_and_risks"]
   diagrams_produced: ["diag-1", "diag-2", "diag-3", "diag-4", "diag-5", "diag-6", "diag-7", "diag-8"]
-  source_requirements_coverage: ["src-1: covered", "src-2: covered", "src-3: partially covered", "src-4: partially covered", "src-5: gap", "src-6: partially covered"]
-  review_caveats_addressed: ["时间敏感数据已于 2026-05-26 重新抓取", "implementation_status 已区分", "node-real 低活跃度已量化", "BSC L1 vs Mantle L2 比较已加限定"]
+  source_requirements_coverage: ["src-1: covered", "src-2: covered", "src-3: partially", "src-4: partially", "src-5: gap", "src-6: partially"]
+  review_caveats_addressed:
+    - "所有时间敏感数据已于 2026-05-26 重新抓取，不沿用 outline 预览数字"
+    - "每项功能严格区分 implementation_status: spec-only / open-pr / merged / released / testnet / mainnet-active"
+    - "node-real org 低活跃度已提供定量数据支撑（6 repos pushed, 16 total PRs, dcellar 1 PR）"
+    - "BSC L1 性能参数未直接对标 Mantle L2，已加明确架构差异限定"
+  language: "zh"
 ---
 
 # BNB Chain 近期开发与叙事分析
 
-> 数据窗口：2026-02-26 至 2026-05-26 UTC
-> 抓取时间：2026-05-26 14:30 UTC
-> 数据来源：`gh pr list`、`gh release list`、`gh api`，覆盖 `bnb-chain` 和 `node-real` GitHub Organization
+> 数据抓取时间：2026-05-26 06:40 UTC | 分析窗口：2026-02-26 至 2026-05-26（3 个月）| 主要数据来源：GitHub API (gh CLI)
 
 ## Executive Summary
 
-BNB Chain 近 3 个月的开发活动呈现**多线并行、reth 双客户端加速、硬分叉快节奏**的格局。核心发现：
+BNB Chain 在过去 3 个月展现出高度集中的工程投入模式。核心开发活动集中在两条主线：**BSC Go 客户端**（`bsc`，92 PRs）和 **reth Rust 双客户端**（`reth` 92 PRs + `reth-bsc` 59 PRs，合计 151 PRs）。工程重心明确指向 **Mendel 硬分叉**（2026-04-28 主网激活）、**Pasteur 硬分叉**（准备中）、**短出块间隔演进**（目标 250ms）、**MEV 基础设施**（BEP-675 builder-proposed blocks）和 **快速最终性优化**。
 
-1. **BSC 主链开发双轨并行**：Go 客户端 `bsc`（79 PRs）和 Rust 客户端 `reth-bsc`（59 PRs）+ `reth` 上游 fork（92 PRs）三个 repo 共贡献 230 PRs，构成 BNB Chain 最大开发投入。reth 双客户端已推进到 v2.0.0 架构升级。
-2. **Mendel 硬分叉已上主网**（2026-03-24），包含 Osaka EVM 对齐、BEP-657 blob 限制等；**Pasteur 硬分叉准备中**，包含 BEP-670（250ms 出块）、BEP-675（builder 提议区块）、BEP-682（CometBFT 轻区块验证）等重大变更。
-3. **AI Agent 叙事活跃但工程浅层**：`bnbagent-sdk`（30 PRs）和 `bnbchain-mcp`（20 PRs）开发活跃，但 contributor 以少数人主导，BEP-692 仍为 Open 提案。
-4. **opBNB L2 实际边缘化**：仅 3 PRs（`opbnb`）+ 8 PRs（`op-geth`），Laplace 硬分叉 PRs 仍为 Open 状态。
-5. **Greenfield 维护模式**：8 PRs 聚焦硬分叉运维，`node-real/dcellar` 近乎停滞（1 PR）。
-6. **开发团队分离**：BSC Go 和 reth 团队基本分离，仅 MatusKysel 同时活跃于两者。
+同期，**AI Agent** 赛道（`bnbagent-sdk` 30 PRs + `bnbchain-mcp` 46 PRs）呈现叙事驱动特征，代码成熟度有限但 BEP 提案活跃。**opBNB L2** 活跃度极低（`opbnb` 3 PRs + `op-geth` 8 PRs），Laplace 硬分叉仍处 open PR 阶段。**Greenfield** 存储层保持稳定维护（`greenfield` 8 PRs），但 `node-real` org 活跃度几乎为零，显示 NodeReal 已淡出一线开发。
+
+对 Mantle 的核心竞争压力来自 BSC 的性能口径（250ms 出块目标）、reth 双客户端战略的客户端多样性叙事、以及 Binance 交易所背景的生态导流能力。但 BSC L1 与 Mantle L2 架构根本不同（Parlia PoSA vs OP Stack），性能参数不可直接对标。
 
 ---
 
-## 1. GitHub org/repo universe 发现与纳入边界 (item-1)
+## 1. GitHub Org/Repo Universe 发现与纳入边界（item-1）
 
-### 1.1 扫描范围
+### 1.1 扫描范围与方法
 
-| Organization | 总 repo 数 | 来源 |
-|---|---|---|
-| `bnb-chain` | 223+ | GitHub org 直接扫描 |
-| `node-real` | 70+ | GitHub org 直接扫描 |
+查询方式：使用 `gh api orgs/{org}/repos --paginate` 获取全部可见 repo 的 metadata，筛选 `pushed_at >= 2026-02-26` 的 repo 为活跃候选。查询时间：2026-05-26 06:40 UTC。
 
-通过 BNB Chain 官网、GitHub topics、repo README 交叉验证，未发现其他官方/半官方 org 有显著活动。Binance 主 org（`binance-chain`、`nicear` 等）已历史性归档，不再活跃。
+| Org | 总 Repo 数 | 近 3 月有 push 的 Repo | 备注 |
+|-----|----------|----------------------|------|
+| `bnb-chain` | 223 | 35 | 核心开发 org，涵盖 BSC、reth、Greenfield、opBNB、AI Agent、BEPs |
+| `node-real` | 70 | 6 | NodeReal 运营 org，近 3 月活跃度极低 |
 
-### 1.2 Repo Universe 表 (diag-1)
+### 1.2 bnb-chain org 活跃 Repo 清单（diag-1：近 3 月有 push）
 
-| Org | Repo | 类型 | Archived/Fork | 语言 | Stars | 近 3 月 PR 数 | 纳入/排除 |
-|---|---|---|---|---|---|---|---|
-| bnb-chain | bsc | core-protocol/client | No/No | Go | 2700+ | 79 | **纳入 Top** |
-| bnb-chain | reth | core-protocol/client (upstream fork) | No/No | Rust | 24 | 92 | **纳入 Top** |
-| bnb-chain | reth-bsc | core-protocol/client (BSC 特定) | No/No | Rust | 71 | 59 | **纳入 Top** |
-| bnb-chain | bnbagent-sdk | AI-agent/SDK | No/No | Python | - | 30 | **纳入 Top** |
-| bnb-chain | bnb-chain.github.io | docs/website | No/No | JS/TS | - | 24 | 纳入（docs 指标） |
-| bnb-chain | BEPs | contracts/BEP/spec | No/No | Markdown | - | 22 | **纳入 Top** |
-| bnb-chain | bnbchain-mcp | AI-agent/MCP | No/No | TypeScript | - | 20 | 纳入（AI 叙事） |
-| bnb-chain | greenfield-cosmos-sdk | storage/cosmos | No/Fork | Go | - | 17 | 纳入（Greenfield 指标） |
-| bnb-chain | greenfield-cometbft-db | storage/infra | No/Fork | Go | - | 14 | 排除：全部 dependabot |
-| bnb-chain | greenfield-storage-provider | storage/SP | No/No | Go | - | 9 | 纳入（Greenfield 指标） |
-| bnb-chain | greenfield | storage/core | No/No | Go | - | 8 | 纳入（Greenfield 指标） |
-| bnb-chain | op-geth | L2/rollup | No/Fork | Go | - | 8 | 纳入（opBNB 指标） |
-| bnb-chain | bsc-genesis-contract | contracts/system | No/No | Solidity | - | 6 | 纳入 |
-| bnb-chain | opbnb | L2/rollup | No/No | Go | - | 3 | 纳入（opBNB 指标） |
-| bnb-chain | bsc-mev-sentry | MEV/builder | No/No | Go | - | 3 | 纳入（MEV 指标） |
-| bnb-chain | reth-bsc-triedb | core-protocol/storage | No/Fork | Rust | 1 | - | 纳入（reth 生态） |
-| bnb-chain | reth-bsc-trail | deprecated | **Archived** | Rust | - | 0 | 排除：已归档 |
-| node-real | dcellar | storage/frontend | No/No | TS | - | 1 | 排除：近乎停滞 |
-| node-real | bnb-chain-agentkit | AI-agent | No/No | - | - | 0 | 排除：无活动 |
-| node-real | 其他 68 repos | various | - | - | - | 0 | 排除：无活动 |
+| Repo | 类型 | Archived | Fork | Language | Stars | Last Pushed | 纳入/排除 |
+|------|------|----------|------|----------|-------|-------------|----------|
+| `bsc` | core-protocol/client | No | No | Go | 3254 | 2026-05-22 | **纳入 Top** |
+| `reth` | core-protocol/client (fork of paradigmxyz/reth) | No | No | Rust | 24 | 2026-05-26 | **纳入 Top** |
+| `reth-bsc` | core-protocol/client (BSC 特有层) | No | No | Rust | 71 | 2026-05-26 | **纳入 Top** |
+| `bnbagent-sdk` | AI Agent SDK | No | No | Python | 22 | 2026-05-23 | **纳入 Top** |
+| `BEPs` | spec/proposal | No | No | Solidity | 957 | 2026-05-08 | **纳入 Top** |
+| `bnbchain-mcp` | AI Agent (MCP server) | No | No | TypeScript | 59 | 2026-04-17 | **纳入 Top** |
+| `bnb-chain.github.io` | docs/website | No | No | HTML | 470 | 2026-05-06 | 纳入（docs 信号） |
+| `greenfield` | storage | No | No | Go | 133 | 2026-05-21 | 纳入 |
+| `greenfield-cosmos-sdk` | storage (上游 fork) | No | No | Go | 28 | 2026-05-21 | 纳入（Greenfield 生态） |
+| `greenfield-storage-provider` | storage | No | No | Go | 57 | 2026-05-11 | 纳入 |
+| `greenfield-cometbft-db` | storage (依赖) | No | No | Go | 8 | 2026-05-25 | **排除**（14 PRs 全为 dependabot） |
+| `opbnb` | L2/rollup | No | No | Go | 434 | 2026-05-20 | 纳入 |
+| `op-geth` | L2/rollup | No | No | Go | 65 | 2026-05-22 | 纳入 |
+| `bsc-genesis-contract` | contracts/system | No | No | Solidity | 771 | 2026-05-08 | 纳入 |
+| `bsc-mev-sentry` | MEV/builder | No | No | Go | 8 | 2026-05-08 | 纳入 |
+| `node-deploy` | infra/devops | No | No | Shell | 69 | 2026-05-18 | 排除（运维部署） |
+| `reth-bsc-triedb` | core-protocol (trie DB fork) | No | Yes | Rust | 1 | 2026-05-22 | 纳入（reth 生态子组件） |
+| `reth-core` | core-protocol (fork) | No | Yes | Rust | 0 | 2026-05-05 | 排除（fork 依赖，无独立 PR） |
+| `canonical-bridge` | bridge/cross-chain | No | No | TypeScript | 6 | 2026-05-12 | 排除（低活跃） |
+| `bep-677-contracts` | contracts | No | No | TypeScript | 0 | 2026-05-08 | 排除（合约实现参考） |
+| `apex-contracts` | contracts | No | No | TypeScript | 0 | 2026-05-15 | 排除（AI Agent 合约） |
 
-**node-real org 排除理由**：70+ repos 中，仅 `dcellar` 有 1 PR，其余全部无近 3 个月 PR 活动。NodeReal 作为 BNB Chain 生态基础设施公司，其开源贡献已大幅萎缩，可能转向私有化或 SaaS 模式。[evidence_confidence: primary-verified]
+### 1.3 node-real org 活跃状况
 
-### 1.3 reth-bsc-trail 归档说明
+| Repo | Fork | Language | Stars | Last Pushed | PR 数（近 3 月） |
+|------|------|----------|-------|-------------|----------------|
+| `dcellar` | No | TypeScript | 10 | 2026-04-23 | 1 |
+| `bnbchainlist` | Yes | JavaScript | 94 | 2026-04-23 | 2 |
+| `bsc` | Yes | Go | 17 | 2026-04-22 | 0 |
+| `walletkit` | No | TypeScript | 5 | 2026-03-30 | 13 |
+| `nodereal-skills` | No | null | 1 | 2026-03-06 | 0 |
+| `bsc-mainnet-data` | No | null | 0 | 2026-03-26 | 0 |
 
-`bnb-chain/reth-bsc-trail` 已于 2025-02-02 归档（description: "BSC and opBNB client based on the Reth fork"），被当前的 `reth-bsc` + `reth` 双 repo 架构取代。[evidence_confidence: primary-verified]
+**排除理由**：`node-real` org 近 3 个月总计约 16 PRs，其中 `walletkit`（13 PRs）为钱包工具库，其余 repo 近乎零活跃。`dcellar`（Greenfield 前端）仅 1 PR，显示 NodeReal 在 Greenfield 前端的投入已大幅收缩。该 org 不包含核心协议开发，全部排除出 Top repo 分析。**evidence_confidence: primary-verified**。
 
----
+### 1.4 相关 Org 发现
 
-## 2. 近 3 个月 repo 活跃度排名与 Top repo 选择 (item-2)
-
-### 2.1 活跃度排名表 (diag-2)
-
-排序公式：Activity Score = merged_PR × 0.30 + created_PR × 0.20 + active_contributors × 0.15 + release_signal × 0.10 + commit_recency × 0.10 + weekly_consistency × 0.15
-
-| Rank | Repo | PR Created | PR Merged | Active Contributors | Release | Activity Score | 备注 |
-|---|---|---|---|---|---|---|---|
-| 1 | bnb-chain/reth | 92 | 58 | 7 | v0.0.9 (2026-04-22) | **95** | 含 11 bot PRs |
-| 2 | bnb-chain/bsc | 79 | 60 | 11 | v1.7.1→v1.7.3 | **93** | Go 客户端 |
-| 3 | bnb-chain/reth-bsc | 59 | 39 | 10 | v0.0.9-beta (2026-04-22) | **88** | BSC 特定 |
-| 4 | bnb-chain/bnbagent-sdk | 30 | ~15 | 8 | - | **55** | AI Agent |
-| 5 | bnb-chain/bnb-chain.github.io | 24 | ~20 | - | - | **45** | 文档 |
-| 6 | bnb-chain/BEPs | 22 | ~15 | 6 | - | **44** | 提案 |
-| 7 | bnb-chain/bnbchain-mcp | 20 | ~10 | 5 | - | **38** | MCP 集成 |
-| 8 | bnb-chain/greenfield-cosmos-sdk | 17 | ~15 | 2 | - | **30** | Cosmos 上游 |
-| 9 | bnb-chain/greenfield-storage-provider | 9 | 6 | 2 | - | **18** | SP 改进 |
-| 10 | bnb-chain/greenfield | 8 | 8 | 2 | - | **17** | 核心 |
-| 11 | bnb-chain/op-geth | 8 | 5 | 1 | v0.5.10 | **16** | opBNB |
-| 12 | bnb-chain/bsc-genesis-contract | 6 | 1 | 3 | - | **10** | 系统合约 |
-| 13 | bnb-chain/opbnb | 3 | 0 | 2 | - | **5** | opBNB |
-| 14 | bnb-chain/bsc-mev-sentry | 3 | 2 | 3 | - | **5** | MEV |
-
-**噪声处理**：
-- `greenfield-cometbft-db`（14 PRs）全部为 dependabot 自动生成，排除出活跃排名。
-- `bnb-chain/reth` 的 92 PRs 中含 11 个 dependabot/github-actions bot PR，人工 PR 为 81 个。
-- `reth-bsc` 无 bot PR。
-
-### 2.2 Top Repo 选择
-
-基于数据分布，选择 Top 6 做深度分析：
-1. **bsc** — Go 客户端（主力生产客户端）
-2. **reth** — Rust 上游 fork（paradigmxyz/reth 的 BNB Chain 分支）
-3. **reth-bsc** — Rust BSC 特定功能层
-4. **bnbagent-sdk** — AI Agent SDK
-5. **BEPs** — 协议提案
-6. **greenfield** 系列（greenfield + greenfield-cosmos-sdk + greenfield-storage-provider 合并分析）
-
-辅助覆盖：opbnb/op-geth（L2）、bnbchain-mcp（AI）、bsc-mev-sentry（MEV）、bsc-genesis-contract（系统合约）。
-
-### 2.3 敏感性检查
-
-- **仅看 merged PR**：bsc(60) > reth(58) > reth-bsc(39) — bsc 排名上升
-- **仅看 contributors**：bsc(11) > reth-bsc(10) > reth(7) — reth-bsc contributor 密度高
-- **仅看 release signal**：bsc(3 releases) > reth-bsc(2) > reth(2) — bsc release 节奏最快
-
-敏感性检查不改变 Top 6 选择，但 bsc 和 reth 的排名在不同视角下互换。
+通过 BNB Chain 官网、GitHub search、repo README 搜索发现：
+- **paradigmxyz/reth**：`bnb-chain/reth` 的上游，BNB Chain 团队成员（chee-chyuan）直接向上游贡献 PR，但上游 repo 不纳入 BNB Chain 分析范围
+- 未发现其他与 BNB Chain 核心开发直接相关的独立 org
 
 ---
 
-## 3. Top Repo PR 活动基线与原始数据 (item-3)
+## 2. 近 3 个月 Repo 活跃度排名与 Top Repo 选择（item-2）
 
-### 3.1 bnb-chain/reth（上游 fork）PR 摘要
+### 2.1 排序公式
 
-**总量**：92 PRs（81 human + 11 bot），58 merged，6 open，28 closed。
+**Activity Score = PR_merged x 0.30 + PR_created x 0.20 + commits x 0.20 + contributors x 0.15 + release_signal x 0.10 + issue_discussion x 0.05**
 
-**核心 contributor 分布**：
+各指标归一化到 0-100 scale（按各指标最大值归一化）。Commits 数取 API 首页（最多 100），存在低估风险。
 
-| Contributor | PR 数 | 角色推断 |
-|---|---|---|
-| chee-chyuan | 45 | 上游同步/集成主力，v2 迁移负责人 |
-| constwz | 17 | 核心功能开发（pipeline guard、metrics、Mendel HF） |
-| sysvm | 7 | CI/运维、RPC 修复 |
-| will-2012 | 5 | 跨区域测试、triedb |
-| MatusKysel | 3 | Mendel HF cherry-pick、prefetcher |
-| joey0612 | 3 | Release 管理（merge develop to main） |
-| zhk101 | 1 | 性能优化（metrics engine stall） |
+### 2.2 活跃度排行榜（diag-2）
 
-**关键 PR**：
+| Rank | Repo | PR Created | PR Merged | PR Closed (not merged) | Commits (pg1) | Active Contributors | Release/Tag | Activity Score | 备注 |
+|------|------|-----------|-----------|----------------------|---------------|---------------------|-------------|---------------|------|
+| 1 | `bsc` | 92 | 63 | 17 | 61 | 12 | 3 (v1.7.1/v1.7.2/v1.7.3) | **95** | Go 主客户端 |
+| 2 | `reth` | 92 | 58 | 28 | 13 | 9 | 0 | **78** | 上游 fork + BSC 特化 |
+| 3 | `reth-bsc` | 59 | 39 | 10 | 32 | 9 | 2 (v0.0.8/v0.0.9-beta) | **65** | BSC reth 特有层 |
+| 4 | `bnbchain-mcp` | 46 | 4 | 41 | 5 | 3 | 0 | **29** | **仅 4 merged，89% close 率** |
+| 5 | `bnbagent-sdk` | 30 | 16 | 11 | 37 | 8 | 0 | **38** | AI Agent SDK |
+| 6 | `BEPs` | 22 | 14 | 1 | 27 | 8 | 0 | **34** | 提案规范 |
+| 7 | `bnb-chain.github.io` | 24 | 20 | 2 | 13 | 5 | 0 | **30** | 文档站 |
+| 8 | `greenfield-cosmos-sdk` | 17 | 10 | 0 | 0 | 2 | 0 | **17** | 含 7 bot PRs |
+| 9 | `greenfield-cometbft-db` | 14 | 0 | 0 | 0 | 1 | 0 | **2** | **全部 dependabot** |
+| 10 | `greenfield-storage-provider` | 9 | 7 | 0 | 0 | 3 | 0 | **12** | SP 改进 |
+| 11 | `greenfield` | 8 | 8 | 0 | 0 | 2 | 0 | **11** | 硬分叉维护 |
+| 12 | `op-geth` | 8 | 5 | 2 | 0 | 1 | 1 (v0.5.10) | **9** | opBNB execution |
+| 13 | `bsc-genesis-contract` | 6 | 1 | 3 | 0 | 2 | 0 | **6** | 系统合约 |
+| 14 | `node-deploy` | 4 | 0 | 0 | 0 | 1 | 0 | **3** | 部署脚本 |
+| 15 | `opbnb` | 3 | 0 | 1 | 0 | 2 | 0 | **3** | opBNB node |
+| 16 | `bsc-mev-sentry` | 3 | 0 | 0 | 0 | 1 | 0 | **2** | MEV sentry |
 
-| PR | 标题 | 状态 | 日期 | 作者 | 分类 |
-|---|---|---|---|---|---|
-| #192 | merge develop-v2.2-new into develop | OPEN | 2026-05-26 | chee-chyuan | upstream-sync |
-| #191 | revert(engine): remove debug logging | MERGED | 2026-05-26 | chee-chyuan | revert |
-| #189 | perf(metrics): prevent engine stalls from scrape hooks | MERGED | 2026-05-18 | zhk101 | performance |
-| #188 | cherry-pick precompile cache memory limit from paradigmxyz/reth v1.11.4 | MERGED | 2026-05-14 | constwz | upstream-sync |
-| #185 | merge upstream v2.2.0 into develop-v2.2 | OPEN | 2026-05-07 | chee-chyuan | upstream-sync |
-| #182 | merge upstream v2.1.0 into develop-v2.1 | OPEN | 2026-05-05 | chee-chyuan | upstream-sync |
-| #179 | fix: resolve some issues in cross region test | MERGED | 2026-04-29 | chee-chyuan | testing |
-| #172 | merge develop to main for v0.0.9 | MERGED | 2026-04-22 | joey0612 | release |
-| #164 | v0.0.9 - pipeline guard, p2p/blobpool metrics, fastnode RPC | MERGED | 2026-04-20 | chee-chyuan | feature |
-| #160 | feat: Mendel HF | MERGED | 2026-04-20 | chee-chyuan | hardfork |
-| #159 | feat(txpool): add EIP-7594 blob sidecar toggle | MERGED | 2026-04-19 | chee-chyuan | feature |
-| #149 | feat: support triedb as state storage backend | MERGED | 2026-04-17 | chee-chyuan | triedb |
-| #142 | feat: support BSC system transactions and refactor tracer | MERGED | 2026-04-15 | chee-chyuan | BSC-specific |
-| #143 | feat: support bsc validator | MERGED | 2026-04-15 | chee-chyuan | BSC-specific |
-| #105 | feat: Mendel HF | MERGED | 2026-03-13 | constwz | hardfork |
+### 2.3 Top Repo 选择
 
-### 3.2 bnb-chain/reth-bsc PR 摘要
+基于数据排序，选择 **Top 6** 深挖对象：
 
-**总量**：59 PRs（全部 human），39 merged，10 open，10 closed。
+1. **`bsc`**（Score 95）-- BSC Go 主客户端，最高 release 密度
+2. **`reth`**（Score 78）-- reth 上游 fork，BSC 特化分支
+3. **`reth-bsc`**（Score 65）-- BSC reth 特有功能层
+4. **`bnbagent-sdk`**（Score 38）-- AI Agent SDK
+5. **`BEPs`**（Score 34）-- 提案规范，反映路线方向
+6. **`bnbchain-mcp`**（Score 29）-- MCP server（需注意高 close 率，有效 PR 仅 4 个）
 
-**核心 contributor 分布**：
+辅助分析对象：`greenfield`（含 `greenfield-storage-provider`、`greenfield-cosmos-sdk`）、`opbnb` + `op-geth`、`bsc-genesis-contract`、`bnb-chain.github.io`。
 
-| Contributor | PR 数 | 角色推断 |
-|---|---|---|
-| constwz | 23 | BSC 核心功能主力（prefetcher、P2P、metrics、hardfork config） |
-| will-2012 | 10 | 跨区域测试、fast finality、system tx |
-| MatusKysel | 10 | 共识修复、性能优化、payload build |
-| chee-chyuan | 5 | v2.0.0 升级、合并 |
-| sysvm | 5 | RPC、CI、snapshots |
-| tsutsu | 2 | 外部贡献者：block import、P2P peer eviction |
-| joey0612 | 2 | Release 管理 |
-| MqllR | 1 | 外部贡献者：RPC 修复 |
-| 0x6564 | 1 | 外部贡献者：系统 tx trace |
+### 2.4 敏感性检查
 
-**关键 PR**：
+| 视角 | Top 3 | 说明 |
+|------|-------|------|
+| PR-only | bsc, reth, reth-bsc | 无变化 |
+| Merged-PR-only | bsc(63), reth(58), reth-bsc(39) | 无变化 |
+| Commits-only | bsc(61), bnbagent-sdk(37), reth-bsc(32) | bnbagent-sdk 上升至 #2 |
+| Contributors-only | bsc(12), reth(9), reth-bsc(9) | 无变化 |
 
-| PR | 标题 | 状态 | 日期 | 作者 | 分类 |
-|---|---|---|---|---|---|
-| #360 | merge develop-v2.2-new into develop | OPEN | 2026-05-26 | chee-chyuan | upstream-sync |
-| #359 | fix: v2.2 prefetcher warmup | MERGED | 2026-05-26 | constwz | performance |
-| #358 | fix: classify system txs at EVM replay entry points | MERGED | 2026-05-25 | will-2012 | system-tx |
-| #356 | gate mining on local tip catching up to peers' best head | OPEN | 2026-05-20 | constwz | mining |
-| #355 | fix: bsc protocol stale registry tx | MERGED | 2026-05-19 | constwz | P2P |
-| #351 | fix(block_import): pipeline FCU for far-ahead NewBlock sync | OPEN | 2026-05-11 | tsutsu | sync |
-| #349 | fix(network): evict stale BSC protocol peers from registry | OPEN | 2026-05-11 | tsutsu | P2P |
-| #345 | upgrade bnb-chain/reth to develop-v2.2 and reth-core to v0.3.1-v2 | OPEN | 2026-05-07 | chee-chyuan | v2-upgrade |
-| #344 | fix: resolve some p2p peer related issues | MERGED | 2026-05-06 | will-2012 | P2P |
-| #340 | fix(rpc): include empty withdrawals in block RLP | MERGED | 2026-04-29 | MqllR | RPC |
-| #336 | perf: miner prefetcher warmup | MERGED | 2026-04-28 | constwz | performance |
-| #334 | fix: resolve some issues in cross region test | MERGED | 2026-04-24 | will-2012 | testing |
-| #332 | **upgrade reth v0.0.9 to v2.0.0 (develop-v2)** | MERGED | 2026-04-29 | chee-chyuan | **v2-upgrade** |
-| #315 | feat: enhance fast finality | MERGED | 2026-03-30 | will-2012 | consensus |
-| #309 | fix: reject stale P2P blocks far behind canonical head | MERGED | 2026-03-26 | constwz | P2P |
-| #303 | perf: reduce payload build churn and cache loss | MERGED | 2026-03-25 | MatusKysel | performance |
-| #300 | miner: gate payload rebuilds on estimated value | MERGED | 2026-03-24 | MatusKysel | mining |
-| #298 | update Osaka and Mendel mainnet hardfork timestamps | MERGED | 2026-03-24 | constwz | hardfork |
-| #259 | **feat: implement mendel HF** | MERGED | 2026-03-13 | MatusKysel | **hardfork** |
-
-### 3.3 bnb-chain/bsc（Go 客户端）PR 摘要
-
-**总量**：79 human PRs，60 merged，10 open，9 closed。
-
-**核心 contributor**：allformless(42), zlacfzy(12), flywukong(11), MatusKysel(6)。
-
-**关键 PR**：
-
-| PR | 标题 | 状态 | 作者 | 分类 |
-|---|---|---|---|---|
-| #3694 | extract VerifyUnsealedHeader from verifyHeader | MERGED | allformless | consensus-refactor |
-| #3691 | **support builder-proposed block with validator blind signing** | OPEN | flywukong | **BEP-675/Pasteur** |
-| #3690 | remove BEP-592 non-consensus block access list | MERGED | allformless | cleanup |
-| #3672 | rate-limit incoming votes by vote count | MERGED | zlacfzy | fast-finality |
-| #3671 | cap GetBlocksByRange response size | MERGED | zlacfzy | P2P |
-| #3669 | reduce local mining time for last block in one turn | MERGED | allformless | mining |
-| #3631 | fix deadlock in votepool when stop client | MERGED | allformless | fast-finality |
-| #3623 | reject duplicate bridge validators at Pasteur | OPEN | MatusKysel | Pasteur |
-| #3610 | **set Osaka/Mendel hardfork time for Mainnet** | MERGED | allformless | **Mendel** |
-| #3594 | set Osaka/Mendel time in Chapel testnet | MERGED | allformless | Mendel |
-| #3678 | remove optional transaction gas limit cap | MERGED | allformless | miner |
+Top 3 在所有视角中稳定为 `bsc`、`reth`、`reth-bsc`，确认核心开发集中在双客户端。`bnbagent-sdk` 在 commits 视角上升，但其 PR merge 率（53%）低于 bsc（68%）和 reth-bsc（66%），总体排名不变。
 
 ---
 
-## 4. PR 分类体系与开发方向分布 (item-4)
+## 3. Top Repo PR 活动基线与原始数据（item-3）
 
-### 4.1 PR 分类矩阵 (diag-4)
+### 3.1 bsc（BSC Go 客户端）
 
-| 分类 | bsc (Go) | reth (fork) | reth-bsc | BEPs | 合计 | 代表 PR |
-|---|---|---|---|---|---|---|
-| **硬分叉与协议升级** | 5 | 2 | 6 | 10 | 23 | bsc#3610, reth#160, reth-bsc#259, reth-bsc#298 |
-| **reth v2 升级/上游同步** | 0 | 20+ | 3 | 0 | 23+ | reth#185, reth#182, reth-bsc#332, reth-bsc#345 |
-| **P2P/网络协议** | 5 | 5 | 11 | 0 | 21 | reth-bsc#309, reth-bsc#355, bsc#3671, bsc#3672 |
-| **Miner/Block Assembly** | 5 | 3 | 15 | 0 | 23 | reth-bsc#300, reth-bsc#303, reth-bsc#336 |
-| **快速最终性/投票** | 4 | 0 | 6 | 3 | 13 | reth-bsc#315, reth-bsc#285, bsc#3672, BEPs#676 |
-| **RPC/API** | 5 | 5 | 5 | 0 | 15 | reth-bsc#340, reth#148, reth#141, bsc#3693 |
-| **TrieDB/存储** | 0 | 10+ | 3 | 0 | 13+ | reth#149, reth-bsc#291, reth-bsc#352 |
-| **System TX/Trace** | 0 | 2 | 3 | 1 | 6 | reth-bsc#358, reth-bsc#311, BEPs#683 |
-| **跨区域测试** | 0 | 3 | 3 | 0 | 6 | reth#179, reth-bsc#334, reth#175 |
-| **CI/Infra/安全** | 3 | 8 | 1 | 0 | 12 | reth#177, reth#119, reth-bsc#296 |
-| **Metrics/Observability** | 2 | 2 | 5 | 0 | 9 | reth-bsc#285, reth-bsc#357, reth#189 |
-| **MEV** | 1 | 0 | 0 | 2 | 3 | bsc#3691, BEPs#675, bsc-mev-sentry#33 |
-| **性能优化** | 3 | 3 | 5 | 0 | 11 | reth-bsc#336, reth-bsc#305, reth#189 |
-| **Release 管理** | 3 | 3 | 2 | 0 | 8 | reth#172, reth-bsc#316, bsc v1.7.1-v1.7.3 |
+- **近 3 月 PR 统计**：92 created / 63 merged / 17 closed（not merged）/ 12 open
+- **Release**: v1.7.1（2026-03-13）、v1.7.2（2026-03-25）、v1.7.3（2026-04-23）
+- **核心贡献者**：allformless (42 PRs)、zlacfzy/Eric (12)、flywukong/wayen (11)、MatusKysel (6)、dependabot (13)、haoyu-haoyu (2)、annielz (1)、lunargon (1)
+- **Bot 占比**：13/92 = 14.1%（全部 dependabot）
+- **外部贡献者 PR**：wjmelements (#3693, CLOSED)、Kushmanmb (#3625, CLOSED)、chuanshanjida (#3641, CLOSED)、haoyu-haoyu (#3599 MERGED, #3600 CLOSED) -- 外部贡献接受率低
+- **Merge latency**：大部分 PR 在 1-3 天内 merge，release 周期 PR 同日 merge
 
-### 4.2 开发方向分布解读
+### 3.2 bsc 周度 PR 趋势（diag-3）
 
-1. **最大投入方向：reth 双客户端 + 上游同步**（~46 PRs）。chee-chyuan 一人贡献 45 PRs 用于将 paradigmxyz/reth 上游变更集成到 BSC fork，并推进 v2.0.0 架构迁移。这是 BNB Chain 近 3 个月最密集的工程投入。
+| 周 | PR Created | PR Merged | 事件标注 |
+|----|-----------|-----------|---------|
+| W08 (02-24) | 3 | 2 | |
+| W09 (03-02) | 5 | 5 | v1.7.1-beta changelog |
+| W10 (03-10) | 10 | 9 | super-instruction 修复密集期 |
+| W11 (03-17) | 7 | 4 | **v1.7.1 release** (03-13), Mendel testnet 参数 |
+| W12 (03-24) | 19 | 14 | **峰值周**：v1.7.2 release, Mendel 主网参数, dependabot 批量 |
+| W13 (03-31) | 4 | 3 | super-instruction & vote fix |
+| W14 (04-07) | 10 | 5 | performance tuning, DA check 修复 |
+| W15 (04-14) | 6 | 4 | v1.7.3 准备 |
+| W16 (04-21) | 6 | 6 | **v1.7.3 release** (04-23), block prune 修复 |
+| W17 (04-28) | 1 | 0 | post-quantum PoC (#3660, 后关闭) |
+| W18 (05-06) | 5 | 5 | 250ms/450ms 参数调优, vote rate-limit |
+| W19 (05-12) | 14 | 5 | **大量上游 cherry-pick**（geth bug fix 批量搬运） |
+| W20 (05-19) | 2 | 1 | BEP-592 移除 |
 
-2. **第二大方向：Miner/Block Assembly + P2P**（~44 PRs）。reth-bsc 在 mining 和 P2P 层有大量修复和优化，表明 reth 客户端正在进入生产环境调试阶段。
+**趋势分析**：W12 (v1.7.2/Mendel 主网) 是最活跃周（19 created），之后进入 v1.7.3 修复周期。W19 出现第二波峰值，主要是从 go-ethereum 上游 cherry-pick bug fix（PR #3680-#3688），为下一版本做准备。
 
-3. **硬分叉实现链条完整**：Mendel 硬分叉从 BEPs 提案 → bsc Go 实现 → reth-bsc 实现 → reth 上游 fork 同步 → bsc-genesis-contract，形成跨 repo 联动。
+### 3.3 reth + reth-bsc（Rust 客户端双线）
 
-4. **AI Agent 与核心协议完全分离**：bnbagent-sdk/bnbchain-mcp 的 contributor 与 bsc/reth 核心开发者零重叠。
+#### reth（上游 fork）
+- **近 3 月 PR 统计**：92 created / 58 merged / 6 open / 28 closed
+- **核心贡献者**：chee-chyuan (45 PRs)、constwz (17)、dependabot (10)、sysvm (7)、will-2012 (5)、joey0612 (3)、MatusKysel (3)
+- **重大 PR**：
+  - #332 `chore: upgrade reth v0.0.9 -> v2.0.0 (develop-v2)` -- 最重大版本跳跃
+  - #189 `perf(metrics): prevent multi-second engine stalls from scrape hooks` -- 性能修复
+  - #188 `chore: cherry-pick precompile cache memory limit fix from paradigmxyz/reth v1.11.4` -- 安全修复
+
+#### reth-bsc（BSC 特有层）
+- **近 3 月 PR 统计**：59 created / 39 merged / 10 open / 10 closed
+- **核心贡献者**：constwz (23)、will-2012 (10)、MatusKysel (10)、chee-chyuan (5)、sysvm (5)
+- **重大 PR**：
+  - #336 `perf: miner prefetcher warmup` -- 性能优化
+  - #332 `upgrade reth v0.0.9 -> v2.0.0` -- 架构升级
+  - #358 `fix: classify system txs at EVM replay entry points` -- BSC 特有逻辑
+  - #356 `feat: gate mining on local tip catching up to peers' best head` -- 挖矿策略
+
+**跨 repo 贡献者重合**：chee-chyuan、constwz、will-2012、MatusKysel、sysvm 同时活跃于 `reth` 和 `reth-bsc`。reth 双客户端团队约 5-6 人，与 BSC Go 团队（allformless、zlacfzy、flywukong）基本不重叠。
+
+### 3.4 bnbagent-sdk
+
+- **近 3 月 PR 统计**：30 created / 16 merged / 3 open / 11 closed
+- **核心贡献者**：jardenx (11)、devinxl (12) -- 仅 2 名主力
+- **重大 PR**：
+  - #26 `feat!: introduce EvaluatorRouter and OptimisticPolicy for agent evaluation` -- 评估框架
+  - #24 `feat!: apex-contracts v3 sync, SDK audit fixes` -- 合约同步
+  - #30 `feat: auto-inject build_with SDK tag on ERC-8004 agent registration` -- 注册机制
+  - #34 `feat(wallet): add sign_typed_data (EIP-712) + x402 signer` -- OPEN
+
+### 3.5 BEPs
+
+- **近 3 月 PR 统计**：22 created / 14 merged / 1 closed / 7 open
+- **关键 BEP**：
+  - **BEP-670** (#670, MERGED)：Short Block Interval Phase Four: 250ms -- by zlacfzy
+  - **BEP-675** (#675, MERGED)：Builder-Proposed Block with Validator Blind Signing -- by flywukong
+  - **BEP-677** (#677, MERGED)：Implement EIP-8056 Scaled UI Amount -- by jardenx
+  - **BEP-667** (#667, MERGED)：Introduce Vote Interval to Relax Fast Finality Consensus -- by zlacfzy
+  - **BEP-673** (#673, MERGED)：Hardfork Meta-Pasteur -- by allformless
+  - **BEP-682** (#682, MERGED)：Enforce Unique Validators in CometBFT Light Block Validator -- by zlacfzy
+  - **BEP-684** (#684, OPEN)：Decouple consensus voting from block execution -- by zlacfzy
+  - **BAP-692** (#692, OPEN)：BNBAgent SDK -- Identity, Commerce, Payment, Memory -- by jardenx
+  - **BAP-674** (#674, OPEN)：Privacy-Preserving Token Transfer Protocol
+
+### 3.6 bnbchain-mcp
+
+- **近 3 月 PR 统计**：46 created / 4 merged / 41 closed / 1 open
+- **核心贡献者**：mefai-dev (41)、robot-ux (4)、Dhaiwat10 (1)
+- **Close 率**：89%（41/46），其中 mefai-dev 提交的 41 个 PR 绝大部分被关闭
+- **仅 4 个有效 merged PR**：#69（tool schema fix）、#64（docs enhancement）、#61（RPC URL fix）、+1
 
 ---
 
-## 5. BSC 主链重大变更与硬分叉路线 (item-5)
+## 4. PR 分类体系与开发方向分布（item-4）
+
+### 4.1 bsc PR 分类矩阵（diag-4）
+
+| 分类 | PR 数 | 占比 | 代表 PR | 状态概览 |
+|------|-------|------|---------|---------|
+| **硬分叉与协议升级** | 3 | 3.3% | #3610（Mendel 主网时间, MERGED）、#3594（Mendel testnet, MERGED）、#3623（Pasteur 验证器, OPEN） | 2 merged, 1 open |
+| **BEP 实现/清理** | 2 | 2.2% | #3690（移除 BEP-592, MERGED）、#3589（BEP-667 vote interval, CLOSED） | 1 merged, 1 closed |
+| **快速最终性/投票** | 5 | 5.4% | #3689（vote race fix）、#3672（vote rate-limit）、#3631（votepool deadlock）、#3628（vote hash cap, CLOSED）、#3573（vote typo） | 3 merged, 2 closed |
+| **MEV/Builder** | 4 | 4.3% | #3691（builder blind signing/BEP-675, OPEN）、#3650（greedy merge buffer）、#3618（async blob bid）、#3597（blob sidecar bid） | 3 merged, 1 open |
+| **性能/Super-instruction** | 9 | 9.8% | #3627（LT 比较修复）、#3622（fallback）、#3588（minStack）、#3584（maxStack）、#3582（bad block fix）、#3626（450ms 参数调优）、#3590（delayed p2p decoding）、#3629（worker pool）、#3669（mining time） | 全部 merged |
+| **共识/Parlia** | 9 | 9.8% | #3694（VerifyUnsealedHeader）、#3652（big.Int comparison）、#3593（test fix）、#3591（nonce increment）、#3569（parent snapshot） | 多数 merged |
+| **P2P/网络** | 6 | 6.5% | #3672（vote rate-limit）、#3671（GetBlocksByRange cap）、#3603（peer info log）、#3590（delayed decode）、#3587（peers idle restore）、#3626（broadcast queue） | 多数 merged |
+| **安全/防御** | 6 | 6.5% | #3682（gas cap simulateV1, OPEN）、#3681（limit simulateV1 calls, OPEN）、#3680（limit getProofs keys, OPEN）、#3678（gas limit cap）、#3601（DA check）、#3574（tar path sanitize） | 3 merged, 3 open |
+| **Release/CI** | 10 | 10.9% | v1.7.1/v1.7.2/v1.7.3 prepare/merge/changelog PRs | 全部 merged |
+| **依赖更新** | 16 | 17.4% | dependabot PRs + #3639（go1.25.0）、#3611（grpc）、#3605（iavl/bitset） | 5 merged, 11 closed |
+| **Bug fix** | 23 | 25.0% | #3686（filter race）、#3653（block prune）、#3631（votepool deadlock）、#3627（super-instruction）、#3582（bad block）等 | 多数 merged |
+| **上游 Cherry-pick** | 8 | 8.7% | #3680-#3688 系列，从 go-ethereum 搬运 | 3 merged, 5 open |
+| **实验性** | 2 | 2.2% | #3660（post-quantum PoC, CLOSED）、#3693（eth_baseFee RPC, CLOSED） | 全部 closed |
+
+### 4.2 reth-bsc PR 分类
+
+| 分类 | PR 数 | 代表 PR |
+|------|-------|---------|
+| **v2.0.0 升级/上游同步** | 8 | #332（v0.0.9->v2.0.0）、#342（v2.1）、#345（v2.2）、#360（v2.2-new） |
+| **性能优化** | 3 | #336（prefetcher warmup）、#359（v2.2 prefetcher）、#356（mining gate） |
+| **P2P/网络** | 6 | #344（peer issues）、#349（stale registry）、#351（pipeline FCU）、#333（peer lifecycle）、#355（stale registry tx）、#347（debug peer drop） |
+| **系统 tx 分类** | 2 | #358（classify system txs）、#340（RPC block RLP） |
+| **跨区域测试** | 2 | #334（cross region test）、#179（cross region test） |
+| **安全/Bug fix** | 5 | #340（block RLP size）、#344（peer issues）、#352（triedb dep）、#331（version change）、#188（precompile cache memory limit） |
+
+### 4.3 开发方向分布总结
+
+**BSC Go 客户端 (bsc) -- 去除 bot/依赖后**：
+
+| 方向 | PR 数 | 判断 |
+|------|-------|------|
+| Bug fix + 稳定性 | 23 | **最大占比**，与 v1.7.x release 节奏吻合 |
+| 挖矿/Miner 优化 | 10 | 短出块间隔和 MEV 支撑 |
+| 性能/Super-instruction | 9 | EVM 加速方向，近期以 fix 为主 |
+| 共识/Parlia | 9 | 验证者逻辑改进 |
+| P2P/网络 | 6 | 低延迟出块基础设施 |
+| 安全/防御 | 6 | RPC 端点防护加强 |
+| 快速最终性/投票 | 5 | bug fix 为主，非功能推进 |
+| MEV/Builder | 4 | BEP-675 实现（最重要的新功能 PR） |
+| 硬分叉 | 3 | Mendel 已完成，Pasteur 进行中 |
+
+**核心发现**：bsc 在此窗口内以 **bug fix 和稳定性改进**为主（25%），配合 **挖矿优化**（10.9%）和 **性能修复**（9.8%）。这与三个 release 节奏吻合 -- v1.7.1 修复 super-instruction bad block，v1.7.2 设定 Mendel 主网时间，v1.7.3 修复数据库增长。真正的新功能（MEV builder block #3691、BEP-675）集中在少数 PR 中，但影响重大。
+
+---
+
+## 5. BSC 主链重大变更与硬分叉路线深挖（item-5）
 
 ### 5.1 Mendel 硬分叉
 
-| 字段 | 值 |
-|---|---|
-| 名称 | Mendel |
-| 目标网络 | BSC Mainnet |
-| 激活时间 | 2026-03-24 02:30:00 UTC |
-| 状态 | **mainnet-active** |
-| 配套 EVM 升级 | Osaka（对齐 Ethereum Osaka/Prague fork） |
-| BSC Release | v1.7.1（2026-03-13 发布，mandatory update before 2026-03-24） |
+| 属性 | 值 |
+|------|-----|
+| **名称** | Mendel（对齐 Ethereum Osaka） |
+| **BSC Chapel 测试网激活** | 2026-03-24 02:30:00 UTC |
+| **BSC Mainnet 激活** | 2026-04-28 02:30:00 UTC |
+| **对应 release** | v1.7.1（测试网）、v1.7.2（主网） |
+| **核心 BEP** | BEP-658（hardfork meta）、Osaka EVM 对齐、BEP-652（MEV bid gas check）、BEP-655（bid block size check）、BEP-657（limit blob tx by block number）、EIP-7918 BSC 禁用 |
+| **implementation_status** | **mainnet-active**（已于 2026-04-28 激活） |
+| **evidence_confidence** | primary-verified（release notes + PR #3610 + BEPs #672 status update） |
 
-**核心 BEP**：
-- BEP-658：Mendel 硬分叉 Meta
-- BEP-657：限制 blob 交易按区块包含数量
-- BEP-655：支持 bid block size 检查
-- BEP-652：MEV bid gas 检查
-- 禁用 EIP-7918（BSC 特有调整）
-- Osaka EVM 对齐（EOF、EIP-7692 等 Prague 变更子集）
-
-**证据**：bsc#3610（MERGED, mainnet hardfork timestamps）、reth-bsc#298（MERGED, Osaka+Mendel timestamps）、reth-bsc#259（MERGED, +7478/-1765, 完整 Mendel 实现）、reth#160（MERGED, reth fork Mendel 实现）、reth#105（MERGED, Mendel HF in develop）。[implementation_status: mainnet-active] [evidence_confidence: primary-verified]
+**关键实现 PR**：
+- #3610 (MERGED)：`params: set Osaka/Mendel hardfork time for Mainnet`
+- #3594 (MERGED)：`params: set Osaka/Mendel time in Chapel testnet`
+- #3580 (MERGED, Mendel 标签)：`fix: bypass the gaslimit check for system txn`
+- #3569 (MERGED, Mendel 标签)：`parlia: use parent snapshot for finalized quorum`
 
 ### 5.2 Pasteur 硬分叉
 
-| 字段 | 值 |
-|---|---|
-| 名称 | Pasteur |
-| 目标网络 | BSC Chapel Testnet → Mainnet |
-| 激活时间 | **未确定（准备中）** |
-| 状态 | **spec-merged / open-pr** |
+| 属性 | 值 |
+|------|-----|
+| **名称** | Pasteur |
+| **BEP Meta** | BEP-673 (Hardfork Meta-Pasteur, MERGED) |
+| **核心 BEP** | BEP-657, BEP-670 (250ms), BEP-675 (builder blocks), BEP-677 (EIP-8056), BEP-682 (unique validators), BEP-684 (decouple voting, OPEN) |
+| **计划时间线** | **尚未公布具体激活时间** |
+| **implementation_status** | **spec-merged / 部分 open-pr** |
+| **evidence_confidence** | primary-verified（BEPs repo + bsc PRs） |
 
-**核心 BEP（已 Merged 到 BEPs repo）**：
+**Pasteur BEP 实现进度表**：
 
-| BEP | 标题 | 状态 | PR |
-|---|---|---|---|
-| BEP-670 | Short Block Interval Phase Four: 250ms | spec-merged | BEPs#670 |
-| BEP-675 | Builder-Proposed Block with Validator Blind Signing | spec-merged | BEPs#675 |
-| BEP-677 | Implement EIP-8056 Scaled UI Amount | spec-merged | BEPs#677 |
-| BEP-682 | Enforce Unique Validators in CometBFT Light Block | spec-merged | BEPs#682 |
-| BEP-657 | Limit Blob Transaction Inclusion | spec-merged (Mendel) | - |
-| BEP-667 | Vote Interval to Relax Fast Finality Consensus | spec-merged (update) | BEPs#676 |
-| BEP-673 | Hardfork Meta-Pasteur | spec-merged | BEPs#673 |
-| BEP-684 | Decouple consensus voting from block execution | spec-open | BEPs#684 |
+| BEP | 名称 | BEP 状态 | bsc 实现 PR | 实现状态 |
+|-----|------|---------|------------|---------|
+| BEP-670 | 250ms blocks Phase 4 | MERGED | 无独立 PR | **spec-only** |
+| BEP-675 | Builder-Proposed Block with Validator Blind Signing | MERGED | #3691 (OPEN) | **open-pr** |
+| BEP-677 | EIP-8056 Scaled UI Amount | MERGED | 无 bsc PR | **spec-only** |
+| BEP-682 | Unique Validators in Light Block | MERGED | #3623 (OPEN, Pasteur 标签) | **open-pr** |
+| BEP-684 | Decouple voting from execution | OPEN | 无 | **spec-draft** |
+| BEP-667 | Vote Interval | MERGED | #3589 (CLOSED) | **closed/deferred** |
 
-**Go 客户端实现状态**：
-- bsc#3691（OPEN）：builder-proposed block with validator blind signing — BEP-675 的核心实现，由 flywukong 提交，尚未合并
-- bsc#3623（OPEN）：reject duplicate bridge validators at Pasteur — MatusKysel 提交
-- bsc-mev-sentry#33（OPEN）：SendBidBlock proxy for BEP-675 — 配套 MEV sentry 变更
-
-**reth 客户端实现状态**：尚未发现 Pasteur 特有功能在 reth-bsc 中的 PR，表明 reth 端 Pasteur 实现可能落后于 Go 客户端。[implementation_status: spec-merged + open-pr] [evidence_confidence: primary-verified]
+**关键发现**：BEP-667 的 bsc 实现 PR #3589 于 2026-04-28 关闭，可能被推迟到 Pasteur 之后或需要重新设计。BEP-670（250ms blocks）尚无 bsc 实现 PR，仍处于 spec 阶段。Pasteur 硬分叉目前没有确定的激活时间，多数核心 BEP 的客户端实现仍在进行中。
 
 ### 5.3 短出块间隔演进路线
 
-BSC 出块时间演进：3s → 1s → 500ms → 450ms（BEP-626, 当前主网） → **250ms（BEP-670, Pasteur 目标）**
+BSC 出块间隔演进：**3s -> 1s -> 500ms -> 450ms -> 250ms（目标）**
 
-BEP-670 Phase Four 的 250ms 目标是 BSC 性能叙事的核心。技术挑战包括：
-- 出块窗口从 450ms 缩短至 250ms，miner 必须在更短时间内完成交易执行和区块组装
-- 投票广播和 fast finality 在更短区间内的可靠性
-- BEP-667 调整 vote interval 以适配短出块间隔
-- BEP-684 提议将共识投票与区块执行解耦，允许验证者在仅验证 header 后即可投票
+| 阶段 | 出块间隔 | BEP | 状态 | 备注 |
+|------|---------|-----|------|------|
+| 原始 | 3s | - | mainnet-active | 初始设定 |
+| Phase 1 | 1s | BEP-520 | mainnet-active | 已上线 |
+| Phase 2 | 500ms | BEP-591 | mainnet-active | 已上线 |
+| Phase 3 | 450ms | BEP-626 | mainnet-active | 已上线，当前运行 |
+| **Phase 4** | **250ms** | **BEP-670** | **spec-merged** | Pasteur 目标，**无 bsc 实现 PR** |
 
-**注意**：250ms 出块是 BSC 作为 L1 (Parlia 共识) 的特定目标。Mantle 基于 OP Stack，其出块时间由 sequencer 控制，不直接受 Parlia 共识约束，因此不应直接对标。[evidence_confidence: primary-verified]
+**近 3 月相关 PR**：
+- #3626 (MERGED)：`eth: tune timing parameters and broadcast queue for 450ms block` -- 当前 450ms 参数优化
+- #3669 (MERGED)：`miner: reduce local mining time for last block in one turn` -- 挖矿时间优化
+- #3590 (MERGED)：`eth: delayed p2p message decoding` -- P2P 性能提升
+- #3629 (MERGED)：`miner: use worker pool for async blob validation` -- 异步验证
 
-### 5.4 Release 节奏
+**evidence_confidence: primary-verified**。250ms 出块时间为 BEP-670 明确目标，但截至 2026-05-26 无 bsc 客户端实现 PR。不可将其视为已实现或已测试功能。
 
-| Release | 日期 | 内容 |
-|---|---|---|
-| bsc v1.7.1 | 2026-03-13 | Mendel/Osaka 硬分叉（Chapel testnet mandatory） |
-| bsc v1.7.2 | 2026-03-25 | 安全/维护修复 |
-| bsc v1.7.3 | 2026-04-23 | 修复数据库大小异常增长、区块剪裁 |
-| reth v0.0.9 | 2026-04-22 | Pipeline guard、P2P/blobpool metrics、fastnode RPC guard |
-| reth-bsc v0.0.9-beta | 2026-04-22 | TrieDB 性能优化（storage_root 迁移到 RocksDB）|
-| reth-bsc v0.0.8-beta | 2026-03-13 | 与 Mendel 对齐 |
+### 5.4 快速最终性改进
+
+| BEP | 名称 | 状态 | bsc 实现 |
+|-----|------|------|---------|
+| BEP-667 | Introduce Vote Interval | BEP MERGED | #3589 CLOSED |
+| BEP-684 | Decouple voting from execution | BEP OPEN | 无 |
+
+**近 3 月 vote 相关 PR**：
+- #3689 (MERGED)：`eth/filters: fix race in NewVotes and NewFinalizedHeaders`
+- #3672 (MERGED)：`eth/protocols/bsc: rate-limit incoming votes by vote count`
+- #3631 (MERGED)：`core/vote: fix deadlock in votepool when stop client`
+- #3573 (MERGED)：`parlia: fix typo in vote comparison`
+
+**分析**：快速最终性在当前窗口内以 bug fix 和稳定性加固为主，而非功能推进。BEP-667 和 BEP-684 是未来方向，但实现均处于早期。
+
+### 5.5 Release 节奏
+
+| Release | 日期 | 类型 | 关键内容 |
+|---------|------|------|---------|
+| **v1.7.1** | 2026-03-13 | mandatory (Chapel testnet) | Mendel testnet hardfork, BEP-652/655/657 实现, super-instruction 修复 (6 bug fix) |
+| **v1.7.2** | 2026-03-25 | mandatory (Mainnet) | Mendel mainnet hardfork 参数, 3 bug fix, delayed p2p decoding |
+| **v1.7.3** | 2026-04-23 | recommended | kvdb 增长修复, super-instruction fix, 450ms 参数调优, async blob validation, greedy merge buffer |
+
+**Release 频率**：3 个月内 3 个 release，约每月 1 个，高频迭代节奏。
+
+### 5.6 Post-Quantum 探索
+
+- PR #3660 (CLOSED)：`all: post quantum migration poc` by fynnss
+- 内容：将 BSC 快速最终性 vote 签名从 BLS-12-381 迁移到 ML-DSA-44（NIST FIPS 204），引入 PQTxType (0x05) 交易类型，使用 STARK 递归证明替代 BLS 线性聚合
+- **状态**：PoC 已关闭（2026-05-11），属于前瞻性研究而非近期路线
 
 ---
 
-## 6. reth 双客户端策略分析 (item-6)
+## 6. reth 双客户端策略分析（item-6）
 
 ### 6.1 架构关系
 
 ```
-paradigmxyz/reth (Ethereum 主线)
-       │
-       ▼ fork
-bnb-chain/reth (BSC 定制上游 fork)
-       │  - 维护与 paradigmxyz/reth 的同步
-       │  - 添加 BSC 基础适配层
-       │  - 提供 reth-core crates
-       ▼ 依赖
-bnb-chain/reth-bsc (BSC 特定功能层)
-       │  - Parlia 共识引擎
-       │  - BSC system transactions
-       │  - Miner / payload builder (BSC 特有)
-       │  - BSC P2P protocol extensions
-       │  - 跨区域测试框架
-       ▼ 依赖
-bnb-chain/reth-bsc-triedb (geth-compatible trie database in Rust)
-       │  - 提供与 Go-BSC 兼容的 trie 存储
+paradigmxyz/reth (Ethereum reth 上游)
+    |
+    +-- bnb-chain/reth (fork, 加 BSC Parlia 共识 + system tx + BSC P2P protocol)
+            |
+            +-- bnb-chain/reth-bsc (BSC 独立特有功能层: prefetcher, miner, cross-region test)
+                    |
+                    +-- bnb-chain/reth-bsc-triedb (geth-compatible trie database fork)
 ```
 
-**关键发现**：`bnb-chain/reth` 不是 GitHub fork（`fork: false`），而是独立 repo，但其代码内容来自 paradigmxyz/reth，通过 `merge upstream` PRs 同步。这使得 BNB Chain 团队能够在不暴露 fork 图谱的情况下管理上游变更。[evidence_confidence: primary-verified]
+**`reth` vs `reth-bsc` 分工**：
+- `reth`：承载上游 paradigmxyz/reth 的 merge 同步，加入 BSC 共识特化（Parlia）、P2P 协议和基础适配。chee-chyuan 是主要维护者（45 PRs），负责上游版本升级。
+- `reth-bsc`：BSC 特有功能开发，如 miner prefetcher warmup、system tx 分类、cross-region testing。constwz 是主要开发者（23 PRs）。
 
-### 6.2 v0.0.9 → v2.0.0 版本升级
+### 6.2 v0.0.9 -> v2.0.0 升级
 
-PR #332（reth-bsc）是这次升级的核心：
+- **PR #332** (reth-bsc, MERGED)：`chore: upgrade reth v0.0.9 -> v2.0.0 (develop-v2)` -- 重大版本跳跃
+- **后续升级**：#342 (v2.1)、#345 (v2.2)、#360 (v2.2-new) -- 持续追赶上游
+- **含义**：从 alpha/beta 阶段（v0.0.x）跳到 2.x，表明 reth-bsc 正在追赶 paradigmxyz/reth 上游 2.x 重构。这**不是** reth-bsc 自身功能成熟度到达 2.0，而是上游版本号对齐。
 
-- **范围**：+1847/-1933 行，45 文件
-- **作者**：chee-chyuan
-- **内容**：
-  - 所有 `reth-*` 依赖从 `tag = "v0.0.9"` 升级到 `branch = "develop-v2"`（reth 2.0.0）
-  - `reth-primitives-traits` 迁移到 `bnb-chain/reth-core`（新的 `main` 分支）
-  - 移除 `reth-primitives`（分解为 `reth-ethereum-primitives`）
-  - `revm-context-interface` 合并到 `revm-context`
-  - alloy 从 `1.1.3` 升级到 `1.8.2`
+### 6.3 reth-bsc Release 状态
 
-这表明 BNB Chain 正在追踪 paradigmxyz/reth 主线的重大架构重构（reth 2.0 将 primitives 解耦），并维护自己的 `reth-core` crate 层。
+| Release | 日期 | 说明 |
+|---------|------|------|
+| v0.0.8-beta | 2026-03-13 | |
+| v0.0.8-alpha | 2026-04-22 | alpha 在 beta 之后发布（可能是回退测试版） |
+| v0.0.9-beta | 2026-04-22 | 最新 release |
 
-当前进行中的 v2.1 和 v2.2 升级（reth-bsc#342 OPEN, reth-bsc#345 OPEN, reth#182 OPEN, reth#185 OPEN）表明团队正在积极追踪上游 v2.1.0 和 v2.2.0。[implementation_status: merged-code (v2.0), open-pr (v2.1/v2.2)] [evidence_confidence: primary-verified]
+**reth_client_maturity**: beta 阶段。近 3 月 release 均为 beta/alpha 标签，reth-bsc 尚未达到 production-ready 状态。**evidence_confidence: primary-verified**。
 
-### 6.3 BSC 特有功能覆盖
+### 6.4 BSC 特有功能（reth-bsc 实现）
 
-reth-bsc 已实现的 BSC 特有功能：
-
-| 功能 | 代表 PR | 状态 | 说明 |
-|---|---|---|---|
-| Parlia 共识 | reth-bsc#268, #274, #319 | merged/released | 与 go-bsc 对齐、header cache 优化 |
-| System TX 分类 | reth-bsc#358, #311, #323 | merged | EVM replay 时正确分类系统交易 |
-| Miner prefetcher warmup | reth-bsc#336, #359 | merged | 矿工预取器预热优化 |
-| BSC P2P protocol | reth-bsc#309, #355, #344 | merged | 拒绝陈旧区块、清理注册表 |
-| Fast finality | reth-bsc#315, #285, #288 | merged | 增强投票/最终性、metrics |
-| Miner_ RPC | reth-bsc#286 | merged | geth-bsc MinerAPI 兼容 |
-| MEV builder manager | reth-bsc#221 | merged | BSC MEV 基础设施 |
-| TrieDB | reth-bsc#291, #352 | merged | geth-compatible trie 存储 |
-| 跨区域测试 | reth-bsc#334, #327, #324 | mixed | 跨区域部署验证 |
-| Mendel HF | reth-bsc#259, #298, #280, #281 | merged/released | 完整硬分叉支持 |
-
-### 6.4 产品成熟度评估
-
-**正面信号**：
-- v0.0.9-beta release 附带明确的生产部署指引（"Simply binary replacement should be good"）
-- 主网 snapshot 提供和维护（reth-bsc#251, reth-bsc#264）
-- 跨区域测试基础设施表明正在进行地理分布式验证
-- TrieDB 优化（storage_root 迁移到 RocksDB）表明存储层已进入性能调优阶段
-- P2P 层大量修复（11 PRs）表明在真实网络环境中发现并解决问题
-
-**风险信号**：
-- 版本号仍为 v0.0.9-beta，未达到 1.0
-- v2.0.0 升级后的版本命名可能从 v0.0.9 跳到 v2.x（内部命名）但对外仍标 beta
-- 尚无 Pasteur 硬分叉相关 PR
-- 外部贡献者极少（tsutsu、MqllR、0x6564 各 1-2 PRs）
-
-**结论**：reth-bsc 已进入**有限生产使用阶段**，作为 BSC 主网的辅助客户端运行。尚不具备替代 Go 客户端的能力，更类似于客户端多样性策略下的 minority client。[reth_client_maturity: beta-production] [evidence_confidence: cross-verified]
+| 功能 | 代表 PR | 状态 |
+|------|---------|------|
+| Parlia 共识 | 多个 PR | 已实现 |
+| System tx 分类 | #358 | merged |
+| Miner prefetcher warmup | #336, #359 | merged |
+| BSC P2P protocol | #355, #349, #344 | merged/open |
+| Cross-region testing | #334, #179 | merged |
+| Block RLP computation | #340 | merged |
+| Mining gate on local tip | #356 | open |
 
 ### 6.5 与 Go 客户端的关系
 
-reth-bsc 与 bsc（Go）的关系是**互补而非替代**：
+**判断：互补 + 客户端多样性战略，非替代。**
 
-1. **开发团队基本分离**：Go 端由 allformless(42)、zlacfzy(12)、flywukong(11) 主导；reth 端由 constwz(23)、will-2012(10)、chee-chyuan(45) 主导。仅 MatusKysel 跨两者活跃。
-2. **Go 客户端仍是主力**：所有 mandatory release（v1.7.1-v1.7.3）均为 Go 客户端；Pasteur 的 BEP-675 实现（bsc#3691）首先出现在 Go 端。
-3. **reth 追踪 Go**：reth-bsc#274（port bsc consensus fixes from bnb-chain/bsc#3575, #3569）表明 reth 端在 port Go 端的修复。
-4. **功能不对称**：MEV builder（BEP-675）、Pasteur 硬分叉 PRs 仅出现在 Go 端；reth 端专注于 P2P 稳定性、prefetcher 优化和 triedb。
+证据：
+1. Go 客户端团队（allformless、zlacfzy、flywukong）与 reth 团队（chee-chyuan、constwz、will-2012）**基本不重叠**，是两个独立团队
+2. reth-bsc 仍在 beta 阶段，不可能短期替代成熟的 Go 客户端
+3. 两者同时跟进 Mendel/Pasteur 硬分叉（但 reth-bsc 滞后于 Go 客户端）
+4. reth-bsc 有独立的 cross-region test 基础设施，显示正在向生产部署推进
+5. 已归档 `reth-bsc-trail` 是早期探索，当前 `reth-bsc` 是正式化版本
 
-### 6.6 对 Mantle 的启示
-
-| 维度 | BNB Chain 做法 | Mantle 现状 | 建议 |
-|---|---|---|---|
-| 客户端多样性 | Go + Rust 双客户端，10+ 开发者 | 单客户端（OP Stack/geth 为基础） | 中期关注：评估 reth 作为 Mantle 执行层替代方案的 ROI |
-| 上游同步投入 | 1 名全职开发者（chee-chyuan, 45 PRs） | OP Stack 上游同步 | 对比：Mantle 的 OP Stack 同步成本 |
-| 生产验证 | 跨区域测试、snapshot、beta release | - | 可借鉴：跨区域测试框架设计 |
-| 团队规模 | reth 端约 5-7 活跃开发者 | - | 参考：双客户端维护的最小人力投入 |
+**对 Mantle 启示**：BNB Chain 投入约 5-6 人全职 reth 团队，是客户端多样性的实质工程投入。Mantle 目前依赖单一 op-geth 客户端，如考虑 reth-based 客户端（如 op-reth），需评估维护成本 vs 收益。
 
 ---
 
-## 7. opBNB L2 定位与发展评估 (item-7)
+## 7. opBNB L2 定位与发展评估（item-7）
 
 ### 7.1 活跃度数据
 
-| Repo | PR 数 | Merged | Open | 状态 |
-|---|---|---|---|---|
-| opbnb | 3 | 0 | 2 | **极低活跃** |
-| op-geth | 8 | 5 | 1 | **低活跃** |
+| Repo | PR Created | PR Merged | PR Open | 活跃贡献者 |
+|------|-----------|-----------|---------|-----------|
+| `opbnb` | 3 | 0 | 2 | sysvm (主), will-2012 |
+| `op-geth` | 8 | 5 | 1 | sysvm (唯一贡献者) |
 
-**opBNB 关键 PR**：
-- #337（OPEN）：feat: implement Laplace hardfork in op-node — sysvm 提交，未合并
-- #339（OPEN）：feat: add startup.defer-gossip flag — sysvm 提交
-- #336（CLOSED）：fix: bypass gas limit for hotfix — will-2012 提交，已关闭
+**总计**：11 PRs，仅 1 名核心开发者（sysvm），活跃度远低于 BSC 主链。
 
-**op-geth 关键 PR**：
-- #320（OPEN）：feat: op-geth supports Laplace hardfork — sysvm 提交，未合并
-- #322（MERGED）：release for v0.5.10 — 维护版本
-- #318（MERGED）：set default max tx gas limit to 16777216
-- #319（MERGED）：adjust MaxBundleAliveBlock to 240
+### 7.2 Laplace 硬分叉进展
 
-### 7.2 Laplace 硬分叉
+| PR | Repo | 标题 | 状态 | 创建日期 |
+|----|------|------|------|---------|
+| #337 | opbnb | feat: implement Laplace hardfork in op-node | **OPEN** | 2026-03-13 |
+| #320 | op-geth | feat: op-geth supports Laplace hardfork | **OPEN** | 2026-03-13 |
 
-Laplace 硬分叉是 opBNB 近 3 个月最重要的工作，但两个核心 PR（opbnb#337、op-geth#320）均为 OPEN 状态，表明：
-- 开发进度缓慢
-- 可能在等待上游 OP Stack 变更
-- opBNB 团队资源有限（sysvm 一人承担大部分工作，同时还在维护 reth/reth-bsc 的 CI）
+**implementation_status**: open-pr。两个核心实现 PR 已 open 超过 2 个月，无 merge 时间线。
 
-[implementation_status: open-pr] [evidence_confidence: primary-verified]
+### 7.3 op-geth 其他活动
 
-### 7.3 opBNB 在 BNB Chain 战略中的定位
+- #322 (MERGED)：`chore: release for v0.5.10` -- 维护 release
+- #319 (MERGED)：`fix: adjust MaxBundleAliveBlock to 240` -- bundle 参数调整
+- #318 (MERGED)：`feat: set default max tx gas limit to 16777216` -- gas limit 调整
+- #315 (MERGED)：`fix: add bundle logs` -- 日志
 
-**边缘化信号**：
-1. 3 个月仅 11 PRs（opbnb + op-geth 合计），对比 bsc Go 客户端 79 PRs
-2. 仅 1-2 名活跃开发者（主要是 sysvm）
-3. BSC 自身性能提升路线（450ms → 250ms 出块）可能减少 L2 的必要性
-4. Laplace 硬分叉 PRs 停滞
-5. 无新 release 在窗口期内
+### 7.4 定位判断
 
-**未边缘化信号**：
-1. Laplace 硬分叉仍在推进（虽然缓慢）
-2. op-geth 仍有维护 release（v0.5.10）
-3. op-enclave（TEE）的存在表明仍有架构探索
-4. BSC 250ms 出块主要面向共识性能，L2 的价值在低成本和特定应用场景
+**opBNB 处于低优先级维护状态，但不可断定已被放弃。**
 
-**结论**：opBNB 当前处于**低优先级维护模式**，不是 BNB Chain 的战略投入重点。BSC 自身性能路线（250ms 目标）部分削弱了 opBNB 作为扩容方案的叙事基础。[evidence_confidence: cross-verified]
+依据：
+1. 仅 1 名活跃开发者（sysvm）同时维护 opbnb 和 op-geth
+2. Laplace 硬分叉 PR 已 open 超过 2 个月，无明显推进
+3. BSC 自身性能提升（450ms -> 250ms 目标）客观上减少了 L2 的差异化价值
+4. 但 opbnb 未被 archive，仍有新 PR 提交，属于缓慢推进
 
-### 7.4 与 Mantle 的对比
+**反例**：opBNB 可能有未公开的重构或 private repo 开发；Laplace PR open 不等于停工，可能在等待上游 OP Stack 版本稳定。
 
-opBNB 和 Mantle 都基于 OP Stack，但定位和投入截然不同：
+**evidence_confidence**: primary-verified（PR 数据直接观测）。
 
-| 维度 | opBNB | Mantle |
-|---|---|---|
-| 战略优先级 | 低（BSC L1 优先） | 核心产品 |
-| 开发投入 | 1-2 人维护 | 全团队 |
-| DA 方案 | 标准 OP Stack DA | EigenDA |
-| 叙事重点 | 不突出 | L2 + DeFi + MNT 经济模型 |
-
-opBNB 的低活跃度对 Mantle **不构成直接竞争压力**。BSC L1 的性能提升才是更值得关注的竞争面。
+**与 Mantle 对比**：opBNB 和 Mantle 同为 OP Stack L2，但 opBNB 的投入规模（1 人团队、11 PRs/3 月）远低于 Mantle。opBNB 不构成直接技术竞争威胁，但 BNB Chain 生态的用户规模和 Binance 导流仍是间接竞争因素。**注意：不可将 BSC L1 的性能提升等同于 opBNB L2 的性能参数。**
 
 ---
 
-## 8. Greenfield 去中心化存储生态评估 (item-8)
+## 8. Greenfield 去中心化存储生态评估（item-8）
 
 ### 8.1 活跃度数据
 
-| Repo | PR 数 | 关键 contributor |
-|---|---|---|
-| greenfield | 8 | andyzhang2023, aweneagle |
-| greenfield-cosmos-sdk | 17 | - |
-| greenfield-storage-provider | 9 | andyzhang2023, annielz |
-| greenfield-cometbft-db | 14 | **全部 dependabot** |
-| node-real/dcellar | 1 | - |
+| Repo | PR Created | PR Merged | Human PR | 活跃贡献者 | 备注 |
+|------|-----------|-----------|----------|-----------|------|
+| `greenfield` | 8 | 8 | 8 | andyzhang2023, aweneagle | 硬分叉维护 |
+| `greenfield-storage-provider` | 9 | 7 | 9 | andyzhang2023, annielz | SP 功能改进 |
+| `greenfield-cosmos-sdk` | 17 | 10 | 10 | andyzhang2023 | 7 bot PRs |
+| `greenfield-cometbft-db` | 14 | 0 | 0 | **全部 dependabot** | 纯噪声 |
+
+**去噪后**：Greenfield 生态近 3 月约 27 个人类 PR，主要由 andyzhang2023 和 annielz 两人维护。
 
 ### 8.2 近期硬分叉
 
-| 硬分叉 | 代表 PR | 状态 | 内容推断 |
-|---|---|---|---|
-| Prairie | greenfield#672 | MERGED | 新增功能 |
-| Steppe | greenfield#676 | MERGED | 功能迭代 |
-| Cerrado | greenfield#677 | MERGED | 功能迭代 |
-| 825 (final) | greenfield#678 | MERGED | 最终修复 |
+| 硬分叉 | 关键 PR | 状态 |
+|--------|---------|------|
+| Prairie | greenfield #672 | MERGED |
+| Steppe | greenfield #676, cosmos-sdk #531 | MERGED |
+| Cerrado | greenfield #677, cosmos-sdk #532 | MERGED |
 
-greenfield-storage-provider 的改进包括：
-- SP2SP auth（#1466, MERGED）— 存储提供者间认证
-- Bucket counter 性能改进（#1465, MERGED）
-- pubkey check 和 auth 更新（#1462, #1461, MERGED）
+### 8.3 功能更新
 
-### 8.3 生态评估
+- **SP2SP auth** (SP #1466 MERGED)：存储提供者间认证
+- **Bucket counter 性能** (SP #1465 MERGED)：性能改进
+- **EIP-712 签名安全** (cosmos-sdk #530 MERGED)：移除签名验证缓存防止跨签名者利用
 
-**维护模式信号**：
-1. 核心 repo 由 2 名开发者（andyzhang2023、annielz）支撑
-2. 硬分叉命名（Prairie、Steppe、Cerrado）频繁但规模不大
-3. node-real/dcellar（Greenfield 前端产品）近乎停滞（1 PR）
-4. greenfield-cometbft-db 全部为自动化依赖更新
+### 8.4 定位判断
 
-**仍有价值信号**：
-1. 硬分叉仍在发布，表明链仍在活跃维护
-2. SP2SP auth 和安全改进表明有实际用户/运营
-3. greenfield-cosmos-sdk 的 17 PRs 可能包含上游 Cosmos SDK 同步
+**Greenfield 处于稳定维护模式，不再是 BNB Chain 的叙事焦点。**
 
-**结论**：Greenfield 处于**活跃维护但不再扩张**的状态，核心团队极小（2-3 人），无明显新叙事或生态增长。去中心化存储叙事在 BNB Chain 战略中的优先级低于 BSC 性能和 AI Agent。[evidence_confidence: primary-verified]
+依据：
+1. 仅 2 名核心开发者维护（andyzhang2023、annielz）
+2. NodeReal 的 dcellar（Greenfield 前端）仅 1 PR/3 月，前端投入大幅收缩
+3. 硬分叉仍在持续（Prairie -> Steppe -> Cerrado），但功能增量小
+4. 未出现在 BNB Chain 近期叙事重点中（对比 reth 和 AI Agent 的声量）
+5. Greenfield 与 AI Agent 的关联（数据存储 + AI）目前无代码证据支撑
+
+**evidence_confidence**: primary-verified（PR 数据）+ inferred（叙事定位判断）。
 
 ---
 
-## 9. AI Agent 赛道布局与叙事分析 (item-9)
+## 9. AI Agent 赛道布局与叙事分析（item-9）
 
-### 9.1 bnbagent-sdk
+### 9.1 bnbagent-sdk（Python SDK）
 
-- **类型**：Python toolkit for on-chain AI agents
-- **PR 数**：30（近 3 个月）
-- **核心 contributor**：jardenx(11), devinxl(12), JhiNResH(2)
-- **与 bsc/reth 开发者零重叠**
+| 属性 | 值 |
+|------|-----|
+| **PR 统计** | 30 created / 16 merged / 3 open / 11 closed |
+| **贡献者** | jardenx (11), devinxl (12), JhiNResH (2), 外部 3 人 |
+| **功能范围** | Python toolkit for on-chain AI agents：agent registration (ERC-8004)、evaluation (ERC-8183)、storage providers、deliverable management |
+| **成熟度** | 早期开发：频繁 breaking changes (`feat!:` 前缀)、README 修订、合约地址重部署 |
 
-**关键功能 PR**：
-- #34（OPEN）：EIP-712 + x402 signer
-- #33（OPEN）：Karma as pluggable verifiable evaluator for ERC-8183
-- #32（OPEN）：BasePolicyClient for pluggable policies
-- #30（MERGED）：auto-inject build_with SDK tag on ERC-8004 agent registration
-- #26（MERGED）：EvaluatorRouter and OptimisticPolicy for agent evaluation
-- #24（MERGED）：apex-contracts v3 sync, SDK audit fixes
-- #23（MERGED）：redesign deliverable structure and fix submit hash strategy
+**代表 PR 与功能**：
+- #26 (MERGED)：EvaluatorRouter + OptimisticPolicy -- agent 评估框架
+- #24 (MERGED)：apex-contracts v3 同步 + SDK 审计修复
+- #30 (MERGED)：auto-inject `build_with` SDK tag on ERC-8004 registration
+- #34 (OPEN)：EIP-712 签名 + x402 signer
+- #33 (OPEN)：Karma 作为 ERC-8183 可插拔评估器
+- #29 (MERGED)：block path traversal 安全修复
 
-### 9.2 bnbchain-mcp
+### 9.2 bnbchain-mcp（MCP Server）
 
-- **类型**：Model Context Protocol server for BNB Chain（支持 BSC、opBNB、Greenfield）
-- **PR 数**：20（近 3 个月）
-- **核心 contributor**：robot-ux, mefai-dev, Dhaiwat10
+| 属性 | 值 |
+|------|-----|
+| **PR 统计** | 46 created / **4 merged** / 41 closed / 1 open |
+| **贡献者** | mefai-dev (41), robot-ux (4), Dhaiwat10 (1) |
+| **功能范围** | Model Context Protocol server for BNB Chain |
+| **成熟度** | **极低**：89% close 率，仅 4 个有效 merged PR |
 
-**关键 PR**：
-- #69（MERGED）：fix tool schema compatibility with OpenAI-compatible validators
-- #64（MERGED）：Enhance documentation and tools for transfer/payment confirmation
-- #70（OPEN）：upgrade to ENSv2 (Universal Resolver)
+**分析**：`bnbchain-mcp` 的高 close 率表明大量 PR 来自 `mefai-dev`（可能是 AI 辅助生成），质量未达标被大量关闭。这严重削弱了该项目的活跃度信号。按有效 merged PR 计算，bnbchain-mcp 实际活跃度仅为 4 PRs/3 月。
 
-### 9.3 BEP-692
+### 9.3 BEP 提案
 
-BEP-692（BNBAgent SDK — Identity, Commerce, Payment, Memory）由 jardenx 提交（BEPs#692, OPEN），定义了：
-- Agent Identity（ERC-8004 注册）
-- Commerce（deliverable + evaluator）
-- Payment（链上支付集成）
-- Memory（Agent 记忆/上下文持久化）
+| BEP | 标题 | 状态 | 说明 |
+|-----|------|------|------|
+| BAP-692 | BNBAgent SDK: Identity, Commerce, Payment, Memory | OPEN | 全面的 Agent SDK 提案，范围宏大 |
+| BEP-677 | EIP-8056 Scaled UI Amount | MERGED | Token 标准（Pasteur 硬分叉） |
 
-[implementation_status: spec-open (BEP-692), merged-code (SDK)] [evidence_confidence: primary-verified]
+### 9.4 工程实质 vs 叙事驱动判断
 
-### 9.4 工程实质 vs 营销驱动判断
+**判断：AI Agent 赛道当前以叙事驱动为主，工程实质有限但方向明确。**
 
-| 信号 | 判断 |
-|---|---|
-| 30 PRs 活跃开发 | 工程投入实际存在 |
-| 2 名主力 contributor（jardenx + devinxl） | 团队极小 |
-| 与 bsc/reth 零 contributor 重叠 | 独立团队，非核心协议团队 |
-| ERC-8183、ERC-8004 等标准集成 | 追踪 Ethereum 生态标准 |
-| BEP-692 仍为 Open | 尚未形成共识 |
-| 无生产部署证据 | 偏 early-stage |
-| MCP 工具质量修复（OpenAI 兼容性） | 开发者体验导向 |
+| 维度 | 评价 | 证据 |
+|------|------|------|
+| 代码成熟度 | **低** | 频繁 breaking changes、合约重部署、仅 2-3 名开发者 |
+| BEP 提案 | **活跃** | BAP-692 范围宏大但仍为 OPEN draft |
+| 生产用例 | **无可见** | 无生产部署证据，测试网合约持续重部署 (#20 MERGED: fix: redeploy testnet contracts) |
+| 开发者采用 | **极早期** | 外部 PR 仅 3 个，多数被关闭 |
+| 叙事声量 | **高** | BNB Chain 官方推广 AI Agent 概念 |
+| bnbchain-mcp 质量 | **极低** | 89% PR close 率，实际有效工作量极小 |
 
-**结论**：AI Agent 赛道在 BNB Chain 中**有实际工程投入但处于早期阶段**。相比核心协议的 200+ PRs，AI 方向 50 PRs 的投入更像是**战略探索 + 叙事布局**，而非已验证的产品方向。SDK 的 contributor 构成（可能是外部团队或独立项目组）进一步印证这是一个分离的、低优先级但具有叙事价值的方向。[narrative_signal: engineering-light, narrative-moderate] [evidence_confidence: cross-verified]
+**narrative_signal**: narrative-heavy。BNB Chain 的 AI Agent 叙事目前更接近叙事投资（narrative investment），而非工程成熟产品。
 
----
-
-## 10. 开发活跃度趋势与工程组织信号 (item-10)
-
-### 10.1 周度趋势概览 (diag-3)
-
-基于 PR createdAt 分布：
-
-| 周 | bsc Go | reth | reth-bsc | 事件 |
-|---|---|---|---|---|
-| 2/24-3/2 | ~8 | ~5 | ~6 | Mendel 准备 |
-| 3/3-3/9 | ~6 | ~4 | ~3 | - |
-| 3/10-3/16 | ~7 | ~5 | ~8 | **Mendel testnet, v0.0.8 release** |
-| 3/17-3/23 | ~6 | ~8 | ~6 | reth 密集开发 |
-| 3/24-3/30 | ~8 | ~6 | ~10 | **Mendel 主网激活** |
-| 3/31-4/6 | ~4 | ~3 | ~3 | 回落 |
-| 4/7-4/13 | ~3 | ~2 | ~2 | 低谷 |
-| 4/14-4/20 | ~3 | ~15 | ~3 | **reth v2 迁移冲刺** |
-| 4/21-4/27 | ~5 | ~8 | ~5 | **v0.0.9 release, v2.0.0 合并** |
-| 4/28-5/4 | ~4 | ~4 | ~3 | - |
-| 5/5-5/11 | ~5 | ~5 | ~5 | v2.1/v2.2 上游同步开始 |
-| 5/12-5/18 | ~4 | ~3 | ~3 | - |
-| 5/19-5/25 | ~8 | ~3 | ~5 | Pasteur BEP 活跃 |
-
-**趋势解读**：
-1. Mendel 硬分叉前后（3/10-3/30）为活跃高峰
-2. 4/14-4/27 reth 端出现集中冲刺（v2 迁移 + v0.0.9 release）
-3. 5 月以来 Pasteur 准备使 bsc Go 活跃度回升
-4. 整体节奏稳定，无明显衰退
-
-### 10.2 Contributor 集中度
-
-| 团队 | 核心人数 | 最高个人贡献 | 集中度 |
-|---|---|---|---|
-| BSC Go | 3 人 | allformless: 42/79 = 53% | **高度集中** |
-| reth (fork) | 2 人 | chee-chyuan: 45/81 = 56% | **极度集中** |
-| reth-bsc | 3 人 | constwz: 23/59 = 39% | 中度集中 |
-| AI Agent SDK | 2 人 | devinxl: 12/30 = 40% | 中度集中 |
-
-**风险信号**：chee-chyuan 一人承担 reth 上游同步的 56%，allformless 承担 BSC Go 的 53%。任一关键人物离开将严重影响对应客户端的开发节奏。
-
-### 10.3 跨 Repo 联动
-
-Mendel 硬分叉展示了完整的跨 repo 链条：
-1. BEPs#658（spec）→ bsc#3610（Go mainnet timestamps）→ reth-bsc#298（reth timestamps）→ reth#105/reth#160（reth fork 实现）→ bsc-genesis-contract（系统合约）
-
-Pasteur 硬分叉正在形成类似链条：
-1. BEPs#670/673/675/677/682（spec 已 merged）→ bsc#3691（Go 实现 OPEN）→ reth-bsc（待启动）
-
-### 10.4 多线并行资源分配推测
-
-| 方向 | 估计开发者数 | 占比 |
-|---|---|---|
-| BSC Go 客户端 | 4-5 人（allformless, zlacfzy, flywukong, MatusKysel + 其他） | ~25% |
-| reth 双客户端 | 5-7 人（constwz, will-2012, chee-chyuan, MatusKysel, sysvm, joey0612 + 其他） | ~35% |
-| Greenfield | 2-3 人（andyzhang2023, annielz, aweneagle） | ~15% |
-| AI Agent | 2-3 人（jardenx, devinxl + 其他） | ~10% |
-| opBNB/L2 | 1 人（sysvm 兼职） | ~5% |
-| BEPs/Docs | 散布在上述团队 | ~10% |
-
-**关键发现**：reth 双客户端已成为 BNB Chain 最大的单一工程投入方向（~35%），超过 Go 客户端本身。这是一个明确的战略选择。
+**evidence_confidence**: primary-verified（代码活动）+ inferred（叙事判断）。
 
 ---
 
-## 11. Binance 生态整合与叙事时间线 (item-11)
+## 10. 开发活跃度趋势与工程组织信号（item-10）
 
-### 11.1 叙事演变时间线 (diag-6)
+### 10.1 贡献者分布与团队结构
+
+| 团队 | 核心成员 | 主要 Repo | 人工 PR 总量 | 估算人力 |
+|------|---------|----------|------------|---------|
+| BSC Go 团队 | allformless, zlacfzy, flywukong | bsc | ~65 | 3-4 人 |
+| reth 团队 | chee-chyuan, constwz, will-2012, MatusKysel, sysvm | reth, reth-bsc | ~120 | 5-6 人 |
+| Greenfield 团队 | andyzhang2023, annielz | greenfield 系列 | ~27 | 2 人 |
+| AI Agent 团队 | jardenx, devinxl | bnbagent-sdk, bnbchain-mcp | ~26 | 2-3 人 |
+| opBNB 团队 | sysvm | opbnb, op-geth | ~11 | 1 人 |
+
+**关键发现**：
+1. **reth 团队人工 PR 数已超过 BSC Go 团队**（~120 vs ~65），显示 Rust 客户端是当前工程资源分配重点
+2. sysvm 同时负责 reth 和 opBNB，opBNB 可能受 reth 工作排挤
+3. BSC Go 团队中 allformless 贡献 42 PRs（占 Go 团队约 65%），高度集中
+4. MatusKysel 跨越 bsc/reth/reth-bsc/bsc-genesis-contract 四个 repo，是安全/验证方向的关键贡献者
+5. 核心开发者总数约 15 人（去重后），分布在 5 条开发线上
+
+### 10.2 多线并行信号
+
+BNB Chain 当前同时推进 5 条开发线：
+
+| 开发线 | 估算人力 | 活跃度 | 战略优先级推测 |
+|--------|---------|--------|-------------|
+| BSC Go 客户端 | 3-4 人 | 高 | 核心产品 |
+| reth Rust 客户端 | 5-6 人 | **最高** | 战略投资 |
+| Greenfield 存储 | 2 人 | 低 | 维护模式 |
+| AI Agent | 2-3 人 | 中 | 叙事投资 |
+| opBNB L2 | 1 人 | 极低 | 低优先级 |
+
+### 10.3 跨 Repo 协同
+
+**Mendel 硬分叉**形成了完整的跨 repo 链条：
+BEP 提案 (BEPs #672 status update) -> bsc 客户端 (#3594, #3610) -> bsc-genesis-contract (#659) -> docs (bnb-chain.github.io) -> release (v1.7.1, v1.7.2)
+
+**Pasteur 硬分叉**正在形成类似链条但尚未闭合：
+BEP 提案 (#673, #675, #677, #682) -> bsc 客户端 (#3623, #3691 进行中) -> 后续环节未启动
+
+### 10.4 与 Mantle 可比指标
+
+| 指标 | BNB Chain (近 3 月) | Mantle (参考) |
+|------|-------------------|-------------|
+| 核心协议 PR velocity | ~92 PRs/3 月 (bsc) + 151 PRs/3 月 (reth 双线) | 需对比 |
+| Release velocity | 3 releases / 3 月 | 需对比 |
+| 核心开发者 | ~15 人 | 需对比 |
+| 客户端数量 | 2 (Go + Rust beta) | 1 (op-geth) |
+| 新赛道投入 | AI Agent 2-3 人 | 需对比 |
+
+---
+
+## 11. Binance 生态整合与叙事时间线（item-11）
+
+### 11.1 叙事演变时间线（diag-6）
 
 ```
-2026-02 ──────── 2026-03 ──────── 2026-04 ──────── 2026-05
-    │               │                │                │
-    │  Mendel 准备   │  Mendel 主网    │  reth v2.0.0   │  Pasteur 准备
-    │  BEP spec      │  2026-03-24    │  v0.0.9 release│  BEP-675 实现
-    │               │  bsc v1.7.1    │  bsc v1.7.3    │  250ms spec
-    │               │               │                │  AI Agent SDK
-    │               │               │                │  BEP-692
+2026-02 -------- 2026-03 -------- 2026-04 -------- 2026-05 -------- 2026-06(预)
+   |               |               |               |
+   v1.7.1-beta   v1.7.1          v1.7.3         Pasteur BEP       Pasteur
+   changelog     release         release         批量 merge        目标上线?
+   (02-28)       (03-13)         (04-23)         (05-08)
+                   |               |               |
+                 v1.7.2          Mendel           bsc #3691
+                 release         主网上线          BEP-675 impl
+                 (03-25)         (04-28)           (05-13, OPEN)
+                   |
+                 Mendel
+                 testnet
+                 (03-24)
+
+reth 线：
+   v0.0.8-beta ---- v0.0.9-beta ---- v2.0.0 架构追赶 ------------>
+   (03-13)          (04-22)          (ongoing, PRs #342/#345/#360)
+
+AI Agent 线：
+   ERC-8183/8004 集成 --- BAP-692 提案 (OPEN) --------->
+   (03-04月)              (05-08)
+
+实验线：
+   Post-quantum PoC (#3660) ---- 关闭 (05-11)
 ```
 
-### 11.2 叙事关键词演变
+### 11.2 叙事关键词与代码证据对照
 
-| 时期 | 主叙事 | 支撑证据 |
-|---|---|---|
-| 2026-02 | EVM 兼容性 + Osaka 对齐 | Mendel 硬分叉包含 Osaka EVM 变更 |
-| 2026-03 | 硬分叉执行力 | Mendel 按时主网激活 |
-| 2026-04 | 双客户端 + 性能 | reth v2.0.0, v0.0.9 release, TrieDB 优化 |
-| 2026-05 | 极短出块 + MEV + AI | BEP-670(250ms), BEP-675(builder blocks), BEP-692(AI SDK) |
+| 叙事 | 代码证据强度 | 官方声量 | 判断 |
+|------|------------|---------|------|
+| EVM 高性能 L1（短出块间隔） | **强**：大量 miner/timing PR，450ms 运行中 | 高 | **engineering-heavy** |
+| reth 双客户端 | **强**：151 PRs，5-6 人团队 | 中 | **engineering-heavy** |
+| AI Agent | **弱**：代码不成熟，MCP 89% close 率 | **高** | **narrative-heavy** |
+| Greenfield 存储 | **弱**：维护模式，2 人 | 低 | **declining** |
+| MEV 基础设施 | **中**：BEP-675 + 相关 PR | 中 | **engineering-driven** |
+| opBNB L2 | **极弱**：1 人维护 | 低 | **de-prioritized** |
+| Post-quantum | **实验性**：PoC 已关闭 | 低 | **exploratory** |
 
-### 11.3 engineering-heavy vs narrative-heavy
+### 11.3 代码活动 vs 叙事对齐度分析
 
-| 方向 | 类型 | 理由 |
-|---|---|---|
-| reth 双客户端 | **engineering-heavy** | 200+ PRs, 7+ 开发者, v2.0.0 架构迁移 |
-| 250ms 出块 | engineering-moderate | BEP spec 完整, Go 实现开始, 但尚无 testnet 验证 |
-| Mendel 硬分叉 | **engineering-heavy** | 已主网激活, 跨 repo 实现完整 |
-| AI Agent SDK | **narrative-heavy** | 30 PRs, 2 人团队, 无生产部署, BEP-692 open |
-| Greenfield | maintenance | 小团队维护, 前端停滞 |
-| opBNB | minimal | 1 人兼职, 硬分叉 open |
+最突出的不对齐是 **AI Agent**：官方叙事声量最高，但代码证据最弱。相反，**reth 双客户端**工程投入最大（所有方向中人力最多），但叙事声量偏低 -- 这可能因为 reth 是基础设施升级，不如 AI Agent 有市场传播效果。
 
-### 11.4 BNB Chain 定位转变
-
-从代码活动看，BNB Chain 的工程重心明确在 **BSC L1 性能极致化 + 客户端多样化**。AI Agent 是叙事层的补充，而非工程主力。opBNB（L2）和 Greenfield（存储）的投入远低于 BSC 主链。
-
-BNB Chain 正从"Binance 的链"向"高性能 EVM L1 + 客户端多样性"定位转型，以 250ms 出块和 reth 双客户端作为技术差异化。[narrative_signal: engineering-heavy for L1, narrative-heavy for AI] [evidence_confidence: cross-verified]
+**Binance 交易所与 BSC 的生态绑定**仍是 BNB Chain 最大的结构性优势。这不是工程手段可以复制的资产，但也意味着 BNB Chain 的部分叙事（如用户规模、TVL）不能直接归因于技术优势。
 
 ---
 
-## 12. 横向竞争定位与对 Mantle 的行动建议 (item-12)
+## 12. 横向竞争定位与对 Mantle 的行动建议（item-12）
 
-### 12.1 Mantle 竞争响应矩阵 (diag-7)
+### 12.1 Mantle 竞争响应矩阵（diag-7）
 
 | 威胁面 | BNB Chain 证据 | Mantle 当前状态 | 可行动作 | 优先级 |
-|---|---|---|---|---|
-| **BSC 250ms 出块** | BEP-670 spec merged, Go 实现中 | OP Stack 默认 2s | 监控进展，**不直接对标**（L1 vs L2 架构差异） | 跟踪 |
-| **reth 双客户端** | 200+ PRs, v2.0.0, 5-7 开发者 | 单客户端 | 评估 reth 作为 Mantle 执行层的 ROI | 中期 POC |
-| **Pasteur builder blocks** | BEP-675, bsc#3691 OPEN | - | 研究 BEP-675 builder/validator 分离设计 | 借鉴 |
-| **Mendel 执行力** | 按时主网激活，跨 repo 链条完整 | - | 参考硬分叉工程管理方法 | 流程借鉴 |
-| **AI Agent SDK** | 30 PRs, BEP-692, MCP server | 无 Agent 基础设施 | 评估最小 MCP/Agent 集成方案 | 低优先级观察 |
-| **交易所流量** | Binance CeFi 导入 | 无交易所背景 | 不可复制，差异化竞争 | N/A |
-| **opBNB L2** | 极低活跃度 | OP Stack 全栈 | opBNB **不构成直接竞争** | 忽略 |
+|--------|---------------|----------------|---------|--------|
+| **短出块间隔口径（250ms 目标）** | BEP-670 spec merged，无实现 PR；当前运行 450ms | Mantle L2 出块间隔由 sequencer 决定，与 BSC L1 Parlia 共识架构不同 | 跟踪 BEP-670 实现进度；评估 Mantle sequencer 出块优化空间；**不可直接对标 L1 vs L2** | 中 |
+| **reth 双客户端** | 151 PRs, 5-6 人团队, v0.0.9-beta | Mantle 单 op-geth 客户端 | 评估 op-reth 可行性和维护成本；跟踪 reth-bsc 生产部署时间线 | 中-高 |
+| **Mendel/Pasteur 硬分叉节奏** | 3 releases / 3 月 | Mantle 硬分叉节奏需对比 | 对标 BSC 的 release velocity，确保 Mantle 协议升级不落后 | 低 |
+| **MEV/Builder 分离（BEP-675）** | Builder blind signing, OPEN PR #3691 | Mantle MEV/sequencer 策略 | 研究 BEP-675 builder separation 设计是否可借鉴到 sequencer 层 | 中 |
+| **AI Agent 叙事** | SDK 早期, 高叙事但 MCP 89% close 率 | Mantle 无公开 AI Agent 策略 | 观望为主；AI Agent 在 BNB Chain 尚未证明工程价值 | 低 |
+| **Binance 交易所导流** | CeFi 流量、品牌、用户规模 | Mantle 独立生态 | **不可复制**：结构性优势，非工程手段可追赶 | N/A |
+| **opBNB L2 竞争** | 1 人团队, 极低投入 | Mantle 作为 OP Stack L2 | opBNB 不构成直接威胁；关注 BSC L1 性能是否吸引用户回流 L1 | 低 |
 
-### 12.2 必须跟踪/防守
+### 12.2 值得借鉴的设计
 
-1. **BSC 250ms 出块路线**：虽然不直接对标（BSC L1 vs Mantle L2），但 250ms 的叙事压力会影响市场认知。需跟踪 Pasteur 硬分叉 testnet 时间线和实际 TPS 数据。
-2. **reth 双客户端成熟度**：如果 reth-bsc 达到生产稳定，BNB Chain 将成为首个拥有双客户端的 EVM L1（除 Ethereum）。Mantle 需评估客户端多样性的战略价值。
-3. **Pasteur 硬分叉**：包含 BEP-675（builder blocks）和 BEP-682（CometBFT 验证），可能改变 BSC 的 MEV 和验证器经济。
+1. **BEP-675 Builder Separation**：validator blind signing 模式将区块构建权完全分离给 builder，validator 仅做签名和系统 tx 注入。这种 MEV 分离设计可为 Mantle sequencer 的 builder/sequencer 分离提供参考。
+2. **快速最终性参数调优**：BSC 在 vote interval、vote rate-limiting、votepool 优化上的经验（3 个 bug fix PR + 2 个关闭的功能 PR）显示快速最终性的工程复杂度。
+3. **BEP 流程效率**：BNB Chain 的 BEP 从提案到 merge 周期短（BEP-675 约一个月内 merge），显示高效的规范制定流程。
+4. **Super-instruction EVM 优化**：BSC 引入的 EVM super-instruction（合并频繁操作码序列）是有趣的 EVM 性能方向，尽管近期多数 PR 为 bug fix，表明新优化的稳定性成本。
 
-### 12.3 值得借鉴/POC
+### 12.3 谨慎 / 不适合直接照搬
 
-1. **BEP-675 Builder 分离设计**：validator blind signing + builder-proposed blocks 的设计可参考 PBS（Proposer-Builder Separation）的 BSC 实现方式。
-2. **跨区域测试框架**：reth-bsc 的 cross-region test 基础设施（6 PRs）可作为 Mantle 客户端验证的参考。
-3. **TrieDB 存储优化**：reth-bsc-triedb 的 geth-compatible trie 在 Rust 中的实现，可作为 Mantle 存储层优化的参考。
-4. **BEP 流程效率**：BNB Chain 从 BEP 提案到实现的节奏（BEPs → Go → reth → genesis → release）可参考。
+1. **BSC 250ms 出块对 Mantle 不适用**：BSC 使用 Parlia PoSA 共识（21 个验证者轮流出块），250ms 在受控验证者集合下可行。Mantle 基于 OP Stack，由 sequencer 单点出块后提交到 L1，出块间隔优化的技术路径完全不同。
+2. **AI Agent SDK 全量复制**：BNB Chain 的 AI Agent SDK 依赖 Binance 生态的用户规模和品牌效应。Mantle 生态规模差异意味着相同投入的 ROI 不同。
+3. **reth 全量投入**：BNB Chain 有 5-6 人全职 reth 团队，这是大量资源投入。Mantle 需评估是否有等量资源和必要性。如果 op-reth（OP Stack + reth）社区版足够成熟，可能不需要独立维护 fork。
 
-### 12.4 谨慎/不适合直接照搬
+### 12.4 定量对比
 
-1. **250ms 出块**：Mantle 基于 OP Stack（sequencer 驱动），不使用 Parlia 共识。BSC 的出块时间优化路线（BEP-670）依赖 Parlia 验证者轮转和投票机制，无法直接移植到 Mantle 架构。
-2. **AI Agent SDK 全量复制**：BNB Chain 生态规模远大于 Mantle，AI Agent 的网络效应依赖交易量和用户量。Mantle 不应全量复制，应选择最小切入点。
-3. **Greenfield 存储层**：Mantle 使用 EigenDA，与 Greenfield 的去中心化存储定位不同。不应参考 Greenfield 的架构设计。
+| 指标 | BNB Chain (BSC + reth) | Mantle (参考) | 说明 |
+|------|----------------------|-------------|------|
+| 核心客户端 PR/3 月 | 243 (bsc 92 + reth 92 + reth-bsc 59) | 需对比 | BNB Chain 双客户端投入巨大 |
+| 核心开发者 | ~15 人 | 需对比 | |
+| Release/3 月 | 3 (bsc) + 2 (reth-bsc) = 5 | 需对比 | |
+| 客户端多样性 | 2 (Go prod + Rust beta) | 1 (op-geth) | BNB Chain 领先 |
+| L2 投入 | 11 PRs (opBNB), 1 人 | - | BNB Chain 极低 |
 
-### 12.5 定量对比
+### 12.5 行动建议
 
-| 指标 | BNB Chain (BSC + reth) | Mantle (估计) |
-|---|---|---|
-| 近 3 月核心 PR | ~230 | - |
-| 活跃 contributor | 15-18 人 | - |
-| 多客户端投入 | Go + Rust 双客户端 | 单客户端 |
-| Release 频率 | ~3 release / 3 months (Go) + 2 release (reth) | - |
-| 硬分叉节奏 | Mendel(已上线) + Pasteur(准备中) | - |
-| AI/新赛道投入 | ~50 PRs | - |
-| L2 投入 | ~11 PRs（opBNB） | 全栈 |
+**短期（1-3 月）-- 跟踪 Watchlist**：
+- [ ] BSC Pasteur 硬分叉：BEP-670 (250ms) 实现进展、BEP-675 (builder block) #3691 merge 状态
+- [ ] reth-bsc 生产部署公告或 testnet 指标
+- [ ] Mantle sequencer 出块间隔优化空间评估，明确与 BSC L1 性能口径的差异叙事
+
+**中期（3-6 月）-- POC 与评估**：
+- [ ] op-reth 可行性评估：optimism/op-reth 成熟度、社区维护力度
+- [ ] MEV/Builder 分离设计：参考 BEP-675 研究 Mantle sequencer builder 分离
+- [ ] 快速最终性 / L2 finality 改进
+
+**长期（6+ 月）-- 路线决策**：
+- [ ] 客户端多样性：单客户端 op-geth vs 双客户端 (op-geth + op-reth)
+- [ ] 新赛道最小投入：AI Agent / MCP 在社区证明 ROI 后再考虑
 
 ---
 
-## 13. 证据完整性、反例和风险控制 (item-13)
+## 13. 证据完整性、反例和风险控制（item-13）
 
 ### 13.1 数据完整性
 
-| 项目 | 状态 | 说明 |
-|---|---|---|
-| GitHub API 漏页 | 低风险 | 使用 `gh pr list --limit 100`，覆盖所有窗口期 PR |
-| Rate limit | 无影响 | 抓取时间 2026-05-26 14:30 UTC |
-| Private repo | 不可见 | 可能存在内部 repo 未被统计；reth 开发可能有私有 staging repo |
-| Archived/fork 处理 | 已标注 | reth-bsc-trail(archived), greenfield-cometbft-db(dependabot noise) |
-| Bot PR 去噪 | 已处理 | reth 的 11 bot PRs 已从人工统计中剔除 |
+| 维度 | 状态 | 说明 |
+|------|------|------|
+| GitHub API 覆盖 | **完整** | `gh pr list --limit 100` + `--search "created:>=2026-02-26"` 覆盖窗口内全部 PR |
+| Rate limit | **未触发** | 查询在限额内完成 |
+| Private repo | **不可见** | BNB Chain 可能有 private repo（安全修复、未公开功能） |
+| Archived/fork 处理 | **已标注** | greenfield-cometbft-db 全 dependabot、reth fork 关系已说明 |
+| Bot PR 去噪 | **已处理** | dependabot 13 in bsc、10 in reth、14 in greenfield-cometbft-db、7 in greenfield-cosmos-sdk、mefai-dev 41 in bnbchain-mcp |
+| Commit 数据 | **不完整** | API 首页最多 100 条，实际值可能更高 |
 
-### 13.2 反例与平衡
+### 13.2 结论反例
 
-| Claim | 反例/限制 |
-|---|---|
-| opBNB 被边缘化 | 低活跃度可能因 opBNB 已稳定运行，不需要频繁变更 |
-| AI Agent 是叙事驱动 | 30 PRs + BEP-692 的工程投入不可忽视；可能有未公开的企业合作 |
-| reth-bsc 仅为 beta | v0.0.9-beta 附带主网 snapshot 和部署指引，可能已有节点在主网运行 |
-| Greenfield 维护模式 | 3 个硬分叉（Prairie/Steppe/Cerrado）表明仍有产品迭代 |
-| node-real 无活动 | 可能转向私有化产品或 SaaS，开源活动不代表公司投入 |
+| 结论 | 反例 / 风险 |
+|------|-----------|
+| opBNB 被边缘化 | 可能有未公开重构或 private repo 开发；Laplace PR open 可能在等待上游 OP Stack 版本 |
+| AI Agent 是叙事驱动 | bnbagent-sdk 可能在下一季度快速成熟；BAP-692 一旦 merge 可能带来大量实现 PR |
+| Greenfield 维护模式 | 可能在策划重大升级但尚未公开 |
+| reth-bsc 不可替代 Go 客户端 | 如果 Q3 达到生产部署，可能改变双客户端主次关系 |
+| 250ms blocks 远期目标 | BNB Chain 此前 3s->450ms 的推进速度超过多数预期，250ms 可能比预想更快 |
 
-### 13.3 Claims Not Supported / 需降级 (diag-8)
+### 13.3 状态误读防线
 
-| Claim | 所需证据 | 当前状态 | 建议 |
-|---|---|---|---|
-| BSC 250ms 已在 testnet 运行 | testnet 区块数据 | 无证据 | 降级为"spec-merged, 尚未验证" |
-| reth-bsc 已用于生产 | 主网节点运行数据 | 仅有 snapshot 和部署指引 | 标注为"beta-production (inferred)" |
-| AI Agent SDK 有实际用户 | 链上交易、GitHub stars、npm 下载 | 无数据 | 标注为"early-stage (inferred)" |
-| opBNB TVL/用户活跃度 | 链上数据、L2Beat | 未抓取 | 标注为 gap |
-| BNB Chain 总开发者投入 | 全部 org 的活跃开发者 | 仅统计 PR author | 可能低估（reviewer、非 PR 贡献者未计） |
-| Pasteur 硬分叉时间线 | 官方 roadmap 或 BEP 目标日期 | 无明确日期 | 标注为"准备中, 日期未确定" |
+| Claim | 正确状态 | 不可误读为 |
+|-------|---------|-----------|
+| BEP-670 (250ms blocks) | spec-merged（BEP 已合入） | ~~已在测试网/主网运行~~ |
+| BEP-675 (builder blocks) | spec-merged + open-pr (#3691) | ~~已发布~~ |
+| BEP-667 (vote interval) | spec-merged + impl-closed (#3589) | ~~已实现~~ |
+| Pasteur 硬分叉 | BEP meta merged, 实现进行中 | ~~即将上线~~ |
+| reth-bsc v2.0.0 | 上游版本号对齐（内部 develop 分支） | ~~自身功能达 2.0 成熟度~~ |
+| reth-bsc 生产就绪 | v0.0.9-beta | ~~production-ready~~ |
+| bnbchain-mcp 46 PRs | 仅 4 个 merged，89% close 率 | ~~活跃且成熟的项目~~ |
 
-### 13.4 Gaps
+### 13.4 Claims Not Supported 列表（diag-8）
 
-| Gap | 影响 | 补救方式 |
-|---|---|---|
-| 链上数据（TPS, gas, TVL）| 无法量化 BSC/opBNB 实际使用情况 | 后续从 BscScan/L2Beat 补充 |
-| BNB Chain 官方 blog 文章 | 叙事分析缺少官方声音 | 需手动检索 BNB Chain blog |
-| Binance 生态整合细节 | CeFi → DeFi 流量数据不可用 | 超出 GitHub 分析范围 |
-| reth-bsc 性能 benchmark | 无法评估 reth vs go-bsc 性能差异 | 需专项 benchmark |
-| commit count 统计 | 未单独统计 commit（仅用 PR 代替）| PR 作为活跃度主指标已足够 |
+| Claim | 状态 | 原因 |
+|-------|------|------|
+| BSC 250ms 出块已运行 | **unsupported** | 仅 BEP spec，无实现 PR |
+| reth-bsc 已用于生产 | **unsupported** | 仅 beta release，无生产部署公告 |
+| AI Agent SDK 有生产用例 | **unsupported** | 合约持续重部署，无用户数据 |
+| Greenfield 与 AI 集成 | **unsupported** | 无代码证据 |
+| opBNB TVL/用户数据 | **unsupported** | 本次分析未获取链上数据 |
+| Pasteur 硬分叉激活时间 | **unsupported** | 未公布 |
+| BNB Chain 总开发者数量 | **inferred** | 基于 PR author 推测约 15-20 核心开发者，可能低估 |
+| BSC L1 vs Mantle L2 性能可比性 | **architecturally invalid** | Parlia PoSA vs OP Stack 架构差异使直接对标无意义 |
 
 ---
 
 ## Source Coverage
 
-| ID | Type | 要求 | 覆盖状态 | 说明 |
-|---|---|---|---|---|
-| src-1 | github_org_data | bnb-chain, node-real org 全 repo 扫描 | **covered** | 通过 gh pr list/gh api 扫描两个 org 全部活跃 repo |
-| src-2 | github_pr_analysis | 每个 Top repo 至少 5 个代表 PR | **covered** | 每个 Top repo 列出 8-15 个代表 PR |
-| src-3 | bep_proposals | BEP-667/670/675/677/682/692 | **partially** | BEP 标题和状态已覆盖，全文内容未逐条检验 |
-| src-4 | official_bnbchain_docs | 官方 blog/docs/release notes | **partially** | Release notes 已覆盖，blog/docs 未单独检索 |
-| src-5 | on_chain_data | BSC/opBNB 链上指标 | **gap** | 未抓取链上数据 |
-| src-6 | comparison_sources | Mantle 代码/OP Stack/L2Beat | **partially** | 基于已有知识比较，未实时检索 |
+| Source Req | Type | Coverage | Sources Used |
+|-----------|------|----------|-------------|
+| src-1 | github_org_data | **covered** | `gh api orgs/bnb-chain/repos --paginate`, `gh api orgs/node-real/repos --paginate`, `gh pr list` for all repos, `gh api repos/.../contributors` |
+| src-2 | github_pr_analysis | **covered** | `gh pr list --json ...` for bsc, reth, reth-bsc, bnbagent-sdk, BEPs, bnbchain-mcp, greenfield*, opbnb, op-geth, bsc-genesis-contract; `gh pr view` for key PRs (#3691, #3589, #3623, #3610, #3660) |
+| src-3 | bep_proposals | **partially** | BEP-670, BEP-675, BEP-677, BEP-667, BEP-673, BEP-682, BEP-684, BAP-692 referenced via BEPs repo PRs and PR body content; BEP 全文未逐一阅读 |
+| src-4 | official_bnbchain_docs | **partially** | Release notes for v1.7.1/v1.7.2/v1.7.3 via `gh release view`; 官方 blog/docs 未单独抓取 |
+| src-5 | on_chain_data | **gap** | 未获取 BSC/opBNB 链上指标（TPS, gas, TVL 等） |
+| src-6 | comparison_sources | **partially** | Mantle 对比基于 OP Stack 通用理解和已有研究; L2Beat 数据未单独抓取 |
+
+---
+
+## Gap Analysis
+
+| Gap | Severity | Impact | Mitigation |
+|-----|----------|--------|-----------|
+| BEP 全文未逐一阅读 | medium | 可能遗漏 BEP 技术细节和时间线承诺 | 在 review 后补充关键 BEP 全文分析 |
+| 链上数据缺失 (src-5) | medium | 无法提供 TVL、TPS、用户活跃度等定量竞争对比 | 建议补充 L2Beat、DeFiLlama 数据 |
+| 官方 Blog/Docs 未抓取 | low | 叙事分析主要依赖代码活动推测而非官方表态 | 可在修订轮补充 |
+| reth-bsc 生产部署状态不确定 | medium | 无法确认 reth-bsc 是否已在任何网络运行 | 需查阅 BNB Chain 官方公告 |
+| Commit 数据不完整 | low | 活跃度排名可能略有偏差 | API pagination 限制，影响有限 |
+| Private repo 不可见 | medium | 可能遗漏安全修复或未公开功能的开发投入 | 已在证据完整性章节标注 |
+| Mantle 自身数据缺乏定量对比 | medium | 竞争矩阵中 Mantle 列多为"需对比" | 需交叉引用 Mantle 内部数据 |
 
 ---
 
 ## Revision Log
 
-| Round | Action | Target | Reason | Source |
-|---|---|---|---|---|
-| 1 | create_draft | all items (1-13) | 基于 Orchestrator deep-draft dispatch 和 approved outline 生成完整研究草稿 | Dispatch comment 1cc1f5ab-068d-4f0b-b9ee-e706ceaba592 |
+| Round | Action | Changes | Source |
+|-------|--------|---------|--------|
+| 1 | initial draft | 完成全部 13 个 outline items 的数据采集和分析；产出 8 个图/表；覆盖 src-1/src-2 fully, src-3/src-4/src-6 partially, src-5 gap | Orchestrator dispatch 1cc1f5ab-068d-4f0b-b9ee-e706ceaba592 |
