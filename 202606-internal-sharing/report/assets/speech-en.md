@@ -156,27 +156,41 @@ The three directions and our conclusions: AgentFi — weak. Payment Chain — me
 
 ## Slide 14 — AgentFi (Weak)
 
-AgentFi is one of the hottest narratives right now. CoinGecko's AI Agents category is at about $3.68 billion market cap. But real usage signals are limited — x402 has 50K+ listed resources, but the overall market is still a mix of narrative, dev tools, and early product.
+AgentFi is one of the hottest narratives right now. CoinGecko's AI Agents category sits at about $3.68 billion market cap, with the broader crypto AI Agent space estimated at $2.3-2.6 billion. But keep in mind — this is still early-stage, proof-of-concept territory. Real usage signals remain limited.
 
-Competition is fierce: Base has AgentKit plus Coinbase distribution, X Layer has Agent Payment Protocol and Agentic Wallet, Solana has pay-kit. All serious EVM or high-performance agent infrastructure.
+On the competitive front, Base has the most complete stack: CDP AgentKit plus x402 payment protocol plus Base MCP plus Coinbase's 110M+ user distribution. Solana has low fees plus pay-kit. Sui has protocol-level gasless P2P. X Layer has APP plus Agentic Wallet.
 
-Mantle currently has no first-party Agent SDK, no Paymaster, no flagship application. We can position as an "EVM AgentFi settlement and yield layer," but this doesn't constitute a primary narrative.
+Let me go deeper on Base's AgentFi ecosystem here, because it represents the current state of the art.
 
-**Verdict: weak.** Hot narrative, but Mantle lacks structural advantage. We can participate, but shouldn't bet the house on it.
+To support AgentFi, a chain's infrastructure needs six layers: standardized AI interfaces, Agent wallet plus permission management, low-latency execution, machine-to-machine payment protocols, DeFi liquidity support, and Agent launch platforms. Base has solutions across all six.
+
+**Base MCP**, launched May 26th, is built on Anthropic's MCP standard — it lets AI applications directly execute on-chain operations. It shipped with seven DeFi protocol plugins out of the box — Morpho, Moonwell, Aerodrome, Uniswap, Avantis, Bankr, and Virtuals — using an OAuth 2.1 security model. **CDP AgentKit** is a model-agnostic development framework with 50+ TypeScript Actions and 30+ Python Actions. Agentic Wallets use TEE-protected keys with built-in Session Caps and Transaction Limits policy engine. **x402 protocol** activates HTTP 402 for machine-to-machine micropayments — $0.001 minimum, sub-second settlement, 156K per week at peak, integrated with Google AP2.
+
+On the ecosystem side — Social Agents like Clanker auto-deploy tokens on Farcaster, with cumulative protocol fees exceeding $50M and 558K traders. Virtuals Protocol has deployed over 18,000 Agents, ranking second in annual protocol revenue on Base at over $59M. Trading/DeFi Agents handle 24/7 yield monitoring and auto-rebalancing. The supporting layer includes Flashblocks at 200ms preconfirmation, Smart Wallet's ERC-4337 plus ERC-7715 permission framework, and Aerodrome DEX with peak TVL exceeding $1B.
+
+**Mantle's fit**: our strengths are EVM compatibility, mETH/DeFi yield ecosystem to support Agent treasuries, and existing AA foundations. But the six-dimension gap is comprehensive — no MCP server, no Agent-specific permission framework, standard 2-second block time with no preconfirmation, no x402 equivalent, insufficient DEX liquidity depth, no Agent launch platform.
+
+**Verdict: weak.** Base has built a four-layer vertical integration — AgentKit → Wallet → x402 → MCP — plus Coinbase distribution. That's a non-replicable structural advantage. Mantle would need to build from scratch across all six dimensions, with limited differentiation upside.
 
 ---
 
 ## Slide 15 — Payment Chain (Medium)
 
-Payments is a fast-growing market. Stablecoin supply at $320.7B. USDC's single-quarter on-chain volume hit $21.5 trillion, up 263% YoY. But actual stablecoin payment penetration is only 0.02% of global payments. Supply-side rails are accelerating; demand-side is still bottlenecked by off-ramps, merchant relations, and compliance.
+Payments is a fast-growing market. Stablecoin supply at $320.7 billion. USDC single-quarter on-chain volume hit $21.5 trillion, up 263% YoY. But penetration is only 0.02% of global payments. More critically, payment-grade chains already have native competitors in position — Tempo has a live mainnet, Arc raised $222M in presale with 100+ testnet institutions, and Sui's gasless P2P is already live.
 
-Critical gaps: Mantle's L2 soft confirmation doesn't meet payment-grade hard finality requirements. More importantly, Circle's CCTP does not list Mantle — that's a structural barrier for cross-chain stablecoin flows.
+Here's a key insight to frame this section: **Payment Chain is not the same as deploying payment contracts on a general-purpose chain.** It requires protocol-level capabilities across six dimensions — deterministic finality (BFT sub-second, non-revertible, not L2 soft confirmation), fee determinism (stablecoin-denominated, invisible to end users), dedicated payment blockspace (reserved capacity, not crowded out by DeFi), native stablecoin support (protocol-level memo, compliance, fee eligibility), cross-chain interop (secure low-latency burn-and-mint), and compliance infrastructure (chain-level transfer policy enforcement).
 
-But there's space in certain sub-scenarios. B2B invoice settlement and merchant treasury settlement are medium-to-strong fit. Mantle's DeFi yield ecosystem can provide "post-payment treasury management" — something Tempo and Arc can't match.
+Let me walk through how the two leading competitors implement these.
 
-**Verdict: medium.** We can't win the pure payment chain narrative, but B2B settlement as a sub-scenario within institutional finance is viable.
+**Tempo's** key innovation is Payment Lane — protocol-level blockspace partitioning into three lanes: System, Payment, and General. Payment transactions get reserved gas capacity; DeFi congestion doesn't affect payment throughput. Consensus is Commonware Simplex BFT, targeting 500-600ms deterministic finality with a dual-process isolation design that reduces execution load impact on the consensus path. Stablecoin gas is denominated in attodollars — roughly $0.001 per TIP-20 transfer. TIP-20 is a precompile-level token standard with native memo, pause, and fee eligibility support. TIP-403 provides a precompile-level compliance policy registry. Enterprise Zones offer Reth validium privacy execution, but proofs are still empty — not recommended for production. Performance numbers are design targets; production SLAs need validation.
 
-One more point: payments need Web2 distribution. Without Stripe-level or Coinbase-level partnerships, pure crypto payment solutions struggle to reach mass adoption.
+**Circle Arc** takes a fundamentally different approach — the USDC issuer building a full-stack financial OS. Malachite BFT achieves roughly 780ms finality at 100 validators, 330-490ms at small scale, with about 50K TPS. USDC is the native gas token, with EWMA fee smoothing plus multi-currency Paymaster with a built-in FX engine. The biggest structural advantage is CCTP V2 — native cross-chain USDC across 26 domains, $126B cumulative volume, 740% YoY growth. This is not replicable by third-party chains. StableFX is an institutional FX engine with 8 partner stablecoins, RFQ execution plus atomic settlement. Testnet includes 100+ institutions — BlackRock, Goldman Sachs, Mastercard among them. Mainnet beta expected this summer.
+
+The core difference between them: **Tempo optimizes the payment transaction pipeline** (Payment Lane plus fixed base fee plus TIP-20 precompiles), while **Arc builds a full-stack financial OS** (native USDC issuance plus CCTP cross-chain plus StableFX plus institutional validators). Tempo lacks cross-chain; Arc lacks Payment Lane.
+
+**Mantle gap analysis**: Three structural gaps — L2 soft confirmation is not BFT finality (requires L1 at ~13 minutes), Circle CCTP does not list Mantle, and we have no protocol-level stablecoin support. Addressable gaps include Paymaster plus AA for stablecoin gas UX, application-layer compliance contracts, and Payment Intent SDK. Needs engineering: sequencer payment tag plus soft reservation, predeploy compliance policy registry. Needs architectural decisions: pushing Circle CCTP partnership, BFT fast-finality, protocol-level stablecoin gas.
+
+**Verdict: medium.** We can't compete on the pure payment chain narrative — three of six dimensions are structural gaps. But a **B2B settlement plus treasury layer** positioning is viable: Paymaster plus Payment Intent SDK plus merchant treasury plus DeFi yield as the entry wedge. Payment remains important as a sub-scenario within institutional finance — we're not abandoning it entirely. And payments need Web2 distribution; pure crypto solutions struggle to reach mass adoption.
 
 ---
 
@@ -184,43 +198,63 @@ One more point: payments need Web2 distribution. Without Stripe-level or Coinbas
 
 Now the strongest-fit direction.
 
-On-chain RWA went from $6 billion to $31-34 billion — more than doubled in a year. Several catalysts behind this: BlackRock BUIDL at $2.5B AUM, SEC's statement on tokenized securities, GENIUS Act signed into law. This isn't projection — it's happening.
+On-chain RWA went from $6 billion in early 2025 to $31-34 billion — more than 200% year-over-year growth. This isn't projection. The catalysts are concrete: BlackRock BUIDL at $2.5B AUM. SEC's statement on tokenized securities. GENIUS Act signed into law. BlackRock filed with the SEC in May to bring a $7 billion money market fund on-chain. MiCA and FATF are driving compliance frameworks globally.
 
-What do institutions need? Four things: compliance, privacy, data sovereignty, and audit. Without these, real institutional capital doesn't come on-chain.
+What do institutions need? Four things: compliance, privacy, data sovereignty, and audit. Without these, real institutional capital stays off-chain.
 
-The core thesis: this isn't a "should we do this" question — it's "who gets there first." zkSync's Prividium is already on this path, claiming 35+ financial institutions. Even if that's vendor-reported, it tells us institutions have this demand, and someone is capturing it.
+**The core thesis**: this isn't a "should we do this" question — it's a "who gets there first" question.
+
+People are already getting there. zkSync Prividium claims 35+ financial institutions — Cari Network is partnering with five US regional banks with combined deposits exceeding $600 billion, targeting Q3 2026 pilot. Deutsche Bank has confirmed a partnership. BitGo provides institutional-grade custody.
+
+Canton has even stronger production validation: Broadridge DLR settles $368 billion daily, roughly $8 trillion monthly in repo settlement. DTCC plans a controlled production MVP in H1 2026.
+
+These numbers tell us the demand is real, and it's already being captured.
 
 ---
 
 ## Slide 17 — Institutional Finance: Prividium Benchmark
 
-Prividium's architecture is worth examining closely.
+Prividium's architecture is worth examining closely. I'll also bring in Canton's design philosophy for comparison.
 
-The core is ZK Validium plus enterprise privacy. Transaction data stays off L1 — only state roots and validity proofs go on-chain. Proxy RPC handles access control, RBAC manages role permissions, private DA layer stores data, STARK proofs ensure state correctness.
+At its core, Prividium is a **permissioned Validium chain** running on institutional-owned infrastructure. The settlement path has three layers: users authenticate via Okta or SIWE, enter through a Proxy RPC gateway (three-step verification: JWT plus wallet plus function-level permissions), then reach the Sequencer for private execution, the Prover running Airbender GPU to generate STARK proofs, through ZKsync Gateway for proof aggregation, and finally to Ethereum L1. L1 sees only state roots and proofs — zero transaction data. Data lives in PostgreSQL plus Blob Store on a private subnet with no internet exposure. The local dev environment is open-source — Docker Compose spins up the complete stack: Prividium API, Keycloak identity, Admin/User Panel, zkSync OS, Sequencer, Prover, Block Explorer, and Prometheus/Grafana.
 
-What's zkSync-native? The RISC-V virtual machine and Airbender prover — we don't need and shouldn't try to copy these.
+Access control operates across four layers. Layer 1: identity authentication — Okta OIDC, SIWE, or hybrid mode. Layer 2: Proxy RPC gateway — three-step verification plus audit logging, the sole entry point to the entire network. Layer 3: RBAC permissions — contract function-level granularity with optional parameter constraints, configurable through Admin Dashboard with no code changes required. Layer 4: L1 TransactionFilterer — whitelist filtering for forced transaction paths.
 
-What's reproducible on other L2s? Proxy RPC, RBAC, private DA layer, compliance policy engine, audit logs — these are Prividium's core value, and they don't depend on the ZK proof system. We can build a similar compliance isolation layer within the OP Stack framework.
+Privacy guarantee is chain-wide — an inherent property of the Validium model, not an add-on feature. ZK proofs ensure state transition correctness.
+
+**Canton design comparison**: Canton represents a fundamentally different paradigm. Prividium is "Prove-Not-Reveal" — the entire chain is invisible to outsiders, but operators see everything. Canton is "Need-to-Know" — no node holds global state, each party only sees sub-transaction-level projections, and even the Sequencer and Mediator cannot see transaction plaintext. Canton's strengths are the strongest financial contract semantics — Daml's signatory/observer/controller naturally maps to financial agreements — and the most robust production validation at $8 trillion monthly. Canton's weaknesses: non-EVM, small developer pool, and low OP Stack compatibility.
+
+**Mantle's path**: build a Prividium-style compliance isolation layer within the OP Stack framework — EVM-compatible, low developer migration cost, Solidity/Foundry work out of the box. Borrow Canton's Observer role and separation-of-duties design thinking. We don't need to replicate the ZK proof system — compliance and access control are Prividium's core value.
 
 ---
 
 ## Slide 18 — Institutional Finance: Mantle Compliance Tech Stack Roadmap
 
-This is the most important slide today — the technical gap matrix.
+This is the most important slide today — the technical gap matrix, updated with dual benchmarking against both Prividium and Canton.
 
 [Walk through each row]
 
-Validium private DA: we currently use EigenDA with no private DA capability. Needs EigenDA adaptation or standalone DA layer. High complexity.
+Compliance RPC Gateway: Prividium has Proxy RPC with three-step auth. We have nothing. Need to build an authentication plus RBAC plus audit gateway layer. Medium complexity.
 
-Compliance execution layer: there's reportedly an ERC-3643 demo foundation, but we couldn't find public source confirmation. Target: identity registry plus policy engine plus audit logs plus selective disclosure.
+RBAC Permission System: Prividium achieves contract function-level granularity. Canton uses Daml's signatory/observer model. We have nothing. Target: contract function-level plus parameter-level, via Admin Dashboard plus policy engine. Medium complexity.
 
-Multi-layer access control: Bridge to RPC to Sequencer to Execution — four-layer filtering. Currently at zero.
+Identity Registry: Prividium uses Okta/SIWE plus Keycloak. Canton uses Party/Participant topology. We have no native solution. Target: KYC Registry contract, integrating Okta/SIWE with on-chain registration. Medium complexity.
 
-Enterprise Zone/L3: MIX4 provides some foundation to build on.
+Audit and Selective Disclosure: Prividium has Private Explorer plus selective disclosure. Canton has Observer plus audit logs. We have nothing. Target: exportable audit plus selective disclosure, via Audit Log API plus SD contracts. Medium complexity.
 
-ZK compliance proofs: KYC-in-ZK, can integrate existing solutions.
+Validium Private DA: Prividium runs on operator-controlled DB with full privacy. Canton has per-party local ACS. We use EigenDA — public. Need EigenDA adaptation or standalone DA layer. High complexity.
 
-**Core message**: the tech stack is almost entirely greenfield — but the path is clear, and we have a benchmark to reference.
+Enterprise Zone/L3: Prividium is a ZK Stack Validium variant. Canton uses Multi-Synchronizer. We have MIX4 foundations to build on. High complexity.
+
+ZK Compliance Proofs: Prividium has STARK via Airbender. Canton uses 2PC. We have SP1 in planning. Can integrate existing solutions for KYC-in-ZK. Medium complexity.
+
+Compliance Execution Layer: Prividium has TransactionFilterer. Canton has 2PC verdict. We reportedly have an ERC-3643 demo — unconfirmed publicly. Target: identity plus policy plus audit plus disclosure as integrated stack, via ERC-3643 extension plus predeploy. Medium-high complexity.
+
+L1 Bridge Filter: Prividium has TransactionFilterer to restrict unauthorized forced transactions. We don't. Need L1/L2 bridge whitelist contract. Low complexity.
+
+**Canton design concepts to borrow** — at the conceptual level, not a tech stack migration. Three points: first, Regulatory Observer role — contract-level observer role, giving regulators an auditable view rather than full plaintext. Second, Sequencer/Mediator separation of duties — we can introduce an independent compliance/verdict service. Third, ACS Commitment equivalent — verifiable state digests for Enterprise Zones, enabling multi-party reconciliation.
+
+**Core message**: the tech stack is almost entirely greenfield — but the path is clear, we have dual benchmarks to reference, and every component has a defined implementation path and complexity assessment.
 
 ---
 
@@ -228,11 +262,21 @@ ZK compliance proofs: KYC-in-ZK, can integrate existing solutions.
 
 Strengths.
 
-First, EVM ecosystem plus Ethereum L2 legitimacy — institutional integration costs are lower. Second, mETH and cmETH yield ecosystem — this is what Tempo, Arc, and Canton don't have. Institutions don't just need settlement; post-settlement capital needs yield management. This is our unique value. Third, MI4 and Securitize partnership with up to $400M treasury anchor. Fourth, USDY and mUSD are already live.
+First, EVM ecosystem plus Ethereum L2 legitimacy — institutions can develop with Solidity/Foundry directly, keeping integration costs low. The Prividium model requires no toolchain switch. Second, mETH and cmETH yield ecosystem — this is what Tempo, Arc, and Canton don't have. Institutions don't just need settlement; post-settlement capital needs yield management. This is our unique value proposition. Third, MI4/Securitize foundation plus over $4 billion in treasury. Fourth, existing Solidity/Foundry toolchain already in place.
 
-Challenges. Tech stack is greenfield, but path is clear. CCTP absence is a hard gap. No production institutional client case yet.
+Challenges. Tech stack is almost entirely greenfield — but the path is clear, progressing from Proxy RPC to RBAC to Private DA to Zone in phases. CCTP absence is a structural hard gap. No production institutional client case yet.
 
-**Phased approach**: first 3 months, compliance RPC and identity registry — no mainchain privacy changes needed. Months 3-9, Enterprise Zone and zkKYC PoC. Months 9-18, Validium DA and full-stack compliance.
+Benchmark positioning: **Prividium model has high compatibility** — EVM-compatible plus enterprise packaging plus OP Stack mappable. Canton model cannot be directly migrated — Daml/JVM/2PC conflicts with the Rollup paradigm — but its design language is worth borrowing.
+
+**Verdict: strong.** We can pursue the Prividium model, and we have unique treasury and yield ecosystem advantages.
+
+**Phased roadmap**:
+
+Phase 1, months 0-3, access control and audit MVP — Compliance RPC Gateway plus Identity/KYC Registry plus Sequencer Policy Engine plus Audit Log Exporter plus L1 Bridge Filter. No mainchain privacy changes needed.
+
+Phase 2, months 3-9, private data layer — Private DA/Encrypted Archive plus Selective Disclosure API plus zkKYC PoC plus Regulatory Observer API.
+
+Phase 3, months 9-18, Enterprise L3/Validium Zone — per-tenant L3 Zone plus Zone Sequencer plus Private DA plus ZonePortal Settlement to L2 plus Admin Dashboard with no-code configuration.
 
 One strategic principle: **productize compliance visibility before productizing cryptographic privacy**. Permissioning, audit, and disclosure APIs are closer to enterprise revenue than FHE.
 
