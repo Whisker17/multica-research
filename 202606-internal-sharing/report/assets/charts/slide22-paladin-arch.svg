@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" width="960" height="720">
+  <style>
+    text { font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace; fill: #e2e8f0; }
+    .title { font-size: 16px; font-weight: 700; fill: #e2e8f0; }
+    .subtitle { font-size: 11px; fill: #94a3b8; }
+    .layer-label { font-size: 13px; font-weight: 700; }
+    .component { font-size: 11px; font-weight: 600; }
+    .component-sub { font-size: 9.5px; fill: #94a3b8; }
+    .domain-label { font-size: 12px; font-weight: 700; }
+    .domain-sub { font-size: 9.5px; fill: #94a3b8; }
+    .boundary { font-size: 10px; fill: #94a3b8; letter-spacing: 0.05em; }
+    .annotation { font-size: 10px; fill: #94a3b8; }
+    .flow-label { font-size: 10px; font-weight: 600; }
+    .note { font-size: 9.5px; fill: #475569; }
+  </style>
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0f1a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#00D395"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#94a3b8"/>
+    </marker>
+    <filter id="glow-green" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="960" height="720" fill="url(#bg-grad)"/>
+  <text x="480" y="32" text-anchor="middle" class="title">Paladin Privacy Runtime &#x2014; High-Level Architecture</text>
+  <text x="480" y="48" text-anchor="middle" class="subtitle">Pluggable privacy sidecar for standard EVM chains</text>
+  <text x="130" y="72" text-anchor="end" class="flow-label" fill="#475569">TX Flow:</text>
+  <rect x="162" y="56" width="76" height="22" rx="11" fill="#94a3b8" opacity="0.15" stroke="#94a3b8" stroke-width="0.8"/>
+  <text x="200" y="71" text-anchor="middle" class="flow-label" fill="#94a3b8">Init</text>
+  <line x1="242" y1="67" x2="288" y2="67" stroke="#475569" stroke-width="1" marker-end="url(#arrow-gray)"/>
+  <rect x="292" y="56" width="76" height="22" rx="11" fill="#4DA6FF" opacity="0.15" stroke="#4DA6FF" stroke-width="0.8"/>
+  <text x="330" y="71" text-anchor="middle" class="flow-label" fill="#4DA6FF">Assemble</text>
+  <line x1="372" y1="67" x2="418" y2="67" stroke="#475569" stroke-width="1" marker-end="url(#arrow-gray)"/>
+  <rect x="422" y="56" width="76" height="22" rx="11" fill="#FFA500" opacity="0.15" stroke="#FFA500" stroke-width="0.8"/>
+  <text x="460" y="71" text-anchor="middle" class="flow-label" fill="#FFA500">Endorse</text>
+  <line x1="502" y1="67" x2="548" y2="67" stroke="#475569" stroke-width="1" marker-end="url(#arrow-gray)"/>
+  <rect x="552" y="56" width="76" height="22" rx="11" fill="#8C8DFC" opacity="0.15" stroke="#8C8DFC" stroke-width="0.8"/>
+  <text x="590" y="71" text-anchor="middle" class="flow-label" fill="#8C8DFC">Prepare</text>
+  <line x1="632" y1="67" x2="678" y2="67" stroke="#475569" stroke-width="1" marker-end="url(#arrow-gray)"/>
+  <rect x="682" y="56" width="76" height="22" rx="11" fill="#00D395" opacity="0.15" stroke="#00D395" stroke-width="0.8"/>
+  <text x="720" y="71" text-anchor="middle" class="flow-label" fill="#00D395">Submit</text>
+  <rect x="40" y="100" width="880" height="90" rx="6" fill="#1a1533" stroke="#8C8DFC" stroke-width="1.2" stroke-dasharray="6,3" opacity="0.7"/>
+  <text x="60" y="122" class="layer-label" fill="#8C8DFC">Layer C &#x2014; Ephemeral Private EVM</text>
+  <text x="60" y="138" class="subtitle">In-memory Besu EVM execution &#xB7; no consensus &#xB7; state diff capture</text>
+  <text x="870" y="122" text-anchor="end" class="annotation" fill="#8C8DFC">Pente only</text>
+  <rect x="90" y="150" width="180" height="32" rx="4" fill="#2a2145" stroke="#8C8DFC" stroke-width="0.8"/>
+  <text x="180" y="164" text-anchor="middle" class="component" fill="#c4b5fd">Private Solidity</text>
+  <text x="180" y="177" text-anchor="middle" class="component-sub">contract execution</text>
+  <rect x="350" y="150" width="180" height="32" rx="4" fill="#2a2145" stroke="#8C8DFC" stroke-width="0.8"/>
+  <text x="440" y="164" text-anchor="middle" class="component" fill="#c4b5fd">Account State</text>
+  <text x="440" y="177" text-anchor="middle" class="component-sub">nonce/balance/storage</text>
+  <rect x="610" y="150" width="180" height="32" rx="4" fill="#2a2145" stroke="#8C8DFC" stroke-width="0.8"/>
+  <text x="700" y="164" text-anchor="middle" class="component" fill="#c4b5fd">State Diff</text>
+  <text x="700" y="177" text-anchor="middle" class="component-sub">input/read/output</text>
+  <line x1="60" y1="198" x2="900" y2="198" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="480" y="212" text-anchor="middle" class="boundary">gRPC Bidirectional Streaming (Plugin Boundary)</text>
+  <rect x="40" y="224" width="880" height="200" rx="6" fill="#0a1a1a" stroke="#00D395" stroke-width="1.5" filter="url(#glow-green)"/>
+  <text x="60" y="246" class="layer-label" fill="#00D395">Layer B &#x2014; Paladin Privacy Runtime (Sidecar)</text>
+  <text x="60" y="262" class="subtitle">Private data processing &#xB7; proof generation &#xB7; endorsement &#xB7; P2P state distribution</text>
+  <rect x="75" y="286" width="210" height="44" rx="4" fill="#0f2a2a" stroke="#00D395" stroke-width="1"/>
+  <text x="180" y="304" text-anchor="middle" class="component" fill="#00D395">TXManager</text>
+  <text x="180" y="319" text-anchor="middle" class="component-sub">API gateway + routing</text>
+  <rect x="345" y="286" width="210" height="44" rx="4" fill="#0f2a2a" stroke="#00D395" stroke-width="1"/>
+  <text x="450" y="304" text-anchor="middle" class="component" fill="#00D395">Sequencer</text>
+  <text x="450" y="319" text-anchor="middle" class="component-sub">Originator / Coordinator</text>
+  <rect x="615" y="286" width="210" height="44" rx="4" fill="#0f2a2a" stroke="#00D395" stroke-width="1"/>
+  <text x="720" y="304" text-anchor="middle" class="component" fill="#00D395">StateManager</text>
+  <text x="720" y="319" text-anchor="middle" class="component-sub">UTXO store + locks</text>
+  <rect x="75" y="342" width="210" height="44" rx="4" fill="#0f2a2a" stroke="#00D395" stroke-width="1"/>
+  <text x="180" y="360" text-anchor="middle" class="component" fill="#00D395">KeyManager</text>
+  <text x="180" y="375" text-anchor="middle" class="component-sub">identity + signing</text>
+  <rect x="345" y="342" width="210" height="44" rx="4" fill="#0f2a2a" stroke="#00D395" stroke-width="1"/>
+  <text x="450" y="360" text-anchor="middle" class="component" fill="#00D395">Transport</text>
+  <text x="450" y="375" text-anchor="middle" class="component-sub">gRPC/mTLS P2P</text>
+  <rect x="615" y="342" width="210" height="44" rx="4" fill="#0f2a2a" stroke="#00D395" stroke-width="1"/>
+  <text x="720" y="360" text-anchor="middle" class="component" fill="#00D395">BlockIndexer</text>
+  <text x="720" y="375" text-anchor="middle" class="component-sub">block tracking + finalize</text>
+  <text x="480" y="414" text-anchor="middle" class="annotation" fill="#00D395">&#x25B2; All private data stays here &#x2014; business payloads, identities, UTXO plaintext, salts, keys</text>
+  <line x1="60" y1="432" x2="900" y2="432" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="480" y="446" text-anchor="middle" class="boundary">JSON-RPC / WebSocket (Standard EVM Interface)</text>
+  <rect x="200" y="454" width="560" height="24" rx="12" fill="#1a0a0a" stroke="#FF4444" stroke-width="0.8" opacity="0.8"/>
+  <text x="480" y="470" text-anchor="middle" class="flow-label" fill="#FF6666">On-chain: only hash / commitment / nullifier / proof &#x2014; Zero business data</text>
+  <rect x="40" y="490" width="880" height="80" rx="6" fill="#111118" stroke="#475569" stroke-width="1"/>
+  <text x="60" y="512" class="layer-label" fill="#94a3b8">Layer A &#x2014; Base EVM Chain (Mantle / Ethereum)</text>
+  <text x="60" y="528" class="subtitle">Ordering &#xB7; finality &#xB7; double-spend protection &#xB7; on-chain anchoring</text>
+  <rect x="75" y="538" width="130" height="24" rx="4" fill="#1a1a24" stroke="#475569" stroke-width="0.6"/>
+  <text x="140" y="554" text-anchor="middle" class="component" fill="#94a3b8">EVM Executor</text>
+  <rect x="245" y="538" width="130" height="24" rx="4" fill="#1a1a24" stroke="#475569" stroke-width="0.6"/>
+  <text x="310" y="554" text-anchor="middle" class="component" fill="#94a3b8">Consensus</text>
+  <rect x="415" y="538" width="130" height="24" rx="4" fill="#1a1a24" stroke="#475569" stroke-width="0.6"/>
+  <text x="480" y="554" text-anchor="middle" class="component" fill="#94a3b8">Tx Mempool</text>
+  <rect x="585" y="538" width="130" height="24" rx="4" fill="#1a1a24" stroke="#475569" stroke-width="0.6"/>
+  <text x="650" y="554" text-anchor="middle" class="component" fill="#94a3b8">Block Storage</text>
+  <rect x="755" y="538" width="130" height="24" rx="4" fill="#1a1a24" stroke="#475569" stroke-width="0.6"/>
+  <text x="820" y="554" text-anchor="middle" class="component" fill="#94a3b8">State Trie</text>
+  <rect x="720" y="498" width="190" height="20" rx="10" fill="#1a2a1a" stroke="#00D395" stroke-width="0.8"/>
+  <text x="815" y="512" text-anchor="middle" class="flow-label" fill="#00D395">No Modification Required</text>
+  <text x="480" y="592" text-anchor="middle" class="layer-label" fill="#e2e8f0">Three Privacy Domains &#x2014; Different Trust Models, Shared Runtime</text>
+  <rect x="60" y="602" width="270" height="90" rx="6" fill="#0f172a" stroke="#FFA500" stroke-width="1.2"/>
+  <rect x="60" y="602" width="270" height="3" rx="2" fill="#FFA500"/>
+  <text x="72" y="624" class="domain-label" fill="#FFA500">NOTO</text>
+  <text x="318" y="624" text-anchor="end" class="component-sub" fill="#FFA500">Notary Trust</text>
+  <text x="72" y="642" class="component-sub">Spans: Layer B + A</text>
+  <text x="72" y="658" class="component-sub">Regulated assets, deposits</text>
+  <text x="72" y="674" class="component-sub">On-chain: opaque state ID + notary sig</text>
+  <rect x="350" y="602" width="270" height="90" rx="6" fill="#0f172a" stroke="#4DA6FF" stroke-width="1.2"/>
+  <rect x="350" y="602" width="270" height="3" rx="2" fill="#4DA6FF"/>
+  <text x="362" y="624" class="domain-label" fill="#4DA6FF">ZETO</text>
+  <text x="608" y="624" text-anchor="end" class="component-sub" fill="#4DA6FF">ZKP Trust</text>
+  <text x="362" y="642" class="component-sub">Spans: Layer B + A</text>
+  <text x="362" y="658" class="component-sub">KYC-gated private transfers</text>
+  <text x="362" y="674" class="component-sub">On-chain: commitment + nullifier + proof</text>
+  <rect x="640" y="602" width="270" height="90" rx="6" fill="#0f172a" stroke="#8C8DFC" stroke-width="1.2"/>
+  <rect x="640" y="602" width="270" height="3" rx="2" fill="#8C8DFC"/>
+  <text x="652" y="624" class="domain-label" fill="#8C8DFC">PENTE</text>
+  <text x="898" y="624" text-anchor="end" class="component-sub" fill="#8C8DFC">Group Trust</text>
+  <text x="652" y="642" class="component-sub">Spans: Layer C + B + A</text>
+  <text x="652" y="658" class="component-sub">Private contracts, bond lifecycle</text>
+  <text x="652" y="674" class="component-sub">On-chain: state hash + EIP-712 sigs</text>
+  <rect x="160" y="704" width="640" height="22" rx="11" fill="#0f172a" stroke="#00D395" stroke-width="0.6"/>
+  <text x="480" y="719" text-anchor="middle" class="annotation" fill="#00D395">Atom: cross-domain atomic DvP settlement in a single EVM transaction</text>
+</svg>
