@@ -1,10 +1,10 @@
 # Research Outline: Base B20 Token Standard Deep Analysis (Beryl Upgrade)
 
-> **Project slug**: `compliant-token-standards`
+> **Project slug**: `compliance-token-standards`
 > **Topic slug**: `base-b20-analysis`
 > **Round**: 2
 > **Codebase**: `base/base` at commit [`8e8767281d7c8768f6a0aed9124779cd4ed030ae`](https://github.com/base/base/tree/8e8767281d7c8768f6a0aed9124779cd4ed030ae)
-> **Branch**: `research/compliant-token-standards/base-b20-analysis`
+> **Branch**: `research/compliance-token-standards/base-b20-analysis`
 > **Date**: 2026-06-04
 
 ## Scope
@@ -483,7 +483,7 @@ All code citations must reference `base/base` at commit `8e8767281d7c8768f6a0aed
 
 - `base/docs` repository (commit `bfff9ef27f2333ff57c3a62417f6c1f0174992f0`) — if public B20/Beryl docs exist
 - ERC/EIP standards: ERC-20, EIP-2612, ERC-5267, ERC-7201, ERC-7572
-- TIP-20 analysis from the compliant-token-standards project (WHI-177 evaluation framework)
+- TIP-20 analysis from the compliance-token-standards project (WHI-177 evaluation framework)
 
 ### Source Integrity Notes
 

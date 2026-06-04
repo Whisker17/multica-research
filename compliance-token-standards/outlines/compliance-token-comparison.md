@@ -42,7 +42,7 @@ source_sections:
   - path: "compliance-token-standards/research-sections/tempo-tip20-analysis/final.md"
     multica_issue_id: "586341f0-3ee8-4a89-8aa1-3535dd847d90"
     label: "WHI-180 TIP-20"
-  - path: "compliant-token-standards/research-sections/base-b20-analysis/final.md"
+  - path: "compliance-token-standards/research-sections/base-b20-analysis/final.md"
     multica_issue_id: "bc5cf45c-2932-4631-b707-c75b2ff7ce6e"
     label: "WHI-181 B20"
 ---

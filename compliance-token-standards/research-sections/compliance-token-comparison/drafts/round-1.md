@@ -82,7 +82,7 @@ report_issue_id: "4c88c789-585a-4c50-965e-628d50cb8bde"
 | WHI-178 ERC-3643 | `compliance-token-standards/research-sections/erc3643-trex-analysis/final.md` | 4036a12f |
 | WHI-179 ERC-1400 | `compliance-token-standards/research-sections/erc1400-series-analysis/final.md` | cf57ea5d |
 | WHI-180 TIP-20 | `compliance-token-standards/research-sections/tempo-tip20-analysis/final.md` | 586341f0 |
-| WHI-181 B20 | `compliant-token-standards/research-sections/base-b20-analysis/final.md` | bc5cf45c |
+| WHI-181 B20 | `compliance-token-standards/research-sections/base-b20-analysis/final.md` | bc5cf45c |
 
 ### 1.3 对比维度体系
 
@@ -493,7 +493,7 @@ B20 的所有横向对比 claim 基于以下两个 pinned commit：
 | S2 | compliance-token-standards/research-sections/erc3643-trex-analysis/final.md | 4036a12f (WHI-178) | item-2-9 (ERC-3643 列) |
 | S3 | compliance-token-standards/research-sections/erc1400-series-analysis/final.md | cf57ea5d (WHI-179) | item-2-9 (ERC-1400 列) |
 | S4 | compliance-token-standards/research-sections/tempo-tip20-analysis/final.md | 586341f0 (WHI-180) | item-2-9 (TIP-20 列) |
-| S5 | compliant-token-standards/research-sections/base-b20-analysis/final.md | bc5cf45c (WHI-181) | item-2-9 (B20 列) |
+| S5 | compliance-token-standards/research-sections/base-b20-analysis/final.md | bc5cf45c (WHI-181) | item-2-9 (B20 列) |
 
 ### EIP/ERC 规范
 

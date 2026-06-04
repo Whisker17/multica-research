@@ -6,8 +6,9 @@
 | 2 | erc1400-series-analysis | cf57ea5d-c512-47fc-8c8d-99b1f15a86e5 | compliance-token-standards/research-sections/erc1400-series-analysis/final.md | compliance-token-landscape | done |
 | 3 | erc3643-trex-analysis | 4036a12f-42fd-4ec1-a113-18df6c26c9a1 | compliance-token-standards/research-sections/erc3643-trex-analysis/final.md | compliance-token-landscape | done |
 | 4 | tempo-tip20-analysis | 586341f0-3ee8-4a89-8aa1-3535dd847d90 | compliance-token-standards/research-sections/tempo-tip20-analysis/final.md | compliance-token-landscape | done |
-| 5 | compliance-token-comparison | c62bd179-f560-4ab7-b23e-9ffb153b88dd | compliance-token-standards/research-sections/compliance-token-comparison/final.md | compliance-token-landscape, erc3643-trex-analysis, erc1400-series-analysis, tempo-tip20-analysis | done |
-| 6 | mantle-compliance-token-strategy | 48844fa0-b39d-40df-8181-01a944734d12 | compliance-token-standards/research-sections/mantle-compliance-token-strategy/final.md | compliance-token-comparison | done |
+| 5 | base-b20-analysis | bc5cf45c-2932-4631-b707-c75b2ff7ce6e | compliance-token-standards/research-sections/base-b20-analysis/final.md | compliance-token-landscape | done |
+| 6 | compliance-token-comparison | c62bd179-f560-4ab7-b23e-9ffb153b88dd | compliance-token-standards/research-sections/compliance-token-comparison/final.md | compliance-token-landscape, erc3643-trex-analysis, erc1400-series-analysis, tempo-tip20-analysis, base-b20-analysis | done |
+| 7 | mantle-compliance-token-strategy | 48844fa0-b39d-40df-8181-01a944734d12 | compliance-token-standards/research-sections/mantle-compliance-token-strategy/final.md | compliance-token-comparison | done |
 
 ## Section Descriptions
 

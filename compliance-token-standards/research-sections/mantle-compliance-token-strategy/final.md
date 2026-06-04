@@ -23,7 +23,7 @@ draft_metadata:
     - "erc3643-trex-analysis/final.md"
     - "tempo-tip20-analysis/final.md"
     - "compliance-token-comparison/final.md (横评)"
-    - "compliant-token-standards base-b20-analysis/final.md (B20 深度)"
+    - "compliance-token-standards base-b20-analysis/final.md (B20 深度)"
     - "Mantle 本地代码仓库 (/Users/whisker/Work/src/networks/mantle/)"
 ---
 
@@ -873,7 +873,7 @@ gantt
 | erc3643-trex-analysis/final.md | 3, 6 | 前序调研 | 六核心合约架构、Gas 2-8x、$32B+ tokenized、92+ 协会成员、ERC Final |
 | tempo-tip20-analysis/final.md | 4, 7 | 前序调研 | Precompile 套件（4 合约）、TIP-403 policy、RBAC 4-role、Payment Lanes、生产验证 |
 | compliance-token-comparison/final.md | 3, 4, 5, 6, 7 | 前序调研 | 9 维技术矩阵、6 维成熟度（ERC-3643: 28/30, TIP-20: 19/30, B20: 10/30）、8 类合规覆盖、6 交叉洞察 |
-| compliant-token-standards base-b20-analysis/final.md | 4, 7 | 前序调研 | B20Factory/B20Asset/B20Stablecoin、PolicyRegistry 4-slot、7-role RBAC、IB20 接口、Beryl hardfork |
+| compliance-token-standards base-b20-analysis/final.md | 4, 7 | 前序调研 | B20Factory/B20Asset/B20Stablecoin、PolicyRegistry 4-slot、7-role RBAC、IB20 接口、Beryl hardfork |
 | Mantle 本地代码仓库 | 1, 4, 6 | 一手代码验证 | 硬分叉定义与激活时间（Everest 2025-03-19, Skadi 2025-08-27, Limb 2026-01-14, Arsia 2026-04-22 均已激活）、无自定义 precompile、无 Arsia 后硬分叉规划、EIP-1559 Gas、Arsia Gas 重构已生效 |
 | B20 pinned commit (base/base@8e87672) | 7 | pinned commit 代码推断 | B20 主线能力确认（经前序 B20 分析间接引用） |
 | B20 本地分支 | 7 | [本地分支演进线索] | B20Security/IB20Security、redeem、batchBurn、securityIdentifier（方向性信号） |
