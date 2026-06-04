@@ -7,6 +7,7 @@
 | 3 | erc3643-trex-analysis | 4036a12f-42fd-4ec1-a113-18df6c26c9a1 | compliance-token-standards/research-sections/erc3643-trex-analysis/final.md | compliance-token-landscape | done |
 | 4 | tempo-tip20-analysis | 586341f0-3ee8-4a89-8aa1-3535dd847d90 | compliance-token-standards/research-sections/tempo-tip20-analysis/final.md | compliance-token-landscape | done |
 | 5 | compliance-token-comparison | c62bd179-f560-4ab7-b23e-9ffb153b88dd | compliance-token-standards/research-sections/compliance-token-comparison/final.md | compliance-token-landscape, erc3643-trex-analysis, erc1400-series-analysis, tempo-tip20-analysis | done |
+| 6 | mantle-compliance-token-strategy | 48844fa0-b39d-40df-8181-01a944734d12 | compliance-token-standards/research-sections/mantle-compliance-token-strategy/final.md | compliance-token-comparison | done |
 
 ## Section Descriptions
 
@@ -24,3 +25,6 @@ Tempo TIP-20 precompile token 标准深度分析：TIP-20 核心架构（precomp
 
 ### 5. compliance-token-comparison
 四大合规 Token 标准横向对比分析（ERC-3643、ERC-1400、TIP-20、B20）：9 维技术对比矩阵（架构层级 / 合规机制类型 / 身份模型 / Gas 效率 / DeFi 可组合性 / 发行方控制力 / 跨链能力 / 支付优化 / 升级与治理）、6 维规范成熟度评估表、基于 WHI-177 taxonomy 的 8 类合规能力覆盖矩阵、EVM 执行栈分层架构对比图、关键 insight（合规在哪一层实现是最根本设计分歧；Precompile 路线已形成趋势但公开 spec 成熟度仍存差距；ERC-3643 与 B20/TIP-20 存在互补而非纯竞争关系）、Trade-off 分析、B20 证据边界说明（pinned commit `base/base@8e87672`，B20Security 本地分支约束，Beryl spec 待发布）。依赖 WHI-177/178/179/180/181 五个 M1 分析节。
+
+### 6. mantle-compliance-token-strategy
+Mantle 合规 Token 策略建议：OP Stack + reth sequencer 技术栈约束评估（Everest/Skadi/Limb/Arsia 四次 hardfork 均已激活，下一次 hardfork 未宣布）、三条路线技术分析（A: ERC-3643 smart-contract 层 8.10分 / C: 混合 PolicyRegistry precompile + adapter 6.05分 / B: Precompile 原生标准 4.15分）、决策矩阵含证据/理由列与置信度标注（GAP-2/GAP-6 约束明确；B20 pinned commit `base/base@8e87672` 为主要 EVM L2 precompile 参考；B20Security 系列接口标注为本地分支演进线索）、分阶段实施建议（0-3月 ERC-3643 PoC + 发行方需求验证 → 3-6月混合路线评估 → 6-12月全面原生标准决策）。依赖 WHI-182 横向对比分析。
