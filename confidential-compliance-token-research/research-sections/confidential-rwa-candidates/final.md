@@ -50,7 +50,7 @@ final_promotion_metadata:
 
 # Confidential RWA 候选方案补充调研
 
-## Executive Summary
+## 执行摘要（Executive Summary）
 
 本 draft 只筛选 Zama 之外的候选方案，不替 WHI-271 做最终路线裁决。初筛结果是：**Inco Lightning / Inco confidential token 路线是最接近 Mantle private RWA / confidential compliance token 的非 Zama 主候选**，原因是它满足轻量 bolt-on、金额/余额隐私、合规披露叙事和 Base 生态近邻；但它把当前信任模型押在 TEE / Intel TDX 与 Inco 网络可用性上，且 Mantle 支持仍需厂商扩展。**VOSA-RWA/VOSA-20、Nightfall/EY 与 Fhenix/CoFHE 是强备选或强参考**，分别代表轻量 exposed-graph 合规草案、企业 ZK rollup 经验、可替换 FHE backend。**Railgun/Privacy Pools、Paladin、Optalysys 是局部补强**，不能直接升格为 RWA token 主路线。**Aztec、Starknet STRK20、EIP-8182 是 C 层 benchmark / 反例**，用于界定隐私上限、非 EVM/非 Mantle 集成代价和协议层路径边界。
 
@@ -58,7 +58,7 @@ final_promotion_metadata:
 
 ### 复用 final artifacts 与 commit pins
 
-| Reuse artifact | Commit SHA | 本 draft 复用内容 | 边界 |
+| 复用 artifact | Commit SHA | 本 draft 复用内容 | 边界 |
 |---|---:|---|---|
 | `confidential-compliance-token-research/research-sections/requirements-framework/final.md` | `9eb29a150f380f21add9b431b66fea2ee5d12881` | CCT 定义、五维 rubric、Inco PoC/Optalysys 分类边界、Mantle lightweight 约束 | 本 section 不重写 WHI-266 需求框架，只引用 scoring baseline。 |
 | `evm-privacy-research/research-sections/erc7984-confidential-token/final.md` | `fdbda370e9e9137890c5bd2deb7752e03d76d0bc` | ERC-7984/OZ confidential token baseline、RWA/Observer/Hooked caveat、Zama comparator | 只作为 Zama/OZ 差异锚点，不把 ERC-7984 当本 issue 的新候选。 |
@@ -71,137 +71,137 @@ final_promotion_metadata:
 
 ### 候选分层 profile 表
 
-| Candidate | Tier | candidate_role | protected_data | compliance_capabilities | disclosure_vector | deployment_shape | maturity_status | evidence_weight | audit_coverage | Zama difference | Key gap |
+| 候选 | 层级 | candidate_role | protected_data | compliance_capabilities | disclosure_vector | deployment_shape | maturity_status | evidence_weight | audit_coverage | 与 Zama 的差异 | 关键缺口 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Inco Lightning / Inco confidential token/RWA route | A | 主候选 | 金额、余额、部分合约状态；地址/交易图仍公开 | programmable access、confidential ERC20/Circle 叙事、ERC-3643 association 相关叙事；发行方强制动作需方案化 | Inco-style access control / re-encryption；scope 与 revocation 需厂商确认 | bolt-on confidential layer / TEE_network；当前 Base mainnet | mainnet_single_chain_vendor; vendor_claimed_Trail_of_Bits_audit; Atlas_FHE_roadmap | official_primary + direct_reuse + vendor_self_report | Trail of Bits audit claim is self-reported on Inco page; no public report/scope pinned in this draft; not independently verified | 比 Zama 更像低延迟 TEE layer，当前 Base 近邻强；但少了 Zama/OZ RWA extension 的成熟合规合约栈 | Mantle chain support、TEE threat model、force-exit、public audit report/SLA package |
-| Inco confidential ERC20 framework code PoC | A | 局部补强 | encrypted balances、encrypted transfer amounts；sender/receiver linkage remains | `Identity`、`ExampleTransferRules`、admin view、blacklist/age/limit examples | owner/admin TFHE allow + user re-encryption; no production audit log design | wrapper + FHE contracts on Rivest/fhEVM-style test environment | **unaudited_poc; not production maturity evidence** | **engineering_poc_not_production; code_analysis; must_not_be_used_as_production_evidence** | README explicitly says not audited and proof of concept; no public audit pinned | 与 Zama/OZ 类似 FHE token shape，但更窄、更 PoC；可借鉴 module split | README 明确 not audited/proof of concept；failure semantics、ACL revocation、upgrade/security missing |
-| VOSA-RWA / VOSA-20 | A | 强备选 | amount、balance、stealth recipient identity；transfer graph deliberately exposed | compliance service attestation、RWA compliance-gated entrances、auditing extension | auditor memo / off-chain compliance proof；residual graph leakage is structural | contract-only ZK wrapper / fat token; no new chain | forum_draft; unaudited; no known mainnet | direct_reuse + community_primary + unverified_self_claims | Prior final classifies as single-author forum draft, unaudited; no public audit pinned | 比 Zama 更轻、合规友好但隐私弱；不是 FHE/confidential accounting backend | single author、zero/low forum validation、freeze/force-transfer weakness |
-| Nightfall / EY enterprise | A | 强备选 | private token transfers for ERC20/ERC721/ERC1155/ERC3525; business identity bound by X.509 | decentralized permissioning / certificate gating; enterprise disclosure controls | x509 identity + enterprise audit/access model | ZK-ZK rollup/operator stack | public_domain_experimental_code; enterprise_pilot_reference | official_primary + code_pin + direct_reuse | CE repo warns experimental/not significant value; no public audit pinned for this route in this draft | 比 Zama 更偏企业 rollup/payment rail，不是 Mantle contract-only token standard | operator stack、not direct RWA token framework、experimental warning in CE repo |
-| Railgun + Privacy Pools | B | 局部补强 | transaction graph/source link hidden inside pools; balances inside shielded notes | PPOI, association sets, ASP screening, viewing key readout | user viewing key, PPOI, ASP roots; ragequit/association-set governance caveats | shielded pool contracts + wallets + relayers/ASP | Railgun mature-ish app; Privacy Pools early/compliance-focused | official_primary + direct_reuse + code_pin | No public audit coverage pinned in this draft for the combined RWA/CCT use; pool audits, if any, do not establish issuer lifecycle fit | 比 Zama 更强 anonymity set/graph privacy；缺 issuer token lifecycle controls | RWA issuer freeze/redeem mismatch、pool UX、regulatory acceptance |
-| Paladin / Pente Privacy Groups | B | 局部补强 | business workflows, private EVM world state, private tokens via domains | known-party workflows, private approvals, notary/ZK token domains | selective data sharing among privacy group participants | client/runtime + privacy domains; unmodified EVM base ledger | active LFDT open source; enterprise framework, not CCT standard | official_primary + code_pin + direct_reuse | No public audit report pinned in this draft for Paladin/Pente as a CCT component | 比 Zama 更适合 enterprise workflow/state privacy；不像 value-level confidential token backend | heavier client/runtime, privacy group ops, token ledger standard gap |
-| Fhenix / CoFHE | B | 强备选 | encrypted contract variables and token state; addresses/graph generally public | basic `FHE.allow`/sealed outputs; weak RWA compliance modules | permit/sealed outputs; revocation and audit model under-specified | bolt-on FHE coprocessor; Base Sepolia support; mainnet status mixed | testnet_or_early_limited; mainnet_support_coming_soon_in_docs | official_primary + code_pin + direct_reuse | No public production audit report pinned in this draft; security posture remains gap | 与 Zama 同为 FHE coprocessor family，但 economic security/EigenLayer route and weaker compliance ecosystem | mainnet production proof、compliance extension set、audit/security posture |
-| Optalysys / LightLocker / photonic FHE | B | 参考 | not a token privacy model; performance reference for encrypted compute/RWA metadata | none as token standard; may support infra-level confidentiality claims | none as CCT disclosure design | hardware_reference / FHE acceleration | vendor_self_report; performance_reference | performance_reference + vendor_self_report + limited_secondary | 不是 Zama competitor at protocol layer；更多是 Zama/FHE productionization input | no independent benchmark in this review、no token standard、hardware ops dependency |
-| Aztec | C | 参考 | private smart contracts, private state, notes, transaction data | app-defined; compliance must be built on Aztec stack | app-specific viewing/disclosure; strong privacy but new VM | native privacy L2 / non-EVM VM | active privacy L2; not Mantle bolt-on | official_primary + direct_reuse | 隐私上限高于 Zama token-only use cases；但 requires Aztec app/bridge/VM | non-EVM, new chain/liquidity, not phase-1 Mantle feature |
-| Starknet STRK20 | C | 参考 | private token balances/transfers on Starknet | claimed built-in compliance/viewing keys; early ecosystem | viewing-key style; details still early | Starknet/Cairo native privacy token framework | early mainnet/announced capability | official_primary + direct_reuse + secondary_current | Benchmark for native privacy token on another stack, not Mantle EVM bolt-on | Cairo/Starknet migration, maturity/audit clarity |
-| EIP-8182 | C | 参考 / phase-1 出局 | private ETH/ERC20 transfers via protocol shielded pool | Privacy Pools compatibility claimed as direction, concrete compliance TBD | protocol-level shielded pool; auth-verifier flexibility | protocol_hardfork/system_contract | Draft EIP / protocol proposal | official_spec + direct_reuse | Potentially stronger shared anonymity than Zama token contracts but requires Ethereum protocol activation | hardfork dependency, not Mantle immediate route, no RWA issuer controls |
+| Inco Lightning / Inco confidential token/RWA route | A | 主候选 | 金额、余额、部分合约状态；地址/交易图仍公开 | programmable access、confidential ERC20/Circle 叙事、ERC-3643 association 相关叙事；发行方强制动作需方案化 | Inco-style access control / re-encryption；scope 与 revocation 需厂商确认 | bolt-on confidential layer / TEE_network；当前 Base mainnet | mainnet_single_chain_vendor; vendor_claimed_Trail_of_Bits_audit; Atlas_FHE_roadmap | official_primary + direct_reuse + vendor_self_report | Trail of Bits 审计声明在 Inco 页面上属厂商自报；本 draft 未锁定公开报告/scope；未经独立核实 | 比 Zama 更像低延迟 TEE layer，当前 Base 近邻强；但少了 Zama/OZ RWA extension 的成熟合规合约栈 | Mantle chain support、TEE threat model、force-exit、公开审计报告/SLA package |
+| Inco confidential ERC20 framework code PoC | A | 局部补强 | encrypted balances、encrypted transfer amounts；sender/receiver linkage 仍保留 | `Identity`、`ExampleTransferRules`、admin view、blacklist/age/limit 示例 | owner/admin TFHE allow + user re-encryption；无生产级审计日志设计 | wrapper + FHE contracts，运行于 Rivest/fhEVM 风格测试环境 | **unaudited_poc；非生产成熟度证据** | **engineering_poc_not_production；code_analysis；must_not_be_used_as_production_evidence** | README 明确声明未审计且为概念验证；无公开审计锁定 | 与 Zama/OZ 类似 FHE token shape，但更窄、更 PoC；可借鉴 module split | README 明确 not audited/proof of concept；缺失 failure semantics、ACL revocation、upgrade/security |
+| VOSA-RWA / VOSA-20 | A | 强备选 | amount、balance、stealth recipient identity；transfer graph 刻意暴露 | compliance service attestation、RWA compliance-gated entrances、auditing extension | auditor memo / off-chain compliance proof；残余 graph 泄漏是结构性的 | contract-only ZK wrapper / fat token；无新链 | forum_draft；unaudited；无已知 mainnet | direct_reuse + community_primary + unverified_self_claims | 既有 final 归类为单作者论坛草案、未审计；无公开审计锁定 | 比 Zama 更轻、合规友好但隐私弱；不是 FHE/confidential accounting backend | 单作者、论坛验证零/低、freeze/force-transfer 弱点 |
+| Nightfall / EY enterprise | A | 强备选 | 为 ERC20/ERC721/ERC1155/ERC3525 提供私密 token 转账；业务身份由 X.509 绑定 | decentralized permissioning / certificate gating；企业披露控制 | x509 identity + 企业审计/访问模型 | ZK-ZK rollup/operator stack | public_domain_experimental_code；enterprise_pilot_reference | official_primary + code_pin + direct_reuse | CE 仓库警告其为实验性/无重大价值；本 draft 未为该路线锁定公开审计 | 比 Zama 更偏企业 rollup/payment rail，不是 Mantle contract-only token standard | operator stack、并非直接的 RWA token framework、CE 仓库的实验性警告 |
+| Railgun + Privacy Pools | B | 局部补强 | 交易图/资金来源链路隐藏在 pool 内部；余额藏于 shielded notes | PPOI、association sets、ASP screening、viewing key readout | user viewing key、PPOI、ASP roots；ragequit/association-set 治理注意事项 | shielded pool contracts + wallets + relayers/ASP | Railgun 相对成熟的应用；Privacy Pools 早期/聚焦合规 | official_primary + direct_reuse + code_pin | 本 draft 未为组合 RWA/CCT 用例锁定公开审计；pool 审计（若有）不足以确立 issuer lifecycle fit | 比 Zama 更强 anonymity set/graph privacy；缺 issuer token lifecycle controls | RWA issuer freeze/redeem 不匹配、pool UX、监管接受度 |
+| Paladin / Pente Privacy Groups | B | 局部补强 | business workflows、private EVM world state、通过 domains 实现的 private tokens | known-party workflows、private approvals、notary/ZK token domains | privacy group 参与方之间的选择性数据共享 | client/runtime + privacy domains；未改动的 EVM base ledger | LFDT 活跃开源；企业 framework，而非 CCT standard | official_primary + code_pin + direct_reuse | 本 draft 未为 Paladin/Pente 作为 CCT 组件锁定公开审计报告 | 比 Zama 更适合 enterprise workflow/state privacy；不像 value-level confidential token backend | 较重的 client/runtime、privacy group 运维、token ledger standard 缺口 |
+| Fhenix / CoFHE | B | 强备选 | encrypted contract variables 与 token state；地址/图通常公开 | 基础 `FHE.allow`/sealed outputs；RWA 合规模块薄弱 | permit/sealed outputs；revocation 与审计模型规格不足 | bolt-on FHE coprocessor；支持 Base Sepolia；mainnet 状态不一 | testnet_or_early_limited；mainnet_support_coming_soon_in_docs | official_primary + code_pin + direct_reuse | 本 draft 未锁定公开生产审计报告；安全态势仍是缺口 | 与 Zama 同为 FHE coprocessor family，但走 economic security/EigenLayer 路线，合规生态更弱 | mainnet 生产验证、合规扩展集、审计/安全态势 |
+| Optalysys / LightLocker / photonic FHE | B | 参考 | 不是 token privacy model；面向加密计算/RWA metadata 的性能参考 | 作为 token standard 无；可能支持基础设施层的机密性主张 | 作为 CCT disclosure 设计无 | hardware_reference / FHE acceleration | vendor_self_report；performance_reference | performance_reference + vendor_self_report + limited_secondary | 在协议层不是 Zama 的竞品；更多是 Zama/FHE 生产化的输入 | 本次审查无独立 benchmark、无 token standard、依赖硬件运维 |
+| Aztec | C | 参考 | private smart contracts、private state、notes、transaction data | app-defined；合规须构建于 Aztec stack 之上 | app-specific viewing/disclosure；隐私强但是新 VM | native privacy L2 / non-EVM VM | 活跃的 privacy L2；非 Mantle bolt-on | official_primary + direct_reuse | 隐私上限高于 Zama 仅 token 的用例；但需要 Aztec app/bridge/VM | 非 EVM、新链/流动性、非 phase-1 Mantle 特性 |
+| Starknet STRK20 | C | 参考 | Starknet 上的 private token balances/transfers | 声称内建 compliance/viewing keys；生态早期 | viewing-key 风格；细节仍早期 | Starknet/Cairo native privacy token framework | early mainnet/已宣布能力 | official_primary + direct_reuse + secondary_current | 是另一技术栈上的 native privacy token benchmark，而非 Mantle EVM bolt-on | Cairo/Starknet 迁移、成熟度/审计明确性 |
+| EIP-8182 | C | 参考 / phase-1 出局 | 通过 protocol shielded pool 实现 private ETH/ERC20 transfers | 声称兼容 Privacy Pools 为方向，具体合规待定 | 协议层 shielded pool；auth-verifier 灵活性 | protocol_hardfork/system_contract | Draft EIP / 协议提案 | official_spec + direct_reuse | 潜在共享匿名性强于 Zama token 合约，但需要以太坊协议层激活 | hardfork 依赖、非 Mantle 即时路线、无 RWA issuer controls |
 
-## Item Findings
+## 逐项发现（Item Findings）
 
 ### item-1: 研究边界、复用输入与候选纳入规则
 
-WHI-266 defines CCT as `compliance token + confidential accounting + selective disclosure + auditability + bridge/redeem/DeFi interoperability` and warns that generic privacy tokens or generic compliance tokens should not be over-scored. This section therefore admits candidates only if they answer at least one of these CCT questions:
+WHI-266 将 CCT 定义为 `compliance token + confidential accounting + selective disclosure + auditability + bridge/redeem/DeFi interoperability`，并警告不应对通用隐私 token 或通用合规 token 过度打分。因此本 section 仅在候选至少回答以下某个 CCT 问题时才纳入：
 
-- Does it protect amount/balance/accounting data in a token or RWA lifecycle?
-- Does it preserve issuer/regulatory controls and selective disclosure?
-- Can Mantle integrate it without a new chain, new bridge, protocol hardfork, full privacy node stack, or non-EVM migration?
-- Is the evidence production-grade, code-grade, draft-grade, or vendor self-report?
-- Does it produce reusable inputs for WHI-271 without deciding WHI-271?
+- 它是否在 token 或 RWA 生命周期中保护金额/余额/记账数据？
+- 它是否保留发行方/监管控制与选择性披露？
+- Mantle 能否在无需新链、新桥、协议硬分叉、完整隐私节点栈或非 EVM 迁移的前提下集成它？
+- 证据是生产级、代码级、草案级，还是厂商自报？
+- 它是否能为 WHI-271 产出可复用输入，而不替 WHI-271 做裁决？
 
-The reused `evm-privacy-research` finals are treated as commit-pinned hard inputs only where cited by full path and commit SHA. Current external URLs are treated as point-in-time sources accessed 2026-06-24; vendor roadmap, partnership and benchmark claims are labeled vendor/self-reported unless supported by independent code, audits, or chain data.
+被复用的 `evm-privacy-research` finals 仅在以完整路径与 commit SHA 引用时才作为 commit-pinned 硬输入。当前外部 URL 视为 2026-06-24 访问的时点来源；除非有独立代码、审计或链上数据支撑，厂商 roadmap、合作与 benchmark 主张一律标注为厂商/自报。
 
 ### item-2: A 层候选一 - Inco confidential token/RWA 方案与代码级 PoC
 
-#### 2.1 Inco product route
+#### 2.1 Inco 产品路线（Inco product route）
 
-Inco is the strongest non-Zama main-candidate input because its current product message is directly aligned with "confidential apps in standard Solidity" and it has a Base-mainnet availability signal. Inco's Base mainnet announcement at `https://www.inco.org/blog/inco-lightning-live-on-base-mainnet` is dated 2026-06-15 and says Inco Lightning is live on Base mainnet; the earlier Base Sepolia launch page anchors the testnet phase. The same announcement says Inco Lightning was extensively audited by Trail of Bits, but this draft treats that as a vendor/source-page claim until a public audit report or engagement scope is pinned. This matches `evm-privacy-research/research-sections/confidential-coprocessor/final.md` @ `0041e3a1598751a7d121fecc600ba3d6ad42ad05`, which classifies Inco Lightning as TEE-first, Base-mainnet current support, with Atlas/FHE still roadmap.
+Inco 是最强的非 Zama 主候选输入，因为其当前产品信息与「在标准 Solidity 中构建 confidential apps」直接对齐，并且有 Base-mainnet 可用性信号。Inco 在 `https://www.inco.org/blog/inco-lightning-live-on-base-mainnet` 的 Base mainnet 公告日期为 2026-06-15，称 Inco Lightning 已在 Base mainnet 上线；更早的 Base Sepolia 启动页面锚定了 testnet 阶段。同一公告称 Inco Lightning 经过 Trail of Bits 的广泛审计，但本 draft 在公开审计报告或 engagement scope 被锁定之前，将其视为厂商/来源页面主张。这与 `evm-privacy-research/research-sections/confidential-coprocessor/final.md` @ `0041e3a1598751a7d121fecc600ba3d6ad42ad05` 一致，该 final 将 Inco Lightning 归类为 TEE-first、当前支持 Base-mainnet，而 Atlas/FHE 仍在 roadmap。
 
-For Mantle, this is attractive because the integration shape is not a native chain or hardfork. It is, however, not automatically "lighter" than Zama in governance terms: Inco shifts the core trust story from Zama-style FHE/MPC/KMS toward TEE hardware, callback relayers and vendor-operated confidential compute. This may be easier for short-latency pilots but harder for a regulator-facing security narrative unless the TEE node set, attestation evidence, SLA and failure recovery are explicit.
+对 Mantle 而言，这很有吸引力，因为其集成形态不是 native chain 或 hardfork。然而就治理而言，它并不自动比 Zama「更轻」：Inco 把核心信任叙事从 Zama 式的 FHE/MPC/KMS 转向 TEE 硬件、callback relayers 与厂商运营的 confidential compute。这对短延迟 pilot 可能更容易，但若 TEE 节点集合、attestation 证据、SLA 与失败恢复不明确，则对面向监管的安全叙事更难。
 
-#### 2.2 Inco confidential ERC20 framework code-level PoC
+#### 2.2 Inco confidential ERC20 框架代码级 PoC（code-level PoC）
 
-Pinned code source: `https://github.com/Inco-fhevm/confidential-erc20-framework` @ `bb39e4f788742121f2fc93de33af58758360545b` (2024-11-21, verified locally 2026-06-24).
+锁定代码源：`https://github.com/Inco-fhevm/confidential-erc20-framework` @ `bb39e4f788742121f2fc93de33af58758360545b`（2024-11-21，2026-06-24 本地核实）。
 
-The README states the design transforms ERC20 tokens into a confidential form that conceals balances and transaction amounts, keeps sender-receiver linkage, and adds optional viewing/transfer rules for compliance or risk management. The README also states the repository is not audited and is intended solely as proof of concept; this is why the profile table marks `maturity_status=unaudited_poc` and `evidence_weight=engineering_poc_not_production`.
+README 称该设计将 ERC20 token 转换为一种隐藏余额与交易金额的 confidential 形态，保留 sender-receiver linkage，并为合规或风险管理加入可选的 viewing/transfer rules。README 还声明该仓库未经审计、仅作为概念验证；这正是 profile 表标注 `maturity_status=unaudited_poc` 与 `evidence_weight=engineering_poc_not_production` 的原因。
 
-Code modules:
+代码模块：
 
-| Module | Role | CCT relevance | Caveat |
+| 模块 | 作用 | CCT 相关性 | 注意事项 |
 |---|---|---|---|
-| `contracts/ConfidentialERC20/ConfidentialERC20.sol` | Core encrypted-balance ERC20-like implementation using `euint64`, `TFHE.select`, `TFHE.allow`, encrypted allowance and encrypted transfer values | Shows confidential accounting shape for balances/amounts | Does not emit normal ERC20 transfer value; address graph still visible; failure often selects zero-transfer rather than ordinary revert semantics. |
-| `contracts/ConfidentialERC20Wrapper.sol` | Wraps an existing ERC20 into confidential token, supports `wrap()` and async `unwrap()` via Gateway decryption callback | Direct bridge/redeem analogy for existing RWA/stablecoin assets | Decimals <= 6 constraint, async burn callback, unwrap disable hook but no full legal redeem/failure model. |
-| `contracts/CompliantConfidentialERC20/CompliantConfidentialERC20.sol` | Applies transfer rules before encrypted transfer and has `adminViewUserBalance()` | Shows policy hook + admin viewing pattern | Central owner visibility not sufficient audit/disclosure governance. |
-| `contracts/CompliantConfidentialERC20/Identity.sol` | Stores encrypted DOB and computes age checks | Demonstrates encrypted credential field and policy predicate | Example identity only; not KYC/AML/claims registry. |
-| `contracts/CompliantConfidentialERC20/ExampleTransferRules.sol` | Blocklist + minimum age + encrypted amount limit | Demonstrates transfer policy composition over encrypted amount | Example only; no sanctions oracle, jurisdiction routing, governance or audit log. |
-| `test/ComplianceTests/CompliantERC.ts` | Tests mint, encrypted transfer, transfer rules and blacklist path | Demonstrates expected PoC behavior | Test coverage is not production audit evidence. |
-| `test/ConfidentialWrapperTests/ConfidentialWrapper.ts` | Tests wrap, confidential transfer and unwrap | Directly relevant to RWA wrap/unwrap PoC | Does not establish production bridge/redeem controls. |
+| `contracts/ConfidentialERC20/ConfidentialERC20.sol` | 使用 `euint64`、`TFHE.select`、`TFHE.allow`、加密 allowance 与加密 transfer value 的核心 encrypted-balance ERC20 类实现 | 展示余额/金额的 confidential accounting 形态 | 不发出常规 ERC20 transfer value；地址图仍可见；失败时通常 select 零额转账而非常规 revert 语义。 |
+| `contracts/ConfidentialERC20Wrapper.sol` | 将既有 ERC20 包装为 confidential token，支持 `wrap()` 与通过 Gateway 解密 callback 的异步 `unwrap()` | 对既有 RWA/stablecoin 资产的直接 bridge/redeem 类比 | Decimals <= 6 约束、异步 burn callback、unwrap disable hook，但无完整法律 redeem/failure 模型。 |
+| `contracts/CompliantConfidentialERC20/CompliantConfidentialERC20.sol` | 在加密转账前应用 transfer rules，并提供 `adminViewUserBalance()` | 展示 policy hook + admin viewing 模式 | 中心化 owner 可见性不足以作为审计/披露治理。 |
+| `contracts/CompliantConfidentialERC20/Identity.sol` | 存储加密 DOB 并计算年龄检查 | 演示加密凭证字段与 policy predicate | 仅为示例 identity；不是 KYC/AML/claims registry。 |
+| `contracts/CompliantConfidentialERC20/ExampleTransferRules.sol` | Blocklist + 最低年龄 + 加密金额上限 | 演示在加密金额上的 transfer policy 组合 | 仅为示例；无 sanctions oracle、辖区路由、治理或审计日志。 |
+| `test/ComplianceTests/CompliantERC.ts` | 测试 mint、加密转账、transfer rules 与 blacklist 路径 | 演示预期 PoC 行为 | 测试覆盖不是生产级审计证据。 |
+| `test/ConfidentialWrapperTests/ConfidentialWrapper.ts` | 测试 wrap、confidential transfer 与 unwrap | 直接关系到 RWA wrap/unwrap PoC | 不足以确立生产级 bridge/redeem 控制。 |
 
-PoC fit: high for engineering inspiration, low for production maturity. Mantle can reuse the module boundaries in a later PoC: wrapper, confidential token core, transfer-rule contract, identity/credential contract, delegated/admin viewing, and async redeem/burn callback. Mantle must not reuse the repo as security evidence.
+PoC fit：对工程灵感而言高，对生产成熟度而言低。Mantle 可在后续 PoC 中复用其 module 边界：wrapper、confidential token core、transfer-rule 合约、identity/credential 合约、delegated/admin viewing 与异步 redeem/burn callback。Mantle 不得将该仓库当作安全证据复用。
 
 ### item-3: A 层候选二 - VOSA-RWA/VOSA-20 与 Nightfall/EY enterprise confidential token
 
 #### 3.1 VOSA-RWA / VOSA-20
 
-VOSA is a useful A-tier comparator because it is intentionally compliance-friendly and lightweight. The accepted final `evm-privacy-research/research-sections/vosa-standards/final.md` @ `c9c16b3eb8956584d63efcf2fe155d9acc271f2f` found that VOSA hides amounts, balances and real-world identity via stealth-address style use, but deliberately exposes the VOSA-to-VOSA transfer graph. VOSA-RWA adds compliance-gated operations backed by an off-chain compliance service and proof flow. The relevant primary forum sources include VOSA-20 at `https://ethereum-magicians.org/t/draft-erc-vosa-20-privacy-preserving-wrapped-erc-20-token-standard/27832` and VOSA-RWA at `https://ethereum-magicians.org/t/draft-erc-vosa-rwa-compliance-gated-privacy-token-for-real-world-assets/27908`.
+VOSA 是有用的 A 层对照，因为它刻意做到合规友好且轻量。被接受的 final `evm-privacy-research/research-sections/vosa-standards/final.md` @ `c9c16b3eb8956584d63efcf2fe155d9acc271f2f` 发现 VOSA 通过 stealth-address 式用法隐藏金额、余额与现实世界身份，但刻意暴露 VOSA-to-VOSA 的 transfer graph。VOSA-RWA 增加了由 off-chain compliance service 与 proof flow 支撑的 compliance-gated operations。相关一手论坛来源包括 VOSA-20，见 `https://ethereum-magicians.org/t/draft-erc-vosa-20-privacy-preserving-wrapped-erc-20-token-standard/27832`，以及 VOSA-RWA，见 `https://ethereum-magicians.org/t/draft-erc-vosa-rwa-compliance-gated-privacy-token-for-real-world-assets/27908`。
 
-Fit: VOSA is lighter than Inco/Zama/Fhenix because it is closer to pure contract/circuit application logic and avoids a confidential compute network. It is a strong backup concept if Mantle values "auditability by exposed graph" over stronger transaction-graph privacy. It should be downgraded from main candidate because the maturity is forum-draft, single-author, unaudited, with no known mainnet deployment and structural limits around freezing/force-transfer in a one-time-address model.
+Fit：VOSA 比 Inco/Zama/Fhenix 更轻，因为它更接近纯 contract/circuit 应用逻辑，并避免了 confidential compute 网络。如果 Mantle 更看重「以 exposed graph 实现可审计性」而非更强的 transaction-graph 隐私，它是一个强备选概念。它应从主候选下调，因为成熟度是 forum-draft、单作者、未审计、无已知 mainnet 部署，且在 one-time-address 模型中围绕冻结/强制转账存在结构性限制。
 
 #### 3.2 Nightfall / EY enterprise
 
-Nightfall is not a CCT token standard, but it is the best A-tier enterprise privacy experience source. EY's technology page describes Nightfall as a ZK-ZK rollup for private transactions on public Ethereum and EVM-compatible blockchains, with decentralized permissioning because counterparties must be scrutinized when transactions are private. EY's 2025 newsroom article states Nightfall_4 replaces the prior version with a ZK rollup architecture and public-domain source code. The Nightfall_4 CE GitHub README says it enables private transfer of ERC20, ERC721, ERC1155 and ERC3525 tokens, while warning that the community edition should be treated as experimental and not used for significant value.
+Nightfall 不是 CCT token standard，但它是最好的 A 层企业隐私经验来源。EY 的技术页面将 Nightfall 描述为面向公共以太坊及 EVM 兼容链上私密交易的 ZK-ZK rollup，并采用 decentralized permissioning，因为当交易私密时必须对交易对手进行审查。EY 2025 年新闻稿称 Nightfall_4 以 ZK rollup 架构取代旧版，并采用公开领域源代码。Nightfall_4 CE 的 GitHub README 称它支持 ERC20、ERC721、ERC1155 与 ERC3525 token 的私密转账，同时警告该社区版应被视为实验性、不应用于重大价值。
 
-Pinned code source: `https://github.com/EYBlockchain/nightfall_4_CE` @ `e3203ea24bd302222f2e071876d756eb66b1e67c` (verified by `git ls-remote`, 2026-06-24).
+锁定代码源：`https://github.com/EYBlockchain/nightfall_4_CE` @ `e3203ea24bd302222f2e071876d756eb66b1e67c`（通过 `git ls-remote` 核实，2026-06-24）。
 
-Fit: Nightfall is a strong backup/reference for enterprise identity, X.509/permissioning, audit and operational design. It is not a Mantle phase-1 main candidate because it implies a rollup/operator architecture and private-transfer rail rather than a lightweight CCT contract standard directly deployable on Mantle.
+Fit：Nightfall 在企业身份、X.509/permissioning、审计与运营设计上是强备选/参考。它不是 Mantle phase-1 主候选，因为它意味着 rollup/operator 架构与 private-transfer rail，而非可直接部署于 Mantle 的轻量 CCT contract standard。
 
 ### item-4: B 层候选 - Railgun/Privacy Pools、Paladin/Privacy Groups、Fhenix/CoFHE、Optalysys
 
 #### 4.1 Railgun / Privacy Pools
 
-Railgun and Privacy Pools should be treated as compliance-disclosure supplements, not RWA token standards. Railgun documentation describes Private Proofs of Innocence as a ZK assurance system using public on-chain bad-actor datasets while not exposing user balances/activity; L2BEAT also notes Railgun viewing keys can expose sent/received private transactions to a regulator or enforcer, while protocol-level compliance is not directly enforced. Privacy Pools documentation says users deposit assets and later withdraw without an on-chain deposit-withdrawal link, while an Association Set Provider maintains approved deposits and posts roots; 0xbow positions ASP as a compliance tool.
+Railgun 与 Privacy Pools 应被视为合规披露补充，而非 RWA token standard。Railgun 文档将 Private Proofs of Innocence 描述为一套 ZK 保证系统，利用公开的链上 bad-actor 数据集，同时不暴露用户余额/活动；L2BEAT 也指出 Railgun viewing keys 可向监管方或执法者暴露已发送/已接收的私密交易，而协议层并不直接强制合规。Privacy Pools 文档称用户存入资产，随后在无链上 deposit-withdrawal 链路的情况下提取，同时由 Association Set Provider 维护已批准存款并发布 roots；0xbow 将 ASP 定位为合规工具。
 
-Pinned code source: `https://github.com/0xbow-io/privacy-pools-core` @ `a80836a47451e662f127af17e11430ffa976c234` (verified by `git ls-remote`, 2026-06-24).
+锁定代码源：`https://github.com/0xbow-io/privacy-pools-core` @ `a80836a47451e662f127af17e11430ffa976c234`（通过 `git ls-remote` 核实，2026-06-24）。
 
-Fit: These tools are useful for `source-of-funds` proofs, association sets, viewing-key disclosure and anonymity-set design. They are not enough for issuer-controlled RWA token lifecycle because the pool model is asset-flow privacy, not issuer policy, freeze/recovery, redemption, omnibus accounting or investor eligibility.
+Fit：这些工具对 `source-of-funds` 证明、association sets、viewing-key 披露与 anonymity-set 设计很有用。它们不足以支撑 issuer-controlled 的 RWA token 生命周期，因为 pool 模型是 asset-flow 隐私，而非 issuer policy、冻结/恢复、赎回、omnibus accounting 或投资者资格。
 
 #### 4.2 Paladin / Privacy Groups
 
-Paladin is valuable because it targets enterprise programmable privacy on unmodified EVM chains. LFDT and Paladin docs describe privacy groups via Pente, private token domains, ZKP/notary-backed token models, private smart contracts and atomic workflows. Kaleido's Paladin page emphasizes deploying on any unmodified EVM-compatible chain and protecting transaction details/business logic.
+Paladin 很有价值，因为它面向未改动的 EVM 链上的企业可编程隐私。LFDT 与 Paladin 文档描述了通过 Pente 实现的 privacy groups、private token domains、ZKP/notary 支撑的 token 模型、private smart contracts 与原子化工作流。Kaleido 的 Paladin 页面强调可部署于任意未改动的 EVM 兼容链，并保护交易细节/业务逻辑。
 
-Pinned code source: `https://github.com/LFDT-Paladin/paladin` @ `c8ece88ed391e663612c5d51fd9e83289730a816` (verified by `git ls-remote`, 2026-06-24).
+锁定代码源：`https://github.com/LFDT-Paladin/paladin` @ `c8ece88ed391e663612c5d51fd9e83289730a816`（通过 `git ls-remote` 核实，2026-06-24）。
 
-Fit: Paladin is better for multi-party institutional workflows, DvP/PvP and business logic privacy than for a minimal confidential RWA token standard. If Mantle's product goal becomes private institutional workflow orchestration rather than just confidential token ledger, Paladin becomes more important. For WHI-270 it remains `局部补强`: privacy groups can complement a token route but introduce a heavier client/runtime and domain coordination model.
+Fit：Paladin 更适合多方机构工作流、DvP/PvP 与业务逻辑隐私，而非最小化的 confidential RWA token standard。如果 Mantle 的产品目标变为 private institutional workflow orchestration，而不仅是 confidential token ledger，Paladin 会更重要。对 WHI-270 而言它仍是 `局部补强`：privacy groups 可补足 token route，但引入了更重的 client/runtime 与 domain 协调模型。
 
 #### 4.3 Fhenix / CoFHE
 
-Fhenix is the closest B-tier backend-replaceable confidential compute candidate. Its docs describe CoFHE as a coprocessor for encrypted computation with standard Solidity integration; the Quick Start lists Ethereum Sepolia, Arbitrum Sepolia and Base Sepolia as supported testnets and says production mainnet support is coming soon. Fhenix's Base blog says developers can build private dApps using CoFHE on Base. This creates a source tension: product/blog language implies active expansion, while docs still put production mainnet support in roadmap. This draft uses the conservative docs-first status.
+Fhenix 是最接近的 B 层 backend-replaceable confidential compute 候选。其文档将 CoFHE 描述为面向加密计算、可标准 Solidity 集成的 coprocessor；Quick Start 列出 Ethereum Sepolia、Arbitrum Sepolia 与 Base Sepolia 作为支持的 testnet，并称生产 mainnet 支持即将到来。Fhenix 的 Base 博客称开发者可在 Base 上使用 CoFHE 构建 private dApps。这造成了来源张力：产品/博客措辞暗示正在积极扩展，而文档仍将生产 mainnet 支持置于 roadmap。本 draft 采用保守的 docs-first 状态。
 
-Pinned code source: `https://github.com/FhenixProtocol/fhenix-confidential-contracts` @ `ad03449120a29a900e6c8223347cc5ac8add63c4` (verified by `git ls-remote`, 2026-06-24).
+锁定代码源：`https://github.com/FhenixProtocol/fhenix-confidential-contracts` @ `ad03449120a29a900e6c8223347cc5ac8add63c4`（通过 `git ls-remote` 核实，2026-06-24）。
 
-Fit: Fhenix can be a strong backup confidential compute backend if Mantle wants a Zama/Inco alternative and accepts EigenLayer/economic-security style assumptions. It is downgraded because RWA compliance modules, maturity, audits and production deployment evidence are weaker than the main-candidate threshold.
+Fit：如果 Mantle 想要 Zama/Inco 的替代方案并接受 EigenLayer/economic-security 式假设，Fhenix 可以成为强备选 confidential compute backend。它被下调，因为其 RWA 合规模块、成熟度、审计与生产部署证据弱于主候选门槛。
 
-#### 4.4 Optalysys performance / productionization reference
+#### 4.4 Optalysys 性能/生产化参考（performance / productionization reference）
 
-Optalysys is not a token standard, not a compliance protocol and not a Mantle integration path. It is included because WHI-266 explicitly classifies it as an FHE production/performance reference. Optalysys' current RWA page claims confidential RWA tokenisation can encrypt sensitive metadata like owner identity or asset value. Its RWA article frames tokenized RWAs as needing confidentiality for institutional adoption, and its Zama partnership/photonic acceleration pages frame Lightmatter-style hardware as an FHE acceleration route.
+Optalysys 不是 token standard、不是合规协议、也不是 Mantle 集成路径。纳入它是因为 WHI-266 明确将其归类为 FHE 生产/性能参考。Optalysys 当前的 RWA 页面声称 confidential RWA tokenisation 可加密如 owner identity 或 asset value 等敏感 metadata。其 RWA 文章将 tokenized RWAs 框定为机构采用需要机密性，而其 Zama partnership/photonic acceleration 页面将 Lightmatter 式硬件框定为一条 FHE acceleration 路线。
 
-Fit: Useful for WHI-271 questions about FHE latency, cost curves, hardware dependency, SLA ownership, deployment model and independent benchmarking. It should not affect candidate verdicts except by reminding Mantle that any FHE-based route needs measurable performance budgets and operational ownership.
+Fit：对 WHI-271 关于 FHE 延迟、成本曲线、硬件依赖、SLA 归属、部署模型与独立 benchmarking 的问题有用。除提醒 Mantle 任何基于 FHE 的路线都需要可衡量的性能预算与运营归属外，它不应影响候选 verdict。
 
 ### item-5: C 层架构 benchmark - Aztec、Starknet STRK20、EIP-8182
 
-Aztec is the upper-bound benchmark for privacy-native application design. Aztec docs describe a privacy-first Ethereum L2 with private smart contracts and private state, while also stating it is not EVM compatible and uses a new privacy-preserving VM. This makes Aztec a reference for what full private state can look like, but a negative example for Mantle phase-1 lightweight integration.
+Aztec 是隐私原生应用设计的上限 benchmark。Aztec 文档描述了一条带 private smart contracts 与 private state 的隐私优先以太坊 L2，同时声明它不兼容 EVM，并使用一套全新的隐私保护 VM。这使 Aztec 成为「完整 private state 能是什么样」的参考，但对 Mantle phase-1 轻量集成而言是反例。
 
-Starknet STRK20 is a benchmark for native privacy-token capability on a non-EVM/Cairo stack. Starknet's v0.14.2 privacy blog presents STRK20 as private ERC-20-style token privacy for Starknet, with compliance positioning. It is valuable as evidence that ecosystems are moving privacy-token features into chain-specific native frameworks. It is not a Mantle candidate because it requires Starknet/Cairo migration rather than Mantle EVM integration.
+Starknet STRK20 是非 EVM/Cairo 栈上 native privacy-token 能力的 benchmark。Starknet 的 v0.14.2 隐私博客将 STRK20 呈现为面向 Starknet 的 private ERC-20 式 token 隐私，并带合规定位。作为生态正把 privacy-token 特性迁入链特定 native framework 的证据，它很有价值。它不是 Mantle 候选，因为它需要 Starknet/Cairo 迁移，而非 Mantle EVM 集成。
 
-EIP-8182 is a protocol-layer benchmark. The official EIP says it introduces private ETH and ERC-20 transfers through a shielded-pool system contract installed at fork activation, with flexible spend authorization and no new precompile/opcode/transaction type. This is architecturally important because it points toward a unified privacy pool, but for Mantle CCT phase 1 it is out: it depends on protocol activation, does not itself solve issuer controls, and should be treated as reference design for future native/private pool thinking.
+EIP-8182 是协议层 benchmark。官方 EIP 称它通过在分叉激活时安装的 shielded-pool system contract 引入 private ETH 与 ERC-20 转账，具备灵活的 spend authorization，且不新增 precompile/opcode/transaction type。这在架构上很重要，因为它指向一个统一的 privacy pool，但对 Mantle CCT phase 1 而言出局：它依赖协议激活，本身不解决 issuer controls，应被视为未来 native/private pool 思路的参考设计。
 
 ### item-6: 候选分层 profile 表与逐候选 source pack
 
-| Candidate | Primary/current source pack | Reused final source pack | Code / version pin | Source confidence |
+| 候选 | 一手/当前 source pack | 复用 final source pack | 代码 / 版本 pin | 来源置信度 |
 |---|---|---|---|---|
-| Inco product | `https://www.inco.org/blog/inco-lightning-live-on-base-mainnet`, `https://www.inco.org/blog/inco-lightning-launched-on-base-sepolia`, `https://www.inco.org/blog/circle-research-inco-confidential-erc20-report`, `https://www.circle.com/blog/confidential-erc-20-framework-for-compliant-on-chain-privacy` | `evm-privacy-research/research-sections/confidential-coprocessor/final.md` @ `0041e3a1598751a7d121fecc600ba3d6ad42ad05` | no product repo pinned beyond PoC | Medium-high for Base availability/architecture; medium for audit scope/roadmap/SLA |
-| Inco ERC20 PoC | `https://github.com/Inco-fhevm/confidential-erc20-framework`, local code read | `confidential-compliance-token-research/research-sections/requirements-framework/final.md` @ `9eb29a150f380f21add9b431b66fea2ee5d12881` | `bb39e4f788742121f2fc93de33af58758360545b` | High for code facts; low for production maturity |
-| VOSA | Ethereum Magicians VOSA-20/VOSA-RWA topics | `evm-privacy-research/research-sections/vosa-standards/final.md` @ `c9c16b3eb8956584d63efcf2fe155d9acc271f2f` | no audited repo pin | Medium for forum design; low for production |
-| Nightfall/EY | `https://blockchain.ey.com/technology`, EY 2025 Nightfall newsroom, `https://github.com/EYBlockchain/nightfall_4_CE` | `evm-privacy-research/research-sections/eea-enterprise-benchmark/final.md` @ `1eac19ed837c8e9a4df1bb1594d5b23cc5a2e9f0` | `e3203ea24bd302222f2e071876d756eb66b1e67c` | High for enterprise architecture; medium for current production fit |
-| Railgun/Privacy Pools | `https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence`, `https://docs.privacypools.com/`, `https://docs.privacypools.com/layers/contracts/entrypoint`, `https://0xbow.io/` | `evm-privacy-research/research-sections/zk-shielded-pool/final.md` @ `788453b4097f37003337b943bcf6d7f8f68b02ba`; `evm-privacy-research/research-sections/privacy-eips-survey/final.md` @ `957773b13b2f5a66354ccda4b7d0c79a7236b222` | Privacy Pools core `a80836a47451e662f127af17e11430ffa976c234` | Medium-high for privacy/compliance supplement |
-| Paladin | `https://www.lfdecentralizedtrust.org/projects/paladin`, `https://lfdt-paladin.github.io/paladin/head/`, `https://www.kaleido.io/paladin`, `https://github.com/LFDT-Paladin/paladin` | `evm-privacy-research/research-sections/eea-enterprise-benchmark/final.md` @ `1eac19ed837c8e9a4df1bb1594d5b23cc5a2e9f0` | `c8ece88ed391e663612c5d51fd9e83289730a816` | Medium-high for workflow privacy; medium for CCT token fit |
-| Fhenix | `https://cofhe-docs.fhenix.zone/fhe-library/introduction/quick-start`, `https://www.fhenix.io/blog/fhenix-adds-base-support-to-cofhe----expanding-privacy-to-ethereum-l2`, `https://www.fhenix.io/blog/what-is-fhenix` | `evm-privacy-research/research-sections/confidential-coprocessor/final.md` @ `0041e3a1598751a7d121fecc600ba3d6ad42ad05` | `ad03449120a29a900e6c8223347cc5ac8add63c4` | Medium; status tension explicitly noted |
-| Optalysys | `https://optalysys.com/confidential-rwa-tokenisation-blockchain-use-case/`, `https://optalysys.com/resource/real-world-assets-on-blockchain-the-trillion-dollar-opportunity-that-needs-confidentiality/`, `https://optalysys.com/resource/optalysys-and-zama-partnership/` | `confidential-compliance-token-research/research-sections/requirements-framework/final.md` @ `9eb29a150f380f21add9b431b66fea2ee5d12881` | no protocol repo | Low for hard performance claims; useful for production questions |
-| Aztec | `https://docs.aztec.network/`, `https://aztec.network/` | `evm-privacy-research/research-sections/zk-privacy-chain-aztec/final.md` @ `eceaef1e1b4f7a17d7fc3eb4dd91560207f40629` | no repo pin needed for benchmark | High for architecture; low for Mantle direct fit |
-| Starknet STRK20 | `https://www.starknet.io/blog/starknet-v0-14-2-the-privacy-engine-arrives/` | `evm-privacy-research/research-sections/zk-shielded-pool/final.md` @ `788453b4097f37003337b943bcf6d7f8f68b02ba` | no repo pin found in scope | Medium; early ecosystem evidence |
-| EIP-8182 | `https://eips.ethereum.org/EIPS/eip-8182`, `https://ethereum-magicians.org/t/eip-8182-private-eth-and-erc-20-transfers/27889` | `evm-privacy-research/research-sections/privacy-eips-survey/final.md` @ `957773b13b2f5a66354ccda4b7d0c79a7236b222` | EIP page current as of access date | High for spec text; low for deployment |
+| Inco product | `https://www.inco.org/blog/inco-lightning-live-on-base-mainnet`, `https://www.inco.org/blog/inco-lightning-launched-on-base-sepolia`, `https://www.inco.org/blog/circle-research-inco-confidential-erc20-report`, `https://www.circle.com/blog/confidential-erc-20-framework-for-compliant-on-chain-privacy` | `evm-privacy-research/research-sections/confidential-coprocessor/final.md` @ `0041e3a1598751a7d121fecc600ba3d6ad42ad05` | 除 PoC 外无产品仓库 pin | Base 可用性/架构为 Medium-high；审计 scope/roadmap/SLA 为 medium |
+| Inco ERC20 PoC | `https://github.com/Inco-fhevm/confidential-erc20-framework`，本地代码阅读 | `confidential-compliance-token-research/research-sections/requirements-framework/final.md` @ `9eb29a150f380f21add9b431b66fea2ee5d12881` | `bb39e4f788742121f2fc93de33af58758360545b` | 代码事实为 High；生产成熟度为 low |
+| VOSA | Ethereum Magicians VOSA-20/VOSA-RWA 主题帖 | `evm-privacy-research/research-sections/vosa-standards/final.md` @ `c9c16b3eb8956584d63efcf2fe155d9acc271f2f` | 无已审计仓库 pin | 论坛设计为 Medium；生产为 low |
+| Nightfall/EY | `https://blockchain.ey.com/technology`, EY 2025 Nightfall 新闻稿, `https://github.com/EYBlockchain/nightfall_4_CE` | `evm-privacy-research/research-sections/eea-enterprise-benchmark/final.md` @ `1eac19ed837c8e9a4df1bb1594d5b23cc5a2e9f0` | `e3203ea24bd302222f2e071876d756eb66b1e67c` | 企业架构为 High；当前生产契合度为 medium |
+| Railgun/Privacy Pools | `https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence`, `https://docs.privacypools.com/`, `https://docs.privacypools.com/layers/contracts/entrypoint`, `https://0xbow.io/` | `evm-privacy-research/research-sections/zk-shielded-pool/final.md` @ `788453b4097f37003337b943bcf6d7f8f68b02ba`；`evm-privacy-research/research-sections/privacy-eips-survey/final.md` @ `957773b13b2f5a66354ccda4b7d0c79a7236b222` | Privacy Pools core `a80836a47451e662f127af17e11430ffa976c234` | 隐私/合规补充为 Medium-high |
+| Paladin | `https://www.lfdecentralizedtrust.org/projects/paladin`, `https://lfdt-paladin.github.io/paladin/head/`, `https://www.kaleido.io/paladin`, `https://github.com/LFDT-Paladin/paladin` | `evm-privacy-research/research-sections/eea-enterprise-benchmark/final.md` @ `1eac19ed837c8e9a4df1bb1594d5b23cc5a2e9f0` | `c8ece88ed391e663612c5d51fd9e83289730a816` | workflow 隐私为 Medium-high；CCT token 契合度为 medium |
+| Fhenix | `https://cofhe-docs.fhenix.zone/fhe-library/introduction/quick-start`, `https://www.fhenix.io/blog/fhenix-adds-base-support-to-cofhe----expanding-privacy-to-ethereum-l2`, `https://www.fhenix.io/blog/what-is-fhenix` | `evm-privacy-research/research-sections/confidential-coprocessor/final.md` @ `0041e3a1598751a7d121fecc600ba3d6ad42ad05` | `ad03449120a29a900e6c8223347cc5ac8add63c4` | Medium；已明确标注状态张力 |
+| Optalysys | `https://optalysys.com/confidential-rwa-tokenisation-blockchain-use-case/`, `https://optalysys.com/resource/real-world-assets-on-blockchain-the-trillion-dollar-opportunity-that-needs-confidentiality/`, `https://optalysys.com/resource/optalysys-and-zama-partnership/` | `confidential-compliance-token-research/research-sections/requirements-framework/final.md` @ `9eb29a150f380f21add9b431b66fea2ee5d12881` | 无协议仓库 | 硬性能主张为 Low；对生产化问题有用 |
+| Aztec | `https://docs.aztec.network/`, `https://aztec.network/` | `evm-privacy-research/research-sections/zk-privacy-chain-aztec/final.md` @ `eceaef1e1b4f7a17d7fc3eb4dd91560207f40629` | benchmark 无需仓库 pin | 架构为 High；Mantle 直接契合度为 low |
+| Starknet STRK20 | `https://www.starknet.io/blog/starknet-v0-14-2-the-privacy-engine-arrives/` | `evm-privacy-research/research-sections/zk-shielded-pool/final.md` @ `788453b4097f37003337b943bcf6d7f8f68b02ba` | 范围内未找到仓库 pin | Medium；早期生态证据 |
+| EIP-8182 | `https://eips.ethereum.org/EIPS/eip-8182`, `https://ethereum-magicians.org/t/eip-8182-private-eth-and-erc-20-transfers/27889` | `evm-privacy-research/research-sections/privacy-eips-survey/final.md` @ `957773b13b2f5a66354ccda4b7d0c79a7236b222` | EIP 页面以访问日期为准当前有效 | spec 文本为 High；部署为 low |
 
 ### item-7: 候选初筛矩阵与 Zama 差异标注
 
-#### Bucket-decision rule
+#### Bucket-decision rule（bucket 裁决规则）
 
 本 section 的 bucket 不是五项分数的简单求和排序。分数用于暴露每个候选在 WHI-266 五维 rubric 上的强弱；bucket 则先由 **standalone-route capability** 这个分类门决定，再由分数解释升降级。规则如下：
 
@@ -212,25 +212,25 @@ EIP-8182 is a protocol-layer benchmark. The official EIP says it introduces priv
 5. **参考**：候选主要提供 architecture/performance/standard benchmark，或反例边界；不应被当作实现路线。
 6. **出局**：作为 Mantle phase-1 direct route 需要新链/非 EVM VM/硬分叉/协议 activation，或者缺少 RWA issuer controls。某些候选可同时是 `参考` 与 direct-route `出局`，如 EIP-8182 和 Aztec。
 
-Round-2 reconciliation: keeping all round-1 verdicts is consistent with this rule. Paladin/Pente and Railgun/Privacy Pools outscore Nightfall/EY and Fhenix/CoFHE on raw totals because they are strong components/disclosure/workflow tools, but they fail the standalone-route gate for a Mantle CCT token route. Nightfall/EY and Fhenix score lower because of integration/maturity gaps, yet remain route-capable backups: Nightfall offers a coherent enterprise private-transfer/permissioning route; Fhenix offers a coherent confidential-compute backend route.
+Round-2 对账：保留全部 round-1 verdict 与本规则一致。Paladin/Pente 与 Railgun/Privacy Pools 在 raw total 上高于 Nightfall/EY 与 Fhenix/CoFHE，因为它们是强组件/披露/workflow 工具，但在 Mantle CCT token route 上未通过 standalone-route gate。Nightfall/EY 与 Fhenix 因集成/成熟度缺口得分较低，却仍是 route-capable backup：Nightfall 提供一条连贯的企业 private-transfer/permissioning 路线；Fhenix 提供一条连贯的 confidential-compute backend 路线。
 
-| Candidate | Raw total | Standalone-route gate | Rule result | Current verdict | Reconciliation |
+| 候选 | Raw total | Standalone-route gate | 规则结果 | 当前 verdict | 对账 |
 |---|---:|---|---|---|---|
-| Inco Lightning / product route | 18 | pass: direct confidential token/RWA route, EVM/Base-adjacent, current product signal | 主候选 | 主候选 | Consistent: strongest non-Zama standalone route despite unpinned public audit and Mantle support gaps. |
-| Inco ERC20 framework PoC | 14 | fail: code PoC/module reference, not a production route | 局部补强 | 局部补强 | Consistent: high topical fit, but unaudited PoC cannot be route-capable. |
-| VOSA-RWA/VOSA-20 | 17 | pass with maturity caveat: coherent lightweight compliance-gated privacy token concept | 强备选 | 强备选 | Consistent: route-capable concept, downgraded below 主候选 by forum-draft/unaudited status. |
-| Nightfall/EY | 14 | pass with integration caveat: coherent enterprise private-transfer/permissioned rollup route | 强备选 | 强备选 | Consistent: score lower due heavier stack/Mantle fit, but still route-capable. |
-| Railgun/Privacy Pools | 15 | fail: disclosure/source-of-funds pool component, lacks issuer token lifecycle route | 局部补强 | 局部补强 | Consistent: high disclosure value, not standalone CCT route. |
-| Paladin/Pente | 16 | fail for token route: enterprise workflow/privacy group layer, not minimal confidential token ledger | 局部补强 | 局部补强 | Consistent: high workflow value, component/layer only for WHI-270 scope. |
-| Fhenix/CoFHE | 13 | pass with compliance/maturity caveat: confidential-compute backend can support a CCT route | 强备选 | 强备选 | Consistent: lower score, but route-capable backend alternative. |
-| Optalysys | 5 | fail: performance/hardware reference only | 参考 | 参考 | Consistent. |
-| Aztec | 12 | fail for Mantle phase-1: non-EVM/native privacy L2 | 参考 / direct-route 出局 | 参考 | Consistent: benchmark only, not direct route. |
-| Starknet STRK20 | 10 | fail for Mantle phase-1: Starknet/Cairo native route | 参考 / direct-route 出局 | 参考 | Consistent: benchmark only. |
-| EIP-8182 | 6 | fail for Mantle phase-1: protocol hardfork/system contract route | 参考 / phase-1 出局 | 参考 / phase-1 出局 | Consistent. |
+| Inco Lightning / product route | 18 | 通过：直接的 confidential token/RWA route，EVM/Base 近邻，有当前产品信号 | 主候选 | 主候选 | 一致：尽管公开审计未锁定且 Mantle 支持有缺口，仍是最强的非 Zama standalone route。 |
+| Inco ERC20 framework PoC | 14 | 不通过：代码 PoC/模块参考，不是生产 route | 局部补强 | 局部补强 | 一致：主题契合度高，但未审计 PoC 不能 route-capable。 |
+| VOSA-RWA/VOSA-20 | 17 | 带成熟度注意事项通过：连贯的轻量 compliance-gated privacy token 概念 | 强备选 | 强备选 | 一致：route-capable 概念，因 forum-draft/未审计状态降至 主候选 以下。 |
+| Nightfall/EY | 14 | 带集成注意事项通过：连贯的企业 private-transfer/permissioned rollup route | 强备选 | 强备选 | 一致：因栈更重/Mantle 契合度而得分较低，但仍 route-capable。 |
+| Railgun/Privacy Pools | 15 | 不通过：披露/资金来源 pool 组件，缺 issuer token lifecycle route | 局部补强 | 局部补强 | 一致：披露价值高，非 standalone CCT route。 |
+| Paladin/Pente | 16 | token route 不通过：企业 workflow/privacy group layer，非最小化 confidential token ledger | 局部补强 | 局部补强 | 一致：workflow 价值高，在 WHI-270 范围内仅为组件/layer。 |
+| Fhenix/CoFHE | 13 | 带合规/成熟度注意事项通过：confidential-compute backend 可支撑一条 CCT route | 强备选 | 强备选 | 一致：得分较低，但是 route-capable 的 backend 替代方案。 |
+| Optalysys | 5 | 不通过：仅性能/硬件参考 | 参考 | 参考 | 一致。 |
+| Aztec | 12 | Mantle phase-1 不通过：非 EVM/native privacy L2 | 参考 / direct-route 出局 | 参考 | 一致：仅 benchmark，非直接 route。 |
+| Starknet STRK20 | 10 | Mantle phase-1 不通过：Starknet/Cairo native route | 参考 / direct-route 出局 | 参考 | 一致：仅 benchmark。 |
+| EIP-8182 | 6 | Mantle phase-1 不通过：协议 hardfork/system contract route | 参考 / phase-1 出局 | 参考 / phase-1 出局 | 一致。 |
 
-#### WHI-266 rubric traceability matrix
+#### WHI-266 rubric traceability matrix（rubric 可追溯矩阵）
 
-| Candidate | RWA/合规相关性 | 轻量集成可能 | 选择性披露 | 成熟度 | Mantle 适配 | Verdict | 为何纳入 / 降权 |
+| 候选 | RWA/合规相关性 | 轻量集成可能 | 选择性披露 | 成熟度 | Mantle 适配 | Verdict | 为何纳入 / 降权 |
 |---|---:|---:|---:|---:|---:|---|---|
 | Inco Lightning / product route | 4 | 4 | 3 | 3 | 4 | 主候选 | RWA/confidential ERC20 叙事与 Base mainnet 近邻强；因 TEE trust、Mantle support 未就绪、Atlas roadmap 限制，不能直接裁决胜出。 |
 | Inco ERC20 framework PoC | 4 | 3 | 3 | 1 | 3 | 局部补强 | 代码正中 confidential token + viewing/transfer rules，但 README 明确 unaudited PoC；只可作 PoC module reference。 |
@@ -244,31 +244,31 @@ Round-2 reconciliation: keeping all round-1 verdicts is consistent with this rul
 | Starknet STRK20 | 3 | 1 | 3 | 2 | 1 | 参考 | 证明 native privacy token trend，但 Cairo/Starknet 栈不可轻量移植到 Mantle。 |
 | EIP-8182 | 2 | 0 | 3 | 1 | 0 | 参考 / phase-1 出局 | 协议层 unified shielded pool 重要，但依赖硬分叉且缺 RWA issuer controls。 |
 
-#### Screening verdicts
+#### Screening verdicts（初筛裁决）
 
-| Verdict bucket | Candidates | Zama delta | WHI-271 input, not decision |
+| Verdict bucket | 候选 | Zama delta | 作为 WHI-271 输入，而非裁决 |
 |---|---|---|---|
-| 主候选 | Inco Lightning / Inco confidential token route | TEE-first, Base-mainnet, potentially lower latency and product adjacency; weaker cryptographic trust and less mature RWA extension stack than Zama/OZ | Ask whether Mantle wants TEE-backed faster go-to-market as an alternative to Zama FHE/MPC. |
-| 强备选 | VOSA-RWA/VOSA-20, Nightfall/EY, Fhenix/CoFHE | VOSA: lighter/exposed graph; Nightfall: enterprise ZK rollup; Fhenix: FHE backend alternative | Use as fallback route, design contrast, or phase-2 backend shortlist. |
-| 局部补强 | Inco PoC, Railgun/Privacy Pools, Paladin | Code modules, compliance-pool disclosure, business workflow privacy | Borrow design components; do not promote to full route alone. |
-| 参考 | Optalysys, Aztec, Starknet STRK20, EIP-8182 | Performance constraints; privacy-native chain upper bound; non-Mantle token standard; protocol pool benchmark | Use as benchmark/constraint, not candidate implementation path. |
-| 出局 for phase 1 | Aztec as direct route, STRK20 direct route, EIP-8182 direct route | New chain/VM or protocol hardfork | Only revisit if Mantle strategy changes from lightweight CCT to native privacy chain/protocol feature. |
+| 主候选 | Inco Lightning / Inco confidential token route | TEE-first、Base-mainnet，潜在更低延迟与产品近邻；密码学信任弱于、RWA extension stack 不如 Zama/OZ 成熟 | 询问 Mantle 是否想要 TEE 支撑的更快 go-to-market 作为 Zama FHE/MPC 的替代。 |
+| 强备选 | VOSA-RWA/VOSA-20, Nightfall/EY, Fhenix/CoFHE | VOSA：更轻/exposed graph；Nightfall：企业 ZK rollup；Fhenix：FHE backend 替代 | 用作 fallback route、设计对照或 phase-2 backend 候选名单。 |
+| 局部补强 | Inco PoC, Railgun/Privacy Pools, Paladin | 代码模块、compliance-pool 披露、业务 workflow 隐私 | 借用设计组件；不要单独升格为完整 route。 |
+| 参考 | Optalysys, Aztec, Starknet STRK20, EIP-8182 | 性能约束；隐私原生链上限；非 Mantle token standard；协议 pool benchmark | 用作 benchmark/约束，而非候选实现路径。 |
+| phase 1 出局 | Aztec 作为直接 route、STRK20 直接 route、EIP-8182 直接 route | 新链/VM 或协议硬分叉 | 仅当 Mantle 战略从轻量 CCT 转向 native privacy chain/protocol 特性时再重新考量。 |
 
 ### item-8: Gap Register、降权/出局理由与后续 WHI-271 输入
 
-| Gap | Affected candidates | Why it matters | WHI-271 / follow-up question |
+| Gap | 受影响候选 | 为何重要 | WHI-271 / 后续问题 |
 |---|---|---|---|
-| Mantle support and deployment commitments | Inco, Fhenix | Base support does not imply Mantle support; callbacks/finality/relayer/KMS/TEE endpoints need chain-specific proof | Ask vendors for Mantle support plan, contracts, latency and operational responsibilities. |
-| TEE trust and attestation narrative | Inco | Institutional RWA users may require clear hardware trust, side-channel, operator and jurisdiction risk treatment | Decide whether TEE-backed confidentiality is acceptable for Mantle's compliance story. |
-| FHE ACL revocation and over-disclosure | Zama comparator, Fhenix, Inco PoC | WHI-266/OZ caveat: historical access may be hard to revoke; GDPR/minimal disclosure concerns | Require a disclosure authority lifecycle and audit log design in any PoC. |
-| Production audit posture | Inco PoC, VOSA, Fhenix, Privacy Pools, Paladin; Inco product audit scope | Unaudited or early code cannot support production RWA; Inco product page claims Trail of Bits auditing but this draft has not pinned a public report/scope | Collect public audits or scope a Mantle-funded audit before production ranking. |
-| Issuer lifecycle controls | Railgun/Privacy Pools, VOSA, Nightfall, Fhenix | RWA needs freeze, recovery, forced transfer, redemption and legal issuer workflows | Map each candidate to ERC-3643-style controls and bridge/redeem events. |
-| Performance/SLA evidence | Zama comparator, Inco, Fhenix, Optalysys | FHE/TEE latency and availability affects UX, market operations, redemption and compliance monitoring | Define latency/cost budgets; treat Optalysys as question generator, not proof. |
-| Independent validation of current mainnet claims | Inco, Fhenix, STRK20 | Vendor/blog claims can move faster than docs/audits | Require chain addresses, contract versions, audit links and observed usage before final route. |
+| Mantle 支持与部署承诺 | Inco, Fhenix | Base 支持不意味着 Mantle 支持；callbacks/finality/relayer/KMS/TEE endpoints 需要链特定证明 | 向厂商索取 Mantle 支持计划、合约、延迟与运营职责。 |
+| TEE 信任与 attestation 叙事 | Inco | 机构 RWA 用户可能要求清晰的硬件信任、side-channel、operator 与辖区风险处理 | 决定 TEE 支撑的机密性是否可被 Mantle 的合规叙事接受。 |
+| FHE ACL revocation 与过度披露 | Zama comparator, Fhenix, Inco PoC | WHI-266/OZ caveat：历史访问可能难以撤销；存在 GDPR/最小披露 顾虑 | 在任何 PoC 中要求 disclosure authority 生命周期与审计日志设计。 |
+| 生产审计态势 | Inco PoC, VOSA, Fhenix, Privacy Pools, Paladin；Inco 产品审计 scope | 未审计或早期代码不能支撑生产 RWA；Inco 产品页面声称 Trail of Bits 审计，但本 draft 未锁定公开报告/scope | 在生产排名前收集公开审计，或 scope 一次 Mantle 资助的审计。 |
+| Issuer lifecycle controls | Railgun/Privacy Pools, VOSA, Nightfall, Fhenix | RWA 需要冻结、恢复、强制转账、赎回与法律 issuer workflows | 将每个候选映射到 ERC-3643 式控制与 bridge/redeem events。 |
+| 性能/SLA 证据 | Zama comparator, Inco, Fhenix, Optalysys | FHE/TEE 延迟与可用性影响 UX、市场运营、赎回与合规监控 | 定义延迟/成本预算；把 Optalysys 当作问题生成器，而非证据。 |
+| 当前 mainnet 主张的独立验证 | Inco, Fhenix, STRK20 | 厂商/博客主张可能跑得比文档/审计更快 | 在最终 route 前要求链上地址、合约版本、审计链接与观察到的使用情况。 |
 
-## Diagrams
+## 图示（Diagrams）
 
-### diag-1: Candidate landscape map
+### diag-1: 候选 landscape map
 
 ```mermaid
 graph TD
@@ -307,7 +307,7 @@ graph TD
   Z -. protocol benchmark .-> E8182
 ```
 
-### diag-2: Capability stack comparison
+### diag-2: 能力栈对比（Capability stack comparison）
 
 ```mermaid
 flowchart LR
@@ -372,7 +372,7 @@ sequenceDiagram
   Note over Wrapper,CToken: README says unaudited proof of concept; do not use as production maturity evidence.
 ```
 
-### diag-4: Screening matrix flow
+### diag-4: 初筛矩阵流程（Screening matrix flow）
 
 ```text
 Evidence pack
@@ -399,38 +399,38 @@ NOT WHI-271 final decision
   vendor validation, security review and Mantle engineering feasibility.
 ```
 
-## Source Coverage
+## 来源覆盖（Source Coverage）
 
-| Source requirement | Status | Evidence |
+| 来源要求 | 状态 | 证据 |
 |---|---|---|
-| src-1 prior requirements framework | covered | `confidential-compliance-token-research/research-sections/requirements-framework/final.md` @ `9eb29a150f380f21add9b431b66fea2ee5d12881` |
-| src-2 prior privacy finals | covered | Full path+SHA reuse table includes ERC-7984, coprocessor, VOSA, shielded pool, Aztec, EEA, privacy EIPs. |
-| src-3 Inco primary | covered | Inco Base mainnet page, Inco Base Sepolia page, Inco/Circle report, Circle blog; accessed 2026-06-24. |
-| src-4 Inco code analysis | covered | `Inco-fhevm/confidential-erc20-framework` @ `bb39e4f788742121f2fc93de33af58758360545b`, local code read. |
-| src-5 VOSA primary | covered by reuse + URLs | VOSA-20/VOSA-RWA Magicians threads from `vosa-standards/final.md`; this draft cites full path+SHA. |
-| src-6 Nightfall/EY primary | covered | EY technology page, EY 2025 newsroom, `EYBlockchain/nightfall_4_CE` @ `e3203ea24bd302222f2e071876d756eb66b1e67c`. |
-| src-7 shielded pool primary | covered | Railgun PPOI docs, Privacy Pools docs/entrypoint, 0xbow website, Privacy Pools core commit. |
-| src-8 Paladin primary/prior | covered | LFDT Paladin project page, Paladin docs, Kaleido page, GitHub pin, EEA benchmark final path+SHA. |
-| src-9 Fhenix primary | covered | CoFHE Quick Start, Base support blog, Fhenix FAQ, confidential contracts commit pin. |
-| src-10 Optalysys performance | covered with vendor-label caveat | Confidential RWA page, RWA confidentiality article, Zama partnership/photonic FHE material; all vendor self-report unless independently verified later. |
-| src-11 C benchmark sources | covered | Aztec docs, Starknet STRK20 blog, EIP-8182 official spec/Magicians plus prior finals. |
-| src-12 Zama comparator | covered by reuse | ERC-7984 and confidential-coprocessor finals; no new Zama landscape repeated. |
-| src-13 audit/security | partially covered | Profile table now carries per-candidate audit coverage for every bucket above `参考`: Inco Lightning Trail-of-Bits claim is self-reported/no public report pinned; Inco PoC and VOSA are unaudited; Nightfall CE is experimental; Railgun/Privacy Pools, Paladin/Pente, and Fhenix have no public audit report pinned for the CCT use in this draft. |
-| src-14 issue record | covered | Multica outline-approved comment `b85ef488-71fb-4527-8a86-70aaee2578aa`; round-1 deep-draft dispatch `7f69f0fc-31ff-4e42-8dae-1dca9c5839d6`; round-2 revision request `f94717ac-55de-4e8f-b0e4-d2f179ac78a4`. |
+| src-1 既有 requirements framework | 已覆盖 | `confidential-compliance-token-research/research-sections/requirements-framework/final.md` @ `9eb29a150f380f21add9b431b66fea2ee5d12881` |
+| src-2 既有隐私 finals | 已覆盖 | 完整 path+SHA 复用表包含 ERC-7984、coprocessor、VOSA、shielded pool、Aztec、EEA、privacy EIPs。 |
+| src-3 Inco 一手 | 已覆盖 | Inco Base mainnet 页面、Inco Base Sepolia 页面、Inco/Circle 报告、Circle 博客；访问于 2026-06-24。 |
+| src-4 Inco 代码分析 | 已覆盖 | `Inco-fhevm/confidential-erc20-framework` @ `bb39e4f788742121f2fc93de33af58758360545b`，本地代码阅读。 |
+| src-5 VOSA 一手 | 已覆盖（通过复用 + URL）| 来自 `vosa-standards/final.md` 的 VOSA-20/VOSA-RWA Magicians 帖；本 draft 引用完整 path+SHA。 |
+| src-6 Nightfall/EY 一手 | 已覆盖 | EY 技术页面、EY 2025 新闻稿、`EYBlockchain/nightfall_4_CE` @ `e3203ea24bd302222f2e071876d756eb66b1e67c`。 |
+| src-7 shielded pool 一手 | 已覆盖 | Railgun PPOI 文档、Privacy Pools 文档/entrypoint、0xbow 网站、Privacy Pools core commit。 |
+| src-8 Paladin 一手/既有 | 已覆盖 | LFDT Paladin 项目页、Paladin 文档、Kaleido 页面、GitHub pin、EEA benchmark final path+SHA。 |
+| src-9 Fhenix 一手 | 已覆盖 | CoFHE Quick Start、Base support 博客、Fhenix FAQ、confidential contracts commit pin。 |
+| src-10 Optalysys 性能 | 已覆盖（带厂商标注注意事项）| Confidential RWA 页面、RWA 机密性文章、Zama partnership/photonic FHE 材料；除非后续独立核实，均为厂商自报。 |
+| src-11 C 层 benchmark 来源 | 已覆盖 | Aztec 文档、Starknet STRK20 博客、EIP-8182 官方 spec/Magicians 加既有 finals。 |
+| src-12 Zama comparator | 已覆盖（通过复用）| ERC-7984 与 confidential-coprocessor finals；不重复新的 Zama landscape。 |
+| src-13 审计/安全 | 部分覆盖 | Profile 表现已为每个高于 `参考` 的 bucket 携带逐候选 audit coverage：Inco Lightning 的 Trail-of-Bits 主张属自报/无公开报告锁定；Inco PoC 与 VOSA 未审计；Nightfall CE 为实验性；Railgun/Privacy Pools、Paladin/Pente 与 Fhenix 在本 draft 未为 CCT 用例锁定公开审计报告。 |
+| src-14 issue 记录 | 已覆盖 | Multica outline-approved 评论 `b85ef488-71fb-4527-8a86-70aaee2578aa`；round-1 deep-draft dispatch `7f69f0fc-31ff-4e42-8dae-1dca9c5839d6`；round-2 revision request `f94717ac-55de-4e8f-b0e4-d2f179ac78a4`。 |
 
-## Gap Analysis
+## 缺口分析（Gap Analysis）
 
-1. **No candidate outside Zama cleanly satisfies the full CCT MVP today.** Inco is closest, but its current route needs Mantle support and TEE governance. VOSA is light but immature and deliberately leaks graph. Nightfall/Paladin are enterprise-workflow heavy. Fhenix is backend-replaceable but weak on compliance evidence.
-2. **Inco PoC must remain an engineering reference.** The structured profile table explicitly marks `maturity_status=unaudited_poc` and `evidence_weight=engineering_poc_not_production`; this should be preserved into final and any TW synthesis.
-3. **Optalysys must remain a performance reference.** It informs FHE hardware/SLA questions but does not define token interfaces, compliance controls, disclosure vectors or Mantle integration.
-4. **Public audit posture is incomplete and must be carried per candidate.** The above-reference candidates have explicit audit coverage in the profile table: Inco Lightning's Base mainnet page claims extensive Trail of Bits auditing, but this is self-reported and no public report/scope is pinned here; Inco PoC and VOSA are unaudited; Nightfall CE is experimental; Railgun/Privacy Pools, Paladin/Pente and Fhenix have no public audit report pinned for this CCT use in this draft. These statements should travel into TW synthesis rather than being inferred from a generic gap.
-5. **Current status is dynamic.** Inco, Fhenix, STRK20 and EIP-8182 are all moving. Final route work must refresh chain deployment addresses, audit links and roadmap claims rather than relying on marketing/blog language.
-6. **Issuer lifecycle remains the hard RWA gap.** Privacy pools and private chains can hide flows; CCT still needs issuer controls, freeze/recovery/force transfer, redemption, bridge accounting, and regulator/issuer disclosure governance.
-7. **Bucket rule is categorical before numeric.** Round-2 makes explicit that `主候选/强备选` require standalone-route capability, while `局部补强` means component-only even if the raw five-axis total is higher. WHI-271 should preserve that distinction when comparing route candidates against components.
+1. **当前没有 Zama 之外的候选能干净地满足完整 CCT MVP。** Inco 最接近，但其当前 route 需要 Mantle 支持与 TEE 治理。VOSA 轻量但不成熟且刻意泄漏 graph。Nightfall/Paladin 是企业-workflow 重型。Fhenix 可替换 backend 但合规证据薄弱。
+2. **Inco PoC 必须保持为工程参考。** 结构化 profile 表明确标注 `maturity_status=unaudited_poc` 与 `evidence_weight=engineering_poc_not_production`；这应被保留到 final 及任何 TW synthesis。
+3. **Optalysys 必须保持为性能参考。** 它为 FHE 硬件/SLA 问题提供信息，但不定义 token interfaces、合规控制、disclosure vectors 或 Mantle 集成。
+4. **公开审计态势不完整，必须逐候选携带。** 高于参考的候选在 profile 表中有明确 audit coverage：Inco Lightning 的 Base mainnet 页面声称经过 Trail of Bits 广泛审计，但这是自报且此处未锁定公开报告/scope；Inco PoC 与 VOSA 未审计；Nightfall CE 为实验性；Railgun/Privacy Pools、Paladin/Pente 与 Fhenix 在本 draft 未为此 CCT 用例锁定公开审计报告。这些陈述应随 TW synthesis 一并传递，而非从通用 gap 推断。
+5. **当前状态是动态的。** Inco、Fhenix、STRK20 与 EIP-8182 都在变动。最终 route 工作必须刷新链部署地址、审计链接与 roadmap 主张，而非依赖营销/博客措辞。
+6. **Issuer lifecycle 仍是 RWA 的硬缺口。** Privacy pools 与 private chains 能隐藏资金流；CCT 仍需要 issuer controls、冻结/恢复/强制转账、赎回、bridge accounting 与监管/issuer 披露治理。
+7. **Bucket 规则先分类后数值。** Round-2 明确 `主候选/强备选` 需要 standalone-route capability，而 `局部补强` 意味着即使 raw 五维总分更高也仅为 component-only。WHI-271 在比较 route 候选与组件时应保留这一区分。
 
-## Revision Log
+## 修订日志（Revision Log）
 
-| Round | Date | Change |
+| Round | 日期 | 变更 |
 |---:|---|---|
-| 1 | 2026-06-24 | Initial deep draft from approved outline. Covered all A/B/C candidates, added candidate profile table, per-candidate x five-axis rubric traceability matrix, Inco code-level PoC profile with pinned commit, Optalysys performance-reference profile, Zama deltas, diagrams, source coverage and gap register. Incorporated mandatory outline-review guidance: full path+SHA reuse citations, structured Inco PoC unaudited warning, and rubric-grounded screening verdicts. |
-| 2 | 2026-06-24 | Revision after draft-review `needs-attention` major finding. Added explicit bucket-decision rule distinguishing route-capable candidates from component-only/reference candidates; added raw-total + standalone-route-gate reconciliation for every verdict without changing scores or verdicts; added per-candidate audit coverage for every bucket above `参考`, including Inco Lightning Trail-of-Bits as self-reported/no public report pinned. |
+| 1 | 2026-06-24 | 基于已批准 outline 的初始 deep draft。覆盖全部 A/B/C 候选，新增候选 profile 表、逐候选 x 五维 rubric 可追溯矩阵、带锁定 commit 的 Inco 代码级 PoC profile、Optalysys 性能参考 profile、Zama deltas、图示、来源覆盖与 gap register。纳入强制 outline-review 指导：完整 path+SHA 复用引用、结构化 Inco PoC 未审计警告，以及 rubric-grounded 初筛 verdict。 |
+| 2 | 2026-06-24 | 基于 draft-review `needs-attention` major finding 的修订。新增明确的 bucket-decision rule，区分 route-capable 候选与 component-only/reference 候选；在不改动分数或 verdict 的前提下，为每个 verdict 新增 raw-total + standalone-route-gate 对账；为每个高于 `参考` 的 bucket 新增逐候选 audit coverage，包括将 Inco Lightning 的 Trail-of-Bits 标为自报/无公开报告锁定。 |
