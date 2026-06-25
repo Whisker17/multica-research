@@ -41,69 +41,69 @@ language: "中文"
 mode: "single-issue-composable"
 ---
 
-# Research Outline: Confidential RWA 候选方案补充调研
+# 研究大纲（Research Outline）：Confidential RWA 候选方案补充调研
 
-## Items
+## 调研项（Items）
 
 ### item-1: 研究边界、复用输入与候选纳入规则
 
 本项先固定研究边界：本 section 不重跑完整 EVM privacy landscape，只抽取与 Mantle private RWA / confidential compliance token 直接相关的候选与差异结论。Deep draft 必须把 WHI-266 的 rubric 作为评分基线，并把 `evm-privacy-research` WHI-255 到 WHI-261 的 accepted final artifacts 作为复用输入；凡复用旧结论，必须标注路径、commit SHA 与复用边界。候选纳入规则应围绕 RWA/合规相关性、轻量集成可能、选择性披露、成熟度、Mantle 适配五个维度，避免把通用隐私项目误升格为 confidential RWA 候选。
 
-- **Priority**: high
-- **Dependencies**: none
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: none
 
 ### item-2: A 层候选一 - Inco confidential token/RWA 方案与代码级 PoC
 
 本项深入调查 Inco 在 confidential token / RWA / compliant privacy 方向的产品、文档、合作叙事与实际工程证据，并与 Zama 形成差异标注。必须分开处理两类证据：Inco Network / Lightning / Atlas 作为机密计算或 confidential token 方案，和 `Inco-fhevm/confidential-erc20-framework` 作为 unaudited engineering PoC。代码级 profile 必须 pin GitHub commit，梳理 wrapper、confidential ERC20、compliant transfer rules、Identity/credential 示例、delegated viewing、transfer-rule failure semantics、测试/部署流程与未审计风险。
 
-- **Priority**: high
-- **Dependencies**: item-1
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-1
 
 ### item-3: A 层候选二 - VOSA-RWA/VOSA-20 与 Nightfall/EY enterprise confidential token
 
 本项覆盖两组 A 层候选。VOSA 方向应复用 `vosa-standards/final.md` 的 exposed-graph、轻量、合规门控、未审计论坛草案结论，并补充本项目需要的 RWA/compliance token fit/gap。Nightfall/EY 方向应重点调研 enterprise confidential token 经验、X.509/企业身份、rollup/operator 模型、RWA/合规披露适配性与生产成熟度；不能把 token-only confidential transfer 直接写成完整 confidential compliance token。
 
-- **Priority**: high
-- **Dependencies**: item-1
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-1
 
 ### item-4: B 层候选 - Railgun/Privacy Pools、Paladin/Privacy Groups、Fhenix/CoFHE、Optalysys
 
 本项对 B 层做 fit/gap profile，不要求写成主路线。Railgun/Privacy Pools 应定位为合规选择性披露或 association-set 补强，而非 RWA token 标准；Paladin/Privacy Groups 应定位为企业业务流程隐私和 privacy domains 参考，而非直接 token ledger 标准；Fhenix/CoFHE 应作为 backend-replaceable confidential compute 候选，与 Zama/Inco 差异化比较；Optalysys 只作为 FHE 性能、成本、SLA、硬件加速与运维生产化参考，不得写成 token framework 或 Mantle 集成协议。
 
-- **Priority**: high
-- **Dependencies**: item-1, item-2
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-1, item-2
 
 ### item-5: C 层架构 benchmark - Aztec、Starknet STRK20、EIP-8182
 
 本项仅做 benchmark 摘要和反例/上限参照，避免扩大为完整 privacy landscape。Aztec 应作为隐私原生链/私密状态上限与非轻量反例；Starknet STRK20 应复用 shielded-pool final 中关于 STRK20 成熟度、Cairo/STARK 基底和未交付/未审计 caveat；EIP-8182 应作为协议层 unified shielded pool benchmark，重点记录需硬分叉/协议层改动、全局匿名集和 Mantle 不适合作 phase 1 轻量候选的原因。
 
-- **Priority**: medium
-- **Dependencies**: item-1
+- **优先级（Priority）**: medium
+- **依赖（Dependencies）**: item-1
 
 ### item-6: 候选分层 profile 表与逐候选 source pack
 
 本项产出 deep draft 的核心结构化 profile 表。每个候选至少应包含：候选层级、角色定位、隐私原语、合规/披露模型、issuer controls、桥接/赎回适配、部署形态、成熟度、Mantle 集成 delta、与 Zama 差异、证据等级、关键 gap。每个候选还必须有 source pack：官方文档/规格、代码仓库或审计、既有 final artifact、外部 vendor 或二手来源，均标注访问日期或 commit。
 
-- **Priority**: high
-- **Dependencies**: item-2, item-3, item-4, item-5
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-2, item-3, item-4, item-5
 
 ### item-7: 候选初筛矩阵与 Zama 差异标注
 
 本项将候选按 `主候选 / 强备选 / 局部补强 / 参考 / 出局` 形成初筛矩阵，但不得替 WHI-271 做最终路线裁决。矩阵应解释每个候选相对 Zama 的差异：信任模型、成熟度、Mantle 部署轻量度、RWA 合规能力、披露机制、性能/SLA 风险和工程 PoC 价值。结论必须保留 uncertainty：例如 Inco PoC 可作为代码级参考但不可作为生产成熟度证据，Optalysys 可作为生产化约束但不可作为协议候选。
 
-- **Priority**: high
-- **Dependencies**: item-6
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-6
 
 ### item-8: Gap Register、降权/出局理由与后续 WHI-271 输入
 
 本项记录未解决问题、降权原因和需要 WHI-271 或后续工程 PoC 判断的内容。至少覆盖：厂商 roadmap/benchmark/partnership 是否独立验证；未审计代码或论坛草案的安全边界；FHE ACL 撤销性与合规最小披露冲突；TEE/硬件信任的监管叙事；privacy pool 与 RWA issuer controls 的错位；独立链/硬分叉方案为何不适合 phase 1。输出应是路线裁决输入，而不是路线裁决本身。
 
-- **Priority**: medium
-- **Dependencies**: item-7
+- **优先级（Priority）**: medium
+- **依赖（Dependencies）**: item-7
 
-## Fields
+## 字段（Fields）
 
-| Field | Description | Applies To |
+| 字段（Field） | 描述（Description） | 适用范围（Applies To） |
 |-------|-------------|------------|
 | candidate_tier | A/B/C 分层及其纳入理由；A=深度候选，B=fit/gap 补强，C=benchmark/反例 | all |
 | candidate_role | 主候选、强备选、局部补强、参考、出局的初筛角色；最终裁决留给 WHI-271 | item-6, item-7, item-8 |
@@ -115,40 +115,40 @@ mode: "single-issue-composable"
 | deployment_shape | contract_only、wrapper、sidecar、coprocessor、TEE_network、FHE_backend、rollup、native_chain、protocol_hardfork、hardware_reference | item-2, item-3, item-4, item-5, item-6 |
 | lightweight_score_inputs | no_new_chain、no_new_bridge、no_hardfork、no_full_node、new_operator_stack、new_sdk_wallet_work、commercial_dependency | item-2, item-3, item-4, item-5, item-7 |
 | maturity_status | final_standard、draft_standard、forum_draft、audited、unaudited_poc、testnet、mainnet、production_customer、roadmap、marketing_only | item-2, item-3, item-4, item-5, item-6 |
-| code_profile | repo URL, pinned commit, modules, tests, deploy flow, security disclaimers, license, production caveats | item-2 |
-| performance_constraints | latency, throughput, cost, hardware dependency, SLA, audit posture, operational model, independent verification status | item-4, item-7, item-8 |
-| zama_difference | Concrete difference from Zama/OZ path: trust model, privacy backend, compliance modules, integration cost, maturity, roadmap dependency | item-2, item-3, item-4, item-5, item-7 |
+| code_profile | 仓库 URL、pin 住的 commit、模块、测试、部署流程、安全免责声明、许可证、生产注意事项 | item-2 |
+| performance_constraints | 延迟、吞吐、成本、硬件依赖、SLA、审计状况、运维模型、独立验证状态 | item-4, item-7, item-8 |
+| zama_difference | 相对 Zama/OZ 路径的具体差异：信任模型、隐私后端、合规模块、集成成本、成熟度、roadmap 依赖 | item-2, item-3, item-4, item-5, item-7 |
 | gap_status | answered_by_reuse、needs_primary_research、needs_code_read、needs_independent_verification、out_of_scope、for_WHI_271 | all |
 
-## Diagram Expectations
+## 图示预期（Diagram Expectations）
 
-| ID | Type | Description | Format | Applies To |
+| ID | 类型（Type） | 描述（Description） | 格式（Format） | 适用范围（Applies To） |
 |----|------|-------------|--------|------------|
-| diag-1 | hierarchy | Candidate landscape map: Zama baseline at center, A/B/C tiers around it, with each candidate's role as product route / code PoC / compliance supplement / performance reference / benchmark | mermaid | item-1, item-6, item-7 |
-| diag-2 | comparison | Confidential RWA capability stack comparison across Inco, VOSA, Nightfall/EY, Railgun/PP, Paladin, Fhenix, Optalysys, Aztec/STRK20/EIP-8182 | mermaid | item-2, item-3, item-4, item-5 |
-| diag-3 | flow | Inco confidential ERC20 PoC flow: wrap/mint, encrypted balance/amount, transfer rules, delegated viewing, identity check, unwrap/redeem, and where audit/ACL caveats enter | mermaid | item-2 |
-| diag-4 | matrix | Initial screening matrix flow from candidate evidence to `主候选 / 强备选 / 局部补强 / 参考 / 出局`, including explicit "not WHI-271 final decision" gate | ascii | item-7, item-8 |
+| diag-1 | hierarchy | 候选全景图：Zama 基线居中，A/B/C 各层环绕其外，标注每个候选的角色——产品路线 / 代码 PoC / 合规补强 / 性能参考 / benchmark | mermaid | item-1, item-6, item-7 |
+| diag-2 | comparison | 跨 Inco、VOSA、Nightfall/EY、Railgun/PP、Paladin、Fhenix、Optalysys、Aztec/STRK20/EIP-8182 的 confidential RWA 能力栈对比 | mermaid | item-2, item-3, item-4, item-5 |
+| diag-3 | flow | Inco confidential ERC20 PoC 流程：wrap/mint、加密余额/加密金额、转账规则、delegated viewing、身份校验、unwrap/redeem，以及 audit/ACL 注意事项介入的位置 | mermaid | item-2 |
+| diag-4 | matrix | 从候选证据到 `主候选 / 强备选 / 局部补强 / 参考 / 出局` 的初筛矩阵流程，含明确的「非 WHI-271 最终裁决」门控 | ascii | item-7, item-8 |
 
-## Source Requirements
+## 来源要求（Source Requirements）
 
-| ID | Type | Description | Min Count |
+| ID | 类型（Type） | 描述（Description） | 最少数量（Min Count） |
 |----|------|-------------|-----------|
-| src-1 | prior_research_final | WHI-266 requirements framework final at `confidential-compliance-token-research/research-sections/requirements-framework/final.md`, pinned to `eefb63d9297c823d545a82ce36a2c31f7eceaba8` or per-file commit if newer | 1 |
-| src-2 | prior_privacy_final | Reuse `evm-privacy-research` accepted finals for ERC-7984, confidential coprocessor, VOSA, shielded pools, Aztec, EEA benchmark, privacy EIPs; each reused claim needs path and commit SHA | 5 |
-| src-3 | inco_primary | Inco official docs/blogs and Circle/Inco confidential ERC20 materials for product/RWA/compliance claims; mark roadmap and partnership claims separately | 3 |
-| src-4 | inco_code_analysis | `Inco-fhevm/confidential-erc20-framework` or successor repo; pin exact commit, inspect contracts/tests/deploy docs, and record README/security/audit caveats | 1 |
-| src-5 | vosa_primary | VOSA, VOSA-20, VOSA-RWA primary forum/spec threads plus any linked repos; preserve forum maturity, author, reply count/status, access date | 3 |
-| src-6 | nightfall_ey_primary | EY/Nightfall official docs, GitHub repos, audit/security notes, enterprise token/confidential payment materials, and current deployment status | 3 |
-| src-7 | shielded_pool_primary | Railgun and Privacy Pools official docs, audit reports, protocol docs, association-set/PPOI docs, and on-chain/TVL sources if used for maturity | 4 |
-| src-8 | paladin_primary_or_prior | Paladin/Privacy Groups official LFDT/Kaleido docs or accepted prior internal research; clearly distinguish privacy-domain business workflow evidence from token-ledger evidence | 2 |
-| src-9 | fhenix_primary | Fhenix/CoFHE official docs, GitHub or developer docs, EigenLayer/restaking materials, deployment status, audit/security posture | 3 |
-| src-10 | optalysys_performance | Optalysys RWA/FHE/photonic acceleration pages plus at least one independent or methodological source for FHE performance limits if available; vendor claims must be labeled self-reported | 3 |
-| src-11 | c_benchmark_sources | Aztec, Starknet STRK20, and EIP-8182 official docs/specs or prior accepted finals; use only for benchmark and anti-scope-expansion evidence | 3 |
-| src-12 | zama_comparator | Zama/OZ baseline sources or accepted final artifacts sufficient to state differences; do not re-litigate Zama except for direct delta fields | 2 |
-| src-13 | audit_or_security | For any candidate scored above "reference", look for audit/security documentation or explicitly state no public audit found | 1 |
-| src-14 | issue_record | Multica issue/comment records for WHI-270 dispatch, WHI-266 dependency, and any reused WHI-255 to WHI-261 artifact if needed to verify accepted status | 1 |
+| src-1 | prior_research_final | 位于 `confidential-compliance-token-research/research-sections/requirements-framework/final.md` 的 WHI-266 requirements framework final，pin 到 `eefb63d9297c823d545a82ce36a2c31f7eceaba8` 或更新的逐文件 commit | 1 |
+| src-2 | prior_privacy_final | 复用 `evm-privacy-research` 中关于 ERC-7984、confidential coprocessor、VOSA、shielded pools、Aztec、EEA benchmark、privacy EIPs 的 accepted finals；每条复用结论需带路径与 commit SHA | 5 |
+| src-3 | inco_primary | Inco 官方文档/博客及 Circle/Inco confidential ERC20 资料，用于产品/RWA/合规相关结论；roadmap 与 partnership 类结论需单独标注 | 3 |
+| src-4 | inco_code_analysis | `Inco-fhevm/confidential-erc20-framework` 或其后继仓库；pin 住确切 commit，检查 contracts/tests/deploy 文档，并记录 README/security/audit 注意事项 | 1 |
+| src-5 | vosa_primary | VOSA、VOSA-20、VOSA-RWA 的一手论坛/规格帖及任何关联仓库；保留论坛成熟度、作者、回复数/状态、访问日期 | 3 |
+| src-6 | nightfall_ey_primary | EY/Nightfall 官方文档、GitHub 仓库、审计/安全说明、enterprise token/confidential payment 资料及当前部署状态 | 3 |
+| src-7 | shielded_pool_primary | Railgun 与 Privacy Pools 官方文档、审计报告、协议文档、association-set/PPOI 文档，以及用于成熟度判断的链上/TVL 来源 | 4 |
+| src-8 | paladin_primary_or_prior | Paladin/Privacy Groups 官方 LFDT/Kaleido 文档或已接受的既有内部研究；明确区分 privacy-domain 业务流程证据与 token-ledger 证据 | 2 |
+| src-9 | fhenix_primary | Fhenix/CoFHE 官方文档、GitHub 或开发者文档、EigenLayer/restaking 资料、部署状态、审计/安全状况 | 3 |
+| src-10 | optalysys_performance | Optalysys RWA/FHE/photonic 加速页面，外加至少一份关于 FHE 性能上限的独立或方法论来源（若有）；厂商声称须标注为自我报告（self-reported） | 3 |
+| src-11 | c_benchmark_sources | Aztec、Starknet STRK20 及 EIP-8182 官方文档/规格或既有 accepted finals；仅用于 benchmark 和防范范围扩张的证据 | 3 |
+| src-12 | zama_comparator | 足以陈述差异的 Zama/OZ 基线来源或 accepted final artifacts；除直接 delta 字段外不要重新论证 Zama | 2 |
+| src-13 | audit_or_security | 对任何评分高于「参考」的候选，查找审计/安全文档，或明确说明未找到公开审计 | 1 |
+| src-14 | issue_record | WHI-270 派发、WHI-266 依赖的 Multica issue/comment 记录，以及任何复用的 WHI-255 到 WHI-261 artifact（如需验证已接受状态） | 1 |
 
-## Patch Log
+## 补丁日志（Patch Log）
 
-| Round | Action | Target | Reason | Source |
+| 轮次（Round） | 动作（Action） | 目标（Target） | 原因（Reason） | 来源（Source） |
 |-------|--------|--------|--------|--------|

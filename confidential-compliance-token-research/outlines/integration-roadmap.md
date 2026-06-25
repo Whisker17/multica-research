@@ -65,211 +65,211 @@ reference_inputs:
     purpose: "仅当 deep draft 对 Mantle precompile/hardfork/current-client surface 作当前事实声明时使用；引用必须标注 repo path、commit SHA 和文件路径"
 ---
 
-# Research Outline: Mantle 轻量级集成路线与 PoC 计划
+# 研究大纲：Mantle 轻量级集成路线与 PoC 计划
 
 本 outline 的目标不是重新设计协议，而是把已接受的 WHI-272 CCT 协议设计压成一个可执行、可验收、可停止的 Mantle PoC / pilot roadmap。核心路线必须保持轻量：Phase 0/1 默认是 **application contracts + external confidential backend / SDK / disclosure tooling**，不要求 Mantle 执行客户端、precompile、hardfork 或新 chain。Native B20-like precompile、PolicyRegistry precompile、native encrypted accounting 和 protocol disclosure registry 只进入 Phase 2 评估项。
 
 Deep draft 的审查重点是：PoC 是否能演示最小闭环；路线是否足够小到 Mantle 小工程团队能执行；工程改动面是否完整；性能/生产化观察项是否能支撑 go/no-go；风险门槛是否能阻止研究结论变成不可控工程承诺。
 
-## Items
+## 条目（Items）
 
 ### item-1: 最小 PoC 成功标准与演示闭环
 
 定义 Mantle CCT PoC 的最小成功标准，避免一开始把 production CCT、native precompile、full private DeFi、private identity 或 cross-chain private settlement 混入 MVP。PoC 必须能演示 KYC/policy onboarding、confidential mint、confidential transfer、scoped audit disclosure、freeze/recovery 或明确写入不覆盖项。研究应把成功标准拆成 must-pass、should-pass、explicit non-goal，并为每个标准写出可观察证据、验收方式和失败处理。
 
-Required PoC success criteria table:
+所需的 PoC 成功标准表：
 
-| Capability | Minimum PoC standard | Evidence required | Out of scope unless explicitly added |
+| 能力 | 最小 PoC 标准 | 所需证据 | 除非明确加入否则不在范围内 |
 |---|---|---|---|
-| KYC / policy | Receiver and sender eligibility checked through ERC-3643-style identity/policy substrate or equivalent adapter | Passing and failing transfer cases; policy config snapshot; source anchor | Private identity, fully encrypted KYC facts |
-| Mint | Issuer can mint encrypted amount to eligible holder | Transaction/log evidence, encrypted balance handle, role proof | Native mint precompile |
-| Confidential transfer | Eligible holder can transfer encrypted amount without revealing amount/balance plaintext | Transfer trace, before/after encrypted handles, no plaintext amount event | Hiding address graph, timing, event existence |
-| Audit disclosure | Authorized auditor/issuer/regulator flow can disclose scoped payload and log request/grant/result reference | Disclosure request, approval, decrypt/re-encrypt evidence, expiry/revocation log | Full-history viewing key |
-| Freeze/recovery | Minimum freeze or recovery ceremony defined and demonstrable, or explicitly deferred with legal rationale | Freeze/recovery test, admin role, audit trail, failure semantics | Unlogged issuer superpowers |
-| Failure/degraded mode | Backend outage, disclosure denial, policy failure, and malformed proof have documented outcomes | Manual runbook, failing test or mock outage scenario | Production incident automation |
+| KYC / 策略 | 通过 ERC-3643 风格的身份/策略基座或等价 adapter 校验收款方与付款方资格 | 通过与失败的转账用例；策略配置快照；来源锚点 | 私密身份、完全加密的 KYC 事实 |
+| Mint | 发行方可向合格持有人 mint 加密金额 | 交易/日志证据、加密余额 handle、角色证明 | 原生 mint precompile |
+| 机密转账 | 合格持有人可转移加密金额而不泄露金额/余额明文 | 转账 trace、转账前后的加密 handle、无明文金额事件 | 隐藏地址图谱、时序、事件存在性 |
+| 审计披露 | 授权的 auditor/issuer/regulator 流程可披露受限范围 payload 并记录 request/grant/result 引用 | 披露请求、批准、decrypt/re-encrypt 证据、过期/撤销日志 | 全历史 viewing key |
+| 冻结/恢复 | 定义并可演示最小的 freeze 或 recovery 仪式，或以法律理由明确延后 | freeze/recovery 测试、管理员角色、审计轨迹、失败语义 | 未记录的发行方超级权限 |
+| 失败/降级模式 | backend 宕机、披露拒绝、策略失败和畸形 proof 均有文档化结果 | 手动 runbook、失败测试或 mock 宕机场景 | 生产事件自动化 |
 
-- **Priority**: high
-- **Dependencies**: none
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: none
 
-### item-2: Phase 0/1 lightweight integration route: contracts, backend, SDK, demo
+### item-2: Phase 0/1 轻量集成路线：contracts、backend、SDK、demo
 
-Design the concrete 0-3 month and 3-6 month route around contracts plus external confidential backend and SDK, without Mantle client changes. Phase 0 should be architecture spike and backend readiness validation; Phase 1 should be a narrow PoC / testnet pilot with a named backend path, disclosure registry, minimal wallet/indexer UX, and a demo script. The route must preserve backend replaceability from WHI-272: public interfaces use encrypted handles/proofs/capability flags rather than Zama `euint`, Inco handle shapes, VOSA proof encoding, or native precompile selectors.
+围绕 contracts 加上 external confidential backend 与 SDK，设计具体的 0-3 月和 3-6 月路线，不改 Mantle 客户端。Phase 0 应为架构 spike 与 backend 就绪验证；Phase 1 应为带有指定 backend 路径、disclosure registry、最小 wallet/indexer UX 和 demo 脚本的窄 PoC / testnet pilot。该路线必须保持 WHI-272 的 backend 可替换性：公开接口使用加密 handle/proof/capability flag，而不是 Zama 的 `euint`、Inco 的 handle 形状、VOSA 的 proof 编码或 native precompile selector。
 
-Required Phase 0/1 route table:
+所需的 Phase 0/1 路线表：
 
-| Phase | Time window | Goal | Deliverables | Go/no-go gate |
+| 阶段 | 时间窗口 | 目标 | 交付物 | Go/no-go 门槛 |
 |---|---|---|---|---|
-| Phase 0 | 0-3 months | Feasibility spike and design freeze | PoC spec, backend selection memo, adapter interface, threat model, source trace map, mock disclosure service | Named backend support path or bounded non-Mantle PoC target |
-| Phase 1a | 3-6 months | Testnet PoC with minimal closed loop | Contracts, SDK demo, KYC/policy fixture, mint/transfer/disclosure/freeze tests, dashboard metrics | Demo passes checklist, no hardfork dependency discovered |
-| Phase 1b | 3-6 months | Pilot readiness assessment | Security review scope, operator runbook, latency/cost measurements, wallet/indexer pilot UX, incident drill | Production gates met or route remains PoC-only |
+| Phase 0 | 0-3 个月 | 可行性 spike 与设计冻结 | PoC spec、backend 选型备忘录、adapter 接口、威胁模型、来源 trace map、mock disclosure service | 指定 backend 支持路径或界定清晰的非 Mantle PoC 目标 |
+| Phase 1a | 3-6 个月 | 带最小闭环的 testnet PoC | Contracts、SDK demo、KYC/policy fixture、mint/transfer/disclosure/freeze 测试、dashboard 指标 | Demo 通过 checklist，未发现 hardfork 依赖 |
+| Phase 1b | 3-6 个月 | Pilot 就绪评估 | Security review 范围、operator runbook、latency/cost 度量、wallet/indexer pilot UX、incident drill | 达到生产门槛或路线维持为仅 PoC |
 
-- **Priority**: high
-- **Dependencies**: item-1
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-1
 
-### item-3: Phase 2 native route assessment: B20-like and PolicyRegistry precompile
+### item-3: Phase 2 原生路线评估：B20-like 与 PolicyRegistry precompile
 
-Define how to evaluate native Mantle integration only after PoC evidence exists. This item should not propose a native route as Phase 1 work; it should specify when to revisit B20-like precompile, PolicyRegistry precompile, native encrypted accounting, native disclosure registry, native bridge/redeem adapter, or deeper chain integration. If deep draft cites Mantle local code for precompile or hardfork feasibility, it must verify current repo path + commit SHA + file path under `/Users/whisker/Work/src/networks/mantle` and separate code plumbing from product/governance schedule.
+定义如何仅在已有 PoC 证据后才评估 Mantle 原生集成。本条目不应把原生路线作为 Phase 1 工作来提议；它应明确何时重新审视 B20-like precompile、PolicyRegistry precompile、native encrypted accounting、native disclosure registry、native bridge/redeem adapter 或更深的链层集成。若 deep draft 引用 Mantle 本地代码以论证 precompile 或 hardfork 可行性，必须在 `/Users/whisker/Work/src/networks/mantle` 下核实当前 repo path + commit SHA + 文件路径，并把代码层接线与产品/治理排期区分开。
 
-Required Phase 2 assessment table:
+所需的 Phase 2 评估表：
 
-| Native option | Evaluation trigger | Evidence needed | Expected cost surface | Default disposition |
+| 原生选项 | 评估触发条件 | 所需证据 | 预期成本面 | 默认处置 |
 |---|---|---|---|---|
-| B20-like token precompile | PoC proves demand and app-layer gas/UX is bottleneck | Mantle op-geth/reth/revm precompile surface, B20 analogy, security spec | dual-client execution changes, fork activation, audits, fraud-proof / op-program review | Phase 2 only |
-| PolicyRegistry precompile | Policy evaluation is stable, generic, and repeatedly used | Policy semantics, upgrade rules, scope model, local code feasibility | protocol governance, compatibility, storage/API stability | Phase 2 only |
-| Native encrypted accounting | External backend latency/cost is unacceptable but CCT demand is validated | Cryptographic backend spec, precompile/API design, key governance, client integration | high cryptography + protocol + ops cost | long-term research |
-| Protocol disclosure registry | App-layer disclosure logs prove useful but insufficient | Legal/audit requirements, privacy impact, revocation model | governance and data-retention commitments | phase 2 candidate |
-| Native bridge/redeem adapter | Pilot needs chain-level settlement integration | bridge/redeem legal flow, plaintext boundary, failure recovery | bridge/security review and operational liability | separate proposal |
+| B20-like token precompile | PoC 证明存在需求且 app 层 gas/UX 成为瓶颈 | Mantle op-geth/reth/revm precompile surface、B20 类比、安全 spec | 双客户端执行改动、fork 激活、审计、fraud-proof / op-program review | 仅 Phase 2 |
+| PolicyRegistry precompile | 策略评估稳定、通用且被反复使用 | 策略语义、升级规则、scope 模型、本地代码可行性 | 协议治理、兼容性、storage/API 稳定性 | 仅 Phase 2 |
+| Native encrypted accounting | 外部 backend latency/cost 不可接受但 CCT 需求已验证 | 密码学 backend spec、precompile/API 设计、密钥治理、客户端集成 | 高密码学 + 协议 + 运维成本 | 长期研究 |
+| Protocol disclosure registry | App 层 disclosure 日志被证明有用但不充分 | 法律/审计需求、隐私影响、撤销模型 | 治理与数据留存承诺 | phase 2 候选 |
+| Native bridge/redeem adapter | Pilot 需要链层结算集成 | bridge/redeem 法律流程、明文边界、失败恢复 | bridge/安全评审与运营责任 | 单独提案 |
 
-- **Priority**: high
-- **Dependencies**: item-1, item-2
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-1, item-2
 
 ### item-4: 工程改动面与 ownership map
 
-Map every engineering surface a small Mantle team would actually need to own, integrate, or outsource. The final output must cover contracts, SDK, wallet, indexer/explorer, auditor tooling, KMS/operator, bridge/redeem, docs/runbooks, security review, and governance/roles. Inco confidential ERC20 framework may be used only as PoC/test/interface inspiration, never as production security evidence or unreviewed code reuse.
+梳理一个 Mantle 小团队实际需要拥有、集成或外包的每一个工程面。最终输出必须覆盖 contracts、SDK、wallet、indexer/explorer、auditor tooling、KMS/operator、bridge/redeem、docs/runbooks、security review 以及 governance/roles。Inco confidential ERC20 framework 仅可用作 PoC/test/interface 灵感来源，绝不可作为生产安全证据或未经评审的代码复用。
 
-Required engineering surface table:
+所需的工程改动面表：
 
-| Surface | Phase 0/1 work | Owner / operator | Test artifact | Production blocker |
+| 改动面 | Phase 0/1 工作 | Owner / operator | 测试产物 | 生产阻塞项 |
 |---|---|---|---|---|
-| Contracts | token, policy, disclosure, issuer control, backend adapter, wrapper/redeem stubs | Mantle app team / issuer integrator | unit/integration tests; ABI and upgrade review | audit, governance, upgrade risk |
-| SDK / backend adapter | encrypted input generation, decrypt request, grant/revoke, capability flags | backend partner or Mantle integration team | SDK demo, mock and real backend conformance tests | backend support path and SLA |
-| Wallet / custody UX | encrypt amount, view/decrypt balance, approve disclosure, show policy failure | wallet/custody partner | manual demo and UX acceptance script | unusable approval/decryption flow |
-| Indexer / explorer | show encrypted activity, policy/disclosure logs, no plaintext amount leakage | indexer/explorer team | indexed event sample and dashboard | missing audit evidence or misleading UI |
-| Auditor tooling | request/grant/result tracking, evidence export | issuer/auditor operator | disclosure report sample | no scoped evidence or revocation story |
-| KMS / operator | key ceremony, threshold/decrypt governance, outage response | backend provider, issuer, or operator set | runbook and incident drill | key governance unacceptable |
-| Bridge / redeem | explicit plaintext settlement boundary and fallback | issuer/custodian/bridge provider | redeem/unshield demo or deferred rationale | no legal settlement path |
-| Docs / security review | deployment guide, threat model, failure modes, audit scope | project lead + security | review package | security review too large for Phase 1 |
+| Contracts | token、policy、disclosure、issuer control、backend adapter、wrapper/redeem stub | Mantle app team / issuer integrator | 单元/集成测试；ABI 与升级评审 | 审计、治理、升级风险 |
+| SDK / backend adapter | 加密输入生成、decrypt 请求、grant/revoke、capability flag | backend partner 或 Mantle 集成团队 | SDK demo、mock 与真实 backend 一致性测试 | backend 支持路径与 SLA |
+| Wallet / custody UX | 加密金额、查看/解密余额、批准披露、显示策略失败 | wallet/custody partner | 手动 demo 与 UX 验收脚本 | 不可用的批准/解密流程 |
+| Indexer / explorer | 展示加密活动、policy/disclosure 日志、无明文金额泄露 | indexer/explorer team | 已索引事件样本与 dashboard | 缺失审计证据或误导性 UI |
+| Auditor tooling | request/grant/result 跟踪、证据导出 | issuer/auditor operator | disclosure 报告样本 | 无受限范围证据或缺撤销叙事 |
+| KMS / operator | 密钥仪式、threshold/decrypt 治理、宕机响应 | backend provider、issuer 或 operator set | runbook 与 incident drill | 密钥治理不可接受 |
+| Bridge / redeem | 明确的明文结算边界与回退 | issuer/custodian/bridge provider | redeem/unshield demo 或延后理由 | 无合法结算路径 |
+| Docs / security review | 部署指南、威胁模型、失败模式、审计范围 | project lead + security | review package | 安全评审对 Phase 1 而言过大 |
 
-- **Priority**: high
-- **Dependencies**: item-2
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-2
 
 ### item-5: 性能、成本与生产化观测计划
 
-Turn performance and operations into measurable PoC outputs. The research should define p50/p95/p99 latency targets or observed measurements for transfer, policy check, disclosure, freeze/recovery, redeem/unshield, encrypted input generation, backend decrypt, and indexer finality. Optalysys may frame FHE throughput/data-movement/hardware acceleration questions, but it must remain a performance/productionization reference and vendor narrative, not proof that any Mantle CCT route meets SLA.
+把性能与运维转化为可度量的 PoC 输出。研究应为 transfer、policy check、disclosure、freeze/recovery、redeem/unshield、加密输入生成、backend decrypt 和 indexer finality 定义 p50/p95/p99 latency 目标或实测值。Optalysys 可用于构建 FHE throughput/data-movement/hardware acceleration 相关问题的框架，但它必须保持为性能/生产化参考与厂商叙事，而非任何 Mantle CCT 路线满足 SLA 的证明。
 
-Required observability table:
+所需的可观测性表：
 
-| Metric group | Metrics | Measurement method | Use in decision |
+| 指标组 | 指标 | 度量方法 | 在决策中的用途 |
 |---|---|---|---|
-| User-facing latency | p50/p95/p99 for mint, transfer, policy check, disclosure request, balance view | testnet script and dashboard | UX go/no-go and wallet requirements |
-| Backend latency | encrypted op latency, decrypt/re-encrypt time, KMS quorum time, Gateway/coprocessor retry time | backend logs and synthetic probes | backend maturity gate |
-| Cost | gas, backend fee, operator cost, monitoring cost, audit/review cost | transaction traces and vendor/operator estimate | budget and production feasibility |
-| Burst / reliability | concurrent transfers, decrypt burst, policy update burst, outage recovery time | load test and failure drill | pilot readiness |
-| Audit evidence | disclosure logs, policy logs, admin action logs, result hashes, retention/export | auditor report sample | compliance acceptance |
-| Monitoring | health checks, alerts, event indexing lag, stuck decrypt detection | dashboard spec | incident response |
+| 用户侧延迟 | mint、transfer、policy check、disclosure request、balance view 的 p50/p95/p99 | testnet 脚本与 dashboard | UX go/no-go 与 wallet 需求 |
+| Backend 延迟 | encrypted op latency、decrypt/re-encrypt 时间、KMS quorum 时间、Gateway/coprocessor 重试时间 | backend 日志与合成探针 | backend 成熟度门槛 |
+| 成本 | gas、backend 费用、operator 成本、监控成本、审计/评审成本 | 交易 trace 与厂商/operator 估算 | 预算与生产可行性 |
+| Burst / 可靠性 | 并发转账、decrypt burst、policy update burst、宕机恢复时间 | 负载测试与失败演练 | pilot 就绪度 |
+| 审计证据 | disclosure 日志、policy 日志、管理员操作日志、result hash、留存/导出 | auditor 报告样本 | 合规验收 |
+| 监控 | health check、告警、事件索引滞后、卡住的 decrypt 检测 | dashboard spec | 事件响应 |
 
-- **Priority**: high
-- **Dependencies**: item-2, item-4
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-2, item-4
 
 ### item-6: 风险门槛、停止条件与降级路线
 
-Define explicit risk thresholds that stop the project, keep it in PoC-only mode, or downgrade it to reference/Phase 2 research. The deep draft must distinguish blocking production gates from PoC-acceptable caveats. It should include backend Mantle support, KMS/disclosure governance, vendor lock-in, performance, wallet UX, compliance disclosure sufficiency, bridge/redeem gaps, security review scope, and accidental hardfork/precompile dependency.
+定义会让项目停止、保持仅 PoC 模式或降级为 reference/Phase 2 研究的明确风险门槛。Deep draft 必须区分阻塞性生产门槛与 PoC 可接受的注意事项。它应涵盖 backend 的 Mantle 支持、KMS/disclosure 治理、vendor lock-in、性能、wallet UX、合规披露充分性、bridge/redeem 缺口、安全评审范围以及意外的 hardfork/precompile 依赖。
 
-Required stop-condition matrix:
+所需的停止条件矩阵：
 
-| Risk gate | Stop condition | Downgrade path | Evidence required |
+| 风险门槛 | 停止条件 | 降级路径 | 所需证据 |
 |---|---|---|---|
-| Backend availability | no Mantle support, self-host path, or bounded non-Mantle PoC target | reference only or Base-aligned PoC | backend statement, deployment test, or explicit non-Mantle scope |
-| Disclosure governance | unclear grant/revoke/log authority or unacceptable historical access | redesign disclosure registry before pilot | authority matrix and audit log sample |
-| Performance/SLA | p95/p99 or failure rate makes wallet/custody flow unusable | PoC-only; defer production | measured benchmark, not vendor claim |
-| Vendor lock-in | public interface leaks backend-specific type/API | refactor adapter boundary | ABI/API review |
-| Compliance sufficiency | audit disclosure or policy proof cannot satisfy issuer/regulator minimum | stop production path | compliance review memo |
-| Wallet/UX burden | users/operators cannot complete encrypt/decrypt/disclosure flow reliably | custody-only pilot or stop | manual acceptance and error logs |
-| Hardfork dependency | Phase 1 path requires Mantle client change/precompile | move to Phase 2 native track | local code verification and architecture decision |
-| Security scope | audit scope exceeds small-team ability or unaudited PoC code is required | narrow PoC or stop | security review estimate |
+| Backend 可用性 | 无 Mantle 支持、无自托管路径或无界定清晰的非 Mantle PoC 目标 | 仅作参考或采用对齐 Base 的 PoC | backend 声明、部署测试或明确的非 Mantle 范围 |
+| 披露治理 | grant/revoke/log 权限不清或历史访问不可接受 | pilot 前重新设计 disclosure registry | 权限矩阵与审计日志样本 |
+| 性能/SLA | p95/p99 或失败率使 wallet/custody 流程不可用 | 仅 PoC；延后生产 | 实测 benchmark，而非厂商声称 |
+| Vendor lock-in | 公开接口泄露 backend 专属 type/API | 重构 adapter 边界 | ABI/API 评审 |
+| 合规充分性 | audit disclosure 或 policy proof 无法满足 issuer/regulator 的最低要求 | 停止生产路径 | 合规评审备忘录 |
+| Wallet/UX 负担 | 用户/operator 无法可靠完成 encrypt/decrypt/disclosure 流程 | 仅 custody pilot 或停止 | 手动验收与错误日志 |
+| Hardfork 依赖 | Phase 1 路径需要 Mantle 客户端改动/precompile | 转入 Phase 2 原生轨道 | 本地代码核实与架构决策 |
+| 安全范围 | 审计范围超出小团队能力或需要未审计的 PoC 代码 | 收窄 PoC 或停止 | 安全评审估算 |
 
-- **Priority**: high
-- **Dependencies**: item-3, item-4, item-5
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-3, item-4, item-5
 
 ### item-7: 验证计划、source traceability 与成本估算
 
-Specify how the deep draft and later PoC should be verified. The plan must include unit tests, integration tests, manual demo acceptance, adversarial review, source traceability, Mantle local code verification only when needed, cost estimate, and evidence classification. Each material conclusion in the final section must attach a path/URL and commit SHA, version, or access date; source gaps should be treated as blockers or caveats, not filled with inference.
+明确 deep draft 与后续 PoC 应如何被验证。计划必须包含 unit tests、integration tests、手动 demo 验收、对抗性评审、source traceability、仅在需要时的 Mantle 本地代码核实、成本估算和证据分类。Final section 中每个实质性结论都必须附上 path/URL 和 commit SHA、version 或 access date；来源缺口应作为阻塞项或注意事项处理，而非用推断填补。
 
-Required validation plan table:
+所需的验证计划表：
 
-| Validation layer | What to verify | Artifact |
+| 验证层 | 验证内容 | 产物 |
 |---|---|---|
-| Source traceability | every conclusion maps to local final path + commit SHA, official URL + access date, or local repo path + commit SHA + file path | evidence map |
-| Contract unit tests | policy pass/fail, encrypted transfer path, disclosure registry, issuer roles, freeze/recovery semantics | test list and pass criteria |
-| Integration tests | SDK encrypted input, backend decrypt/re-encrypt, indexer events, wallet/custody flow | testnet script |
-| Manual acceptance | mint -> confidential transfer -> audit disclosure -> freeze/recovery demo | checklist and screenshots/log refs |
-| Adversarial review | route is truly lightweight, native route staged correctly, stop conditions are enforceable | review response package |
-| Cost estimate | contract/audit/backend/operator/wallet/indexer/security/doc effort | rough order-of-magnitude table |
-| Local code verification | only if making current Mantle hardfork/precompile claims | repo path, commit SHA, file paths, searched terms |
+| Source traceability | 每个结论映射到 local final path + commit SHA、官方 URL + access date，或 local repo path + commit SHA + 文件路径 | 证据 map |
+| 合约单元测试 | 策略 pass/fail、加密转账路径、disclosure registry、issuer 角色、freeze/recovery 语义 | 测试清单与通过标准 |
+| 集成测试 | SDK 加密输入、backend decrypt/re-encrypt、indexer 事件、wallet/custody 流程 | testnet 脚本 |
+| 手动验收 | mint -> confidential transfer -> audit disclosure -> freeze/recovery demo | checklist 与截图/日志引用 |
+| 对抗性评审 | 路线是否真正轻量、原生路线是否正确分阶段、停止条件是否可执行 | review response package |
+| 成本估算 | contract/audit/backend/operator/wallet/indexer/security/doc 工作量 | 量级粗估表 |
+| 本地代码核实 | 仅当作出当前 Mantle hardfork/precompile 声明时 | repo path、commit SHA、文件路径、检索词 |
 
-- **Priority**: high
-- **Dependencies**: item-1, item-2, item-3, item-4, item-5, item-6
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-1, item-2, item-3, item-4, item-5, item-6
 
-### item-8: 一页路线图与 PoC checklist packaging
+### item-8: 一页路线图与 PoC checklist 打包
 
-Produce the final reader-facing package: a one-page roadmap and detailed PoC checklist that Mantle engineering/product can use to decide whether to start. The roadmap should summarize 0-3 / 3-6 / 6-12 month phases, owners, deliverables, gates, and downgrade paths. The checklist should be concrete enough to run as a project kickoff artifact, not just a narrative conclusion.
+产出最终面向读者的交付包：一页路线图与详细 PoC checklist，供 Mantle 工程/产品用于决定是否启动。路线图应概括 0-3 / 3-6 / 6-12 月阶段、owners、deliverables、gates 与降级路径。Checklist 应足够具体，可作为项目 kickoff 产物来执行，而不仅是叙事性结论。
 
-Required output package:
+所需的输出交付包：
 
-| Output | Content | Acceptance condition |
+| 输出 | 内容 | 验收条件 |
 |---|---|---|
-| One-page roadmap | phase timeline, deliverables, owners, go/no-go gates, Phase 2 trigger | readable without prior sections |
-| PoC checklist | tasks across contracts, SDK/backend, wallet/indexer, auditor tooling, KMS/operator, bridge/redeem, docs/security | each row has owner, evidence, status, blocker |
-| Decision memo | start / narrow / stop / defer-native recommendation | tied to measured gates |
-| Caveat box | what this PoC does not prove | prevents production overclaim |
+| 一页路线图 | 阶段时间线、deliverables、owners、go/no-go gates、Phase 2 触发条件 | 无需前置章节即可读懂 |
+| PoC checklist | 横跨 contracts、SDK/backend、wallet/indexer、auditor tooling、KMS/operator、bridge/redeem、docs/security 的任务 | 每行有 owner、证据、status、blocker |
+| 决策备忘录 | start / narrow / stop / defer-native 建议 | 与实测门槛挂钩 |
+| 注意事项框 | 本 PoC 未能证明的内容 | 防止生产过度宣称 |
 
-- **Priority**: high
-- **Dependencies**: item-1, item-2, item-3, item-4, item-5, item-6, item-7
+- **优先级（Priority）**: high
+- **依赖（Dependencies）**: item-1, item-2, item-3, item-4, item-5, item-6, item-7
 
-## Fields
+## 字段（Fields）
 
-| Field | Description | Applies To |
+| 字段 | 描述 | 适用于 |
 |-------|-------------|------------|
-| source_anchor | Exact local file path plus commit SHA, external URL plus access date/version, or local repo path plus commit SHA plus file path supporting each claim | all |
+| source_anchor | 支撑每个声明的精确本地文件路径加 commit SHA、外部 URL 加 access date/version，或 local repo path 加 commit SHA 加文件路径 | all |
 | reuse_class | direct_reuse, bounded_reuse, new_synthesis, code_verification_required, vendor_reference, engineering_poc_only, blocker_gap | all |
 | phase_window | 0_3_months, 3_6_months, 6_12_months, phase_2_native, out_of_scope | all |
 | chain_change_class | no_chain_change, app_integration, sidecar_operator_dependency, bridge_or_redeem_service, client_or_hardfork_required, unknown | item-2, item-3, item-4 |
-| poc_success_signal | The observable pass/fail evidence for each PoC criterion | item-1, item-2, item-7, item-8 |
+| poc_success_signal | 每个 PoC 标准的可观察 pass/fail 证据 | item-1, item-2, item-7, item-8 |
 | engineering_surface | contract, sdk_backend, wallet_custody, indexer_explorer, auditor_tooling, kms_operator, bridge_redeem, docs_security, governance_roles | item-4, item-8 |
 | performance_metric | p50, p95, p99, encrypted_op_cost, gas_cost, burst_capacity, recovery_time, indexing_lag, audit_export_time | item-5 |
 | risk_gate | backend_support, disclosure_governance, performance_sla, vendor_lock_in, compliance_sufficiency, wallet_ux, hardfork_dependency, security_scope | item-6 |
 | validation_method | unit_test, integration_test, manual_demo, adversarial_review, source_trace, local_code_check, cost_estimate, incident_drill | item-7 |
 | checklist_status | not_started, planned, in_progress, passed, failed, deferred, blocked, non_goal | item-8 |
 
-## Diagram Expectations
+## 图示预期（Diagram Expectations）
 
-| ID | Type | Description | Format | Applies To |
+| ID | 类型 | 描述 | 格式 | 适用于 |
 |----|------|-------------|--------|------------|
-| diag-1 | timeline | 0-3 / 3-6 / 6-12 month roadmap showing Phase 0 feasibility, Phase 1 PoC/pilot, and Phase 2 native evaluation trigger. Must show stop/downgrade gates between phases. | mermaid | item-2, item-3, item-6, item-8 |
-| diag-2 | flow | Minimum PoC flow from KYC/policy onboarding through mint, confidential transfer, audit disclosure, freeze/recovery, and evidence capture. Label plaintext versus ciphertext versus disclosure boundaries. | mermaid | item-1, item-7 |
-| diag-3 | architecture | Lightweight Phase 0/1 deployment architecture: contracts, backend adapter, confidential backend/Gateway/KMS or TEE/operator, SDK, wallet, indexer, auditor tooling, bridge/redeem service. Label no Mantle client change by default. | mermaid | item-2, item-4, item-5 |
-| diag-4 | comparison | Engineering surface matrix with owner, work item, test artifact, blocker, and phase. | ascii | item-4, item-8 |
-| diag-5 | decision | Risk gate and stop-condition decision tree: continue, narrow PoC, defer production, move to Phase 2 native, or stop. | mermaid | item-6 |
-| diag-6 | checklist | One-page PoC checklist table suitable for Technical Writer conversion into `confidential-compliance-token-research/report/poc-checklist.md`. | ascii | item-8 |
+| diag-1 | timeline | 0-3 / 3-6 / 6-12 月路线图，展示 Phase 0 可行性、Phase 1 PoC/pilot 和 Phase 2 原生评估触发条件。必须展示各阶段之间的 stop/downgrade gate。 | mermaid | item-2, item-3, item-6, item-8 |
+| diag-2 | flow | 最小 PoC 流程，从 KYC/policy onboarding 经 mint、confidential transfer、audit disclosure、freeze/recovery 到证据捕获。标注 plaintext、ciphertext 与 disclosure 边界。 | mermaid | item-1, item-7 |
+| diag-3 | architecture | 轻量 Phase 0/1 部署架构：contracts、backend adapter、confidential backend/Gateway/KMS 或 TEE/operator、SDK、wallet、indexer、auditor tooling、bridge/redeem service。标注默认不改 Mantle 客户端。 | mermaid | item-2, item-4, item-5 |
+| diag-4 | comparison | 工程改动面矩阵，含 owner、work item、test artifact、blocker 和 phase。 | ascii | item-4, item-8 |
+| diag-5 | decision | 风险门槛与停止条件决策树：continue、narrow PoC、defer production、move to Phase 2 native 或 stop。 | mermaid | item-6 |
+| diag-6 | checklist | 一页 PoC checklist 表，适合 Technical Writer 转换为 `confidential-compliance-token-research/report/poc-checklist.md`。 | ascii | item-8 |
 
-## Source Requirements
+## 来源要求（Source Requirements）
 
-| ID | Type | Description | Min Count |
+| ID | 类型 | 描述 | 最小数量 |
 |----|------|-------------|-----------|
-| src-1 | prior_research_final | Commit-pinned direct inputs from current `origin/main`: `mantle-protocol-design/final.md`, `zama-confidential-rwa/final.md`, and `compliance-token-private-extension/final.md` at commit `0a058bd286ab95d3a1ff7b76421a9e8627b675b4`. | 3 |
-| src-2 | supporting_prior_research | Use `requirements-framework/final.md` and `route-comparison/final.md` for rubric, Inco/Optalysys classification, engineering delta, and route bucket rules. Cite paths and commit SHA. | 2 |
-| src-3 | code_analysis | Mantle local repo analysis only if the draft makes current precompile/hardfork/client-surface claims. Required citation shape: `/Users/whisker/Work/src/networks/mantle` + subrepo commit SHA + file path + search/inspection method. | 1 |
-| src-4 | official_backend_docs | Official docs/specs for the chosen backend and standards boundary: ERC-7984, ERC-3643, OpenZeppelin Confidential Contracts, Zama docs, Inco docs or other selected backend docs. Include access date or version. | 4 |
-| src-5 | performance_reference | Optalysys and backend performance/SLA material may be used to frame latency/throughput/production questions only. Vendor claims must be labeled vendor_reference or self_report, not benchmark proof. | 2 |
-| src-6 | engineering_poc_reference | Inco confidential ERC20 framework or comparable code may be used only as engineering PoC/test/interface inspiration. If used, cite repo commit and explicitly state unaudited/non-production status. | 1 |
-| src-7 | issue_record | Multica issue description and Orchestrator dispatch for scope, expected output, Agent Directory, and acceptance criteria. | 1 |
+| src-1 | prior_research_final | 来自当前 `origin/main` 的 commit 锚定直接输入：`mantle-protocol-design/final.md`、`zama-confidential-rwa/final.md` 和 `compliance-token-private-extension/final.md`，均在 commit `0a058bd286ab95d3a1ff7b76421a9e8627b675b4`。 | 3 |
+| src-2 | supporting_prior_research | 使用 `requirements-framework/final.md` 和 `route-comparison/final.md` 获取 rubric、Inco/Optalysys 分类、engineering delta 和 route bucket 规则。引用路径和 commit SHA。 | 2 |
+| src-3 | code_analysis | 仅当 draft 作出当前 precompile/hardfork/client-surface 声明时才做 Mantle 本地 repo 分析。所需引用形态：`/Users/whisker/Work/src/networks/mantle` + subrepo commit SHA + 文件路径 + 检索/检视方法。 | 1 |
+| src-4 | official_backend_docs | 所选 backend 与标准边界的官方文档/规范：ERC-7984、ERC-3643、OpenZeppelin Confidential Contracts、Zama docs、Inco docs 或其他所选 backend 文档。需包含 access date 或 version。 | 4 |
+| src-5 | performance_reference | Optalysys 与 backend 性能/SLA 材料仅可用于构建 latency/throughput/production 问题的框架。厂商声称必须标注为 vendor_reference 或 self_report，而非 benchmark 证据。 | 2 |
+| src-6 | engineering_poc_reference | Inco confidential ERC20 framework 或可比代码仅可用作工程 PoC/test/interface 灵感。若使用，需引用 repo commit 并明确声明未审计/非生产状态。 | 1 |
+| src-7 | issue_record | Multica issue 描述与 Orchestrator dispatch，用于 scope、expected output、Agent Directory 和验收标准。 | 1 |
 
-## Patch Log
+## 修订日志（Patch Log）
 
-| Round | Action | Target | Reason | Source |
+| 轮次 | 操作 | 目标 | 原因 | 来源 |
 |-------|--------|--------|--------|--------|
 
-## Verification Acceptance Criteria
+## 验证验收标准（Verification Acceptance Criteria）
 
-| ID | Criterion | Applies To |
+| ID | 标准 | 适用于 |
 |----|-----------|------------|
-| vc-1 | Defines a minimum demonstrable PoC closed loop covering KYC/policy, mint, confidential transfer, audit disclosure, and freeze/recovery or explicit deferral. | item-1 |
-| vc-2 | Phase 0/1 route defaults to contracts + external backend/SDK/services and does not require Mantle hardfork, execution-client changes, or precompile. | item-2 |
-| vc-3 | Native B20-like precompile, PolicyRegistry precompile, native encrypted accounting, and deeper chain integration are treated as Phase 2 evaluation only, with evidence requirements and triggers. | item-3 |
-| vc-4 | Engineering surface covers contracts, SDK, wallet/custody, indexer/explorer, auditor tooling, KMS/operator, bridge/redeem, docs, governance, and security review. | item-4 |
-| vc-5 | Performance/production plan includes p50/p95/p99 latency, encrypted operation cost, gas/backend/operator cost, burst behavior, audit evidence, monitoring, and failure recovery. | item-5 |
-| vc-6 | Stop conditions and downgrade paths are explicit enough to prevent PoC results from being marketed as production readiness. | item-6 |
-| vc-7 | Verification plan includes tests, manual demo, adversarial review, source traceability, cost estimate, and local code verification rules for Mantle hardfork/precompile claims. | item-7 |
-| vc-8 | Produces a one-page roadmap and actionable PoC checklist with owner/evidence/status/blocker fields. | item-8 |
-| vc-9 | Inco framework is classified as engineering PoC/reference only, and Optalysys is classified as performance/productionization reference only. | item-4, item-5, item-7 |
-| vc-10 | Every material conclusion in the final section has a path/URL and commit SHA, version, or access date. | all |
+| vc-1 | 定义一个最小可演示的 PoC 闭环，覆盖 KYC/policy、mint、confidential transfer、audit disclosure 和 freeze/recovery 或明确延后。 | item-1 |
+| vc-2 | Phase 0/1 路线默认采用 contracts + external backend/SDK/services，且不要求 Mantle hardfork、执行客户端改动或 precompile。 | item-2 |
+| vc-3 | Native B20-like precompile、PolicyRegistry precompile、native encrypted accounting 和更深的链层集成均被视为仅 Phase 2 评估，并附证据要求与触发条件。 | item-3 |
+| vc-4 | 工程改动面覆盖 contracts、SDK、wallet/custody、indexer/explorer、auditor tooling、KMS/operator、bridge/redeem、docs、governance 和 security review。 | item-4 |
+| vc-5 | 性能/生产计划包含 p50/p95/p99 latency、加密操作成本、gas/backend/operator 成本、burst 行为、审计证据、监控和失败恢复。 | item-5 |
+| vc-6 | 停止条件和降级路径足够明确，能防止 PoC 结果被宣传为生产就绪。 | item-6 |
+| vc-7 | 验证计划包含测试、手动 demo、对抗性评审、source traceability、成本估算，以及针对 Mantle hardfork/precompile 声明的本地代码核实规则。 | item-7 |
+| vc-8 | 产出一页路线图和可执行 PoC checklist，含 owner/evidence/status/blocker 字段。 | item-8 |
+| vc-9 | Inco framework 被分类为仅工程 PoC/参考，Optalysys 被分类为仅性能/生产化参考。 | item-4, item-5, item-7 |
+| vc-10 | Final section 中每个实质性结论都有 path/URL 和 commit SHA、version 或 access date。 | all |
